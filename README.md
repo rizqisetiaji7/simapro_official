@@ -12,13 +12,13 @@
 Ini merupakan proyek website untuk mengelola manajemen proyek pada [PT. Aryabakti Saluyu](https://ptaryabaktisaluyu.com/). Aplikasi berbasis web ini dibuat khusus untuk mengelola progress pada proyek pembangunan yang sedang dijalankan oleh perusahaan agar deadline atau jumlah proyek yang dikerjakan sesuai dengan kontrak yang telah disepakati.
 
 Aplikasi ini memiliki fitur-fitur yang bisa digunakan dengan efisien, diantaranya:
-<ul>
-<li style="list-style-type: none">**1. Multilevel login sistem**</li>
-<li style="list-style-type: none">**2. Dashboard monitor**</li>
-<li style="list-style-type: none">**3. Manajemen proyek**</li>
-<li style="list-style-type: none">**4. Manajemen perusahaan & karyawan (Direktur utama, karyawan / mandor)**</li>
-<li style="list-style-type: none">**5. Download / print laporan proyek**</li>
-</ul>
+<div align="left">
+**1. Multilevel login sistem** <br />
+**2. Dashboard monitor** <br />
+**3. Manajemen proyek** <br />
+**4. Manajemen perusahaan & karyawan (Direktur utama, karyawan / mandor)** <br />
+**5. Download / print laporan proyek** <br />
+</div>
   
 <br/>  
 
