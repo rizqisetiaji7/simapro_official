@@ -49,7 +49,7 @@
 
 <div class="form-row mb-3">
   <div class="col-12">
-    <label for="user_phone">Nomor Telepon <span class="text-danger small">*</span></label>
+    <label for="user_phone">Nomor Telepon <span class="text-muted small">(Opsional)</span></label>
     <input type="text" name="user_phone" id="user_phone" class="form-control" placeholder="Isi nomor telepon" autocomplete="off">
     <div class="invalid-feedback"></div>
   </div>
