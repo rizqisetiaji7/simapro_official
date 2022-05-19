@@ -6,11 +6,11 @@
 </a>  
   
 <br />
-
-![SIMAPRO Logo](/assets/img/simapro/logo-text.svg)
-
 <br />
 
+![SIMAPRO Logo](/assets/img/simapro/logo-text.svg#gh-light-mode-only)
+
+<br />
 
 ### Deskripsi aplikasi  
 Ini merupakan proyek website untuk mengelola manajemen proyek pada [PT. Aryabakti Saluyu](https://ptaryabaktisaluyu.com/). Aplikasi berbasis web ini dibuat khusus untuk mengelola progress pada proyek pembangunan yang sedang dijalankan oleh perusahaan agar deadline atau jumlah proyek yang dikerjakan sesuai dengan kontrak yang telah disepakati.
