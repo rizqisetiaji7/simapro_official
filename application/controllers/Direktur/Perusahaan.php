@@ -2,7 +2,9 @@
 
 class Perusahaan extends CI_Controller {
    private $table = 'tb_company';
+   private $table_users = 'tb_users';
    private $placeholder = 'default-placeholder320x320.png';
+   private $default_avatar = 'default-avatar.jpg';
 
    public function __construct() {
       parent::__construct();
@@ -106,7 +108,7 @@ class Perusahaan extends CI_Controller {
             'errors' => [
                'numeric'      => '{field} wajib berisi angka.',
                'min_length'   => '{field} minimal terdiri dari 10 digit angka.',
-               'min_length'   => '{field} maksimal terdiri dari 15 digit angka.'
+               'max_length'   => '{field} maksimal terdiri dari 15 digit angka.'
             ]
          ]
       ];
@@ -341,16 +343,96 @@ class Perusahaan extends CI_Controller {
             'message' => [
                ['field' => 'user_fullname', 'err_message' => form_error('user_fullname', '<span>','</span>')],
                ['field' => 'user_email', 'err_message' => form_error('user_email', '<span>','</span>')],
-               ['field' => 'user_phone', 'err_message' => form_error('user_phone', '<span>','</span>')],
                ['field' => 'user_password', 'err_message' => form_error('user_password', '<span>','</span>')],
-               ['field' => 'password_confirm', 'err_message' => form_error('password_confirm', '<span>','</span>')]
+               ['field' => 'password_confirm', 'err_message' => form_error('password_confirm', '<span>','</span>')],
+               ['field' => 'user_phone', 'err_message' => form_error('user_phone', '<span>','</span>')]
             ]
          ];
       } else {
-         $message = [
-            'status' => 'success',
-            'message' => 'OK'
+         // Generate Director Unique ID
+         $dir_ID = 'DIRUT'.$post['comp_handle_ID'].random_string('numeric', 5);
+
+         $config = [
+            'upload_path'   => './uploads/profile',
+            'allowed_types' => 'jpg|jpeg|png|svg',
+            'max_size'      => 4096, // 4MB
+            'encrypt_name'  => TRUE,
+            'remove_spaces' => TRUE
          ];
+
+         // Initialize Config upload
+         $this->upload->initialize($config);
+
+         if (@$_FILES['user_profile']['name'] != NULL) {
+            if ($this->upload->do_upload('user_profile')) {
+               $user_prof = $this->upload->data('file_name');
+
+               $data_insert = [
+                  'ID_company'      => $post['ID_company'],
+                  'user_unique_id'  => $dir_ID,
+                  'user_role'       => $post['user_role'],
+                  'user_role_name'  => $post['user_role_name'],
+                  'user_profile'    => $user_prof,
+                  'user_fullname'   => $post['user_fullname'],
+                  'user_email'      => $post['user_email'],
+                  'user_password'   => password_hash($post['user_password'], PASSWORD_DEFAULT),
+                  'user_phone'      => $post['user_phone'],
+                  'user_address'    => $post['user_address'] == NULL ? NULL : $post['user_address'],
+                  'theme_mode'      => 0,
+                  'created'         => date('Y-m-d H:i:s', now('Asia/Jakarta'))
+               ];
+
+
+               $this->bm->save($this->table_users, $data_insert);
+
+               if ($this->db->affected_rows() > 0) {
+                  $message = [
+                     'status'    => 'success',
+                     'message'   => 'Data direktur telah berhasil disimpan.'
+                  ];
+               } else {
+                  $message = [
+                     'status'    => 'failed',
+                     'message'   => 'Oops! Maaf data direktur gagal disimpan.'
+                  ];
+               }
+            } else {
+               $message = [
+                  'status'    => 'failed',
+                  'message'   => 'Oops! Maaf data direktur gagal disimpan.'
+               ];
+            }
+         } else {
+            $user_proff = $this->default_avatar;
+            $data_insert = [
+               'ID_company'      => $post['ID_company'],
+               'user_unique_id'  => $dir_ID,
+               'user_role'       => $post['user_role'],
+               'user_role_name'  => $post['user_role_name'],
+               'user_profile'    => $user_proff,
+               'user_fullname'   => $post['user_fullname'],
+               'user_email'      => $post['user_email'],
+               'user_password'   => password_hash($post['user_password'], PASSWORD_DEFAULT),
+               'user_phone'      => $post['user_phone'],
+               'user_address'    => $post['user_address'] == NULL ? NULL : $post['user_address'],
+               'theme_mode'      => 0,
+               'created'         => date('Y-m-d H:i:s', now('Asia/Jakarta'))
+            ];
+
+            $this->bm->save($this->table_users, $data_insert);
+         }
+
+         if ($this->db->affected_rows() > 0) {
+            $message = [
+               'status'    => 'success',
+               'message'   => 'Data direktur telah berhasil disimpan.'
+            ];
+         } else {
+            $message = [
+               'status'    => 'failed',
+               'message'   => 'Oops! Maaf data direktur gagal disimpan.'
+            ];
+         }
       }
 
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
