@@ -1,0 +1,131 @@
+<div class="row">
+    <div class="col-12 col-sm-6">
+        <div class="d-flex flex-row align-items-start justify-content-between justify-content-sm-start">
+            <div class="mr-3">
+                <h4 class="mb-0">Proyek Rumah sakit Kawali</h4>
+                <p class="text-secondary text-sm">Jl. Blabla, No.69, Kab. Ciamis</p>    
+            </div>
+            <button type="button" class="btn btn-sm btn-info" data-toggle="tooltip" title="Edit proyek">
+                <i class="fa fa-pencil"></i>
+            </button>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 text-sm-right">
+        <button type="button" class="btn btn-primary py-2 px-3" data-toggle="tooltip" title="Pesan"><i class="fa-solid fa-message"></i></button>
+        <button type="button" class="btn btn-success py-2 px-4 ml-1" data-toggle="modal" data-target="#addSubProject">Buat Sub-proyek</button>
+    </div>
+</div>
+
+<div class="row my-4">
+    <div class="col-12">
+        <div class="pro-progress">
+            <div class="pro-progress-bar">
+                <h4>Progress</h4>
+                <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 50%"></div>
+                </div>
+                <span>50%</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="kanban-board card mb-0">
+    <div class="card-body">
+        <div class="kanban-cont">
+
+            <!-- "Subproyek" Board -->
+            <div class="kanban-list kanban-purple">
+                <!-- Kanban Header -->
+                <div class="kanban-header">
+                    <span class="status-title">
+                        <span class="mr-2">Pembangunan Area Parkir</span>
+                        <span class="badge">High</span>
+                    </span>
+                    <div class="kanban-header-right">
+                        <div class="dropdown kanban-action">
+                            <a href="" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#">Edit</a>
+                                <a class="dropdown-item" href="#">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Kanban Header -->
+
+                <!-- "Subproyek" Content -->
+                <div class="kanban-wrap">
+                    <div class="pro-progress">
+                        <div class="pro-progress-bar">
+                            <h5>Progres</h5>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 50%"></div>
+                            </div>
+                            <span>50%</span>
+                        </div>
+                    </div>
+
+                    <!-- Upload Photo Documentation Section -->
+                    <div class="d-flex flex-row justify-content-between align-items-center mb-3 kanban-upload-area">
+                        <div>
+                            <p class="text-dark mb-0">Unggah Gambar</p>
+                            <p class="text-xs text-secondary mb-0">Foto dokumentasi proyek</p>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-uploadGambarProyek"  data-title="Lapang parkir" data-toggle="tooltip" title="Klik untuk Upload">
+                            <i class="fa fa-cloud-upload"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Task Sub-Element "Proyek" -->
+                    <div class="card panel">
+                        <div class="kanban-box ui-sortable-handle">
+                            <div class="task-board-header">
+                                <span class="status-title"><a href="task-view.html">Website redesign</a></span>
+                                <div class="dropdown kanban-task-action">
+                                    <a href="" data-toggle="dropdown">
+                                        <i class="fa fa-angle-down"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_task_modal">Edit</a>
+                                        <a class="dropdown-item" href="#">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="task-board-body">
+                                <div class="kanban-info">
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <span>70%</span>
+                                </div>
+                                <div class="kanban-footer">
+                                    <span class="task-info-cont">
+                                        <span class="task-date"><i class="fa fa-clock-o"></i> Sep 26</span>
+                                        <span class="task-priority badge bg-inverse-danger">High</span>
+                                    </span>
+                                    <span class="task-users">
+                                        <img src="<?= base_url('assets/img/profiles/avatar-12.jpg') ?>" class="task-avatar" width="24" height="24">
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Task Sub-Element "Proyek" -->
+
+                </div>
+                <!-- End "Subproyek" Content -->
+
+                <!-- Button Add new Kanban "Subproyek" Task -->
+                <div class="add-new-task">
+                    <a href="javascript:void(0);" data-toggle="modal" data-target="#add_task_modal">Add New Task</a>
+                </div>
+            </div>
+            <!-- End "Subproyek" Board -->
+
+        </div>
+    </div>
+</div>
+
+<?php $this->view('direktur/proyek/detail_proyek/modal'); ?>
+<?php $this->view('direktur/proyek/detail_proyek/script'); ?>

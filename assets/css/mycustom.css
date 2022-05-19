@@ -1,0 +1,143 @@
+.kanban-box.ui-sortable-handle {
+	cursor: default !important;
+}
+
+.thumbnail-box {
+	padding: 20px;
+	border: dashed #ddd;
+	border-width: 2px;
+	cursor: pointer;
+}
+
+.thumbnail-kanban {
+	height: 120px !important;
+	overflow: hidden;
+}
+
+.thumbnail-kanban i {
+	color: #ddd;
+	font-size: 3rem;
+	transition: color .3s ease;
+}
+
+.thumbnail-box:hover .thumbnail-kanban i {
+	color: #ff9b44;
+}
+
+.kanban-list > .kanban-header .status-title {
+	width: 280px;
+	margin-right: 1rem;
+}
+
+.kanban-list {
+	width: 380px !important;
+}
+
+.kanban-list > .kanban-wrap > .pro-progress .pro-progress-bar h5 {
+	margin-right: .7rem;
+	text-transform: uppercase;
+	margin-bottom: 0;
+}
+.kanban-list > .kanban-wrap > .pro-progress .pro-progress-bar h5, 
+.kanban-list > .kanban-wrap > .pro-progress .pro-progress-bar span {
+	font-size: 12px;
+}
+
+.kanban-list > .kanban-wrap > .pro-progress .pro-progress-bar .progress {
+	height: 8px;
+}
+
+.kanban-list > .kanban-wrap > .kanban-upload-area {
+	margin-top: 10px;
+	padding: 10px 15px;
+	border: 2px dashed #dbdbdb;
+	background-color: rgba(255, 255, 255, 0.5);
+	border-width: 2px;
+}
+
+/* Kanban Coloring Style Theme */
+.kanban-list.kanban-danger > .kanban-header .status-title > span.badge {
+	background-color: rgb(255 255 255 / 85%) !important;
+	color: #ef5350 !important;
+}
+
+.kanban-list.kanban-danger > .kanban-wrap > .kanban-upload-area button.btn-uploadGambarProyek {
+	background-color: #ef5350;
+	color: #fff;
+	border-color: 1px solid #ef5350;
+}
+
+.kanban-list.kanban-success > .kanban-header .status-title > span.badge {
+	background-color: rgb(255 255 255 / 85%) !important;
+	color: #4caf50 !important;
+}
+
+.kanban-list.kanban-success > .kanban-wrap > .kanban-upload-area button.btn-uploadGambarProyek {
+	background-color: #4caf50;
+	color: #fff;
+	border-color: 1px solid #4caf50;
+}
+
+.kanban-list.kanban-primary > .kanban-header .status-title > span.badge {
+	background-color: rgb(255 255 255 / 85%) !important;
+	color: #ff9b44 !important;
+}
+
+.kanban-list.kanban-primary > .kanban-wrap > .kanban-upload-area button.btn-uploadGambarProyek {
+	background-color: #ff9b44;
+	color: #fff;
+	border-color: 1px solid #ff9b44;
+}
+
+.kanban-list.kanban-warning > .kanban-header .status-title > span.badge {
+	background-color: rgb(255 255 255 / 85%) !important;
+	color: #ffb300 !important;
+}
+
+.kanban-list.kanban-warning > .kanban-wrap > .kanban-upload-area button.btn-uploadGambarProyek {
+	background-color: #ffb300;
+	color: #fff;
+	border-color: 1px solid #ffb300;
+}
+
+.kanban-list.kanban-info > .kanban-header .status-title > span.badge {
+	background-color: rgb(255 255 255 / 85%) !important;
+	color: #42a5f5 !important;
+}
+
+.kanban-list.kanban-info > .kanban-wrap > .kanban-upload-area button.btn-uploadGambarProyek {
+	background-color: #42a5f5;
+	color: #fff;
+	border-color: 1px solid #42a5f5;
+}
+
+.kanban-list.kanban-purple > .kanban-header .status-title > span.badge {
+	background-color: rgb(255 255 255 / 85%) !important;
+	color: #7460ee !important;
+}
+
+.kanban-list.kanban-purple > .kanban-wrap > .kanban-upload-area button.btn-uploadGambarProyek {
+	background-color: #7460ee;
+	color: #fff;
+	border-color: 1px solid #7460ee;
+}
+
+div.mandor-profile {
+	width: 120px; 
+	height: 120px; 
+	border-radius: 50%; 
+	overflow: hidden;
+}
+
+div.mandor-profile > img {
+	height: 100%; 
+	width: 100%; 
+	object-fit: cover; 
+	object-position: center center;
+}
+
+@media only screen and (max-width: 575.98px) {
+	.profile-info-left ul.personal-info{
+	   text-align: left !important;
+	}
+}
