@@ -15,12 +15,24 @@
     </div> -->
 </div>
 
-<!-- <div class="row">
+<div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <?= $director->num_rows() > 0 ? 'Oke! Ada direkturnya.' : 'Oops! Belum ada direkturnya.' ?>
-                <?php var_dump($director->row()) ?>
+                <?= $user_role ?>
+                <!--<?= $director->num_rows() > 0 ? 'Oke! Ada direkturnya.' : 'Oops! Belum ada direkturnya.' ?>
+                <?php var_dump($director->row()) ?>-->
+                <?php var_dump($company) ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <?= random_string('numeric', 5); ?>
             </div>
         </div>
     </div>
@@ -118,7 +130,7 @@
                                             </ul>
                                         <?php } else { ?> 
                                             <p class="text-muted">Data direktur belum tersedia. Silahkan klik tombol berikut untuk menambahkan direktur.</p>
-                                            <button type="" class="btn btn-success btn-sm">Tambah direktur</button>
+                                            <button type="button" onclick="addDirector(<?= "'".$company->comp_handle_ID."'" ?>, <?= $company->company_id ?>, <?= "'".$user_role."'" ?>)" class="btn btn-success btn-sm">Tambah direktur</button>
                                         <?php } ?>
                                     </div>
                                 </div>
@@ -131,6 +143,7 @@
     </div>
 </div>
 
+<?php if ($director->num_rows() > 0) { ?>
 <div class="row">
     <div class="col-12 mb-3 d-flex align-items-center">
         <h4 class="mb-0 mr-3">Daftar Karyawan (Mandor)</h4>
@@ -189,6 +202,7 @@
         </div>
     </div>
 </div>
+<?php } ?>
 
 <?php $this->view('direktur/perusahaan/detail/modal'); ?>
 <?php $this->view('direktur/perusahaan/detail/script'); ?>
