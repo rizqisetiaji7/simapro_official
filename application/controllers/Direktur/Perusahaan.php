@@ -62,6 +62,58 @@ class Perusahaan extends CI_Controller {
       return $config;
    }
 
+   private function _user_rules() {
+      $config = [
+         [
+            'field'  => 'user_fullname',
+            'label'  => 'Nama lengkap',
+            'rules'  => 'trim|required',
+            'errors' => [
+               'required' => '{field} tidak boleh kosong.'
+            ]
+         ],
+         [
+            'field'  => 'user_email',
+            'label'  => 'Email',
+            'rules'  => 'trim|required|valid_email',
+            'errors' => [
+               'required'     => '{field} tidak boleh kosong.',
+               'valid_email'  => '{field} tidak valid, silahkan isi format email dengan benar.'
+            ]
+         ],
+         [
+            'field'  => 'user_password',
+            'label'  => 'Password',
+            'rules'  => 'trim|required|min_length[5]',
+            'errors' => [
+               'required'     => '{field} tidak boleh kosong.',
+               'min_length'   => '{field} minimal terdiri dari 5 digit karakter.'
+            ]
+         ],
+         [
+            'field'  => 'password_confirm',
+            'label'  => 'Konfirmasi Password',
+            'rules'  => 'trim|required|matches[user_password]',
+            'errors' => [
+               'required'  => '{field} tidak boleh kosong.',
+               'matches'   => '{field} tidak valid, silahkan isi dengan benar.'
+            ]
+         ],
+         [
+            'field'  => 'user_phone',
+            'label'  => 'Nomor Telepon',
+            'rules'  => 'trim|numeric|min_length[10]|max_length[15]',
+            'errors' => [
+               'numeric'      => '{field} wajib berisi angka.',
+               'min_length'   => '{field} minimal terdiri dari 10 digit angka.',
+               'min_length'   => '{field} maksimal terdiri dari 15 digit angka.'
+            ]
+         ]
+      ];
+
+      return $config;
+   }
+
    public function index() {
       $getMainComp = $this->company_model->get_main_company(user_login()->user_id)->row();
       $subcompany = $this->company_model->get_subcompany($getMainComp->company_id)->result();
@@ -249,9 +301,58 @@ class Perusahaan extends CI_Controller {
          'desc'         => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
          'company'      => $this->bm->get($this->table, '*', ['company_id' => $id_company, 'comp_parent_id' => $comp_parent_id])->row(),
          'director'     => $director,
+         'user_role'    => $user_role,
          'page'         => 'detail_perusahaan'
       ];
 
       $this->theme->view('templates/main', 'direktur/perusahaan/detail/index', $data);
+   }
+
+   // CRUD
+   public function tambah_direktur() {
+      $role_name = '';
+
+      if ($this->input->post('user_role') == 'admin') {
+         $role_name = 'Admin';
+      } elseif ($this->input->post('user_role') == 'super_admin') {
+         $role_name = 'Administrator';
+      }
+
+      $data['data'] = [
+         'handle_id'    => $this->input->post('handle_id'),
+         'company_id'   => $this->input->post('company_id'),
+         'user_role'    => $this->input->post('user_role'),
+         'role_name'    => $role_name
+      ];
+
+      $this->load->view('direktur/perusahaan/detail/form_add_director', $data);
+   }
+
+   function tambah_dir_process() {
+      $message = [];
+      $post = $this->input->post(NULL, TRUE);
+
+      // Form Validation
+      $this->form_validation->set_rules($this->_user_rules());
+
+      if ($this->form_validation->run() == FALSE) {
+         $message = [
+            'status' => 'validation_error',
+            'message' => [
+               ['field' => 'user_fullname', 'err_message' => form_error('user_fullname', '<span>','</span>')],
+               ['field' => 'user_email', 'err_message' => form_error('user_email', '<span>','</span>')],
+               ['field' => 'user_phone', 'err_message' => form_error('user_phone', '<span>','</span>')],
+               ['field' => 'user_password', 'err_message' => form_error('user_password', '<span>','</span>')],
+               ['field' => 'password_confirm', 'err_message' => form_error('password_confirm', '<span>','</span>')]
+            ]
+         ];
+      } else {
+         $message = [
+            'status' => 'success',
+            'message' => 'OK'
+         ];
+      }
+
+      $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 }
