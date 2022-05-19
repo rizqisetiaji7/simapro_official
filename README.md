@@ -13,11 +13,11 @@ Ini merupakan proyek website untuk mengelola manajemen proyek pada [PT. Aryabakt
 
 Aplikasi ini memiliki fitur-fitur yang bisa digunakan dengan efisien, diantaranya:
 <div align="left">
-**1. Multilevel login sistem** <br />
-**2. Dashboard monitor** <br />
-**3. Manajemen proyek** <br />
-**4. Manajemen perusahaan & karyawan (Direktur utama, karyawan / mandor)** <br />
-**5. Download / print laporan proyek** <br />
+1. Multilevel login sistem <br />
+2. Dashboard monitor <br />
+3. Manajemen proyek <br />
+4. Manajemen perusahaan & karyawan (Direktur utama, karyawan / mandor) <br />
+5. Download / print laporan proyek <br />
 </div>
   
 <br/>  
