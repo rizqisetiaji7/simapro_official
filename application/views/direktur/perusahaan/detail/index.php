@@ -15,18 +15,18 @@
     </div> -->
 </div>
 
-<div class="row">
+<!-- <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
                 <?= $user_role ?>
-                <!--<?= $director->num_rows() > 0 ? 'Oke! Ada direkturnya.' : 'Oops! Belum ada direkturnya.' ?>
-                <?php var_dump($director->row()) ?>-->
+                <?= $director->num_rows() > 0 ? 'Oke! Ada direkturnya.' : 'Oops! Belum ada direkturnya.' ?>
+                <?php var_dump($director->row()) ?>
                 <?php var_dump($company) ?>
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <!-- <div class="row">
     <div class="col">
