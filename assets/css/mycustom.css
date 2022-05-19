@@ -129,7 +129,15 @@ div.mandor-profile {
 	overflow: hidden;
 }
 
-div.mandor-profile > img {
+div.profile-pic {
+	width: 80px; 
+	height: 80px; 
+	border-radius: 50%; 
+	overflow: hidden;
+}
+
+div.mandor-profile > img,
+div.profile-pic > img {
 	height: 100%; 
 	width: 100%; 
 	object-fit: cover; 
