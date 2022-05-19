@@ -144,6 +144,12 @@ div.profile-pic > img {
 	object-position: center center;
 }
 
+.avatar > img {
+	height: 100%;
+	object-fit: cover;
+	object-position: top center;
+}
+
 @media only screen and (max-width: 575.98px) {
 	.profile-info-left ul.personal-info{
 	   text-align: left !important;
