@@ -10,33 +10,7 @@
             </ul>
         </div>
     </div>
-    <!-- <div class="col-12 col-sm-6 text-sm-right">
-        <button class="btn btn-success py-2 px-4 my-2">Tambah</button>
-    </div> -->
 </div>
-
-<!-- <div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <?= $user_role ?>
-                <?= $director->num_rows() > 0 ? 'Oke! Ada direkturnya.' : 'Oops! Belum ada direkturnya.' ?>
-                <?php var_dump($director->row()) ?>
-                <?php var_dump($company) ?>
-            </div>
-        </div>
-    </div>
-</div> -->
-
-<!-- <div class="row">
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
-                <?= random_string('numeric', 5); ?>
-            </div>
-        </div>
-    </div>
-</div> -->
 
 <div class="row mb-4">
     <div class="col-12">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 19, 2022 at 03:19 PM
+-- Generation Time: May 19, 2022 at 04:31 PM
 -- Server version: 10.5.11-MariaDB-log
 -- PHP Version: 7.4.21
 
@@ -209,7 +209,8 @@ CREATE TABLE `tb_users` (
 
 INSERT INTO `tb_users` (`user_id`, `ID_company`, `user_unique_id`, `user_role`, `user_role_name`, `user_profile`, `user_fullname`, `user_email`, `user_password`, `user_phone`, `user_address`, `token`, `token_expiry`, `theme_mode`, `created`, `updated`) VALUES
 (1, 1, 'DIRUTA39542', 'super_admin', 'Administrator', 'default-avatar.jpg', 'Rizqi Setiaji', 'rizqisetiaji9@gmail.com', '$2y$10$7cGpr4x1bGiUhdCNWf2rC.Dstwd14f4MXzQWkd0xflolHA5F/WTFq', NULL, NULL, NULL, NULL, '0', '2022-05-10 14:06:07', NULL),
-(2, 4, 'DIRUTM358249', 'admin', 'Admin', 'default-avatar.jpg', 'Anjay wow', 'anjaywow@mail.com', 'anjaywow', NULL, NULL, NULL, NULL, '0', '2022-05-12 21:06:47', NULL);
+(2, 4, 'DIRUTM358249', 'admin', 'Admin', 'default-avatar.jpg', 'Anjay wow', 'anjaywow@mail.com', '$2y$10$VTB/9l1B.dSk0TsX3L7N3eh17/V.8wzfPCWhqaWoYJqFW17zvR5o6\n', NULL, NULL, NULL, NULL, '0', '2022-05-12 21:06:47', NULL),
+(3, 2, 'DIRUTM103872', 'admin', 'Admin', 'default-avatar.jpg', 'Om Jay', 'omjay@gmail.com', '$2y$10$QO1hPllpI5nExac58jMoiOFkMPO.77OP0mVO8QNjoJeqZys.MDHAC', '087321445778', NULL, NULL, NULL, '', '2022-05-19 23:00:34', NULL);
 
 --
 -- Indexes for dumped tables
@@ -338,7 +339,7 @@ ALTER TABLE `tb_subproject`
 -- AUTO_INCREMENT for table `tb_users`
 --
 ALTER TABLE `tb_users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
