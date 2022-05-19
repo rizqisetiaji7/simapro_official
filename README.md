@@ -14,7 +14,7 @@
 
 <br />
 
-### Deskripsi aplikasi  
+### ✔ Deskripsi aplikasi 
 Ini merupakan proyek website untuk mengelola manajemen proyek pada [PT. Aryabakti Saluyu](https://ptaryabaktisaluyu.com/). Aplikasi berbasis web ini dibuat khusus untuk mengelola progress pada proyek pembangunan yang sedang dijalankan oleh perusahaan agar deadline atau jumlah proyek yang dikerjakan sesuai dengan kontrak yang telah disepakati.
 
 Aplikasi ini memiliki fitur-fitur yang bisa digunakan dengan efisien, diantaranya:
@@ -28,7 +28,7 @@ Aplikasi ini memiliki fitur-fitur yang bisa digunakan dengan efisien, diantarany
   
 <br/>  
 
-## Languages and Tools  
+## 🛠 Teknologi & Tools  
 <div align="left">  
 <img style="margin: 10px" src="https://profilinator.rishav.dev/skills-assets/php-original.svg" alt="PHP" height="38" />  
 <img style="margin: 10px" src="https://profilinator.rishav.dev/skills-assets/mysql-original-wordmark.svg" alt="MySQL" height="38" />
