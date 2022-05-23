@@ -162,6 +162,31 @@ class Perusahaan extends CI_Controller {
       return $config;
    }
 
+   private function _password_rules() {
+      $config = [
+         [
+            'field'  => 'user_password',
+            'label'  => 'Password',
+            'rules'  => 'trim|required|min_length[5]',
+            'errors' => [
+               'required'     => '{field} tidak boleh kosong.',
+               'min_length'   => '{field} minimal terdiri dari 5 digit karakter.'
+            ]
+         ],
+         [
+            'field'  => 'password_confirm',
+            'label'  => 'Konfirmasi Password',
+            'rules'  => 'trim|required|matches[user_password]',
+            'errors' => [
+               'required'  => '{field} tidak boleh kosong.',
+               'matches'   => '{field} tidak valid, silahkan isi dengan benar.'
+            ]
+         ]
+      ];
+
+      return $config;
+   }
+
    public function index() {
       $getMainComp = $this->company_model->get_main_company(user_login()->user_id)->row();
       $subcompany = $this->company_model->get_subcompany($getMainComp->company_id)->result();
@@ -560,5 +585,47 @@ class Perusahaan extends CI_Controller {
       $director_id = $this->input->post('director_id');
       $data['director'] = $this->bm->get($this->table_users, '*', ['user_unique_id' => $director_id])->row();
       $this->load->view('direktur/perusahaan/detail/detail_director', $data);
+   }
+
+   public function change_password() {
+      $data['director_id'] = $this->input->post('director_id', TRUE);
+      $data['user_role'] = $this->input->post('user_role', TRUE);
+      $this->load->view('direktur/perusahaan/detail/form_change_password', $data);
+   }
+
+   function change_password_process() {
+      $message = [];
+      $post = $this->input->post(NULL, TRUE);
+
+      // Form password Validation
+      $this->form_validation->set_rules($this->_password_rules());
+      if (!$this->form_validation->run()) {
+         $message = [
+            'status'    => 'validation_error',
+            'message'   => [
+               ['field' => 'user_password', 'err_message' => form_error('user_password', '<span>','</span>')],
+               ['field' => 'password_confirm', 'err_message' => form_error('password_confirm', '<span>','</span>')]
+            ]
+         ];
+      } else {
+         $data['user_password'] = password_hash($post['user_password'], PASSWORD_DEFAULT);
+         $data['updated'] = date('Y-m-d H:i:s', now('Asia/Jakarta'));
+
+         $this->bm->update($this->table_users, $data, ['user_unique_id' => $post['user_unique_id'], 'user_role' => $post['user_role']]);
+
+         if ($this->db->affected_rows() > 0) {
+            $message = [
+               'status'    => 'success',
+               'message'   => 'Password telah berhasil diperbarui.'
+            ];  
+         } else {
+            $message = [
+               'status'    => 'failed',
+               'message'   => 'Oops! Permbaruan password gagal dilakukan, silahkan coba lagi.'
+            ];
+         }
+      }
+
+      $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 }
