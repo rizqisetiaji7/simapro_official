@@ -98,7 +98,7 @@
                                                         <button class="btn btn-secondary btn-sm" onclick="viewDetail(<?= "'".$director->row()->user_unique_id."'" ?>)" data-toggle="tooltip" title="Lihat detail"><i class="fa-solid fa-up-right-from-square"></i></button>
                                                         <button class="btn btn-success btn-sm" onclick="editDirector(<?= "'".$director->row()->user_unique_id."'" ?>)" data-toggle="tooltip" title="Edit profile"><i class="fa-solid fa-user-pen"></i></button>
                                                         <button class="btn btn-danger btn-sm" data-toggle="tooltip" title="Hapus" disabled="disabled"><i class="fa-solid fa-trash-can"></i></button>
-                                                        <button class="btn btn-light btn-sm" onclick="changePassword(<?= "'".$director->row()->user_unique_id."'" ?>, <?= "'".$director->row()->user_role."'" ?>)"><i class="fa-solid fa-key mr-1"></i> Ganti password</button>
+                                                        <!-- <button class="btn btn-light btn-sm" onclick="changePassword(<?= "'".$director->row()->user_unique_id."'" ?>, <?= "'".$director->row()->user_role."'" ?>)"><i class="fa-solid fa-key mr-1"></i> Ganti password</button> -->
                                                     <?php } ?>
                                                 </li>
                                             </ul>
@@ -121,7 +121,7 @@
 <div class="row">
     <div class="col-12 mb-3 d-flex align-items-center">
         <h4 class="mb-0 mr-3">Daftar Karyawan (Mandor)</h4>
-        <button class="btn btn-success btn-sm" onclick="addEmployee(<?= $company->company_id ?>)"> <i class="la la-plus"></i> Tambah</button>
+        <button class="btn btn-success btn-sm" onclick="addEmployee(<?= $company->company_id ?>, <?= "'".$company->comp_handle_ID."'" ?>, 'tambah')"> <i class="la la-plus"></i> Tambah</button>
     </div>
 
     <div class="col-12 col-sm-6 col-md-4">
@@ -131,7 +131,7 @@
                     <div class="mandor-profile my-3 mx-auto">
                         <img src="<?= base_url('assets/img/default-avatar.jpg') ?>">
                     </div>
-                    <small><strong>ID:</strong> MDR002773990</small>
+                    <small><strong>ID:</strong> MDRM1002773</small>
                 </div>
 
                 <div class="mb-3">
@@ -144,10 +144,10 @@
                     <p class="text-secondary">rizqisetiaji9@gmail.com</p>
                 </div>
 
-                <div class="mb-3">
+                <!-- <div class="mb-3">
                     <span class="d-block mb-1"><strong>Alamat</strong></span>
                     <p class="text-secondary">Jl. Kujang No.20, Kota Banjar</p>
-                </div>
+                </div> -->
 
                 <div>
                     <span class="d-block mb-1"><strong>Jumlah proyek berjalan</strong></span>
@@ -157,7 +157,7 @@
             <div class="card-footer">
                 <div class="row align-items-center">
                     <div class="col-10 pr-0">
-                        <button type="button" class="btn btn-custom btn-block">Edit Profile</button>
+                        <button type="button" class="btn btn-custom btn-sm btn-block">Edit Profile</button>
                     </div>
                     <div class="col-2 text-center">
                         <div class="dropdown dropdown-action">
@@ -166,8 +166,8 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a class="dropdown-item" href="javascript:void(0)">Detail</a>
-                                <a class="dropdown-item" href="javascript:void(0)">Ganti password</a>
-                                <a class="dropdown-item text-danger" href="javascript:void(0)">Hapus</a>
+                                <!-- <a class="dropdown-item" href="javascript:void(0)">Ganti password</a> -->
+                                <!-- <a class="dropdown-item text-danger" href="javascript:void(0)">Hapus</a> -->
                             </div>
                         </div>
                     </div>
