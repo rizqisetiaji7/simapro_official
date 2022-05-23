@@ -150,7 +150,7 @@
                 </div>
 
                 <div>
-                    <span class="d-block mb-1"><strong>Jumlah project</strong></span>
+                    <span class="d-block mb-1"><strong>Jumlah proyek berjalan</strong></span>
                     <p class="text-secondary mb-0">3</p>
                 </div>
             </div>
