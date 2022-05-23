@@ -75,11 +75,33 @@
 
 	// Change Password
 	function changePassword(director_id, user_role) {
-		modalTitle.text('Ganti password');
+		let title = '';
+		if (user_role == 'super_admin') {
+			title = 'Ganti password direktur utama';
+		} else if (user_role == 'admin') {
+			title = 'Ganti password direktur';
+		} else {
+			title = 'Ganti password mandor';
+		}
+
+		modalTitle.text(title);
 		btnSubmit.text('Simpan password');
 		formModal.attr('action', `<?= site_url('direktur/perusahaan/change_password_process') ?>`);
-		modal.modal('show');
-		console.log(director_id);
+
+		$.ajax({
+			url: `<?= site_url('direktur/perusahaan/change_password') ?>`,
+			method: 'POST',
+			dataType: 'html',
+			cache: false,
+			data: {
+				director_id: director_id,
+				user_role: user_role
+			},
+			success: function(data) {
+				modalBody.html(data);
+				modal.modal('show');
+			}
+		});
 	}
 
 	// Delete Director (coming soon)
@@ -125,7 +147,7 @@
         btnSubmit.attr('disabled', false).text('Simpan')
       },
       success: function(data) {
-      	// console.log(data);
+      	console.log(data);
       	if (data.status == 'validation_error') {
       		for (let i = 0; i < data.message.length; i++) {
       			if (data.message[i].err_message == '') {
