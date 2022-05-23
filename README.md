@@ -15,7 +15,7 @@
 <br />
 
 ### ✔ Deskripsi aplikasi 
-Ini merupakan proyek website untuk mengelola manajemen proyek pada [PT. Aryabakti Saluyu](https://ptaryabaktisaluyu.com/). Aplikasi berbasis web ini dibuat khusus untuk mengelola progress pada proyek pembangunan yang sedang dijalankan oleh perusahaan agar deadline atau jumlah proyek yang dikerjakan sesuai dengan kontrak yang telah disepakati.
+SIMAPRO merupakan proyek website untuk mengelola manajemen proyek pada [PT. Aryabakti Saluyu](https://ptaryabaktisaluyu.com/). Aplikasi berbasis web ini dibuat khusus untuk mengelola progress pada proyek pembangunan yang sedang dijalankan oleh perusahaan agar deadline atau jumlah proyek yang dikerjakan sesuai dengan kontrak yang telah disepakati.
 
 Aplikasi ini memiliki fitur-fitur yang bisa digunakan dengan efisien, diantaranya:
 <div align="left">
