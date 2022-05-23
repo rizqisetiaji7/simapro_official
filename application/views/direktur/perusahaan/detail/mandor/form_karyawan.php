@@ -1,7 +1,6 @@
-<!-- <input type="hidden" name="comp_handle_ID" value="<?= $data['handle_id'] ?>">
-<input type="hidden" name="ID_company" value="<?= $data['company_id'] ?>">
-<input type="hidden" name="user_role" value="<?= $data['user_role'] ?>">
-<input type="hidden" name="user_role_name" value="<?= $data['role_name'] ?>"> -->
+<input type="hidden" name="comp_handle_ID" value="<?= $comp_handle_ID ?>">
+<input type="hidden" name="ID_company" value="<?= $company_id ?>">
+<input type="hidden" name="pageType" value="<?= $pageType ?>">
 
 <div class="form-row mb-3">
 	<div class="col-3 text-center">
