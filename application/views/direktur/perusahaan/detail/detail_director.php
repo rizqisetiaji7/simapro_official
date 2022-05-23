@@ -35,4 +35,4 @@
 	</tbody>
 </table>
 
-<span class="text-muted text-sm">Terakhir diperbarui: <strong><?= $director->updated == NULL ? '-' : $director->updated ?></strong></span>
+<span class="text-muted text-sm">Terakhir diperbarui: <strong class="text-dark"><?= $director->updated == NULL ? '-' : dateTimeIDN($director->updated, TRUE, TRUE) ?></strong></span>
