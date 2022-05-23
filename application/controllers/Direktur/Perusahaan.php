@@ -518,7 +518,6 @@ class Perusahaan extends CI_Controller {
                      'message'   => 'Oops! Maaf data direktur gagal diperbarui.'
                   ];
                }
-
             } else {
                $message = [
                   'status'    => 'failed',
@@ -554,7 +553,6 @@ class Perusahaan extends CI_Controller {
             }
          }
       }
-
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 

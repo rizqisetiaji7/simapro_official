@@ -97,8 +97,8 @@
                                                     <?php } else { ?>
                                                         <button class="btn btn-secondary btn-sm" onclick="viewDetail(<?= "'".$director->row()->user_unique_id."'" ?>)" data-toggle="tooltip" title="Lihat detail"><i class="fa-solid fa-up-right-from-square"></i></button>
                                                         <button class="btn btn-success btn-sm" onclick="editDirector(<?= "'".$director->row()->user_unique_id."'" ?>)" data-toggle="tooltip" title="Edit profile"><i class="fa-solid fa-user-pen"></i></button>
-                                                        <button class="btn btn-danger btn-sm" data-toggle="tooltip" title="Hapus"><i class="fa-solid fa-trash-can"></i></button>
-                                                        <button class="btn btn-light btn-sm"><i class="fa-solid fa-key mr-1"></i> Ganti password</button>
+                                                        <button class="btn btn-danger btn-sm" data-toggle="tooltip" title="Hapus" disabled="disabled"><i class="fa-solid fa-trash-can"></i></button>
+                                                        <button class="btn btn-light btn-sm" onclick="changePassword(<?= "'".$director->row()->user_unique_id."'" ?>, <?= "'".$director->row()->user_role."'" ?>)"><i class="fa-solid fa-key mr-1"></i> Ganti password</button>
                                                     <?php } ?>
                                                 </li>
                                             </ul>

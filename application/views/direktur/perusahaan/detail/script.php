@@ -52,6 +52,7 @@
 		});
 	}
 
+	// Edit Director
 	function editDirector(director_id) {
 		modalTitle.text('Edit Direktur');
 		btnSubmit.text('Update');
@@ -71,6 +72,21 @@
 			}
 		});
 	}
+
+	// Change Password
+	function changePassword(director_id, user_role) {
+		modalTitle.text('Ganti password');
+		btnSubmit.text('Simpan password');
+		formModal.attr('action', `<?= site_url('direktur/perusahaan/change_password_process') ?>`);
+		modal.modal('show');
+		console.log(director_id);
+	}
+
+	// Delete Director (coming soon)
+	// function deleteDirector(director_id, user_id) {
+		
+	// }
+
 
 	// CRUD Mandor
 	// Tambah Data Mandor
