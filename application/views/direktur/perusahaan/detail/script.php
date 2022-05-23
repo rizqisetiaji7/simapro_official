@@ -3,10 +3,14 @@
 	const modalTitle = $('#modalDetailCompanyTitle');
 	const modalDialog = $('#modalDetailCompany .modal-dialog');
 	const modalBody = $('#modalDetailCompany .modal-body');
+	const modalFooter = $('#modalDetailCompany .modal-footer');
 	const formModal = $('#form_detail_company');
 	const hiddenId = $('#formDetailCompany_id');
 	const btnSubmit = $('#btnDetailCompany-submit');
 
+	// CRUD Direktur
+
+	// Add Director
 	function addDirector(handle_id, company_id, user_role) {
 		modalTitle.text('Input data Direktur');
 		formModal.attr('action', `<?= site_url('direktur/perusahaan/tambah_dir_process') ?>`);
@@ -25,9 +29,51 @@
 				modalBody.html(data);
 				modal.modal('show');
 			}
-		})
+		});
 	}
 
+	// View Detail Director
+	function viewDetail(director_id) {
+		modalTitle.text('Detail Direktur');
+		modalFooter.addClass('d-none');
+		$.ajax({
+			url: `<?= site_url('direktur/perusahaan/detail_director') ?>`,
+			method: 'POST',
+			dataType: 'html',
+			cache: false,
+			data: {
+				director_id: director_id
+			},
+			success: function(data) {
+				// console.log(data);
+				modalBody.html(data);
+				modal.modal('show');
+			}
+		});
+	}
+
+	function editDirector(director_id) {
+		modalTitle.text('Edit Direktur');
+		btnSubmit.text('Update');
+		formModal.attr('action', `<?= site_url('direktur/perusahaan/edit_dir_process') ?>`);
+
+		$.ajax({
+			url: `<?= site_url('direktur/perusahaan/edit_direktur') ?>`,
+			method: 'POST',
+			dataType: 'html',
+			cache: false,
+			data: {
+				director_id: director_id
+			},
+			success: function(data) {
+				modalBody.html(data);
+				modal.modal('show');
+			}
+		});
+	}
+
+	// CRUD Mandor
+	// Tambah Data Mandor
 	function addEmployee(company_id) {
 		console.log(company_id);
 		modalTitle.text('Tambah data mandor');
@@ -63,6 +109,7 @@
         btnSubmit.attr('disabled', false).text('Simpan')
       },
       success: function(data) {
+      	// console.log(data);
       	if (data.status == 'validation_error') {
       		for (let i = 0; i < data.message.length; i++) {
       			if (data.message[i].err_message == '') {
@@ -109,6 +156,7 @@
 		modalTitle.empty();
 		modalDialog.removeClass('modal-lg');
 		modalBody.empty();
+		modalFooter.removeClass('d-none');
 		formModal.removeAttr('action');
 		btnSubmit.text('Simpan');
 		hiddenId.removeAttr('value');
