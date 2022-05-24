@@ -641,4 +641,102 @@ class Perusahaan extends CI_Controller {
 
       $this->load->view('direktur/perusahaan/detail/mandor/form_add_mandor', $data, FALSE);
    }
+
+   function mandor_process() {
+      $message = [];
+      $post = $this->input->post(NULL, TRUE);
+
+      // CRUD Tambah Mandor
+      if ($post['pageType'] == 'tambah') {
+         $this->form_validation->set_rules($this->_user_rules());
+         if ($this->form_validation->run() == FALSE) {
+            $message = [
+               'status' => 'validation_error',
+               'message' => [
+                  ['field' => 'user_fullname', 'err_message' => form_error('user_fullname', '<span>','</span>')],
+                  ['field' => 'user_email', 'err_message' => form_error('user_email', '<span>','</span>')],
+                  ['field' => 'user_password', 'err_message' => form_error('user_password', '<span>','</span>')],
+                  ['field' => 'password_confirm', 'err_message' => form_error('password_confirm', '<span>','</span>')],
+                  ['field' => 'user_phone', 'err_message' => form_error('user_phone', '<span>','</span>')]
+               ]
+            ];
+         } else {
+            // Generate Mandor Unique ID
+            $mdr_ID = getIDCode('MDR',$post['comp_handle_ID']);
+
+            // Initialize Config upload
+            $this->upload->initialize($this->_file_upload_config('./uploads/profile')); 
+            if (@$_FILES['user_profile']['name'] != NULL) {
+               if ($this->upload->do_upload('user_profile')) {
+                  $user_prof = $this->upload->data('file_name');
+
+                  $data_insert = [
+                     'ID_company'      => $post['ID_company'],
+                     'user_unique_id'  => $mdr_ID,
+                     'user_role'       => 'employee',
+                     'user_role_name'  => 'Mandor',
+                     'user_profile'    => $user_prof,
+                     'user_fullname'   => $post['user_fullname'],
+                     'user_email'      => $post['user_email'],
+                     'user_password'   => password_hash($post['user_password'], PASSWORD_DEFAULT),
+                     'user_phone'      => $post['user_phone'],
+                     'user_address'    => $post['user_address'] == NULL ? NULL : $post['user_address'],
+                     'theme_mode'      => 0,
+                     'created'         => date('Y-m-d H:i:s', now('Asia/Jakarta'))
+                  ];
+
+                  $this->bm->save($this->table_users, $data_insert);
+
+                  if ($this->db->affected_rows() > 0) {
+                     $message = [
+                        'status'    => 'success',
+                        'message'   => 'Data Mandor telah berhasil disimpan.'
+                     ];
+                  } else {
+                     $message = [
+                        'status'    => 'failed',
+                        'message'   => 'Oops! Maaf data Mandor gagal disimpan.'
+                     ];
+                  }
+               } else {
+                  $message = [
+                     'status'    => 'failed',
+                     'message'   => 'Oops! Maaf data Mandor gagal disimpan.'
+                  ];
+               }
+            } else {
+               $user_proff = $this->default_avatar;
+               $data_insert = [
+                  'ID_company'      => $post['ID_company'],
+                  'user_unique_id'  => $mdr_ID,
+                  'user_role'       => 'employee',
+                  'user_role_name'  => 'Mandor',
+                  'user_profile'    => $user_proff,
+                  'user_fullname'   => $post['user_fullname'],
+                  'user_email'      => $post['user_email'],
+                  'user_password'   => password_hash($post['user_password'], PASSWORD_DEFAULT),
+                  'user_phone'      => $post['user_phone'],
+                  'user_address'    => $post['user_address'] == NULL ? NULL : $post['user_address'],
+                  'theme_mode'      => 0,
+                  'created'         => date('Y-m-d H:i:s', now('Asia/Jakarta'))
+               ];
+
+               $this->bm->save($this->table_users, $data_insert);
+
+               if ($this->db->affected_rows() > 0) {
+                  $message = [
+                     'status'    => 'success',
+                     'message'   => 'Data Mandor telah berhasil disimpan.'
+                  ];
+               } else {
+                  $message = [
+                     'status'    => 'failed',
+                     'message'   => 'Oops! Maaf data Mandor gagal disimpan.'
+                  ];
+               }
+            }
+         }
+      }
+      $this->output->set_content_type('application/json')->set_output(json_encode($message));
+   }
 }
