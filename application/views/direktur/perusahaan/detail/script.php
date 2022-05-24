@@ -8,8 +8,17 @@
 	const hiddenId = $('#formDetailCompany_id');
 	const btnSubmit = $('#btnDetailCompany-submit');
 
-	// CRUD Direktur
+	$(document).on('keyup', '.form-control', function(e) {
+    $(this).removeClass('is-invalid');
+    $(this).next().html('');
+  });
 
+  $(document).on('change', '.formSelect', function(e) {
+		$(this).removeClass('is-invalid');
+		$(this).next().html('');
+  });
+
+	// CRUD Direktur
 	// Add Director
 	function addDirector(handle_id, company_id, user_role) {
 		modalTitle.text('Input data Direktur');
@@ -114,7 +123,7 @@
 	// Tambah Data Mandor
 	function addEmployee(company_id, handle_id, pageType='tambah') {
 		modalTitle.text('Tambah data mandor');
-		formModal.attr('action', `<?= site_url('direktur/perusahaan/karyawan_process') ?>`);
+		formModal.attr('action', `<?= site_url('direktur/perusahaan/mandor_process') ?>`);
 
 		$.ajax({
 			url: `<?= site_url('direktur/perusahaan/form_add_mandor') ?>`,
@@ -131,18 +140,7 @@
 				modal.modal('show');
 			}
 		});
-	}
-
-	$(document).on('keyup', '.form-control', function(e) {
-    $(this).removeClass('is-invalid');
-    $(this).next().html('');
-  });
-
-  $(document).on('change', '.formSelect', function(e) {
-		$(this).removeClass('is-invalid');
-		$(this).next().html('');
-  });
- 
+	} 
 
  	// Submit Form Data
 	formModal.on('submit', function(e) {
@@ -163,43 +161,43 @@
       },
       success: function(data) {
       	console.log(data);
-      	if (data.status == 'validation_error') {
-      		for (let i = 0; i < data.message.length; i++) {
-      			if (data.message[i].err_message == '') {
-      				$(`[name="${data.message[i].field}"]`).removeClass('is-invalid');
-              $(`[name="${data.message[i].field}"]`).next().html('');
-      			} else {
-      				$(`[name="${data.message[i].field}"]`).addClass('is-invalid');
-              $(`[name="${data.message[i].field}"]`).next().html(data.message[i].err_message);
-      			}
-      		}
-      	} else if (data.status == 'success') {
-      		modal.modal('hide');
-          Swal.fire({
-            icon: 'success',
-            title: 'Berhasil',
-            text: `${data.message}`
-          }).then((result) => {
-            if (result.isConfirmed) {
-              window.location.reload();
-            } else {
-              window.location.reload();
-            }
-          });
-      	} else {
-      		modal.modal('hide');
-          Swal.fire({
-            icon: 'error',
-            title: 'Gagal',
-            text: `${data.message}`
-          }).then((result) => {
-            if (result.isConfirmed) {
-              window.location.reload();
-            } else {
-              window.location.reload();
-            }
-          });
-      	}
+      	// if (data.status == 'validation_error') {
+      	// 	for (let i = 0; i < data.message.length; i++) {
+      	// 		if (data.message[i].err_message == '') {
+      	// 			$(`[name="${data.message[i].field}"]`).removeClass('is-invalid');
+       //        $(`[name="${data.message[i].field}"]`).next().html('');
+      	// 		} else {
+      	// 			$(`[name="${data.message[i].field}"]`).addClass('is-invalid');
+       //        $(`[name="${data.message[i].field}"]`).next().html(data.message[i].err_message);
+      	// 		}
+      	// 	}
+      	// } else if (data.status == 'success') {
+      	// 	modal.modal('hide');
+       //    Swal.fire({
+       //      icon: 'success',
+       //      title: 'Berhasil',
+       //      text: `${data.message}`
+       //    }).then((result) => {
+       //      if (result.isConfirmed) {
+       //        window.location.reload();
+       //      } else {
+       //        window.location.reload();
+       //      }
+       //    });
+      	// } else {
+      	// 	modal.modal('hide');
+       //    Swal.fire({
+       //      icon: 'error',
+       //      title: 'Gagal',
+       //      text: `${data.message}`
+       //    }).then((result) => {
+       //      if (result.isConfirmed) {
+       //        window.location.reload();
+       //      } else {
+       //        window.location.reload();
+       //      }
+       //    });
+      	// }
       }
 		})
 	});
