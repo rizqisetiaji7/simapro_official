@@ -117,16 +117,6 @@
     </div>
 </div>
 
-<!-- <div class="row">
-    <div class="col">
-        <div class="card">
-            <div class="card-body">
-                <?= getIDCode('MDR', 'M1', 5) ?>
-            </div>
-        </div>
-    </div>
-</div> -->
-
 <!-- =========================================  -->
 <!-- ============== Data Mandor ============== -->
 <!-- =========================================  -->
@@ -209,63 +199,6 @@
             <?php } ?>
         </div>
     <?php } ?>
-    <!-- <div class="col-12 col-sm-6 col-md-4">
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex flex-column justify-content-center text-center mb-4">
-                    <div class="mandor-profile my-3 mx-auto">
-                        <img src="<?= base_url('assets/img/default-avatar.jpg') ?>">
-                    </div>
-                    <small><strong>ID:</strong> MDRM1002773</small>
-                </div>
-
-                <div class="mb-3">
-                    <span class="d-block mb-1"><strong>Nama lengkap</strong></span>
-                    <p class="text-secondary">Rizqi Setiaji</p>
-                </div>
-
-                <div class="mb-3">
-                    <span class="d-block mb-1"><strong>Email</strong></span>
-                    <p class="text-secondary">rizqisetiaji9@gmail.com</p>
-                </div>
-
-                <div>
-                    <span class="d-block mb-1"><strong>Jumlah proyek berjalan</strong></span>
-                    <p class="text-secondary mb-0">3</p>
-                </div>
-            </div>
-
-            <?php if ($director->row()->user_role == 'super_admin') { ?>
-            <div class="card-footer">
-                <div class="row align-items-center">
-                    <div class="col-10 pr-0">
-                        <button type="button" class="btn btn-custom btn-sm btn-block">Edit Profile</button>
-                    </div>
-                    <div class="col-2 text-center">
-                        <div class="dropdown dropdown-action">
-                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-ellipsis-vertical"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="javascript:void(0)">Detail</a>
-                                <a class="dropdown-item" href="javascript:void(0)">Ganti password</a>
-                                <a class="dropdown-item text-danger" href="javascript:void(0)">Hapus</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <?php } elseif ($director->row()->user_role == 'admin') { ?>
-            <div class="card-footer">
-                <div class="row align-items-center">
-                    <div class="col-12">
-                        <button type="button" class="btn btn-custom btn-sm btn-block">Detail</button>
-                    </div>
-                </div>
-            </div>
-            <?php } ?>
-        </div>
-    </div> -->
 </div>
 <?php } ?>
 
