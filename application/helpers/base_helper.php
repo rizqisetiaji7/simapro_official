@@ -125,3 +125,14 @@ function numberIDN($number=0, $prefix=FALSE, $pref_id = 'Rp') {
 	}
 	return $format;
 }
+
+function getIDCode($prefix = 'USR', $code = '', $digit = 5, $unique = TRUE) {
+	$codeID = '';
+	if ($unique == TRUE) {
+		$codeID = $prefix.$code.random_string('number', $digit);
+	} else {
+		$codeID = $prefix.$code;
+	}
+
+	return $codeID;
+}
