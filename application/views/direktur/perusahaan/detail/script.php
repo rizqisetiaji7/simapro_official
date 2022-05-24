@@ -113,7 +113,6 @@
 	// CRUD Mandor
 	// Tambah Data Mandor
 	function addEmployee(company_id, handle_id, pageType='tambah') {
-		// console.log(company_id);
 		modalTitle.text('Tambah data mandor');
 		formModal.attr('action', `<?= site_url('direktur/perusahaan/karyawan_process') ?>`);
 
@@ -131,8 +130,7 @@
 				modalBody.html(data);
 				modal.modal('show');
 			}
-		})
-		modal.modal('show');
+		});
 	}
 
 	$(document).on('keyup', '.form-control', function(e) {
