@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="modalCompany" tabindex="-1" role="dialog" aria-labelledby="modalCompanyTitle" aria-hidden="true">
+<div class="modal fade" id="modalCompany" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalCompanyTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
     <form class="modal-content" id="form_modal_company" action="" method="post" accept-charset="utf-8" enctype="multipart/form-data">
       <div class="modal-header">

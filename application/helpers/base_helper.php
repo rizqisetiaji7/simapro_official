@@ -129,7 +129,7 @@ function numberIDN($number=0, $prefix=FALSE, $pref_id = 'Rp') {
 function getIDCode($prefix = 'USR', $code = '', $digit = 5, $unique = TRUE) {
 	$codeID = '';
 	if ($unique == TRUE) {
-		$codeID = $prefix.$code.random_string('number', $digit);
+		$codeID = $prefix.$code.random_string('numeric', $digit);
 	} else {
 		$codeID = $prefix.$code;
 	}

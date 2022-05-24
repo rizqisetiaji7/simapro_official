@@ -117,7 +117,7 @@
 		formModal.attr('action', `<?= site_url('direktur/perusahaan/karyawan_process') ?>`);
 
 		$.ajax({
-			url: `<?= site_url('direktur/perusahaan/form_karyawan') ?>`,
+			url: `<?= site_url('direktur/perusahaan/form_add_mandor') ?>`,
 			method: 'POST',
 			dataType: 'html',
 			cache: false,

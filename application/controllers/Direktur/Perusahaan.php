@@ -634,12 +634,11 @@ class Perusahaan extends CI_Controller {
    }
 
    // CRUD Karyawan (Mandor)
-   public function form_karyawan() {
+   public function form_add_mandor() {
       $data['company_id'] = $this->input->post('company_id', TRUE);
       $data['comp_handle_ID'] = $this->input->post('comp_handle_ID', TRUE);
       $data['pageType'] = $this->input->post('pageType', TRUE);
 
-      $this->load->view('direktur/perusahaan/detail/mandor/form_karyawan', $data, FALSE);
+      $this->load->view('direktur/perusahaan/detail/mandor/form_add_mandor', $data, FALSE);
    }
-
 }
