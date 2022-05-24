@@ -28,7 +28,7 @@
                                 <div class="row">
                                     <div class="col-md-7">
                                         <div class="profile-info-left">
-                                            <h4 class="m-t-0 mb-3"><?= $company->comp_name ?></h4>
+                                            <h4 class="m-t-0 mb-3"><?= $director->row()->user_role == 'super_admin' ? '<i class="fa-solid fa-circle-check text-info mr-2"></i>' : NULL ?><?= $company->comp_name ?></h4>
                                             <ul class="personal-info">
                                                 <li>
                                                     <div class="title">ID:</div>
@@ -64,7 +64,7 @@
                                     <div class="col-md-5">
 
                                         <!-- Bagian Direktur Perusahaan -->
-                                        <h4 class="m-t-0 mb-3">Data Direktur</h4>
+                                        <h4 class="m-t-0 mb-3">Data Direktur <?= $director->row()->user_role == 'super_admin' ? 'Utama' : 'Anak Perusahaan' ?></h4>
                                         <?php if ($director->num_rows() > 0) { ?> 
                                             <ul class="personal-info">
                                                 <li>
@@ -117,7 +117,7 @@
     </div>
 </div>
 
-<div class="row">
+<!-- <div class="row">
     <div class="col">
         <div class="card">
             <div class="card-body">
@@ -125,7 +125,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <!-- =========================================  -->
 <!-- ============== Data Mandor ============== -->
@@ -203,9 +203,9 @@
     <?php } else { ?>
         <div class="col-12">
             <?php if ($director->row()->user_role == 'super_admin') { ?>
-                <p><i class="fa fa-warning text-warning mr-2"></i>Data mandor belum terdaftar. Silahkan klik tombol <b class="text-success">Tambah</b> diatas untuk menambahkan data mandor.</p>
+                <p><i class="fa fa-warning text-warning mr-2"></i>Data mandor tidak terdaftar. Silahkan klik tombol <b class="text-success">Tambah</b> diatas untuk menambahkan data mandor.</p>
             <?php } else { ?>
-                <p><i class="fa fa-warning text-warning mr-2"></i> Daftar mandor tidak tersedia.</p>
+                <p class="text-muted"><i class="fa fa-warning text-warning mr-2"></i> Tidak ada data mandor anak perusahaan.</p>
             <?php } ?>
         </div>
     <?php } ?>

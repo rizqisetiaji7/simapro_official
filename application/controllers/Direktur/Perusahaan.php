@@ -415,7 +415,7 @@ class Perusahaan extends CI_Controller {
          ];
       } else {
          // Generate Director Unique ID
-         $dir_ID = 'DIRUT'.$post['comp_handle_ID'].random_string('numeric', 5);
+         $dir_ID = getIDCode('DIRUT', $post['comp_handle_ID']);
 
          // Initialize Config upload
          $this->upload->initialize($this->_file_upload_config('./uploads/profile'));

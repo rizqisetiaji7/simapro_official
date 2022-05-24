@@ -160,44 +160,44 @@
         btnSubmit.attr('disabled', false).text('Simpan')
       },
       success: function(data) {
-      	console.log(data);
-      	// if (data.status == 'validation_error') {
-      	// 	for (let i = 0; i < data.message.length; i++) {
-      	// 		if (data.message[i].err_message == '') {
-      	// 			$(`[name="${data.message[i].field}"]`).removeClass('is-invalid');
-       //        $(`[name="${data.message[i].field}"]`).next().html('');
-      	// 		} else {
-      	// 			$(`[name="${data.message[i].field}"]`).addClass('is-invalid');
-       //        $(`[name="${data.message[i].field}"]`).next().html(data.message[i].err_message);
-      	// 		}
-      	// 	}
-      	// } else if (data.status == 'success') {
-      	// 	modal.modal('hide');
-       //    Swal.fire({
-       //      icon: 'success',
-       //      title: 'Berhasil',
-       //      text: `${data.message}`
-       //    }).then((result) => {
-       //      if (result.isConfirmed) {
-       //        window.location.reload();
-       //      } else {
-       //        window.location.reload();
-       //      }
-       //    });
-      	// } else {
-      	// 	modal.modal('hide');
-       //    Swal.fire({
-       //      icon: 'error',
-       //      title: 'Gagal',
-       //      text: `${data.message}`
-       //    }).then((result) => {
-       //      if (result.isConfirmed) {
-       //        window.location.reload();
-       //      } else {
-       //        window.location.reload();
-       //      }
-       //    });
-      	// }
+      	// console.log(data);
+      	if (data.status == 'validation_error') {
+      		for (let i = 0; i < data.message.length; i++) {
+      			if (data.message[i].err_message == '') {
+      				$(`[name="${data.message[i].field}"]`).removeClass('is-invalid');
+              $(`[name="${data.message[i].field}"]`).next().html('');
+      			} else {
+      				$(`[name="${data.message[i].field}"]`).addClass('is-invalid');
+              $(`[name="${data.message[i].field}"]`).next().html(data.message[i].err_message);
+      			}
+      		}
+      	} else if (data.status == 'success') {
+      		modal.modal('hide');
+          Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: `${data.message}`
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.reload();
+            } else {
+              window.location.reload();
+            }
+          });
+      	} else {
+      		modal.modal('hide');
+          Swal.fire({
+            icon: 'error',
+            title: 'Gagal',
+            text: `${data.message}`
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.reload();
+            } else {
+              window.location.reload();
+            }
+          });
+      	}
       }
 		})
 	});
