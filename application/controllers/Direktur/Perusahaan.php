@@ -350,6 +350,9 @@ class Perusahaan extends CI_Controller {
       $typecomp = base64_decode(urldecode($type_company));
       $user_role = $typecomp == 'subcompany' ? 'admin' : 'super_admin';
       $director = $this->company_model->get_director($id_company, $user_role);
+      $mandor = $this->bm->get($this->table_users, 'user_id, ID_company, user_unique_id as uniqID, user_role, user_profile, user_fullname, user_email, user_phone, user_address', [
+         'ID_company' => $id_company, 'user_role' => 'employee'
+      ])->result();
 
       $data = [
          'app_name'     => APP_NAME,
@@ -357,6 +360,7 @@ class Perusahaan extends CI_Controller {
          'title'        => 'Detail perusahaan',
          'desc'         => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
          'company'      => $this->bm->get($this->table, '*', ['company_id' => $id_company, 'comp_parent_id' => $comp_parent_id])->row(),
+         'mandor'       => $mandor,
          'director'     => $director,
          'user_role'    => $user_role,
          'page'         => 'detail_perusahaan'

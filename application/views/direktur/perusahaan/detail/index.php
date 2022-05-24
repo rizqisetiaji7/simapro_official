@@ -117,14 +117,89 @@
     </div>
 </div>
 
+<!-- =========================================  -->
+<!-- ============== Data Mandor ============== -->
+<!-- =========================================  -->
+
 <?php if ($director->num_rows() > 0) { ?>
 <div class="row">
     <div class="col-12 mb-3 d-flex align-items-center">
         <h4 class="mb-0 mr-3">Daftar Karyawan (Mandor)</h4>
+        <?php if ($director->row()->user_role == 'super_admin') { ?>
         <button class="btn btn-success btn-sm" onclick="addEmployee(<?= $company->company_id ?>, <?= "'".$company->comp_handle_ID."'" ?>, 'tambah')"> <i class="la la-plus"></i> Tambah</button>
+        <?php } ?>
     </div>
 
-    <div class="col-12 col-sm-6 col-md-4">
+    <?php if ($mandor) { ?>
+        <?php foreach ($mandor as $mdr) { ?>
+            <div class="col-12 col-sm-6 col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column justify-content-center text-center mb-4">
+                            <div class="mandor-profile my-3 mx-auto">
+                                <img src="<?= $mdr->user_profile == 'default-avatar.jpg' ? base_url('assets/img/'.$mdr->user_profile) : base_url('uploads/profile/'.$mdr->user_profile) ?>">
+                            </div>
+                            <small>ID: <strong><?= $mdr->uniqID ?></strong></small>
+                        </div>
+
+                        <div class="mb-3">
+                            <span class="d-block mb-1"><strong>Nama lengkap</strong></span>
+                            <p class="text-secondary"><?= $mdr->user_fullname ?></p>
+                        </div>
+
+                        <div class="mb-3">
+                            <span class="d-block mb-1"><strong>Email</strong></span>
+                            <p class="text-secondary"><?= $mdr->user_email ?></p>
+                        </div>
+
+                        <div>
+                            <span class="d-block mb-1"><strong>Jumlah proyek berjalan</strong></span>
+                            <p class="text-secondary mb-0">0</p>
+                        </div>
+                    </div>
+
+                    <?php if ($director->row()->user_role == 'super_admin') { ?>
+                    <div class="card-footer">
+                        <div class="row align-items-center">
+                            <div class="col-10 pr-0">
+                                <button type="button" class="btn btn-custom btn-sm btn-block">Edit Profile</button>
+                            </div>
+                            <div class="col-2 text-center">
+                                <div class="dropdown dropdown-action">
+                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" onclick="showDetailEmployee(<?= "'".$mdr->uniqID."'" ?>, <?= $mdr->user_id ?>, <?= "'".$mdr->user_role."'" ?>)" href="javascript:void(0)">Detail</a>
+                                        <a class="dropdown-item" onclick="showDetailEmployee(<?= "'".$mdr->uniqID."'" ?>, <?= $mdr->user_id ?>, <?= "'".$mdr->user_role."'" ?>)" href="javascript:void(0)">Ganti password</a>
+                                        <a class="dropdown-item text-danger" onclick="showDetailEmployee(<?= "'".$mdr->uniqID."'" ?>, <?= $mdr->user_id ?>, <?= "'".$mdr->user_role."'" ?>)" href="javascript:void(0)">Hapus</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php } elseif ($director->row()->user_role == 'admin') { ?>
+                    <div class="card-footer">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <button type="button" onclick="showDetailEmployee(<?= "'".$mdr->uniqID."'" ?>, <?= $mdr->user_id ?>, <?= "'".$mdr->user_role."'" ?>)" class="btn btn-custom btn-sm btn-block">Detail</button>
+                            </div>
+                        </div>
+                    </div>
+                    <?php } ?>
+                </div>
+            </div>
+        <?php } ?>
+    <?php } else { ?>
+        <div class="col-12">
+            <?php if ($director->row()->user_role == 'super_admin') { ?>
+                <p><i class="fa fa-warning text-warning mr-2"></i>Data mandor belum terdaftar. Silahkan klik tombol <b class="text-success">Tambah</b> diatas untuk menambahkan data mandor.</p>
+            <?php } else { ?>
+                <p><i class="fa fa-warning text-warning mr-2"></i> Daftar mandor tidak tersedia.</p>
+            <?php } ?>
+        </div>
+    <?php } ?>
+    <!-- <div class="col-12 col-sm-6 col-md-4">
         <div class="card">
             <div class="card-body">
                 <div class="d-flex flex-column justify-content-center text-center mb-4">
@@ -144,16 +219,13 @@
                     <p class="text-secondary">rizqisetiaji9@gmail.com</p>
                 </div>
 
-                <!-- <div class="mb-3">
-                    <span class="d-block mb-1"><strong>Alamat</strong></span>
-                    <p class="text-secondary">Jl. Kujang No.20, Kota Banjar</p>
-                </div> -->
-
                 <div>
                     <span class="d-block mb-1"><strong>Jumlah proyek berjalan</strong></span>
                     <p class="text-secondary mb-0">3</p>
                 </div>
             </div>
+
+            <?php if ($director->row()->user_role == 'super_admin') { ?>
             <div class="card-footer">
                 <div class="row align-items-center">
                     <div class="col-10 pr-0">
@@ -166,15 +238,24 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a class="dropdown-item" href="javascript:void(0)">Detail</a>
-                                <!-- <a class="dropdown-item" href="javascript:void(0)">Ganti password</a> -->
-                                <!-- <a class="dropdown-item text-danger" href="javascript:void(0)">Hapus</a> -->
+                                <a class="dropdown-item" href="javascript:void(0)">Ganti password</a>
+                                <a class="dropdown-item text-danger" href="javascript:void(0)">Hapus</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <?php } elseif ($director->row()->user_role == 'admin') { ?>
+            <div class="card-footer">
+                <div class="row align-items-center">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-custom btn-sm btn-block">Detail</button>
+                    </div>
+                </div>
+            </div>
+            <?php } ?>
         </div>
-    </div>
+    </div> -->
 </div>
 <?php } ?>
 
