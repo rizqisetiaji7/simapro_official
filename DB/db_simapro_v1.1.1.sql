@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 19, 2022 at 04:31 PM
+-- Generation Time: May 25, 2022 at 12:48 PM
 -- Server version: 10.5.11-MariaDB-log
 -- PHP Version: 7.4.21
 
@@ -66,9 +66,9 @@ CREATE TABLE `tb_company` (
 
 INSERT INTO `tb_company` (`company_id`, `comp_parent_id`, `comp_code_ID`, `comp_handle_ID`, `comp_name`, `comp_logo`, `comp_slug`, `comp_email`, `comp_phone`, `comp_address`, `comp_type`, `comp_desc`, `comp_since`, `created`, `updated`) VALUES
 (1, 0, 'COMP2002111351086392', 'A', 'PT. Arya Bakti Saluyu', 'ptaryabakti-logo.png', 'pt-arya-bakti-saluyu', 'aryabakti@gmail.com', '087665332445', 'Kab. Ciamis, Jawa Barat', 'PT', '', '2002-11-13', '2022-05-11 13:07:40', '2022-05-18 15:01:06'),
-(2, 1, NULL, 'M1', 'CV. Lima Utama', 'limautama-logo.jpg', 'cv-lima-utama', NULL, NULL, NULL, 'CV', NULL, NULL, '2022-05-11 13:07:40', NULL),
-(3, 1, NULL, 'M2', 'CV. Berkah Jaya Buana', 'berkahjayabuana-logo.jpg', 'cv-berkah-jaya-buana', NULL, NULL, NULL, 'CV', NULL, NULL, '2022-05-11 13:07:40', NULL),
-(4, 1, NULL, 'M3', 'CV. Putra Jaya', 'putrajaya-logo.jpg', 'cv-putra-jaya', NULL, NULL, NULL, 'CV', NULL, NULL, '2022-05-11 13:07:40', NULL);
+(2, 1, 'COMP2017070570462518', 'M1', 'CV. Lima Utama', 'limautama-logo.jpg', 'cv-lima-utama', 'didu_ciamis@yahoo.com', '087665778990', '', 'CV', '', '2017-07-05', '2022-05-11 13:07:40', '2022-05-23 12:46:03'),
+(3, 1, NULL, 'M2', 'CV. Berkah Jaya Buana', 'berkahjayabuana-logo.jpg', 'cv-berkah-jaya-buana', '', NULL, NULL, 'CV', NULL, NULL, '2022-05-11 13:07:40', NULL),
+(4, 1, NULL, 'M3', 'CV. Putra Jaya', 'putrajaya-logo.jpg', 'cv-putra-jaya', 'cvputrajaya51@gmail.com', NULL, NULL, 'CV', NULL, NULL, '2022-05-11 13:07:40', NULL);
 
 -- --------------------------------------------------------
 
@@ -209,8 +209,11 @@ CREATE TABLE `tb_users` (
 
 INSERT INTO `tb_users` (`user_id`, `ID_company`, `user_unique_id`, `user_role`, `user_role_name`, `user_profile`, `user_fullname`, `user_email`, `user_password`, `user_phone`, `user_address`, `token`, `token_expiry`, `theme_mode`, `created`, `updated`) VALUES
 (1, 1, 'DIRUTA39542', 'super_admin', 'Administrator', 'default-avatar.jpg', 'Rizqi Setiaji', 'rizqisetiaji9@gmail.com', '$2y$10$7cGpr4x1bGiUhdCNWf2rC.Dstwd14f4MXzQWkd0xflolHA5F/WTFq', NULL, NULL, NULL, NULL, '0', '2022-05-10 14:06:07', NULL),
-(2, 4, 'DIRUTM358249', 'admin', 'Admin', 'default-avatar.jpg', 'Anjay wow', 'anjaywow@mail.com', '$2y$10$VTB/9l1B.dSk0TsX3L7N3eh17/V.8wzfPCWhqaWoYJqFW17zvR5o6\n', NULL, NULL, NULL, NULL, '0', '2022-05-12 21:06:47', NULL),
-(3, 2, 'DIRUTM103872', 'admin', 'Admin', 'default-avatar.jpg', 'Om Jay', 'omjay@gmail.com', '$2y$10$QO1hPllpI5nExac58jMoiOFkMPO.77OP0mVO8QNjoJeqZys.MDHAC', '087321445778', NULL, NULL, NULL, '', '2022-05-19 23:00:34', NULL);
+(3, 2, 'DIRUTM103872', 'admin', 'Admin', 'efb1ae2c2552c5e93266265d3a109783.jpg', 'Om Jay', 'omjay@gmail.com', '$2y$10$sWu4UUbKFCgzWHxYKbv34.ulvntxhiwnoGP6L4GxYxGgddCkqMcFa', '087321445778', NULL, NULL, NULL, '', '2022-05-19 23:00:34', '2022-05-23 18:29:25'),
+(7, 2, 'MDRM189760', 'employee', 'Mandor', 'default-avatar.jpg', 'Azhar Gunawan', 'gunawanazhar6@gmail.com', '$2y$10$ZqXNbZntAs7xx4Lw0eZ6BuTiwTchrj7XVmd9tVesdUVqA9ueu9opy', '081778554326', NULL, NULL, NULL, '0', '2022-05-24 12:27:42', NULL),
+(8, 2, 'MDRM102657', 'employee', 'Mandor', 'default-avatar.jpg', 'Hari Nurdin', 'harnurdin@gmail.com', '$2y$10$H4GvUHgMbOItaoyTCY7cmuT0uf0lnD5/8CoocLprDWApb7TXLGKnm', NULL, 'Banjarsari, Kab. Ciamis', NULL, NULL, '0', '2022-05-24 12:27:42', NULL),
+(9, 3, 'DIRUTM283140', 'admin', 'Admin', '0a42c31ca7985807b73cc1f69c244195.jpg', 'Anya Forger', 'anyakawai@gmail.com', '$2y$10$8p9mkVyIJxS50Al7CMuJ6uVhhXHOTTLnj.Is6papl2yL26gKLn1vy', '0991887556', 'Ostania, Germany', NULL, NULL, '', '2022-05-24 13:15:00', '2022-05-24 13:16:33'),
+(11, 1, 'MDRA34506', 'employee', 'Mandor', 'default-avatar.jpg', 'okok', 'oko@mail.com', '$2y$10$2VvxZgDiR2ogsvYgQLRhHeSdi4oPSKbIODcm1rNp/9RSS8Lfz88VK', '', NULL, NULL, NULL, '', '2022-05-24 17:43:23', NULL);
 
 --
 -- Indexes for dumped tables
@@ -297,7 +300,7 @@ ALTER TABLE `tb_category`
 -- AUTO_INCREMENT for table `tb_company`
 --
 ALTER TABLE `tb_company`
-  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tb_livechat`
@@ -339,7 +342,7 @@ ALTER TABLE `tb_subproject`
 -- AUTO_INCREMENT for table `tb_users`
 --
 ALTER TABLE `tb_users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
