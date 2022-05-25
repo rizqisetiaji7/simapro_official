@@ -1,4 +1,4 @@
-<input type="hidden" name="user_unique_id" value="<?= $director_id ?>">
+<input type="hidden" name="user_unique_id" value="<?= $unique_id ?>">
 <input type="hidden" name="user_role" value="<?= $user_role ?>">
 
 <div class="form-row mb-3">

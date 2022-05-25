@@ -83,35 +83,34 @@
 	}
 
 	// Change Password
-	// function changePassword(director_id, user_role) {
-	// 	let title = '';
-	// 	if (user_role == 'super_admin') {
-	// 		title = 'Ganti password direktur utama';
-	// 	} else if (user_role == 'admin') {
-	// 		title = 'Ganti password direktur';
-	// 	} else {
-	// 		title = 'Ganti password mandor';
-	// 	}
+	function changePassword(unique_id, user_role) {
+		let title = '';
+		if (user_role == 'super_admin') {
+			title = 'Ganti password direktur utama';
+		} else if (user_role == 'admin') {
+			title = 'Ganti password direktur';
+		} else {
+			title = 'Ganti password mandor';
+		}
 
-	// 	modalTitle.text(title);
-	// 	btnSubmit.text('Simpan password');
-	// 	formModal.attr('action', `<?= site_url('direktur/perusahaan/change_password_process') ?>`);
+		modalTitle.text(title);
+		formModal.attr('action', `<?= site_url('direktur/perusahaan/change_password_process') ?>`);
 
-	// 	$.ajax({
-	// 		url: `<?= site_url('direktur/perusahaan/change_password') ?>`,
-	// 		method: 'POST',
-	// 		dataType: 'html',
-	// 		cache: false,
-	// 		data: {
-	// 			director_id: director_id,
-	// 			user_role: user_role
-	// 		},
-	// 		success: function(data) {
-	// 			modalBody.html(data);
-	// 			modal.modal('show');
-	// 		}
-	// 	});
-	// }
+		$.ajax({
+			url: `<?= site_url('direktur/perusahaan/change_password') ?>`,
+			method: 'POST',
+			dataType: 'html',
+			cache: false,
+			data: {
+				unique_id: unique_id,
+				user_role: user_role
+			},
+			success: function(data) {
+				modalBody.html(data);
+				modal.modal('show');
+			}
+		});
+	}
 
 	// Delete Director (coming soon)
 	// function deleteDirector(director_id, user_id) {

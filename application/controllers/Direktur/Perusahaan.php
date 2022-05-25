@@ -593,7 +593,7 @@ class Perusahaan extends CI_Controller {
    }
 
    public function change_password() {
-      $data['director_id'] = $this->input->post('director_id', TRUE);
+      $data['unique_id'] = $this->input->post('unique_id', TRUE);
       $data['user_role'] = $this->input->post('user_role', TRUE);
       $this->load->view('direktur/perusahaan/detail/form_change_password', $data);
    }
@@ -616,7 +616,10 @@ class Perusahaan extends CI_Controller {
          $data['user_password'] = password_hash($post['user_password'], PASSWORD_DEFAULT);
          $data['updated'] = date('Y-m-d H:i:s', now('Asia/Jakarta'));
 
-         $this->bm->update($this->table_users, $data, ['user_unique_id' => $post['user_unique_id'], 'user_role' => $post['user_role']]);
+         $this->bm->update($this->table_users, $data, [
+            'user_unique_id'  => $post['user_unique_id'], 
+            'user_role'       => $post['user_role']
+         ]);
 
          if ($this->db->affected_rows() > 0) {
             $message = [

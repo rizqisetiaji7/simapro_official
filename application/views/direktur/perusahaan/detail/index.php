@@ -171,7 +171,7 @@
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item" onclick="showDetailEmployee(<?= "'".$mdr->uniqID."'" ?>, <?= "'".$mdr->user_role."'" ?>)" href="javascript:void(0)">Detail</a>
-                                        <a class="dropdown-item" href="javascript:void(0)">Ganti password</a>
+                                        <a class="dropdown-item" onclick="changePassword(<?= "'".$mdr->uniqID."'" ?>, <?= "'".$mdr->user_role."'" ?>)" href="javascript:void(0)">Ganti password</a>
                                         <a class="dropdown-item text-danger" href="javascript:void(0)">Hapus</a>
                                     </div>
                                 </div>
