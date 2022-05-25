@@ -362,6 +362,7 @@ class Perusahaan extends CI_Controller {
          'company'      => $this->bm->get($this->table, '*', ['company_id' => $id_company, 'comp_parent_id' => $comp_parent_id])->row(),
          'mandor'       => $mandor,
          'director'     => $director,
+         'typecomp'     => $typecomp,
          'user_role'    => $user_role,
          'page'         => 'detail_perusahaan'
       ];
