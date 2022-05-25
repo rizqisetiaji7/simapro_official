@@ -40,7 +40,7 @@
 
   <div class="col-12 mb-3">
     <label for="upload_logo">Upload logo <span class="text-muted">(Opsional)</span></label>
-    <input type="file" name="comp_logo" id="upload_logo" class="form-control">
+    <input type="file" accept=".jpg,.jpeg,.png" name="comp_logo" id="upload_logo" class="form-control">
   </div>
 
   <div class="col-12 mb-3">
