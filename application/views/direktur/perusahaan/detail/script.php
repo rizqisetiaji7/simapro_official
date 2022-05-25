@@ -19,7 +19,7 @@
   });
 
 	// CRUD Direktur
-	// Add Director
+	// Tambah Data Direktur
 	function addDirector(handle_id, company_id, user_role) {
 		modalTitle.text('Input data Direktur');
 		formModal.attr('action', `<?= site_url('direktur/perusahaan/tambah_dir_process') ?>`);
@@ -41,8 +41,8 @@
 		});
 	}
 
-	// View Detail Director
-	function viewDetail(director_id) {
+	// Detail Direktur
+	function viewDetailDirector(director_id) {
 		modalTitle.text('Detail Direktur');
 		modalFooter.addClass('d-none');
 		$.ajax({
@@ -61,7 +61,7 @@
 		});
 	}
 
-	// Edit Director
+	// Edit Direktur
 	function editDirector(director_id) {
 		modalTitle.text('Edit Direktur');
 		btnSubmit.text('Update');
@@ -83,35 +83,35 @@
 	}
 
 	// Change Password
-	function changePassword(director_id, user_role) {
-		let title = '';
-		if (user_role == 'super_admin') {
-			title = 'Ganti password direktur utama';
-		} else if (user_role == 'admin') {
-			title = 'Ganti password direktur';
-		} else {
-			title = 'Ganti password mandor';
-		}
+	// function changePassword(director_id, user_role) {
+	// 	let title = '';
+	// 	if (user_role == 'super_admin') {
+	// 		title = 'Ganti password direktur utama';
+	// 	} else if (user_role == 'admin') {
+	// 		title = 'Ganti password direktur';
+	// 	} else {
+	// 		title = 'Ganti password mandor';
+	// 	}
 
-		modalTitle.text(title);
-		btnSubmit.text('Simpan password');
-		formModal.attr('action', `<?= site_url('direktur/perusahaan/change_password_process') ?>`);
+	// 	modalTitle.text(title);
+	// 	btnSubmit.text('Simpan password');
+	// 	formModal.attr('action', `<?= site_url('direktur/perusahaan/change_password_process') ?>`);
 
-		$.ajax({
-			url: `<?= site_url('direktur/perusahaan/change_password') ?>`,
-			method: 'POST',
-			dataType: 'html',
-			cache: false,
-			data: {
-				director_id: director_id,
-				user_role: user_role
-			},
-			success: function(data) {
-				modalBody.html(data);
-				modal.modal('show');
-			}
-		});
-	}
+	// 	$.ajax({
+	// 		url: `<?= site_url('direktur/perusahaan/change_password') ?>`,
+	// 		method: 'POST',
+	// 		dataType: 'html',
+	// 		cache: false,
+	// 		data: {
+	// 			director_id: director_id,
+	// 			user_role: user_role
+	// 		},
+	// 		success: function(data) {
+	// 			modalBody.html(data);
+	// 			modal.modal('show');
+	// 		}
+	// 	});
+	// }
 
 	// Delete Director (coming soon)
 	// function deleteDirector(director_id, user_id) {
@@ -140,7 +140,50 @@
 				modal.modal('show');
 			}
 		});
+	}
+
+	// Edit Data Mandor
+	function editEmployee(company_id, user_unique_id, pageType='edit') {
+		modalTitle.text('Edit data mandor');
+		formModal.attr('action', `<?= site_url('direktur/perusahaan/mandor_process') ?>`);
+
+		$.ajax({
+			url: `<?= site_url('direktur/perusahaan/form_edit_mandor') ?>`,
+			method: 'POST',
+			dataType: 'html',
+			cache: false,
+			data: {
+				company_id: company_id,
+				user_unique_id: user_unique_id,
+				pageType: pageType
+			},
+			success: function(data) {
+				modalBody.html(data);
+				modal.modal('show');
+			}
+		});
 	} 
+
+	// View Detail Mandor
+	function showDetailEmployee(unique_id, user_role) {
+		modalTitle.text('Detail Data Mandor');
+		modalFooter.addClass('d-none');
+		$.ajax({
+			url: `<?= site_url('direktur/perusahaan/detail_mandor') ?>`,
+			method: 'POST',
+			dataType: 'html',
+			cache: false,
+			data: {
+				unique_id: unique_id,
+				user_role: user_role
+			},
+			success: function(data) {
+				// console.log(data);
+				modalBody.html(data);
+				modal.modal('show');
+			}
+		});
+	}
 
  	// Submit Form Data
 	formModal.on('submit', function(e) {

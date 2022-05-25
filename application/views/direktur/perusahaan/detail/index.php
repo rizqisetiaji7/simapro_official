@@ -95,7 +95,7 @@
                                                     <?php if ($director->row()->user_role == 'super_admin') { ?>
                                                         <a href="<?= site_url('direktur/profile') ?>" class="btn btn-custom btn-sm">Lihat Profile</a>
                                                     <?php } else { ?>
-                                                        <button class="btn btn-secondary btn-sm" onclick="viewDetail(<?= "'".$director->row()->user_unique_id."'" ?>)" data-toggle="tooltip" title="Lihat detail"><i class="fa-solid fa-up-right-from-square"></i></button>
+                                                        <button class="btn btn-secondary btn-sm" onclick="viewDetailDirector(<?= "'".$director->row()->user_unique_id."'" ?>)" data-toggle="tooltip" title="Lihat detail"><i class="fa-solid fa-up-right-from-square"></i></button>
                                                         <button class="btn btn-success btn-sm" onclick="editDirector(<?= "'".$director->row()->user_unique_id."'" ?>)" data-toggle="tooltip" title="Edit profile"><i class="fa-solid fa-user-pen"></i></button>
                                                         <button class="btn btn-danger btn-sm" data-toggle="tooltip" title="Hapus" disabled="disabled"><i class="fa-solid fa-trash-can"></i></button>
                                                         <!-- <button class="btn btn-light btn-sm" onclick="changePassword(<?= "'".$director->row()->user_unique_id."'" ?>, <?= "'".$director->row()->user_role."'" ?>)"><i class="fa-solid fa-key mr-1"></i> Ganti password</button> -->
@@ -162,7 +162,7 @@
                     <div class="card-footer">
                         <div class="row align-items-center">
                             <div class="col-10 pr-0">
-                                <button type="button" class="btn btn-custom btn-sm btn-block">Edit Profile</button>
+                                <button type="button" onclick="editEmployee(<?= $mdr->ID_company ?>, <?= "'".$mdr->uniqID."'" ?>)" class="btn btn-custom btn-sm btn-block">Edit Profile</button>
                             </div>
                             <div class="col-2 text-center">
                                 <div class="dropdown dropdown-action">
@@ -170,9 +170,9 @@
                                         <i class="fa-solid fa-ellipsis-vertical"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" onclick="showDetailEmployee(<?= "'".$mdr->uniqID."'" ?>, <?= $mdr->user_id ?>, <?= "'".$mdr->user_role."'" ?>)" href="javascript:void(0)">Detail</a>
-                                        <a class="dropdown-item" onclick="showDetailEmployee(<?= "'".$mdr->uniqID."'" ?>, <?= $mdr->user_id ?>, <?= "'".$mdr->user_role."'" ?>)" href="javascript:void(0)">Ganti password</a>
-                                        <a class="dropdown-item text-danger" onclick="showDetailEmployee(<?= "'".$mdr->uniqID."'" ?>, <?= $mdr->user_id ?>, <?= "'".$mdr->user_role."'" ?>)" href="javascript:void(0)">Hapus</a>
+                                        <a class="dropdown-item" onclick="showDetailEmployee(<?= "'".$mdr->uniqID."'" ?>, <?= "'".$mdr->user_role."'" ?>)" href="javascript:void(0)">Detail</a>
+                                        <a class="dropdown-item" href="javascript:void(0)">Ganti password</a>
+                                        <a class="dropdown-item text-danger" href="javascript:void(0)">Hapus</a>
                                     </div>
                                 </div>
                             </div>
@@ -182,7 +182,7 @@
                     <div class="card-footer">
                         <div class="row align-items-center">
                             <div class="col-12">
-                                <button type="button" onclick="showDetailEmployee(<?= "'".$mdr->uniqID."'" ?>, <?= $mdr->user_id ?>, <?= "'".$mdr->user_role."'" ?>)" class="btn btn-custom btn-sm btn-block">Detail</button>
+                                <button type="button" onclick="showDetailEmployee(<?= "'".$mdr->uniqID."'" ?>, <?= "'".$mdr->user_role."'" ?>)" class="btn btn-custom btn-sm btn-block">Detail</button>
                             </div>
                         </div>
                     </div>

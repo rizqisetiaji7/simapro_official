@@ -128,7 +128,7 @@ class Perusahaan extends CI_Controller {
       return $config;
    }
 
-   private function _edit_dir_rules() {
+   private function _edit_rules() {
       $config = [
          [
             'field'  => 'user_fullname',
@@ -500,7 +500,7 @@ class Perusahaan extends CI_Controller {
       $post = $this->input->post(NULL, TRUE);
 
       // Form Validation
-      $this->form_validation->set_rules($this->_edit_dir_rules());
+      $this->form_validation->set_rules($this->_edit_rules());
 
       if ($this->form_validation->run() == FALSE) {
          $message = [
@@ -642,6 +642,30 @@ class Perusahaan extends CI_Controller {
       $this->load->view('direktur/perusahaan/detail/mandor/form_add_mandor', $data, FALSE);
    }
 
+   public function form_edit_mandor() {
+      $company_id = $this->input->post('company_id', TRUE);
+      $user_unique_id = $this->input->post('user_unique_id', TRUE);
+
+      $data['pageType'] = $this->input->post('pageType', TRUE);
+      $data['mandor'] = $this->bm->get($this->table_users, '*', [
+         'user_unique_id'  => $user_unique_id, 
+         'ID_company'      => $company_id
+      ])->row();
+
+      $this->load->view('direktur/perusahaan/detail/mandor/form_edit_mandor', $data, FALSE);
+   }
+
+   public function detail_mandor() {
+      $unique_id = $this->input->post('unique_id');
+      $user_role = $this->input->post('user_role');
+
+      $data['mandor'] = $this->bm->get($this->table_users, '*', [
+         'user_unique_id' => $unique_id,
+         'user_role'      => $user_role
+      ])->row();
+      $this->load->view('direktur/perusahaan/detail/mandor/detail_mandor', $data);
+   }
+
    function mandor_process() {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
@@ -736,7 +760,91 @@ class Perusahaan extends CI_Controller {
                }
             }
          }
+      } else if ($post['pageType'] == 'edit') {
+         $this->form_validation->set_rules($this->_edit_rules());
+         if ($this->form_validation->run() == FALSE) {
+            $message = [
+               'status' => 'validation_error',
+               'message' => [
+                  ['field' => 'user_fullname', 'err_message' => form_error('user_fullname', '<span>','</span>')],
+                  ['field' => 'user_email', 'err_message' => form_error('user_email', '<span>','</span>')],
+                  ['field' => 'user_phone', 'err_message' => form_error('user_phone', '<span>','</span>')]
+               ]
+            ];
+         } else {
+            // Initialize Config upload
+            $this->upload->initialize($this->_file_upload_config('./uploads/profile'));
+            if (@$_FILES['user_profile']['name'] != NULL) {
+               if ($this->upload->do_upload('user_profile')) {
+                  if ($post['old_profile'] != $this->default_avatar) {
+                     unlink('./uploads/profile/'.$post['old_profile']);
+                  }
+
+                  $user_prof = $this->upload->data('file_name');
+                  $data_update = [
+                     'user_profile'    => $user_prof,
+                     'user_fullname'   => $post['user_fullname'],
+                     'user_email'      => $post['user_email'],
+                     'user_phone'      => $post['user_phone'],
+                     'user_address'    => $post['user_address'] == NULL ? NULL : $post['user_address'],
+                     'updated'         => date('Y-m-d H:i:s', now('Asia/Jakarta'))
+                  ];
+
+                  $this->bm->update($this->table_users, $data_update, [
+                     'user_unique_id' => $post['user_unique_id'],
+                     'ID_company'     => $post['ID_company']
+                  ]);
+
+                  if ($this->db->affected_rows() >= 0) {
+                     $message = [
+                        'status'    => 'success',
+                        'message'   => 'Data Mandor telah berhasil diperbarui.'
+                     ];
+                  } else {
+                     $message = [
+                        'status'    => 'failed',
+                        'message'   => 'Oops! Maaf data Mandor gagal diperbarui.'
+                     ];
+                  }
+
+               } else {
+                  $message = [
+                     'status'    => 'failed',
+                     'message'   => 'Oops! Maaf data Mandor gagal diperbarui.'
+                  ];
+               }
+            } else {
+               $user_prof = $post['old_profile'];
+               $data_update = [
+                  'user_profile'    => $user_prof,
+                  'user_fullname'   => $post['user_fullname'],
+                  'user_email'      => $post['user_email'],
+                  'user_phone'      => $post['user_phone'],
+                  'user_address'    => $post['user_address'] == NULL ? NULL : $post['user_address'],
+                  'updated'         => date('Y-m-d H:i:s', now('Asia/Jakarta'))
+               ];
+
+               $this->bm->update($this->table_users, $data_update, [
+                  'user_unique_id' => $post['user_unique_id'],
+                  'ID_company'     => $post['ID_company']
+               ]);
+
+               if ($this->db->affected_rows() >= 0) {
+                  $message = [
+                     'status'    => 'success',
+                     'message'   => 'Data Mandor telah berhasil diperbarui.'
+                  ];
+               } else {
+                  $message = [
+                     'status'    => 'failed',
+                     'message'   => 'Oops! Maaf data Mandor gagal diperbarui.'
+                  ];
+               }
+            }
+
+         }
       }
+
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 }
