@@ -40,7 +40,7 @@
   </div>
   <div class="col-12 col-sm-8 col-md-9">
     <label for="upload_logo">Ubah logo <span class="text-muted">(Opsional)</span></label>
-    <input type="file" name="comp_logo" id="upload_logo" class="form-control">
+    <input type="file" name="comp_logo" accept=".jpg,.jpeg,.png" id="upload_logo" class="form-control">
   </div>
 </div>
 
