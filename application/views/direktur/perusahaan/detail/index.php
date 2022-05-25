@@ -28,7 +28,7 @@
                                 <div class="row">
                                     <div class="col-md-7">
                                         <div class="profile-info-left">
-                                            <h4 class="m-t-0 mb-3"><?= $director->row()->user_role == 'super_admin' ? '<i class="fa-solid fa-circle-check text-info mr-2"></i>' : NULL ?><?= $company->comp_name ?></h4>
+                                            <h4 class="m-t-0 mb-3"><?= $typecomp == 'maincompany' ? '<i class="fa-solid fa-circle-check text-info mr-2"></i>' : NULL ?><?= $company->comp_name ?></h4>
                                             <ul class="personal-info">
                                                 <li>
                                                     <div class="title">ID:</div>
@@ -64,7 +64,7 @@
                                     <div class="col-md-5">
 
                                         <!-- Bagian Direktur Perusahaan -->
-                                        <h4 class="m-t-0 mb-3">Data Direktur <?= $director->row()->user_role == 'super_admin' ? 'Utama' : 'Anak Perusahaan' ?></h4>
+                                        <h4 class="m-t-0 mb-3">Data Direktur <?= $typecomp == 'maincompany' ? 'Utama' : 'Anak Perusahaan' ?></h4>
                                         <?php if ($director->num_rows() > 0) { ?> 
                                             <ul class="personal-info">
                                                 <li>
