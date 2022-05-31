@@ -81,7 +81,7 @@
                     <div class="card panel">
                         <div class="kanban-box ui-sortable-handle">
                             <div class="task-board-header">
-                                <span class="status-title"><a href="task-view.html">Website redesign</a></span>
+                                <span class="status-title">Pengaspalan parkir</span>
                                 <div class="dropdown kanban-task-action">
                                     <a href="" data-toggle="dropdown">
                                         <i class="fa fa-angle-down"></i>
