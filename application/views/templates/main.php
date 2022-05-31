@@ -41,9 +41,13 @@
             ?>
             
             <div class="page-wrapper">
-                <div class="content container-fluid">
+                <?php if ($this->uri->segment(3) == 'chat') { ?>
                     <?= $page_content; ?>
-                </div>
+                <?php } else { ?>
+                    <div class="content container-fluid">
+                        <?= $page_content; ?>
+                    </div>
+                <?php } ?>
             </div>
         </div>
 
