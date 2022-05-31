@@ -3,7 +3,15 @@
         <div class="d-flex flex-row align-items-start justify-content-between justify-content-sm-start">
             <div class="mr-3">
                 <h4 class="mb-0">Proyek Rumah sakit Kawali</h4>
-                <p class="text-secondary text-sm">Jl. Blabla, No.69, Kab. Ciamis</p>    
+                <p class="text-secondary text-sm">Jl. Blabla, No.69, Kab. Ciamis</p>
+                <div class="d-flex">
+                    <div class="p-2">
+                        <i class="fa-solid fa-map-pin mr-2"></i><span class="badge bg-inverse-warning px-2 py-1">On Progress</span>  
+                    </div>
+                    <div class="p-2">
+                        <i class="fa-solid fa-clock mr-2"></i><span class="text-secondary">Deadline: <strong class="text-dark">12 Oktober 2023</strong></span>
+                    </div>
+                </div>
             </div>
             <button type="button" class="btn btn-sm btn-info" data-toggle="tooltip" title="Edit proyek">
                 <i class="fa fa-pencil"></i>
@@ -99,14 +107,18 @@
                                     </div>
                                     <span>70%</span>
                                 </div>
-                                <div class="kanban-footer">
+                                <div class="kanban-footer mb-3">
                                     <span class="task-info-cont">
-                                        <span class="task-date"><i class="fa fa-clock-o"></i> Sep 26</span>
+                                        <span class="task-date"><i class="fa-solid fa-clock"></i> 26 September 2022</span>
                                         <span class="task-priority badge bg-inverse-danger">High</span>
                                     </span>
                                     <span class="task-users">
-                                        <img src="<?= base_url('assets/img/profiles/avatar-12.jpg') ?>" class="task-avatar" width="24" height="24">
+                                        <span class="task-date"><i class="fa-solid fa-map-pin"></i> Status</span>
+                                        <span class="task-priority badge bg-info">On Progress</span>
                                     </span>
+                                </div>
+                                <div class="d-block text-center">
+                                    <span class="text-xs text-muted">Diperbarui: <strong>12 September 2022</strong></span>
                                 </div>
                             </div>
                         </div>

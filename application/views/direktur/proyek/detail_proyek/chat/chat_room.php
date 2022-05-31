@@ -102,7 +102,7 @@
                   <div class="message-inner">
                      <div class="message-area">
                         <div class="input-group">
-                           <textarea class="form-control" placeholder="Type message..."></textarea>
+                           <textarea class="form-control" placeholder="Tulis pesan..."></textarea>
                            <span class="input-group-append">
                               <button class="btn btn-custom" type="button"><i class="fa fa-paper-plane"></i></button>
                            </span>
