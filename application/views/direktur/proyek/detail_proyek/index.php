@@ -4,14 +4,6 @@
             <div class="mr-3">
                 <h4 class="mb-0">Proyek Rumah sakit Kawali</h4>
                 <p class="text-secondary text-sm">Jl. Blabla, No.69, Kab. Ciamis</p>
-                <div class="d-flex">
-                    <div class="p-2">
-                        <i class="fa-solid fa-map-pin mr-2"></i><span class="badge bg-inverse-warning px-2 py-1">On Progress</span>  
-                    </div>
-                    <div class="p-2">
-                        <i class="fa-solid fa-clock mr-2"></i><span class="text-secondary">Deadline: <strong class="text-dark">12 Oktober 2023</strong></span>
-                    </div>
-                </div>
             </div>
             <button type="button" class="btn btn-sm btn-info" data-toggle="tooltip" title="Edit proyek">
                 <i class="fa fa-pencil"></i>
@@ -21,6 +13,17 @@
     <div class="col-12 col-sm-6 text-sm-right">
         <a href="<?= site_url('direktur/proyek/chat') ?>" class="btn btn-primary py-2 px-3" data-toggle="tooltip" title="Kirim Pesan"><i class="fa-solid fa-message"></i></a>
         <button type="button" class="btn btn-success py-2 px-4 ml-1" data-toggle="modal" data-target="#addSubProject">Buat Sub-proyek</button>
+    </div>
+
+    <div class="col-12">
+        <div class="d-flex mt-3">
+            <div class="mr-4 ml-0">
+                <i class="fa-solid fa-map-pin mr-2"></i><span class="badge bg-inverse-warning px-2 py-1">On Progress</span>  
+            </div>
+            <div class="mr-2">
+                <i class="fa-solid fa-clock mr-2"></i><span class="text-secondary">Deadline: <strong class="text-dark">12 Oktober 2023</strong></span>
+            </div>
+        </div>
     </div>
 </div>
 
