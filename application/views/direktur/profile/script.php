@@ -13,9 +13,21 @@
 	
 	// Profile CRUD
 	function uploadProfile(unique_id, user_role) {
-		console.log(`Unique ID: ${unique_id}, User Role: ${user_role}`);
-		title.text('Upload Foto Profile');
-		modal.modal('show');
+
+		$.ajax({
+			url: `<?= site_url('direktur/profile/upload_profile') ?>`,
+			method: 'POST',
+			dataType: 'json',
+			data: {
+				unique_id: unique_id,
+				user_role: user_role
+			},
+			success: function(data) {
+				console.log(data);
+			}
+		});
+		// title.text('Upload Foto Profile');
+		// modal.modal('show');
 	}
 
 
