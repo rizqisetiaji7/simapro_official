@@ -17,4 +17,11 @@ class Profile extends CI_Controller {
       ];
       $this->theme->view('templates/main', 'direktur/profile/index', $data);
    }
+
+   function upload_profile() {
+      $data['unique_id'] = base64_decode(urldecode($this->input->post('unique_id')));
+      $data['user_role'] = base64_decode(urldecode($this->input->post('user_role')));
+
+      $this->output->set_content_type('application/json')->set_output(json_encode($data));
+   }
 }
