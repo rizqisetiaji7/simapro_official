@@ -130,8 +130,8 @@ div.mandor-profile {
 }
 
 div.profile-pic {
-	width: 80px; 
-	height: 80px; 
+	width: 70px; 
+	height: 70px; 
 	border-radius: 50%; 
 	overflow: hidden;
 }
@@ -153,6 +153,11 @@ div.profile-pic > img {
 .main-drop .user-img img {
 	height: 30px;
 	object-fit: cover;
+}
+
+.divider {
+	height: 1px;
+	background-color: #eee;
 }
 
 @media only screen and (max-width: 575.98px) {
