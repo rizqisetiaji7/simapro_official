@@ -150,6 +150,11 @@ div.profile-pic > img {
 	object-position: top center;
 }
 
+.main-drop .user-img img {
+	height: 30px;
+	object-fit: cover;
+}
+
 @media only screen and (max-width: 575.98px) {
 	.profile-info-left ul.personal-info{
 	   text-align: left !important;
