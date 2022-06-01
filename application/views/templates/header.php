@@ -33,8 +33,7 @@
             </li>
             <li class="nav-item dropdown has-arrow main-drop">
                 <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                    <?php $user_photo = user_login()->user_profile == 'default-avatar.jpg' ? base_url('assets/img/'.user_login()->user_profile) : base_url('uploads/profile/'.user_login()->user_profile); ?>
-                    <span class="user-img"><img src="<?= $user_photo ?>" alt="<?= user_login()->user_fullname ?>">
+                    <span class="user-img"><img src="<?= user_login()->user_profile == 'default-avatar.jpg' ? base_url('assets/img/'.user_login()->user_profile) : base_url('uploads/profile/'.user_login()->user_profile); ?>" alt="<?= user_login()->user_fullname ?>">
                     <span class="status online"></span></span>
                     <span><?= user_login()->user_fullname ?></span>
                 </a>
