@@ -32,9 +32,9 @@
                     </a>
                 </li>
 
-                <!-- <li class="menu-title mt-3"><span>Akun</span></li> -->
+                <li class="menu-title mt-3"><span>Pengaturan</span></li>
                 <li>
-                    <a href="<?= site_url('direktur/profile') ?>"><i class="las la-user-cog"></i><span>Pengaturan Profile</span></a>
+                    <a href="<?= site_url('direktur/profile') ?>"><i class="las la-user-cog"></i><span>Profile</span></a>
                 </li>
             </ul>
         </div>
