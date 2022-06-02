@@ -38,21 +38,21 @@
 								<p class="text-muted mt-2">Gambar Profile</p>
 								<!-- Content -->
 								<div class="d-flex align-items-center">
-									<div class="profile-pic mr-4">
-										<img src="<?= user_login()->user_profile == 'default-avatar.jpg' ? base_url('assets/img/default-avatar.jpg') : base_url('uploads/profile/'.user_login()->user_profile) ?>">
+									<div class="profile-pic mr-4" id="userProfilePhoto">
+										<img src="<?= user_login()->user_profile == 'default-avatar.jpg' ? base_url('assets/img/default-avatar.jpg') : base_url('uploads/profile/'.user_login()->user_profile) ?>" alt="<?= user_login()->user_fullname ?>">
 									</div>
 									<div>
 										<span class="text-primary small d-block mb-1">#<?= user_login()->user_unique_id ?></span>
 										<div>
 											<button class="btn btn-custom px-4 mr-1" onclick="uploadProfile(<?= "'".urlencode(base64_encode(user_login()->user_unique_id))."'" ?>, <?= "'".urlencode(base64_encode(user_login()->user_role))."'" ?>)">Upload</button>
-											<button class="btn btn-light px-4 ml-1" onclick="removeProfile()">Hapus Profile</button>
+											<button class="btn btn-light px-4 ml-1" <?= user_login()->user_profile == 'default-avatar.jpg' ? 'disabled=disabled' : ' onclick="removeProfile('."'".urlencode(base64_encode(user_login()->user_unique_id))."'".', '."'".urlencode(base64_encode(user_login()->user_profile))."'".')"' ?> >Hapus Profile</button>
 										</div>
 									</div>
 								</div>
 
 								<div class="divider mt-3 mb-3"></div>
 
-								<form id="editProfile" action="<?= site_url('direktur/profile/edit') ?>" method="POST">
+								<form id="editProfileData" action="<?= site_url('direktur/profile/edit_data') ?>" method="POST">
 									<div class="form-row">
 										<input type="hidden" name="user_unique_id" value="<?= urlencode(base64_encode(user_login()->user_unique_id)) ?>">
 										<input type="hidden" name="user_role" value="<?= urlencode(base64_encode(user_login()->user_role)) ?>">
@@ -77,14 +77,14 @@
 										</div>
 
 										<div class="col-12 mb-3">
-											<label for="user_email">Alamat <span class="text-muted small">(Opsional)</span></label>
-											<textarea class="form-control" rows="7" placeholder="Isi alamat lengkap"><?= user_login()->user_address ?></textarea>
+											<label for="user_address">Alamat <span class="text-muted small">(Opsional)</span></label>
+											<textarea class="form-control" rows="7" name="user_address" placeholder="Isi alamat lengkap"><?= user_login()->user_address ?></textarea>
 										</div>
 									</div>
 
 									<div class="form-row mb-3">
 										<div class="col-12">
-											<button type="submit" class="btn btn-custom px-4">Update Profile</button>
+											<button type="submit" id="btnUpdate-profileData" class="btn btn-custom px-4">Update Profile</button>
 										</div>
 									</div>
 								</form>
@@ -105,6 +105,8 @@
 									<div class="col-12 col-md-7 m-auto">
 										<h4 class="project-title mt-2 mb-4">Ganti password akun login</h4>
 										<form id="editPassword" action="<?= site_url('direktur/profile/edit_password') ?>" method="POST">
+											<input type="hidden" name="user_unique_id" value="<?= urlencode(base64_encode(user_login()->user_unique_id)) ?>">
+											<input type="hidden" name="user_role" value="<?= urlencode(base64_encode(user_login()->user_role)) ?>">
 											<div class="form-row">
 												<div class="col-12 mb-3">
 													<label for="new_password">Password baru <span class="text-danger small">*</span></label>
@@ -119,8 +121,9 @@
 											</div>
 											<div class="form-row">
 												<div class="col-12 mb-3">
-													<button type="submit" class="btn btn-custom btn-block py-2">Update password</button>
+													<button type="submit" id="btnUpdate-password" class="btn btn-custom btn-block py-2">Update password</button>
 												</div>
+											</div>
 										</form>
 									</div>
 								</div>
