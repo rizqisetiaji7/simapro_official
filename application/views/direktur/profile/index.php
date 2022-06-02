@@ -1,13 +1,4 @@
 <div class="row">
-	<!-- <div class="col-12 col-sm-11 m-auto">
-		<div class="card">
-			<div class="card-body">
-				<?php var_dump(user_login()) ?>
-			</div>
-		</div>
-	</div> -->
-
-
 	<div class="col-12 col-sm-11 m-auto">
 		<div class="card tab-box mb-0">
 			<div class="row user-tabs">
