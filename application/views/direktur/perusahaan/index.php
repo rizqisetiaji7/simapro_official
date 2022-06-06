@@ -52,17 +52,14 @@
 
                                                 <li>
                                                     <div class="title">Telepon:</div>
-                                                    <div class="text"><span class="text-secondary"><?= $main_comp->comp_phone ?></span></div>
+                                                    <div class="text"><span class="text-secondary"><?= $main_comp->comp_phone == '' ? '-' : $main_comp->comp_phone ?></span></div>
                                                 </li>
 
                                                 <li>
                                                     <div class="title">Alamat:</div>
-                                                    <div class="text"><span class="text-secondary"><?= $main_comp->comp_address ?></span></div>
+                                                    <div class="text"><span class="text-secondary"><?= $main_comp->comp_address == '' ? '-' : $main_comp->comp_address ?></span></div>
                                                 </li>
-                                                <!-- <li>
-                                                    <div class="title">Deskripsi/Bio:</div>
-                                                    <div class="text"><?= $main_comp->comp_desc == '' ? '-' : $main_comp->comp_desc ?></div>
-                                                </li> -->
+
                                                 <li>
                                                     <div class="title">Di dirikan pada:</div>
                                                     <div class="text"><span class="text-secondary"><?= datetimeIDN($main_comp->comp_since) ?></span></div>
@@ -177,5 +174,4 @@
     <?php } ?>
 </div>
 
-<?php $this->view('direktur/perusahaan/detail/modal'); ?>
-<?php $this->view('direktur/perusahaan/detail/script'); ?>
+<!-- Script And Modal -->

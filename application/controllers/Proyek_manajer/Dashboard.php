@@ -13,8 +13,8 @@ class Dashboard extends CI_Controller {
          'author'    => APP_AUTHOR,
          'title'     => 'Dashboard Direktur',
          'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
-         'page'      => 'sub_direktur'
+         'page'      => 'proyek_manajer'
       ];
-      $this->theme->view('templates/main', 'sub_direktur/dashboard', $data);
+      $this->theme->view('templates/main', 'pm/dashboard', $data);
    }
 }

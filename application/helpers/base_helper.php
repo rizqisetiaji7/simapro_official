@@ -42,15 +42,6 @@ function is_not_pm() {
 	}
 }
 
-function is_not_mandor() {
-	$ci =& get_instance();
-	if (user_login()->user_role == 'admin') {
-		redirect(site_url('sub_direktur'));
-	} else if (user_login()->user_role == 'super_admin') {
-		redirect(site_url('direktur'));
-	}
-}
-
 function slugify($str=NULL) {
 	if ($str != NULL) {
 		$str = preg_replace("/\s+/", '-', $str);

@@ -44,7 +44,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-3">
                         <div>
-                            <span class="d-block">Anak perusahaan</span>
+                            <span class="d-block">Arsip</span>
                         </div>
                         <i class="la la-rocket text-xl text-success"></i>
                     </div>

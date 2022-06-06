@@ -35,8 +35,8 @@
             <?php 
                 if ($this->uri->segment(1) == 'direktur') {
                     $this->view('templates/sidebar/sidebar_direktur');
-                } else {
-                    $this->view('templates/sidebar/default_sidebar');
+                } else if ($this->uri->segment(1) == 'pm') {
+                    $this->view('templates/sidebar/sidebar_pm');
                 } 
             ?>
             
