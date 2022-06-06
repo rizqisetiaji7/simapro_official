@@ -73,8 +73,6 @@ $route['direktur/proyek/daftar_proyek'] = 'direktur/proyek/index';
 $route['direktur/proyek/riwayat'] = 'direktur/proyek/riwayat_proyek';
 $route['direktur/proyek/arsip'] = 'direktur/proyek/arsip_proyek';
 
-$route['direktur/perusahaan/detail/(:num)/(:num)/(:any)'] = 'direktur/perusahaan/detail_perusahaan/$1/$2/$3';
-
 
 
 /**

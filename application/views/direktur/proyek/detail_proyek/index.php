@@ -67,7 +67,7 @@
 
                 <!-- "Subproyek" Content -->
                 <div class="kanban-wrap">
-                    <div class="pro-progress">
+                    <div class="pro-progress mb-3">
                         <div class="pro-progress-bar">
                             <h5>Progres</h5>
                             <div class="progress">
@@ -77,8 +77,8 @@
                         </div>
                     </div>
 
-                    <!-- Upload Photo Documentation Section -->
-                    <div class="d-flex flex-row justify-content-between align-items-center mb-3 kanban-upload-area">
+                    <!-- Upload Photo Documentation Section (Hanya Projek Manajer) -->
+                    <!-- <div class="d-flex flex-row justify-content-between align-items-center mb-3 kanban-upload-area">
                         <div>
                             <p class="text-dark mb-0">Unggah Gambar</p>
                             <p class="text-xs text-secondary mb-0">Foto dokumentasi proyek</p>
@@ -86,7 +86,7 @@
                         <button type="button" class="btn btn-sm btn-uploadGambarProyek"  data-title="Lapang parkir" data-toggle="tooltip" title="Klik untuk Upload">
                             <i class="fa fa-cloud-upload"></i>
                         </button>
-                    </div>
+                    </div> -->
                     
                     <!-- Task Sub-Element "Proyek" -->
                     <div class="card panel">

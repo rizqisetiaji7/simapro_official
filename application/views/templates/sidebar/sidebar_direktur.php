@@ -22,13 +22,7 @@
 
                 <li>
                     <a href="<?= site_url('direktur/perusahaan') ?>">
-                        <i class="las la-landmark"></i> <span>Manajemen Perusahaan</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="<?= site_url('direktur/pengguna') ?>">
-                        <i class="las la-user-friends"></i> <span>Mandor</span>
+                        <i class="las la-landmark"></i> <span>Perusahaan</span>
                     </a>
                 </li>
 

@@ -1,3 +1,15 @@
+<!-- <div class="row">
+	<div class="col-12">
+		<div class="card">
+			
+			<div class="card-body">
+				<?php var_dump($company) ?>
+			</div>
+
+		</div>
+	</div>
+</div> -->
+
 <div class="row">
 	<div class="col-12 col-sm-11 m-auto">
 		<div class="card tab-box mb-0">
@@ -12,6 +24,11 @@
 						<li class="nav-item">
 							<a href="#change_password" data-toggle="tab" class="nav-link">
 								<i class="fa-solid fa-shield mr-1 text-primary"></i> Ganti Password
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="#edit_profile_perusahaan" data-toggle="tab" class="nav-link">
+								<i class="fa-solid fa-shield mr-1 text-primary"></i> Perusahaan
 							</a>
 						</li>
 					</ul>
@@ -123,7 +140,87 @@
 					</div>
 				</div>
 			</div>
-			<!-- /Change Password Tab -->	
+			<!-- /Change Password Tab -->
+
+
+			<!-- Edit Profile Perusahaan -->
+			<div class="tab-pane fade" id="edit_profile_perusahaan">
+				<div class="row">
+					<div class="col-12">
+						<div class="card">
+							<div class="card-body">
+								<p class="text-muted">Detail Info Perusahaan</p>
+								<!-- Content -->
+								<div class="d-flex align-items-center">
+									<img src="<?= $company->comp_logo == 'default-placeholder320x320.png' ? base_url('assets/img/default-placeholder320x320.png') : base_url('uploads/company/'.$company->comp_logo) ?>" height="80">
+									<div class="ml-3">
+										<span class="text-primary small d-block mb-1">#<?= $company->comp_code ?></span>
+										<p class="text-secondary small mb-1"><?= 'Didirikan: '.dateTimeIDN($company->comp_since) ?></p>
+										<div>
+											<button class="btn btn-custom px-4 btn-sm mr-1" onclick="uploadLogo(<?= "'".urlencode(base64_encode($company->comp_code))."'" ?>)">Ganti Logo</button>
+										</div>
+									</div>
+								</div>
+
+								<div class="divider mt-3 mb-3"></div>
+
+								<form id="editProfilePerusahaan" action="<?= site_url('direktur/perusahaan/edit') ?>" method="POST">
+									<div class="form-row">
+										<input type="hidden" name="company_id" value="<?= $company->company_id ?>">
+										<input type="hidden" name="comp_code" value="<?= urlencode(base64_encode($company->comp_code)) ?>">
+										<div class="col-12 col-sm-6 col-md-7 mb-3">
+											<label for="comp_name">Nama Perusahaan <span class="text-danger small">*</span></label>
+											<input type="text" name="comp_name" id="comp_name" class="form-control" value="<?= $company->comp_name ?>" placeholder="Isi nama perusahaan" autocomplete="off">
+											<div class="invalid-feedback"></div>
+										</div>
+
+										<div class="col-12 col-sm-6 col-md-5 mb-3">
+											<label for="comp_phone">Nomor Telepon <span class="text-muted small">(Opsional)</span></label>
+											<input type="text" name="comp_phone" id="comp_phone" class="form-control" value="<?= $company->comp_phone ?>" placeholder="Nomor telepon" autocomplete="off">
+											<div class="invalid-feedback"></div>
+										</div>
+									</div>
+
+									<div class="form-row">
+										<div class="col-12 col-sm-6 col-md-7 mb-3">
+											<label for="comp_email">Email <span class="text-danger small">*</span></label>
+											<input type="text" name="comp_email" id="comp_email" class="form-control" value="<?= $company->comp_email ?>" placeholder="Alamat email" autocomplete="off">
+											<div class="invalid-feedback"></div>
+										</div>
+										<div class="col-12 col-sm-6 col-md-5 mb-3">
+											<label for="comp_type">Tipe perusahaan <span class="text-danger small">*</span></label>
+											<select name="comp_type" class="form-control" id="comp_type">
+												<option value="PT" <?= $company->comp_type == 'PT' ? 'selected' : NULL ?>>Perseroan Terbatas (PT)</option>
+												<option value="CV" <?= $company->comp_type == 'CV' ? 'selected' : NULL ?>>CV</option>
+											</select>
+											<div class="invalid-feedback"></div>
+										</div>
+									</div>
+
+									<div class="form-row mb-3">
+										<div class="col-12 mb-3">
+											<label for="comp_address">Alamat <span class="text-muted small">(Opsional)</span></label>
+											<input type="text" name="comp_address" id="comp_address" class="form-control" value="<?= $company->comp_address ?>" placeholder="Isi alamat lengkap" autocomplete="off">
+										</div>
+
+										<div class="col-12 mb-3">
+											<label for="comp_desc">Deskripsi/Bio <span class="text-muted small">(Opsional)</span></label>
+											<textarea class="form-control" rows="7" name="comp_desc" placeholder="Isi Biografi Perusahaan"><?= $company->comp_desc ?></textarea>
+										</div>
+									</div>
+
+									<div class="form-row mb-3">
+										<div class="col-12">
+											<button type="submit" id="btnUpdate-Perusahaan" class="btn btn-custom px-4">Update</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /Edit Profile Perusahaan -->
 		</div>
 	</div>
 </div>

@@ -81,12 +81,10 @@ class Login extends CI_Controller {
             if (password_verify($post['password'], $user->user_password)) {
                $redirect_url = '';
 
-               if ($user->user_role == 'super_admin') {
+               if ($user->user_role == 'direktur') {
                   $redirect_url = site_url('direktur');
-               } else if ($user->user_role == 'admin') {
-                  $redirect_url = site_url('sub_direktur');
                } else {
-                  $redirect_url = site_url('mandor');
+                  $redirect_url = site_url('pm');
                }
 
                $this->session->set_userdata(['user_id' => $user->user_id]);

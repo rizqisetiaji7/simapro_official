@@ -8,6 +8,7 @@ class Profile extends CI_Controller {
       parent::__construct();
       is_not_login();
       is_not_direktur();
+      $this->load->model('company_model');
    }
 
    private function _file_upload_config($filePath = './assets/img') {
@@ -86,6 +87,7 @@ class Profile extends CI_Controller {
          'author'    => APP_AUTHOR,
          'title'     => 'Profile Direktur',
          'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
+         'company'   => $this->company_model->get_company(user_login()->user_id)->row(),
          'page'      => 'profile_direktur'
       ];
       $this->theme->view('templates/main', 'direktur/profile/index', $data);

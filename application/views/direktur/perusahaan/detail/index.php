@@ -32,7 +32,7 @@
                                             <ul class="personal-info">
                                                 <li>
                                                     <div class="title">ID:</div>
-                                                    <div class="text"><span class="text-secondary"><?= $company->comp_code_ID == NULL ? ' - ' : $company->comp_code_ID ?></span></div>
+                                                    <div class="text"><span class="text-secondary"><?= $company->comp_code == NULL ? ' - ' : $company->comp_code ?></span></div>
                                                 </li>
 
                                                 <li>

@@ -4,7 +4,7 @@ class Dashboard extends CI_Controller {
    public function __construct() {
       parent::__construct();
       is_not_login();
-      is_not_subdirektur();
+      is_not_pm();
    }
 
    public function index() {

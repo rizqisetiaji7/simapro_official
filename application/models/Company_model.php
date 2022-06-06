@@ -4,10 +4,10 @@ class Company_model extends CI_Model {
 	private $tb_company = 'tb_company';
 	private $tb_users = 'tb_users';
 
-	public function get_main_company($user_id) {
+	public function get_company($user_id) {
 		$this->db->from($this->tb_company);
 		$this->db->join($this->tb_users, 'tb_company.company_id=tb_users.ID_company', 'left');
-		$this->db->where(['tb_users.user_id' => $user_id, 'tb_company.comp_parent_id' => 0]);
+		$this->db->where(['tb_users.user_id' => $user_id]);
 		return $this->db->get();
 	}
 

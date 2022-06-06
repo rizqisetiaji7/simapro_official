@@ -6,12 +6,10 @@ function is_login() {
 	if ($session) {
 		$user = $ci->bm->get('tb_users','*', ['user_id' => $session])->row();
 
-		if ($user->user_role == 'super_admin') {
+		if ($user->user_role == 'direktur') {
 			redirect(site_url('direktur'));	
-		} else if ($user->user_role == 'admin') {
-			redirect(site_url('sub_direktur'));
 		} else {
-			redirect(site_url('mandor'));
+			redirect(site_url('pm'));
 		}
 	}
 }
@@ -32,19 +30,15 @@ function user_login() {
 
 function is_not_direktur() {
 	$ci =& get_instance();
-	if (user_login()->user_role == 'admin') {
-		redirect(site_url('sub_direktur'));
-	} else if (user_login()->user_role == 'employee') {
-		redirect(site_url('mandor'));
+	if (user_login()->user_role == 'pm') {
+		redirect(site_url('pm'));
 	}
 }
 
-function is_not_subdirektur() {
+function is_not_pm() {
 	$ci =& get_instance();
-	if (user_login()->user_role == 'super_admin') {
+	if (user_login()->user_role == 'direktur') {
 		redirect(site_url('direktur'));
-	} else if (user_login()->user_role == 'employee') {
-		redirect(site_url('mandor'));
 	}
 }
 
