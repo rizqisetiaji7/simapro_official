@@ -28,6 +28,15 @@ function user_login() {
 	return $ci->bm->get('tb_users','*',['user_id' => $id])->row();
 }
 
+function user_company() {
+	$ci =& get_instance();
+	$id = $ci->session->userdata('user_id');
+	$ci->db->from('tb_users');
+	$ci->db->join('tb_company', 'tb_users.ID_company=tb_company.company_id');
+	$ci->db->where(['tb_users.user_id' => $id]);
+	return $ci->db->get()->row();
+}
+
 function is_not_direktur() {
 	$ci =& get_instance();
 	if (user_login()->user_role == 'pm') {

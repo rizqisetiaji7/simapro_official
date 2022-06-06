@@ -141,3 +141,6 @@
         </div>
     </div>
 </div>
+
+<?php $this->view('pm/proyek/detail/modal_upload_subproyek'); ?>
+<?php $this->view('pm/proyek/detail/script'); ?>

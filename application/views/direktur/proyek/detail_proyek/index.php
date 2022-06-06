@@ -12,7 +12,7 @@
     </div>
     <div class="col-12 col-sm-6 text-sm-right">
         <a href="<?= site_url('direktur/chat') ?>" class="btn btn-primary py-2 px-3" data-toggle="tooltip" title="Kirim Pesan"><i class="fa-solid fa-message"></i></a>
-        <button type="button" class="btn btn-success py-2 px-4 ml-1" data-toggle="modal" data-target="#addSubProject">Buat Sub-proyek</button>
+        <button type="button" class="btn btn-success py-2 px-4 ml-1" onclick="add_subProject()">Buat Sub-proyek</button>
     </div>
 
     <div class="col-12">
@@ -57,8 +57,8 @@
                         <div class="dropdown kanban-action">
                             <a href="" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#">Edit</a>
-                                <a class="dropdown-item" href="#">Delete</a>
+                                <a class="dropdown-item" href="javascript:void(0)" onclick="edit_subProject()">Edit</a>
+                                <a class="dropdown-item" href="javascript:void(0)" onclick="hapus_subElProject('subproject')" >Hapus</a>
                             </div>
                         </div>
                     </div>
@@ -76,17 +76,6 @@
                             <span>50%</span>
                         </div>
                     </div>
-
-                    <!-- Upload Photo Documentation Section (Hanya Projek Manajer) -->
-                    <!-- <div class="d-flex flex-row justify-content-between align-items-center mb-3 kanban-upload-area">
-                        <div>
-                            <p class="text-dark mb-0">Unggah Gambar</p>
-                            <p class="text-xs text-secondary mb-0">Foto dokumentasi proyek</p>
-                        </div>
-                        <button type="button" class="btn btn-sm btn-uploadGambarProyek"  data-title="Lapang parkir" data-toggle="tooltip" title="Klik untuk Upload">
-                            <i class="fa fa-cloud-upload"></i>
-                        </button>
-                    </div> -->
                     
                     <!-- Task Sub-Element "Proyek" -->
                     <div class="card panel">
@@ -98,8 +87,8 @@
                                         <i class="fa fa-angle-down"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_task_modal">Edit</a>
-                                        <a class="dropdown-item" href="#">Delete</a>
+                                        <a class="dropdown-item" href="javascript:void(0)" onclick="edit_subElemenProject()">Edit</a>
+                                        <a class="dropdown-item" href="javascript:void(0)" onclick="hapus_subElProject('sub_elemen')">Hapus</a>
                                     </div>
                                 </div>
                             </div>
@@ -133,7 +122,8 @@
 
                 <!-- Button Add new Kanban "Subproyek" Task -->
                 <div class="add-new-task">
-                    <a href="javascript:void(0);" data-toggle="modal" data-target="#add_task_modal">Add New Task</a>
+                    <button type="button" onclick="add_subElemenProject()" class="btn btn-light btn-sm btn-block">Tambah Sub-Elemen</button>
+                    <!-- <a href="javascript:void(0);" >Tambah Sub-elemen</a> -->
                 </div>
             </div>
             <!-- End "Subproyek" Board -->
