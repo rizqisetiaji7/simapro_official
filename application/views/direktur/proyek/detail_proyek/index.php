@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="col-12 col-sm-6 text-sm-right">
-        <a href="<?= site_url('direktur/proyek/chat') ?>" class="btn btn-primary py-2 px-3" data-toggle="tooltip" title="Kirim Pesan"><i class="fa-solid fa-message"></i></a>
+        <a href="<?= site_url('direktur/chat') ?>" class="btn btn-primary py-2 px-3" data-toggle="tooltip" title="Kirim Pesan"><i class="fa-solid fa-message"></i></a>
         <button type="button" class="btn btn-success py-2 px-4 ml-1" data-toggle="modal" data-target="#addSubProject">Buat Sub-proyek</button>
     </div>
 

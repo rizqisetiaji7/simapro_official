@@ -50,15 +50,4 @@ class Proyek extends CI_Controller {
       ];
       $this->theme->view('templates/main', 'pm/proyek/riwayat', $data);
    }
-
-   public function chat() {
-      $data = [
-         'app_name'  => APP_NAME,
-         'author'    => APP_AUTHOR,
-         'title'     => 'Pesan',
-         'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
-         'page'      => 'proyek_chat'
-      ];
-      $this->theme->view('templates/main', 'pm/proyek/chat/chat_room', $data);
-   }
 }

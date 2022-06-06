@@ -33,7 +33,7 @@ class Mylibs {
       return $this->ci->bm->get_join('tb_users', '*', ['user_id' => $id])->row();
    }
 
-   function _sendEmail($emailRecipient, $nameRecipient = '', $token, $dataBody = [] ,$smtpDebug = FALSE) {
+   function _sendEmail($emailRecipient, $nameRecipient = '', $token = '', $dataBody = [] ,$smtpDebug = FALSE) {
       $response = [];
 
       // Send Email Verification Link

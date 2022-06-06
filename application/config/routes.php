@@ -73,6 +73,8 @@ $route['direktur/proyek/daftar_proyek'] = 'direktur/proyek/index';
 $route['direktur/proyek/riwayat'] = 'direktur/proyek/riwayat_proyek';
 $route['direktur/proyek/arsip'] = 'direktur/proyek/arsip_proyek';
 
+$route['direktur/chat'] = 'direktur/chat/index';
+
 
 
 /**
@@ -92,3 +94,5 @@ $route['pm/profile/update_profile']           = 'proyek_manajer/profile/update_p
 $route['pm/profile/remove_profile']           = 'proyek_manajer/profile/remove_profile';
 $route['pm/profile/edit_data']                = 'proyek_manajer/profile/edit_data';
 $route['pm/profile/edit_password']            = 'proyek_manajer/profile/edit_password';
+
+$route['pm/chat']            = 'proyek_manajer/chat/index';
