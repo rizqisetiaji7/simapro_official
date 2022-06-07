@@ -1,11 +1,62 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Proyek extends CI_Controller {
+   private $tb_project = 'tb_project';
+
    public function __construct() {
       parent::__construct();
       is_not_login();
       is_not_direktur();
       $this->load->model('project_model');
+   }
+
+   private function _file_upload_config($filePath = './assets/img') {
+      $config = [
+         'upload_path'   => $filePath,
+         'allowed_types' => 'jpg|jpeg|png|svg',
+         'max_size'      => 4096, // 4MB
+         'encrypt_name'  => TRUE,
+         'remove_spaces' => TRUE
+      ];
+      return $config;
+   }
+
+   private function _rules() {
+      $config = [
+         [
+            'field'  => 'project_name',
+            'label'  => 'Nama proyek',
+            'rules'  => 'trim|required',
+            'errors' => [
+               'required' => '{field} wajib diisi.'
+            ]
+         ],
+         [
+            'field'  => 'ID_pm',
+            'label'  => 'Penanggung jawab',
+            'rules'  => 'trim|required',
+            'errors' => [
+               'required' => '{field} wajib dipilih.'
+            ]
+         ],
+         [
+            'field'  => 'project_start',
+            'label'  => 'Tanggal',
+            'rules'  => 'trim|required',
+            'errors' => [
+               'required' => '{field} wajib Diisi.'
+            ]
+         ],
+         [
+            'field'  => 'project_deadline',
+            'label'  => 'Tanggal',
+            'rules'  => 'trim|required',
+            'errors' => [
+               'required' => '{field} wajib Diisi.'
+            ]
+         ]
+      ];
+      return $config;
    }
 
    public function index() {
@@ -27,15 +78,78 @@ class Proyek extends CI_Controller {
       $this->load->view('direktur/proyek/daftar_proyek/form_tambah_proyek', $data);
    }
 
-   public function detail_proyek() {
-      $data = [
-         'app_name'  => APP_NAME,
-         'author'    => APP_AUTHOR,
-         'title'     => 'Detail Proyek',
-         'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
-         'page'      => 'detail_proyek'
-      ];
-      $this->theme->view('templates/main', 'direktur/proyek/detail_proyek/index', $data);
+   // CRUD List Proyek
+   function tambah() {
+      $message = [];
+      $post = $this->input->post(NULL, TRUE);
+
+      $this->form_validation->set_rules($this->_rules());
+
+      if ($this->form_validation->run() == FALSE) {
+         $message = [
+            'status'    => 'validation_error',
+            'message'   => [
+               ['field' => 'project_name', 'err_message' => form_error('project_name', '<span>','</span>')],
+               ['field' => 'ID_pm', 'err_message' => form_error('ID_pm', '<span>','</span>')],
+               ['field' => 'project_start', 'err_message' => form_error('project_start', '<span>','</span>')],
+               ['field' => 'project_deadline', 'err_message' => form_error('project_deadline', '<span>','</span>')],
+            ]
+         ];
+      } else {
+         $data = [
+            'ID_pm'                 => $post['ID_pm'],
+            'ID_company'            => user_company()->company_id,
+            'project_code_ID'       => urldecode(base64_decode($post['project_code_ID'])),
+            'project_name'          => $post['project_name'],
+            'project_address'       => $post['project_address'],
+            'project_description'   => $post['project_description'],
+            'project_start'         => $post['project_start'],
+            'project_deadline'      => $post['project_deadline'],
+            'project_progress'      => 0,
+            'created'               => date('Y-m-d H:i:s', now('Asia/Jakarta'))
+         ];
+         
+         $this->upload->initialize($this->_file_upload_config('./uploads/thumbnail'));
+         // Upload File Thumbnail Image
+         if (@$_FILES['profile_image']['name'] != NULL) {
+            if ($this->upload->do_upload('profile_image')) {
+               $data['project_thumbnail'] = $this->upload->data('file_name');
+               $this->bm->save($this->tb_project, $data);
+
+               if ($this->db->affected_rows() > 0) {
+                  $message = [
+                     'status'    => 'success',
+                     'message'   => 'Data proyek berhasil tersimpan'
+                  ];
+               } else {
+                  $message = [
+                     'status'    => 'failed',
+                     'message'   => 'Oops! Maaf data proyek gagal disimpan.'
+                  ];
+               }
+            } else {
+               $message = [
+                  'status'    => 'failed',
+                  'message'   => 'Oops! Maaf data proyek gagal disimpan.'
+               ];
+            }
+         } else {
+            $data['project_thumbnail'] = 'placeholder.jpg';
+            $this->bm->save($this->tb_project, $data);
+            if ($this->db->affected_rows() > 0) {
+               $message = [
+                  'status'    => 'success',
+                  'message'   => 'Data proyek berhasil tersimpan'
+               ];
+            } else {
+               $message = [
+                  'status'    => 'failed',
+                  'message'   => 'Oops! Maaf data proyek gagal disimpan.'
+               ];
+            }
+         }  
+      }
+      $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
    public function riwayat_proyek() {
@@ -58,5 +172,45 @@ class Proyek extends CI_Controller {
          'page'      => 'arsip_proyek'
       ];
       $this->theme->view('templates/main', 'direktur/proyek/arsip', $data);
+   }
+
+   function arsip_process() {
+      $message = [];
+      $code_id = urldecode(base64_decode($this->input->post('project_code', TRUE)));
+      $this->bm->update($this->tb_project, ['project_status' => 'archive'], ['project_code_ID' => $code_id]);
+      if ($this->db->affected_rows() > 0) {
+         $message = [
+            'status'    => 'success',
+            'message'   => 'Proyek telah berhasil diarsipkan.'
+         ];
+      } else {
+         $message = [
+            'status'    => 'failed',
+            'message'   => 'Oops! Proyek gagal disimpan sebagai arsip'
+         ];
+      }
+      $this->output->set_content_type('application/json')->set_output(json_encode($message));
+   }
+
+   public function detail_proyek($company_id, $project_code_ID) {
+      $project = $this->bm->get($this->tb_project, '*', [
+         'ID_company'      => $company_id, 
+         'project_code_ID' => $project_code_ID
+      ])->row();
+
+      $subproject = $this->project_model->get_subproject([
+         'ID_project' => $project->project_id
+      ]);
+
+      $data = [
+         'app_name'     => APP_NAME,
+         'author'       => APP_AUTHOR,
+         'title'        => 'Detail Proyek',
+         'desc'         => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
+         'project'      => $project,
+         'subproject'   => $subproject,
+         'page'         => 'detail_proyek'
+      ];
+      $this->theme->view('templates/main', 'direktur/proyek/detail_proyek/index', $data);
    }
 }

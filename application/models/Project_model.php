@@ -2,6 +2,8 @@
 
 class Project_model extends CI_Model {
 	private $tb_project = 'tb_project';
+	private $tb_subproject = 'tb_subproject';
+	private $tb_project_task = 'tb_project_task';
 	private $tb_company = 'tb_company';
 	private $tb_users = 'tb_users';
 
@@ -18,6 +20,21 @@ class Project_model extends CI_Model {
 		$this->db->or_where('tb_project.project_status', 'review');
 		$this->db->or_where('tb_project.project_status', 'on_progress');
 		$this->db->or_where('tb_project.project_status', 'revision');
+		return $this->db->get();
+	}
+
+	public function get_subproject($project_id) {
+		$this->db->from($this->tb_subproject);
+		$this->db->join('tb_priority', 'tb_subproject.ID_priority=tb_priority.priority_id');
+		// $this->db->join('tb_project', 'tb_subproject.ID_project=tb_project.project_id');
+		$this->db->where($project_id);
+		return $this->db->get();
+	}
+
+	public function get_subelemen_project($subproject_id) {
+		$this->db->from($this->$tb_project_task);
+		$this->db->join('tb_priority', 'tb_project_task.ID_priority=tb_priority.priority_id');
+		$this->db->where($subproject_id);
 		return $this->db->get();
 	}
 }

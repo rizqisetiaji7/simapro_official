@@ -44,7 +44,7 @@
                             <tr>
                                 <td class="text-nowrap">
                                     <div class="d-flex align-items-center">
-                                        <img src="<?= base_url('assets/img/profiles/avatar-02.jpg') ?>" class="rounded-lg" width="50" alt="">
+                                        <img src="<?= $pro->project_thumbnail == 'placeholder.jpg' ? base_url('assets/img/placeholder.jpg') : base_url('uploads/thumbnail/'.$pro->project_thumbnail) ?>" class="rounded-lg" width="50">
                                         <div class="ml-3">
                                             <h4 class="mb-0"><?= $pro->project_name ?></h4>
                                             <p class="mb-0 text-xs text-muted"><?= $pro->project_address ?></p>
@@ -53,7 +53,7 @@
                                 </td>
                                 <td class="text-nowrap">
                                     <div class="d-flex align-items-center">
-                                        <img src="<?= base_url('assets/img/profiles/avatar-02.jpg') ?>" class="rounded-lg" width="40" alt="">
+                                        <img src="<?= $pro->user_profile == 'default-avatar.jpg' ? base_url('assets/img/default-avatar.jpg') : base_url('uploads/profile/'.$pro->user_profile) ?>" class="rounded-lg" width="40">
                                         <div class="ml-3">
                                             <h5 class="mb-0"><?= $pro->user_fullname ?></h5>
                                             <p class="mb-0 text-xs text-secondary"><?= $pro->comp_name ?></p>
@@ -74,7 +74,6 @@
                                             echo '<span class="badge bg-inverse-success p-2">Berjalan</span>';
                                         }
                                     ?>
-                                    <!-- <span class="badge bg-inverse-danger p-2">Tertunda</span> -->
                                 </td>
                                 <td class="text-nowrap"><?= datetimeIDN($pro->project_deadline) ?></td>
                                 <td class="text-nowrap">
@@ -95,8 +94,8 @@
                                     </div>
                                 </td>
                                 <td class="text-nowrap text-center">
-                                    <button type="button" onclick="archiveProject(<?= urlencode(base64_encode($pro->projectID)) ?>)" class="btn btn-sm my-1 btn-info" data-toggle="tooltip" title="Arsipkan"><i class="la la-archive"></i></button>
-                                    <a href="<?= site_url('direktur/proyek/detail_proyek/'.urlencode(base64_encode($pro->projectID))) ?>" class="btn btn-sm my-1 btn-primary text-nowrap" data-toggle="tooltip" title="Lihat Proyek">Detail</a>
+                                    <button type="button" onclick="archiveProject(<?= "'".urlencode(base64_encode($pro->projectID))."'" ?>)" class="btn btn-sm my-1 btn-info" data-toggle="tooltip" title="Arsipkan"><i class="la la-archive"></i></button>
+                                    <a href="<?= site_url('direktur/proyek/detail_proyek/'.$pro->company_id.'/'.$pro->projectID) ?>" class="btn btn-sm my-1 btn-primary text-nowrap" data-toggle="tooltip" title="Lihat Proyek">Detail</a>
                                 </td>
                             </tr>
                             <?php } ?>

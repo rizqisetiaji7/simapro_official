@@ -103,7 +103,8 @@ $autoload['helper'] = [
 	'date', 
 	'security', 
 	'string', 
-	'base'
+	'base',
+	'project'
 ];
 
 /*
