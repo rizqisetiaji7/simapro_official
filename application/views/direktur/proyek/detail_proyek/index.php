@@ -45,7 +45,7 @@
                     <span class="d-inline-block text-danger mb-1 small"><i class="fas fa-user mr-2"></i>Penanggung Jawab Tidak Terdaftar</span>
                 <?php } ?>
             </div>
-            <button type="button" class="btn btn-sm btn-info" onclick="editProyek(<?= $project->project_id ?>, <?= "'".$project->projectID."'" ?>)" data-toggle="tooltip" title="Edit proyek">
+            <button type="button" class="btn btn-sm btn-info" onclick="editProyek(<?= "'".$project->projectID."'" ?>)" data-toggle="tooltip" title="Edit proyek">
                 <i class="fa fa-pencil"></i>
             </button>
         </div>

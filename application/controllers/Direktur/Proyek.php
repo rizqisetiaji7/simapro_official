@@ -236,4 +236,21 @@ class Proyek extends CI_Controller {
       ];
       $this->theme->view('templates/main', 'direktur/proyek/detail_proyek/index', $data);
    }
+
+   public function form_edit_proyek() {
+      $code_ID = $this->input->post('project_code_ID', TRUE);
+      // $project = $this->bm->get($this->tb_project, '*', ['project_code_ID' => $code_ID])->row();
+      $project = $this->project_model->get_project_detail(user_company()->company_id, $code_ID)->row();
+      $project_manajer = $this->bm->get('tb_users', '*', [
+         'ID_company' => $project->company_id, 
+         'user_role' => 'pm'
+      ])->result();
+
+      $data = [
+         'project'         => $project,
+         'project_manajer' => $project_manajer
+      ];
+
+      $this->load->view('direktur/proyek/detail_proyek/form_edit_proyek', $data);
+   }
 }

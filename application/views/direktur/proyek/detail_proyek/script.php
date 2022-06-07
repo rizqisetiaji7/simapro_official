@@ -16,8 +16,27 @@
         $(this).next().html('');
     });
 
+    // Edit Proyek
+    function editProyek(proyekID) {
+    	title.text('Edit Detail Proyek');
+    	formModal.attr('action', `<?= site_url('direktur/proyek/edit_detail_proyek') ?>`);
+
+    	$.ajax({
+    		url: `<?= site_url('direktur/proyek/form_edit_proyek') ?>`,
+    		method: 'POST',
+    		dataType: 'html',
+    		cache: false,
+    		data: {
+    			project_code_ID: proyekID
+    		},
+    		success: function(data) {
+    			modalBody.html(data);
+    			modal.modal('show');
+    		}
+    	});
+    }
+
     // CRUD Sub Proyek
-	
 	function add_subProject() {
 		title.text('Tambah Sub-Proyek');
 		formModal.attr('action', `<?= site_url('direktur/manajemen_proyek/tambah_subproyek') ?>`);
@@ -120,12 +139,33 @@
       });
 	}
 
+	formModal.on('submit', function(e) {
+		e.preventDefault();
+		$.ajax({
+			url: $(this).attr('action'),
+			method: 'POST',
+			dataType: 'json',
+			processData: false,
+			contentType: false,
+			cache: false,
+			data: new FormData(this),
+			beforeSend: function() {
+				btnSubmit.attr('disabled', true).text('Memproses...');
+			},
+			complete: function() {
+				btnSubmit.attr('disabled', false).text('Simpan');
+			},
+			success: function(data) {
+				console.log(data);
+			}
+		});
+	});
+
 	modal.on('hidden.bs.modal', function() {
 		title.empty();
 		modalDialog.removeClass('modal-lg');
 		modalBody.empty();
 		formModal.removeAttr('action');
 		btnSubmit.text('Simpan');
-		hiddenId.removeAttr('value');
 	});
 </script>
