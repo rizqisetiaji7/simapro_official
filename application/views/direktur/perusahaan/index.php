@@ -113,8 +113,10 @@
 <!-- =========================================  -->
 <div class="row">
     <div class="col-12 mb-3 d-flex align-items-center">
-        <h4 class="mb-0 mr-3">Daftar Projek Manajer</h4>
-        <button class="btn btn-success btn-sm" onclick="addEmployee()"> <i class="la la-plus"></i> Tambah</button>
+        <?php if ($projek_manajer) { ?>
+            <h4 class="mb-0 mr-3">Daftar Projek Manajer</h4>
+            <button class="btn btn-success btn-sm" onclick="addProjectManager()"> <i class="la la-plus"></i> Tambah</button>
+        <?php } ?>
     </div>
 
     <?php if ($projek_manajer) { ?>
@@ -148,7 +150,7 @@
                     <div class="card-footer">
                         <div class="row align-items-center">
                             <div class="col-10 pr-0">
-                                <button type="button" onclick="editPM(<?= "'".urlencode(base64_encode($pm->user_unique_id))."'" ?>, <?= "'".$pm->user_role."'" ?>)" class="btn btn-custom btn-sm btn-block">Edit Profile</button>
+                                <button type="button" onclick="editProjectManager(<?= "'".$pm->user_unique_id."'" ?>, <?= "'".$pm->user_role."'" ?>)" class="btn btn-custom btn-sm btn-block">Edit Profile</button>
                             </div>
                             <div class="col-2 text-center">
                                 <div class="dropdown dropdown-action">
@@ -156,8 +158,7 @@
                                         <i class="fa-solid fa-ellipsis-vertical"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" onclick="tampilDetailPM(<?= "'".urlencode(base64_encode($pm->user_unique_id))."'" ?>, <?= "'".$pm->user_role."'" ?>)" href="javascript:void(0)">Detail</a>
-                                        <a class="dropdown-item" onclick="ubahPasswordPM(<?= "'".urlencode(base64_encode($pm->user_unique_id))."'" ?>, <?= "'".$pm->user_role."'" ?>)" href="javascript:void(0)">Ganti password</a>
+                                        <a class="dropdown-item" onclick="changePasswordPM(<?= "'".$pm->user_unique_id."'" ?>, <?= "'".$pm->user_role."'" ?>)" href="javascript:void(0)">Ganti password</a>
                                         <a class="dropdown-item text-danger" href="javascript:void(0)">Hapus</a>
                                     </div>
                                 </div>
@@ -168,10 +169,15 @@
             </div>
         <?php } ?>
     <?php } else { ?>
-        <div class="col-12">
-            <p class="text-muted">Data projek manajer belum tersedia. Silahkan klik tombol <strong class="text-success">Tambah</strong> untuk menambahkan data projek manajer.</p>
+        <div class="col-12 my-4 text-center">
+            <img src="<?= base_url('assets/img/blank.png') ?>" width="120" class="mb-3">
+            <h4 class="mb-1">Data proyek manajer belum tersedia.</h4>
+            <p class="small text-muted">Klik tombol berikut untuk membuat data Proyek Manajer.</p>
+            <button type="button" class="btn btn-sm btn-success py-2 px-4 my-2" onclick="addProjectManager()">Tambah Proyek Manajer</button>
         </div>
     <?php } ?>
 </div>
 
 <!-- Script And Modal -->
+<?php $this->view('direktur/perusahaan/modal') ?>
+<?php $this->view('direktur/perusahaan/script') ?>

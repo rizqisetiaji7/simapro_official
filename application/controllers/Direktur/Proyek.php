@@ -106,6 +106,7 @@ class Proyek extends CI_Controller {
             'project_start'         => $post['project_start'],
             'project_deadline'      => $post['project_deadline'],
             'project_progress'      => 0,
+            'project_archive'       => '0',
             'created'               => date('Y-m-d H:i:s', now('Asia/Jakarta'))
          ];
          
@@ -164,20 +165,22 @@ class Proyek extends CI_Controller {
    }
 
    public function arsip_proyek() {
+      $archived = $this->project_model->get_project_archive(user_company()->company_id)->result();
       $data = [
          'app_name'  => APP_NAME,
          'author'    => APP_AUTHOR,
          'title'     => 'Arsip Proyek',
          'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
+         'archived'  => $archived,
          'page'      => 'arsip_proyek'
       ];
-      $this->theme->view('templates/main', 'direktur/proyek/arsip', $data);
+      $this->theme->view('templates/main', 'direktur/proyek/arsip/index', $data);
    }
 
    function arsip_process() {
       $message = [];
       $code_id = urldecode(base64_decode($this->input->post('project_code', TRUE)));
-      $this->bm->update($this->tb_project, ['project_status' => 'archive'], ['project_code_ID' => $code_id]);
+      $this->bm->update($this->tb_project, ['project_archive' => 1], ['project_code_ID' => $code_id]);
       if ($this->db->affected_rows() > 0) {
          $message = [
             'status'    => 'success',
@@ -192,12 +195,32 @@ class Proyek extends CI_Controller {
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
-   public function detail_proyek($company_id, $project_code_ID) {
-      $project = $this->bm->get($this->tb_project, '*', [
-         'ID_company'      => $company_id, 
-         'project_code_ID' => $project_code_ID
-      ])->row();
+   function hapus_arsip() {
+      $message = [];
+      $project_ID = $this->input->post('project_ID', TRUE);
+      $this->bm->update($this->tb_project, [
+         'project_archive' => '0', 
+         'project_status' => 'on_progress'
+      ], [
+         'project_code_ID' => $project_ID
+      ]);
 
+      if ($this->db->affected_rows() > 0) {
+         $message = [
+            'status'    => 'success',
+            'message'   => 'Proyek telah berhasil dikembalikan ke daftar proyek.'
+         ];
+      } else {
+         $message = [
+            'status'    => 'failed',
+            'message'   => 'Oops! Proses gagal, silahkan coba lagi!'
+         ];
+      }
+      $this->output->set_content_type('application/json')->set_output(json_encode($message));
+   }
+
+   public function detail_proyek($company_id, $project_code_ID) {
+      $project = $this->project_model->get_project_detail($company_id, $project_code_ID)->row();
       $subproject = $this->project_model->get_subproject([
          'ID_project' => $project->project_id
       ]);

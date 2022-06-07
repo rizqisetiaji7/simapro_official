@@ -12,14 +12,40 @@
     </div>    
 </div> -->
 
+<!-- <div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <?php 
+                    var_dump($project);
+                ?>
+            </div>
+        </div>
+    </div>    
+</div> -->
+
 <div class="row">
     <div class="col-12 col-sm-6">
         <div class="d-flex flex-row align-items-start justify-content-between justify-content-sm-start">
             <div class="mr-3">
                 <h4 class="mb-0"><?= $project->project_name ?></h4>
-                <p class="text-secondary text-sm"><?= $project->project_address ?></p>
+                <p class="text-secondary mb-2"><?= $project->project_address ?></p>
+                <?php if ($project->user_id != NULL) { ?>
+                    <span class="d-inline-block text-primary mb-1 small">Penanggung Jawab</span>
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="profile-pic mr-2" style="width: 40px !important; height: 40px !important;">
+                            <img src="<?= $project->user_profile == 'default-avatar.jpg' ? base_url('assets/img/default-avatar.jpg') : base_url('uploads/profile/'.$project->user_profile) ?>">
+                        </div>
+                        <p class="mb-0">
+                            <?= $project->user_fullname ?> <br>
+                            <span class="d-block text-muted small"><?= $project->user_role == 'pm' ? 'Projek Manajer' : NULL ?></span>
+                        </p>
+                    </div>
+                <?php } else { ?>
+                    <span class="d-inline-block text-danger mb-1 small"><i class="fas fa-user mr-2"></i>Penanggung Jawab Tidak Terdaftar</span>
+                <?php } ?>
             </div>
-            <button type="button" class="btn btn-sm btn-info" onclick="editProyek(<?= $project->project_id ?>, <?= "'".$project->project_code_ID."'" ?>)" data-toggle="tooltip" title="Edit proyek">
+            <button type="button" class="btn btn-sm btn-info" onclick="editProyek(<?= $project->project_id ?>, <?= "'".$project->projectID."'" ?>)" data-toggle="tooltip" title="Edit proyek">
                 <i class="fa fa-pencil"></i>
             </button>
         </div>
@@ -86,125 +112,127 @@
 
 <div class="kanban-board card mb-0">
     <div class="card-body">
+        <?php if ($subproject->num_rows() > 0) { ?>
         <div class="kanban-cont">
-            <?php if ($subproject->num_rows() > 0) { ?>
-                <!-- "Subproyek" Board -->
-                <?php foreach ($subproject->result() as $sp) { ?>
-                <div class="kanban-list <?= $sp->panel_color ?>">
-                    <!-- Kanban Header -->
-                    <div class="kanban-header">
-                        <span class="status-title">
-                            <span class="mr-2"><?= $sp->subproject_name ?></span>
-                            <span class="badge"><?= $sp->priority_name ?></span>
-                        </span>
-                        <div class="kanban-header-right">
-                            <div class="dropdown kanban-action">
-                                <a href="" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="javascript:void(0)" onclick="edit_subProject()">Edit</a>
-                                    <a class="dropdown-item" href="javascript:void(0)" onclick="hapus_subElProject('subproject')" >Hapus</a>
-                                </div>
+            <!-- "Subproyek" Board -->
+            <?php foreach ($subproject->result() as $sp) { ?>
+            <div class="kanban-list <?= $sp->panel_color ?>">
+                <!-- Kanban Header -->
+                <div class="kanban-header">
+                    <span class="status-title">
+                        <span class="mr-2"><?= $sp->subproject_name ?></span>
+                        <span class="badge"><?= $sp->priority_name ?></span>
+                    </span>
+                    <div class="kanban-header-right">
+                        <div class="dropdown kanban-action">
+                            <a href="" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="javascript:void(0)" onclick="edit_subProject()">Edit</a>
+                                <a class="dropdown-item" href="javascript:void(0)" onclick="hapus_subElProject('subproject')" >Hapus</a>
                             </div>
                         </div>
                     </div>
-                    <!-- End Kanban Header -->
+                </div>
+                <!-- End Kanban Header -->
 
-                    <?php $total_subelemen = subelemen_project($sp->subproject_id)->num_rows(); ?>
-                    <!-- "Subproyek" Content -->
-                    <div class="kanban-wrap">
-                        <div class="pro-progress mb-3">
-                            <div class="pro-progress-bar">
-                                <h5>Progres</h5>
-                                <div class="progress">
-                                    <div class="progress-bar bg-success" role="progressbar" <?= 'style="width: '.subproject_progress($sp->subproject_id, $total_subelemen).'%;"' ?>></div>
-                                </div>
-                                <span><?= subproject_progress($sp->subproject_id, $total_subelemen).'%' ?></span>
+                <?php $total_subelemen = subelemen_project($sp->subproject_id)->num_rows(); ?>
+                <!-- "Subproyek" Content -->
+                <div class="kanban-wrap">
+                    <div class="pro-progress mb-3">
+                        <div class="pro-progress-bar">
+                            <h5>Progres</h5>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" role="progressbar" <?= 'style="width: '.subproject_progress($sp->subproject_id, $total_subelemen).'%;"' ?>></div>
                             </div>
+                            <span><?= subproject_progress($sp->subproject_id, $total_subelemen).'%' ?></span>
                         </div>
+                    </div>
 
-                        <?php if ($total_subelemen > 0) { ?>
-                            <?php foreach(subelemen_project($sp->subproject_id)->result() as $se) { ?>
-                                <!-- Task Sub-Element "Proyek" -->
-                                <div class="card panel">
-                                    <div class="kanban-box ui-sortable-handle">
-                                        <div class="task-board-header">
-                                            <span class="status-title"><?= $se->project_task_name ?></span>
-                                            <div class="dropdown kanban-task-action">
-                                                <a href="" data-toggle="dropdown">
-                                                    <i class="fa fa-angle-down"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right">
-                                                    <a class="dropdown-item" href="javascript:void(0)" onclick="edit_subElemenProject()">Edit</a>
-                                                    <a class="dropdown-item" href="javascript:void(0)" onclick="hapus_subElProject('sub_elemen')">Hapus</a>
-                                                </div>
+                    <?php if ($total_subelemen > 0) { ?>
+                        <?php foreach(subelemen_project($sp->subproject_id)->result() as $se) { ?>
+                            <!-- Task Sub-Element "Proyek" -->
+                            <div class="card panel">
+                                <div class="kanban-box ui-sortable-handle">
+                                    <div class="task-board-header">
+                                        <span class="status-title"><?= $se->project_task_name ?></span>
+                                        <div class="dropdown kanban-task-action">
+                                            <a href="" data-toggle="dropdown">
+                                                <i class="fa fa-angle-down"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="javascript:void(0)" onclick="edit_subElemenProject()">Edit</a>
+                                                <a class="dropdown-item" href="javascript:void(0)" onclick="hapus_subElProject('sub_elemen')">Hapus</a>
                                             </div>
-                                        </div>
-                                        <div class="task-board-body">
-                                            <div class="kanban-info">
-                                                <div class="progress progress-xs">
-                                                    <div class="progress-bar" role="progressbar" <?= 'style="width: '.$se->project_task_progress.'%"' ?> aria-valuenow="<?= $se->project_task_progress ?>" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                                <span><?= $se->project_task_progress >= 100 ? 100 : $se->project_task_progress ?>%</span>
-                                            </div>
-                                            <div class="kanban-footer mb-3">
-                                                <span class="task-info-cont">
-                                                    <span class="task-date"><i class="fa-solid fa-clock"></i> <?= datetimeIDN($se->project_task_deadline) ?></span>
-                                                    <span class="task-priority badge <?= $se->priority_color ?>"><?= $se->priority_name ?></span>
-                                                </span>
-                                                <span class="task-users">
-                                                    <span class="task-date"><i class="fa-solid fa-map-pin"></i> Status</span>
-                                                    <?php 
-                                                        if ($se->project_task_status == NULL) {
-                                                            echo '<span class="task-priority badge bg-inverse-light"><span class="text-dark">Belum ada</span></span>';
-                                                        } else if ($se->project_task_status == 'pending') {
-                                                            echo '<span class="task-priority badge bg-inverse-danger">Ditunda</span>';
-                                                        } else if ($se->project_task_status == 'onprogress') {
-                                                            echo '<span class="task-priority badge bg-inverse-info">Berjalan</span>';
-                                                        } else if ($se->project_task_status == 'finish') {
-                                                            echo '<span class="task-priority badge bg-inverse-success">Selesai</span>';
-                                                        }
-                                                    ?>
-                                                </span>
-                                            </div>
-                                            <?php if ($se->updated != NULL) { ?>
-                                                <div class="d-block text-center">
-                                                    <span class="text-xs text-muted small">Diperbarui: <strong><?= datetimeIDN($se->updated, TRUE) ?></strong></span>
-                                                </div>
-                                            <?php } ?>
                                         </div>
                                     </div>
+                                    <div class="task-board-body">
+                                        <div class="kanban-info">
+                                            <div class="progress progress-xs">
+                                                <div class="progress-bar" role="progressbar" <?= 'style="width: '.$se->project_task_progress.'%"' ?> aria-valuenow="<?= $se->project_task_progress ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <span><?= $se->project_task_progress >= 100 ? 100 : $se->project_task_progress ?>%</span>
+                                        </div>
+                                        <div class="kanban-footer mb-3">
+                                            <span class="task-info-cont">
+                                                <span class="task-date"><i class="fa-solid fa-clock"></i> <?= datetimeIDN($se->project_task_deadline) ?></span>
+                                                <span class="task-priority badge <?= $se->priority_color ?>"><?= $se->priority_name ?></span>
+                                            </span>
+                                            <span class="task-users">
+                                                <span class="task-date"><i class="fa-solid fa-map-pin"></i> Status</span>
+                                                <?php 
+                                                    if ($se->project_task_status == NULL) {
+                                                        echo '<span class="task-priority badge bg-inverse-light"><span class="text-dark">Belum ada</span></span>';
+                                                    } else if ($se->project_task_status == 'pending') {
+                                                        echo '<span class="task-priority badge bg-inverse-danger">Ditunda</span>';
+                                                    } else if ($se->project_task_status == 'onprogress') {
+                                                        echo '<span class="task-priority badge bg-inverse-info">Berjalan</span>';
+                                                    } else if ($se->project_task_status == 'finish') {
+                                                        echo '<span class="task-priority badge bg-inverse-success">Selesai</span>';
+                                                    }
+                                                ?>
+                                            </span>
+                                        </div>
+                                        <?php if ($se->updated != NULL) { ?>
+                                            <div class="d-block text-center">
+                                                <span class="text-xs text-muted small">Diperbarui: <strong><?= datetimeIDN($se->updated, TRUE) ?></strong></span>
+                                            </div>
+                                        <?php } ?>
+                                    </div>
                                 </div>
-                                <!-- End Task Sub-Element "Proyek" -->
-                            <?php } ?>
-                        <?php } else { ?>
-                        <div class="text-center">
-                            <p class="mb-0 text-secondary small">List Belum tersedia</p>
-                        </div>
+                            </div>
+                            <!-- End Task Sub-Element "Proyek" -->
                         <?php } ?>
-
+                    <?php } else { ?>
+                    <div class="text-center">
+                        <p class="mb-0 text-secondary small">List Belum tersedia</p>
                     </div>
-                    <!-- End "Subproyek" Content -->
+                    <?php } ?>
 
-                    <!-- Button Add new Kanban "Subproyek" Task -->
-                    <div class="add-new-task">
-                        <button type="button" onclick="add_subElemenProject()" class="btn btn-light btn-sm btn-block"><i class="fas fa-plus mr-2 small"></i>Buat List</button>
-                        <!-- <a href="javascript:void(0);" >Tambah Sub-elemen</a> -->
-                    </div>
+                </div>
+                <!-- End "Subproyek" Content -->
 
-                    <!-- <div class="p-3">
-                        <p><?= 'Sub-project ID : '. $sp->subproject_id ?></p>
-                        <p><?= 'Total sub_elemen : '. $total_subelemen; ?></p>
-                        <p><?= 'Progress : '. subproject_progress($sp->subproject_id, $total_subelemen) ?></p>
-                    </div> -->
+                <!-- Button Add new Kanban "Subproyek" Task -->
+                <div class="add-new-task">
+                    <button type="button" onclick="add_subElemenProject()" class="btn btn-light btn-sm btn-block"><i class="fas fa-plus mr-2 small"></i>Buat List</button>
+                    <!-- <a href="javascript:void(0);" >Tambah Sub-elemen</a> -->
                 </div>
-                <?php } ?>
-                <!-- End "Subproyek" Board -->
-            <?php } else { ?>
-                <div class="text-center">
-                    <p class="text-muted">Subproject belum tersedia.</p>
-                </div>
+
+                <!-- <div class="p-3">
+                    <p><?= 'Sub-project ID : '. $sp->subproject_id ?></p>
+                    <p><?= 'Total sub_elemen : '. $total_subelemen; ?></p>
+                    <p><?= 'Progress : '. subproject_progress($sp->subproject_id, $total_subelemen) ?></p>
+                </div> -->
+            </div>
             <?php } ?>
+            <!-- End "Subproyek" Board -->
         </div>
+        <?php } else { ?>
+            <div class="text-center py-5">
+                <img src="<?= base_url('assets/img/blank.png') ?>" width="120" class="mb-3">
+                <h3 class="mb-1">Sub-Proyek belum tersedia.</h3>
+                <p class="small text-muted">Silahkan klik tombol <strong class="text-success">Buat Sub-Proyek</strong>, untuk membuat sub baru.</p>
+            </div>
+        <?php } ?>
     </div>
 </div>
 

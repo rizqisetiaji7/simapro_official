@@ -4,7 +4,6 @@
     const modalDialog = $('#modalCompany .modal-dialog');
     const modalBody = $('#modalCompany .modal-body');
     const formModal = $('#form_modal_company');
-    const hiddenId = $('#formCompany_id');
     const btnSubmit = $('#btnCompany-submit');
 
     $(document).on('keyup', '.form-control', function(e) {
@@ -17,64 +16,123 @@
         $(this).next().html('');
     });
 
-
     // Add Data Company
-    function addCompanyModal(maincompid=null) {
-        title.text('Tambah anak perusahaan');
-        modalDialog.addClass('modal-lg');
-        formModal.attr('action','tambah');
-        hiddenId.attr('value', maincompid);
+    // function addCompanyModal(maincompid=null) {
+    //     title.text('Tambah anak perusahaan');
+    //     modalDialog.addClass('modal-lg');
+    //     formModal.attr('action','tambah');
+    //     hiddenId.attr('value', maincompid);
 
+    //     $.ajax({
+    //         url: `<?= site_url('direktur/perusahaan/show_form') ?>`,
+    //         method: 'POST',
+    //         dataType: 'html',
+    //         data: {modal_type: 'add'},
+    //         success: function(data) {
+    //             modalBody.html(data);
+    //             modal.modal('show');
+    //         },
+    //         error: function(xhr) {
+    //             alert('Oops! Terjadi kesalahan pada server! silahkan coba beberapa saat.');
+    //             modal.modal('hide');
+    //         }
+    //     });
+    // }
+
+    // function editCompanyModal(company_id, comp_parent_id) {
+    //     title.text('Ubah data anak perusahaan');
+    //     modalDialog.addClass('modal-lg');
+    //     formModal.attr('action','edit');
+    //     btnSubmit.text('Update');
+    //     hiddenId.attr('value', company_id);
+
+    //     $.ajax({
+    //         url: `<?= site_url('direktur/perusahaan/show_form') ?>`,
+    //         method: 'POST',
+    //         dataType: 'html',
+    //         data: {
+    //             modal_type: 'edit',
+    //             company_id: company_id,
+    //             parent_id: comp_parent_id
+    //         },
+    //         success: function(data) {
+    //             modalBody.html(data);
+    //             modal.modal('show');
+    //         },
+    //         error: function(xhr) {
+    //             alert('Oops! Terjadi kesalahan pada server! silahkan coba beberapa saat.');
+    //             modal.modal('hide');
+    //         }
+    //     });
+    // }
+
+    // Choose file from computer
+    chooseFile('#chooseFileImage', '#inputProfile');
+
+    $(document).on('change', '#inputProfile', function() {
+        if (this.files && this.files[0]) {
+            // Get and display filename
+            $('#profileFileName').removeClass('d-none');
+            $('#profileFileName').addClass('mb-3').html(`<p class="mb-0 small text-muted">Gambar: <strong class="text-dark">${this.files[0].name}</strong></p>`);
+        }
+    });
+    
+    function addProjectManager() {
+        title.text('Tambah Proyek Manajer');
+        formModal.attr('action', `<?= site_url('direktur/proyek_manajer/tambah') ?>`);
         $.ajax({
-            url: `<?= site_url('direktur/perusahaan/show_form') ?>`,
-            method: 'POST',
+            url: `<?= site_url('direktur/proyek_manajer/show_form_add') ?>`,
             dataType: 'html',
-            data: {modal_type: 'add'},
+            cache: false,
             success: function(data) {
                 modalBody.html(data);
                 modal.modal('show');
-            },
-            error: function(xhr) {
-                alert('Oops! Terjadi kesalahan pada server! silahkan coba beberapa saat.');
-                modal.modal('hide');
             }
         });
     }
 
-    function editCompanyModal(company_id, comp_parent_id) {
-        title.text('Ubah data anak perusahaan');
-        modalDialog.addClass('modal-lg');
-        formModal.attr('action','edit');
-        btnSubmit.text('Update');
-        hiddenId.attr('value', company_id);
-
+    function editProjectManager(user_unique_id, user_role) {
+        title.text('Edit Proyek Manajer');
+        formModal.attr('action', `<?= site_url('direktur/proyek_manajer/edit') ?>`);
         $.ajax({
-            url: `<?= site_url('direktur/perusahaan/show_form') ?>`,
-            method: 'POST',
+            url: `<?= site_url('direktur/proyek_manajer/show_form_edit') ?>`,
             dataType: 'html',
+            method: 'POST',
+            cache: false,
             data: {
-                modal_type: 'edit',
-                company_id: company_id,
-                parent_id: comp_parent_id
+                user_unique_id: user_unique_id, 
+                user_role: user_role
             },
             success: function(data) {
                 modalBody.html(data);
                 modal.modal('show');
+            }
+        });
+    }
+
+    function changePasswordPM(unique_id, user_role) {
+        title.text('Ubah Password');
+        formModal.attr('action', `<?= site_url('direktur/proyek_manajer/ubah_password') ?>`);
+        $.ajax({
+            url: `<?= site_url('direktur/proyek_manajer/show_form_password') ?>`,
+            dataType: 'html',
+            method: 'POST',
+            cache: false,
+            data: {
+                unique_id: unique_id, 
+                user_role: user_role
             },
-            error: function(xhr) {
-                alert('Oops! Terjadi kesalahan pada server! silahkan coba beberapa saat.');
-                modal.modal('hide');
+            success: function(data) {
+                modalBody.html(data);
+                modal.modal('show');
             }
         });
     }
 
     formModal.on('submit', function(e) {
         e.preventDefault();
-        let url = `<?= site_url('direktur/perusahaan/') ?>`;
-        url += `${$(this).attr('action')}`;
-
         $.ajax({
-            url: url,
+            url: $(this).attr('action'),
             method: 'POST',
             dataType: 'json',
             cache: false,
@@ -88,7 +146,6 @@
                 btnSubmit.attr('disabled', false).text('Simpan')
             },
             success: function(data) {
-                // console.log(data);
                 if (data.status == 'validation_error') {
                     for (let i = 0; i < data.message.length; i++) {
                         if (data.message[i].err_message == '') {
@@ -136,6 +193,5 @@
         modalBody.empty();
         formModal.removeAttr('action');
         btnSubmit.text('Simpan');
-        hiddenId.removeAttr('value');
     });
 </script>

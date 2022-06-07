@@ -10,7 +10,6 @@
         ...
       </div>
       <div class="modal-footer">
-        <input type="hidden" id="formCompany_id" name="company_id" value="">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Batal">Batal</button>
         <button type="submit" class="btn btn-primary" id="btnCompany-submit">Simpan</button>
       </div>

@@ -16,12 +16,6 @@
     <?php } ?>
 </div>
 
-<div class="row mb-4">
-    <div class="col-12">
-        <?php var_dump($projects) ?>
-    </div>
-</div>
-
 <?php if ($projects) { ?>
 <div class="row">
     <div class="col-12 d-flex">
@@ -52,6 +46,7 @@
                                     </div>
                                 </td>
                                 <td class="text-nowrap">
+                                    <?php if ($pro->user_id != NULL) { ?>
                                     <div class="d-flex align-items-center">
                                         <img src="<?= $pro->user_profile == 'default-avatar.jpg' ? base_url('assets/img/default-avatar.jpg') : base_url('uploads/profile/'.$pro->user_profile) ?>" class="rounded-lg" width="40">
                                         <div class="ml-3">
@@ -59,6 +54,9 @@
                                             <p class="mb-0 text-xs text-secondary"><?= $pro->comp_name ?></p>
                                         </div>
                                     </div>
+                                    <?php } else { ?>
+                                        <p class="mb-0 text-danger small text-center">Tidak Terdaftar</p>
+                                    <?php } ?>
                                 </td>
                                 <td class="text-nowrap">
                                     <?php 
@@ -69,9 +67,9 @@
                                         } else if ($pro->project_status == 'revision') {
                                             echo '<span class="badge bg-inverse-warning p-2">Direvisi</span>';
                                         } else if ($pro->project_status == 'review') {
-                                            echo '<span class="badge bg-inverse-info p-2">Diperiksa</span>';
+                                            echo '<span class="badge bg-inverse-primary p-2">Diperiksa</span>';
                                         } else if ($pro->project_status == 'on_progress') {
-                                            echo '<span class="badge bg-inverse-success p-2">Berjalan</span>';
+                                            echo '<span class="badge bg-inverse-info p-2">Berjalan</span>';
                                         }
                                     ?>
                                 </td>
@@ -94,7 +92,9 @@
                                     </div>
                                 </td>
                                 <td class="text-nowrap text-center">
+                                    <?php if($pro->project_status == 'pending') { ?>
                                     <button type="button" onclick="archiveProject(<?= "'".urlencode(base64_encode($pro->projectID))."'" ?>)" class="btn btn-sm my-1 btn-info" data-toggle="tooltip" title="Arsipkan"><i class="la la-archive"></i></button>
+                                    <?php } ?>
                                     <a href="<?= site_url('direktur/proyek/detail_proyek/'.$pro->company_id.'/'.$pro->projectID) ?>" class="btn btn-sm my-1 btn-primary text-nowrap" data-toggle="tooltip" title="Lihat Proyek">Detail</a>
                                 </td>
                             </tr>
@@ -109,9 +109,10 @@
 <?php } else { ?>
 <div class="row">
     <div class="col-12 my-5 text-center">
-        <h4>Proyek belum tersedia.</h4>
-        <p>Klik tombol tambah berikut untuk membuat proyek baru.</p>
-        <button type="button" class="btn btn-success py-2 px-4 my-2" data-toggle="modal" data-target="#addProject-modal">Tambah Proyek</button>
+        <img src="<?= base_url('assets/img/blank.png') ?>" width="120" class="mb-3">
+        <h3 class="mb-1">Proyek belum tersedia.</h3>
+        <p class="small text-muted">Klik tombol tambah berikut untuk membuat proyek baru.</p>
+        <button type="button" class="btn btn-success py-2 px-4 my-2" onclick="addNewProject()">Tambah Proyek</button>
     </div>
 </div>
 <?php } ?>
