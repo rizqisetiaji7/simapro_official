@@ -128,7 +128,7 @@
                             <a href="" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a class="dropdown-item" href="javascript:void(0)" onclick="edit_subProject(<?= $project->project_id ?>,<?= $sp->subproject_id ?>)">Edit</a>
-                                <a class="dropdown-item" href="javascript:void(0)" onclick="hapus_subElProject('subproject', <?= $sp->subproject_id ?>)" >Hapus</a>
+                                <a class="dropdown-item" href="javascript:void(0)" onclick="hapus_subElProject('subproject', <?= $sp->subproject_id ?>, <?= $project->project_id ?>)" >Hapus</a>
                             </div>
                         </div>
                     </div>
@@ -162,7 +162,7 @@
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right">
                                                 <a class="dropdown-item" href="javascript:void(0)" onclick="edit_subElemenProject(<?= $se->project_task_id ?>, <?= $sp->subproject_id ?>)">Edit</a>
-                                                <a class="dropdown-item" href="javascript:void(0)" onclick="hapus_subElProject('sub_elemen')">Hapus</a>
+                                                <a class="dropdown-item" href="javascript:void(0)" onclick="hapus_subElProject('sub_elemen', <?= $se->project_task_id ?>)">Hapus</a>
                                             </div>
                                         </div>
                                     </div>

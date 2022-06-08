@@ -113,47 +113,52 @@
 		});
 	}
 
-	// function hapus_subElProject(task_type) {
-
-	// }
-
-	function hapus_subElProject(task_type, id_sub = '') {
+	function hapus_subElProject(task_type, id_sub = '', project_id = '') {
 		let task_name = task_type == 'subproject' ? 'Sub-Proyek' : 'Sub-Elemen Proyek' ;
+		let textFill = task_type == 'subproject' ? 'Data Subproyek akan terhapus beserta Sub-elemennya' : 'Anda akan menghapus Sub-elemen Proyek.' ;
 		Swal.fire({
 			icon: 'warning',
 			title: `Hapus ${task_name}`,
-			text: `Yakin akan menghapus?`,
+			text: textFill,
 			confirmButtonText: 'Ya, Hapus',
 			showCancelButton: true,
 			cancelButtonText: 'Batal'
      	}).then((result) => {
       	if (result.isConfirmed) {
-   			// $.ajax({
-			// 	url: `<?= site_url('direktur/manajemen_proyek/hapus') ?>`,
-			// 	method: 'POST',
-			// 	dataType: 'json',
-			// 	cache: false,
-			// 	data: {
-			// 		task_type: task_type,
-			// 		id_sub: is_sub
-			// 	},
-			// 	success: function(data) {
-			// 		if (data.status == 'success') {
-			// 			window.location.reload();					
-			// 		} else if (data.status == 'failed') {
-			// 			Swal.fire({
-			//             icon: 'error',
-			//             title: 'Gagal',
-			//             text: `${data.message}`,
-			//             showConfirmButton: false,
-			//             timer: 2000,
-			//          }).then((result) => {
-			//          	window.location.reload();
-			//          });
-			// 		}
-			// 	}
-			// });
-			alert('Terhapus!');
+   			$.ajax({
+				url: `<?= site_url('direktur/manajemen_proyek/hapus') ?>`,
+				method: 'POST',
+				dataType: 'json',
+				cache: false,
+				data: {
+					task_type: task_type,
+					id_sub: id_sub,
+					project_id: project_id
+				},
+				success: function(data) {
+					if (data.status == 'success') {
+						Swal.fire({
+							icon: 'success',
+							title: 'Berhasil',
+							text: `${data.message}`,
+							showConfirmButton: false,
+							timer: 2000,
+						}).then((result) => {
+							window.location.reload();
+						});		
+					} else if (data.status == 'failed') {
+						Swal.fire({
+							icon: 'error',
+							title: 'Gagal',
+							text: `${data.message}`,
+							showConfirmButton: false,
+							timer: 2000,
+						}).then((result) => {
+							window.location.reload();
+						});
+					}
+				}
+			});
       	}
       });
 	}
@@ -183,7 +188,6 @@
 				btnSubmit.attr('disabled', false).text('Simpan');
 			},
 			success: function(data) {
-				// console.log(data);
 				if (data.status == 'validation_error') {
 					for (let i = 0; i < data.message.length; i++) {
 						if (data.message[i].err_message == '') {

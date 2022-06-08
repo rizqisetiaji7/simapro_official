@@ -51,7 +51,6 @@ class Project_model extends CI_Model {
 	public function get_subproject($project_id) {
 		$this->db->from($this->tb_subproject);
 		$this->db->join('tb_priority', 'tb_subproject.ID_priority=tb_priority.priority_id');
-		// $this->db->join('tb_project', 'tb_subproject.ID_project=tb_project.project_id');
 		$this->db->where($project_id);
 		return $this->db->get();
 	}

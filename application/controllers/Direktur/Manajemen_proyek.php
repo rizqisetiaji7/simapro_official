@@ -275,7 +275,59 @@ class Manajemen_proyek extends CI_Controller {
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
-   // function hapus() {
-   //    echo 'Hapus';
-   // }
+   function hapus() {
+      $message = [];
+      $list_type = $this->input->post('task_type', TRUE);
+      $id_sub = $this->input->post('id_sub', TRUE);
+      $project_id = $this->input->post('project_id', TRUE);
+
+      if ($list_type == 'subproject') {
+         // Delete Sub-elemen
+         $subElemen = $this->bm->get('tb_project_task', '*', ['ID_subproject' => $id_sub]);
+         if ($subElemen->num_rows() > 0) {
+            $this->bm->delete('tb_project_task', ['ID_subproject' => $id_sub]);
+            $this->bm->delete('tb_subproject', ['subproject_id' => $id_sub, 'ID_project' => $project_id]);
+
+            if ($this->db->affected_rows() > 0) {
+               $message = [
+                  'status'    => 'success',
+                  'message'   => 'Sub-project telah berhasil dihapus.'
+               ];
+            } else {
+               $message = [
+                  'status'    => 'failed',
+                  'message'   => 'Oops! Sub-project gagal dihapus.'
+               ];
+            }
+         } else {
+            $this->bm->delete('tb_subproject', ['subproject_id' => $id_sub, 'ID_project' => $project_id]);
+            if ($this->db->affected_rows() > 0) {
+               $message = [
+                  'status'    => 'success',
+                  'message'   => 'Sub-project telah berhasil dihapus.'
+               ];
+            } else {
+               $message = [
+                  'status'    => 'failed',
+                  'message'   => 'Oops! Sub-project gagal dihapus.'
+               ];
+            }
+         }
+      } else if ($list_type == 'sub_elemen') {
+         $this->bm->delete('tb_project_task', ['project_task_id' => $id_sub]);
+         if ($this->db->affected_rows() > 0) {
+            $message = [
+               'status'    => 'success',
+               'message'   => 'Sub-project telah berhasil dihapus.'
+            ];
+         } else {
+            $message = [
+               'status'    => 'failed',
+               'message'   => 'Oops! Sub-project gagal dihapus.'
+            ];
+         }
+      }
+
+      $this->output->set_content_type('application/json')->set_output(json_encode($message));
+   }
 }
