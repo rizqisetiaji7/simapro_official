@@ -16,6 +16,9 @@
         $(this).next().html('');
     });
 
+    // Choose file from computer
+	chooseFile('#chooseFileImage', '#inputProfile');
+
     // Edit Proyek
     function editProyek(proyekID) {
     	title.text('Edit Detail Proyek');
@@ -37,13 +40,17 @@
     }
 
     // CRUD Sub Proyek
-	function add_subProject() {
+	function add_subProject(project_id) {
 		title.text('Tambah Sub-Proyek');
 		formModal.attr('action', `<?= site_url('direktur/manajemen_proyek/tambah_subproyek') ?>`);
 		$.ajax({
 			url: `<?= site_url('direktur/manajemen_proyek/form_tambah_subproyek') ?>`,
+			method: 'POST',
 			dataType: 'html',
 			cache: false,
+			data: {
+				project_id: project_id
+			},
 			success: function(data) {
 				modalBody.html(data);
 				modal.modal('show');
@@ -51,13 +58,18 @@
 		});
 	}
 
-	function edit_subProject() {
+	function edit_subProject(project_id, subproject_id) {
 		title.text('Edit Sub-Proyek');
 		formModal.attr('action', `<?= site_url('direktur/manajemen_proyek/edit_subproyek') ?>`);
 		$.ajax({
 			url: `<?= site_url('direktur/manajemen_proyek/form_edit_subproyek') ?>`,
+			method: 'POST',
 			dataType: 'html',
 			cache: false,
+			data: {
+				project_id: project_id,
+				subproject_id: subproject_id
+			},
 			success: function(data) {
 				modalBody.html(data);
 				modal.modal('show');
@@ -94,9 +106,9 @@
 		});
 	}
 
-	function hapus_subElProject(task_type) {
+	// function hapus_subElProject(task_type) {
 
-	}
+	// }
 
 	function hapus_subElProject(task_type, id_sub = '') {
 		let task_name = task_type == 'subproject' ? 'Sub-Proyek' : 'Sub-Elemen Proyek' ;
@@ -139,6 +151,14 @@
       });
 	}
 
+	$(document).on('change', '#inputProfile', function() {
+		if (this.files && this.files[0]) {
+			// Get and display filename
+			$('#profileFileName').removeClass('d-none');
+			$('#profileFileName').addClass('mb-3').html(`<p class="mb-0 small text-muted">Gambar: <strong class="text-dark">${this.files[0].name}</strong></p>`);
+		}
+	});
+
 	formModal.on('submit', function(e) {
 		e.preventDefault();
 		$.ajax({
@@ -156,7 +176,40 @@
 				btnSubmit.attr('disabled', false).text('Simpan');
 			},
 			success: function(data) {
-				console.log(data);
+				// console.log(data);
+				if (data.status == 'validation_error') {
+					for (let i = 0; i < data.message.length; i++) {
+						if (data.message[i].err_message == '') {
+							$(`[name="${data.message[i].field}"]`).removeClass('is-invalid');
+			            	$(`[name="${data.message[i].field}"]`).next().html('');
+						} else {
+							$(`[name="${data.message[i].field}"]`).addClass('is-invalid');
+			            	$(`[name="${data.message[i].field}"]`).next().html(data.message[i].err_message);
+						}
+					}
+				} else if (data.status == 'success') {
+					modal.modal('hide');
+					Swal.fire({
+		            icon: 'success',
+		            title: 'Berhasil',
+		            text: `${data.message}`,
+		            showConfirmButton: false,
+		            timer: 2000,
+		         }).then((result) => {
+		         	window.location.reload();
+		         });
+				} else {
+					modal.modal('hide');
+					Swal.fire({
+		            icon: 'error',
+		            title: 'Gagal',
+		            text: `${data.message}`,
+		            showConfirmButton: false,
+		            timer: 2000,
+		         }).then((result) => {
+		         	window.location.reload();
+		         });
+				}
 			}
 		});
 	});

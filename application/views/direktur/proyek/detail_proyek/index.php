@@ -52,7 +52,7 @@
     </div>
     <div class="col-12 col-sm-6 text-sm-right">
         <a href="<?= site_url('direktur/chat') ?>" class="btn btn-primary py-2 px-3" data-toggle="tooltip" title="Kirim Pesan"><i class="fa-solid fa-message"></i></a>
-        <button type="button" class="btn btn-success py-2 px-4 ml-1" onclick="add_subProject()">Buat Sub-proyek</button>
+        <button type="button" class="btn btn-success py-2 px-4 ml-1" onclick="add_subProject(<?= $project->project_id ?>)">Buat Sub-proyek</button>
     </div>
 
     <div class="col-12">
@@ -110,6 +110,16 @@
     </div>
 </div>
 
+<!-- 
+Kanban Color Panel
+1. kanban-danger
+2. kanban-success
+3. kanban-info
+4. kanban-warning
+5. kanban-purple
+6. kanban-primary
+-->
+
 <div class="kanban-board card mb-0">
     <div class="card-body">
         <?php if ($subproject->num_rows() > 0) { ?>
@@ -127,8 +137,8 @@
                         <div class="dropdown kanban-action">
                             <a href="" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="javascript:void(0)" onclick="edit_subProject()">Edit</a>
-                                <a class="dropdown-item" href="javascript:void(0)" onclick="hapus_subElProject('subproject')" >Hapus</a>
+                                <a class="dropdown-item" href="javascript:void(0)" onclick="edit_subProject(<?= $project->project_id ?>,<?= $sp->subproject_id ?>)">Edit</a>
+                                <a class="dropdown-item" href="javascript:void(0)" onclick="hapus_subElProject('subproject', <?= $sp->subproject_id ?>)" >Hapus</a>
                             </div>
                         </div>
                     </div>

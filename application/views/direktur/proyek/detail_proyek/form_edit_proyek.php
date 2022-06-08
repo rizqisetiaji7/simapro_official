@@ -1,4 +1,4 @@
-<!-- <?php var_dump($project) ?> -->
+<input type="hidden" name="old_thumbnail" value="<?= $project->project_thumbnail ?>">
 <input type="hidden" name="project_code_ID" value="<?= $project->projectID ?>">
 <input type="file" name="profile_image" id="inputProfile" accept=".jpg,.png,.jpeg" class="d-none">
 <div class="row">
@@ -25,14 +25,13 @@
             <div class="invalid-feedback"></div>
         </div>
         <div class="form-group">
-            <label for="ID_pm">Penanggung Jawab Lapangan <span class="text-danger small">*</span></label>
+            <label for="ID_pm">Penanggung Jawab Lapangan</label>
             <select name="ID_pm" class="custom-select formSelect">
                 <option value="">-- Pilih --</option>
                 <?php foreach ($project_manajer as $pm) { ?>
                 <option value="<?= $pm->user_id ?>" <?= $pm->user_id == $project->ID_pm ? 'selected' : NULL ?>><?= $pm->user_fullname ?></option>
                 <?php } ?>
             </select>
-            <div class="invalid-feedback"></div>
         </div>
         <div class="form-group">
             <label for="project_address">Alamat Proyek <span class="text-muted small">(Opsional)</span></label>

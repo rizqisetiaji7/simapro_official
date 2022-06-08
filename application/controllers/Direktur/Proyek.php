@@ -32,14 +32,6 @@ class Proyek extends CI_Controller {
             ]
          ],
          [
-            'field'  => 'ID_pm',
-            'label'  => 'Penanggung jawab',
-            'rules'  => 'trim|required',
-            'errors' => [
-               'required' => '{field} wajib dipilih.'
-            ]
-         ],
-         [
             'field'  => 'project_start',
             'label'  => 'Tanggal',
             'rules'  => 'trim|required',
@@ -72,6 +64,32 @@ class Proyek extends CI_Controller {
       $this->theme->view('templates/main', 'direktur/proyek/daftar_proyek/index', $data);
    }
 
+   function form_edit_status() {
+      $id = $this->input->post('project_code', TRUE);
+      $data['project_status'] = $this->bm->get($this->tb_project, 'project_id, ID_pm, ID_company, project_code_ID, project_progress, project_status', ['project_code_ID' => $id])->row();
+      $this->load->view('direktur/proyek/daftar_proyek/form_edit_status', $data);
+   }
+
+   function edit_status_process() {
+      $message = [];
+      $post = $this->input->post(NULL, TRUE);
+      $this->bm->update($this->tb_project, ['project_status' => $post['project_status']],[
+         'project_code_ID' => $post['project_code_ID']
+      ]);
+      if ($this->db->affected_rows() >= 0) {
+         $message = [
+            'status'    => 'success',
+            'message'   => 'Status berhasil diperbarui.'
+         ];
+      } else {
+         $message = [
+            'status'    => 'failed',
+            'message'   => 'Oops! Status gagal diperbarui.'
+         ];
+      }
+      $this->output->set_content_type('application/json')->set_output(json_encode($message));
+   }
+
    function form_tambah() {
       $data['project_code_ID'] = urlencode(base64_encode(getIDCode('PROY', user_company()->comp_prefix)));
       $data['project_man'] = $this->bm->get('tb_users', 'user_id, user_fullname', ['ID_company' => user_company()->company_id, 'user_role' => 'pm'])->result();
@@ -90,14 +108,13 @@ class Proyek extends CI_Controller {
             'status'    => 'validation_error',
             'message'   => [
                ['field' => 'project_name', 'err_message' => form_error('project_name', '<span>','</span>')],
-               ['field' => 'ID_pm', 'err_message' => form_error('ID_pm', '<span>','</span>')],
                ['field' => 'project_start', 'err_message' => form_error('project_start', '<span>','</span>')],
                ['field' => 'project_deadline', 'err_message' => form_error('project_deadline', '<span>','</span>')],
             ]
          ];
       } else {
          $data = [
-            'ID_pm'                 => $post['ID_pm'],
+            'ID_pm'                 => $post['ID_pm'] == '' ? NULL : $post['ID_pm'],
             'ID_company'            => user_company()->company_id,
             'project_code_ID'       => urldecode(base64_decode($post['project_code_ID'])),
             'project_name'          => $post['project_name'],
@@ -239,7 +256,6 @@ class Proyek extends CI_Controller {
 
    public function form_edit_proyek() {
       $code_ID = $this->input->post('project_code_ID', TRUE);
-      // $project = $this->bm->get($this->tb_project, '*', ['project_code_ID' => $code_ID])->row();
       $project = $this->project_model->get_project_detail(user_company()->company_id, $code_ID)->row();
       $project_manajer = $this->bm->get('tb_users', '*', [
          'ID_company' => $project->company_id, 
@@ -253,4 +269,74 @@ class Proyek extends CI_Controller {
 
       $this->load->view('direktur/proyek/detail_proyek/form_edit_proyek', $data);
    }
+
+   public function edit_detail_proyek() {
+      $message = [];
+      $post = $this->input->post(NULL, TRUE);
+
+      $this->form_validation->set_rules($this->_rules());
+      if ($this->form_validation->run() == FALSE) {
+         $message = [
+            'status'    => 'validation_error',
+            'message'   => [
+               ['field' => 'project_name', 'err_message' => form_error('project_name', '<span>','</span>')],
+               ['field' => 'project_start', 'err_message' => form_error('project_start', '<span>','</span>')],
+               ['field' => 'project_deadline', 'err_message' => form_error('project_deadline', '<span>','</span>')],
+            ]
+         ];
+      } else {
+         $data = [
+            'ID_pm'                 => $post['ID_pm'] == '' ? NULL : $post['ID_pm'],
+            'project_name'          => $post['project_name'],
+            'project_address'       => $post['project_address'],
+            'project_description'   => $post['project_description'],
+            'project_start'         => $post['project_start'],
+            'project_deadline'      => $post['project_deadline'],
+            'updated'               => date('Y-m-d H:i:s', now('Asia/Jakarta'))
+         ];
+
+         $this->upload->initialize($this->_file_upload_config('./uploads/thumbnail'));
+         // File Upload
+         if (@$_FILES['profile_image']['name'] != NULL) {
+            if ($this->upload->do_upload('profile_image')) {
+               if ($post['old_thumbnail'] != 'placeholder.jpg') {
+                  unlink('./uploads/thumbnail/'.$post['old_thumbnail']);
+               }
+               $data['project_thumbnail'] = $this->upload->data('file_name');
+               $this->bm->update($this->tb_project, $data, ['project_code_ID' => $post['project_code_ID']]);
+               if ($this->db->affected_rows() >= 0) {
+                  $message = [
+                     'status'    => 'success',
+                     'message'   => 'Data proyek berhasil Diperbarui.'
+                  ];
+               } else {
+                  $message = [
+                     'status'    => 'failed',
+                     'message'   => 'Oops! Maaf data proyek gagal Diperbarui.'
+                  ];
+               }
+            } else {
+               $message = [
+                  'status'    => 'failed',
+                  'message'   => 'Oops! Maaf data proyek gagal Diperbarui.'
+               ];
+            }
+         } else {
+            $data['project_thumbnail'] = $post['old_thumbnail'];
+            $this->bm->update($this->tb_project, $data, ['project_code_ID' => $post['project_code_ID']]);
+            if ($this->db->affected_rows() >= 0) {
+               $message = [
+                  'status'    => 'success',
+                  'message'   => 'Data proyek berhasil Diperbarui.'
+               ];
+            } else {
+               $message = [
+                  'status'    => 'failed',
+                  'message'   => 'Oops! Maaf data proyek gagal Diperbarui.'
+               ];
+            }
+         }
+      }
+      $this->output->set_content_type('application/json')->set_output(json_encode($message));
+   } 
 }

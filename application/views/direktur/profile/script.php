@@ -224,7 +224,6 @@
 		});
 	});
 
-
 	modal.on('hidden.bs.modal', function() {
 		title.empty();
 		modalDialog.removeClass('modal-lg');

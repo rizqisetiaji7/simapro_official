@@ -19,14 +19,13 @@
             <div class="invalid-feedback"></div>
         </div>
         <div class="form-group">
-            <label for="ID_pm">Penanggung Jawab Lapangan <span class="text-danger small">*</span></label>
+            <label for="ID_pm">Penanggung Jawab Lapangan</label>
             <select name="ID_pm" class="custom-select formSelect">
                 <option value="">-- Pilih --</option>
                 <?php foreach ($project_man as $pm) { ?>
                 <option value="<?= $pm->user_id ?>"><?= $pm->user_fullname ?></option>
                 <?php } ?>
             </select>
-            <div class="invalid-feedback"></div>
         </div>
         <div class="form-group">
             <label for="project_address">Alamat Proyek <span class="text-muted small">(Opsional)</span></label>
