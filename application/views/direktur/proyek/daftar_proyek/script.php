@@ -46,7 +46,6 @@
 
 	// Arsipkan Proyek
 	function archiveProject(project_code) {
-		// console.log(project_code);
 		Swal.fire({
          icon: 'warning',
          title: 'Arsipkan proyek ini?',

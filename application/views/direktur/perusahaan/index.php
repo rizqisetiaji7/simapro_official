@@ -159,7 +159,7 @@
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item" onclick="changePasswordPM(<?= "'".$pm->user_unique_id."'" ?>, <?= "'".$pm->user_role."'" ?>)" href="javascript:void(0)">Ganti password</a>
-                                        <a class="dropdown-item text-danger" href="javascript:void(0)">Hapus</a>
+                                        <a class="dropdown-item text-danger" onclick="deleteProjectManajer(<?= "'".$pm->user_unique_id."'" ?>, <?= "'".$pm->user_role."'" ?>, <?= "'".$pm->user_profile."'" ?>)" href="javascript:void(0)">Hapus</a>
                                     </div>
                                 </div>
                             </div>

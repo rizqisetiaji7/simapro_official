@@ -1,6 +1,5 @@
 <script>
 	function removeArchive(projectID) {
-		console.log(projectID);
 		Swal.fire({
          icon: 'info',
          html: `

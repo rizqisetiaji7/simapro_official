@@ -194,6 +194,17 @@ class Proyek extends CI_Controller {
       $this->theme->view('templates/main', 'direktur/proyek/arsip/index', $data);
    }
 
+   function detail_arsip() {
+      $data = [
+         'app_name'  => APP_NAME,
+         'author'    => APP_AUTHOR,
+         'title'     => 'Detail Arsip Proyek',
+         'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
+         'page'      => 'detail_arsip_proyek'
+      ];
+      $this->theme->view('templates/main', 'direktur/proyek/arsip/arsip_detail', $data);
+   }
+
    function arsip_process() {
       $message = [];
       $code_id = urldecode(base64_decode($this->input->post('project_code', TRUE)));

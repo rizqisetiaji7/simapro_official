@@ -222,8 +222,6 @@ class Proyek_manajer extends CI_Controller {
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
-
-
    function edit() {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
@@ -335,7 +333,33 @@ class Proyek_manajer extends CI_Controller {
             ];
          }
       }
+      $this->output->set_content_type('application/json')->set_output(json_encode($message));
+   }
 
+   function delete_pm() {
+      $message = [];
+      $post = $this->input->post(NULL, TRUE);
+
+      if ($post['user_profile'] != 'default-avatar.jpg') {
+         unlink('./uploads/profile/'.$post['user_profile']);
+      }
+
+      $this->bm->delete($this->table_users, [
+         'user_unique_id' => $post['unique_id'], 
+         'user_role' => $post['user_role']
+      ]);
+
+      if ($this->db->affected_rows() > 0) {
+         $message = [
+            'status'    => 'success',
+            'message'   => 'Proyek Manajer telah berhasil terhapus.'
+         ];
+      } else {
+         $message = [
+            'status'    => 'failed',
+            'message'   => 'Oops! Maaf Proyek Manajer gagal dihapus.'
+         ];
+      }
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 }

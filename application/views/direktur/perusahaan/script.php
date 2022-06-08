@@ -60,6 +60,55 @@
         });
     }
 
+    function deleteProjectManajer(unique_id, user_role, user_profile) {
+        Swal.fire({
+            icon: 'warning',
+            html: `
+                <h4>Anda Yakin akan menghapus Proyek Manajer?</h4>
+                <p class="text-muted mb-0 small">Hal ini mungkin akan berpengaruh pada informasi proyek.</p>  
+            `,
+            confirmButtonText: 'Ya, Hapus',
+            showCancelButton: true,
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `<?= site_url('direktur/proyek_manajer/delete_pm') ?>`,
+                    method: 'POST',
+                    dataType: 'json',
+                    cache: false,
+                    data: { 
+                        unique_id: unique_id,
+                        user_role: user_role,
+                        user_profile: user_profile
+                    },
+                    success: function(data) {
+                        if (data.status == 'success') {
+                            Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: `${data.message}`,
+                            confirmButtonText: 'Oke, Sip!',
+                         }).then((result) => {
+                            window.location.reload();
+                         });
+                        } else if (data.status == 'failed') {
+                            Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal',
+                            text: `${data.message}`,
+                            showConfirmButton: false,
+                            timer: 2000,
+                         }).then((result) => {
+                            window.location.reload();
+                         });
+                        }
+                    }
+                });
+            }
+        });
+    }
+
     function changePasswordPM(unique_id, user_role) {
         title.text('Ubah Password');
         formModal.attr('action', `<?= site_url('direktur/proyek_manajer/ubah_password') ?>`);
