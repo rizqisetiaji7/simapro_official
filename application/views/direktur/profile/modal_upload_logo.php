@@ -3,7 +3,6 @@
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
     <form class="modal-content" id="form_modalLogo" method="post" accept-charset="utf-8" enctype="multipart/form-data">
       <div class="modal-body">
-        
       </div>
     </form>
   </div>

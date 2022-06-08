@@ -26,3 +26,24 @@ function countProjectPM($pm_id) {
 	$ci->db->where(['ID_pm' => $pm_id, 'project_status' => 'on_progress']);
 	return $ci->db->count_all_results();
 }
+
+function countProjectFinish($company_id) {
+	$ci =& get_instance();
+	$ci->db->from('tb_project');
+	$ci->db->where(['ID_company' => $company_id, 'project_status' => 'finish']);
+	return $ci->db->count_all_results();
+}
+
+function countProjectOnProgress($company_id) {
+	$ci =& get_instance();
+	$ci->db->from('tb_project');
+	$ci->db->where(['ID_company' => $company_id, 'project_status' => 'on_progress']);
+	return $ci->db->count_all_results();
+}
+
+function countProjectArchive($company_id) {
+	$ci =& get_instance();
+	$ci->db->from('tb_project');
+	$ci->db->where(['ID_company' => $company_id, 'project_archive' => 1]);
+	return $ci->db->count_all_results();
+}

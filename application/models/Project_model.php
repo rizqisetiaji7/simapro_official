@@ -11,7 +11,7 @@ class Project_model extends CI_Model {
 		return $columns = 'tb_project.project_id, tb_project.ID_pm, tb_project.ID_company as project_compID, tb_project.project_code_ID as projectID, tb_project.project_name, tb_project.project_thumbnail, tb_project.project_address, tb_project.project_description, tb_project.project_start, tb_project.project_deadline, tb_project.project_status, tb_project.project_progress, tb_project.project_archive, tb_company.company_id, tb_company.comp_parent_id as comp_parent, tb_company.comp_code, tb_company.comp_prefix, tb_company.comp_name, tb_users.user_id, tb_users.ID_company as user_ID_company, tb_users.user_role, tb_users.user_profile, tb_users.user_fullname';
 	}
 
-	public function get_all_user_project($comp_id) {
+	public function get_all_user_project($comp_id, $limit=FALSE) {
 		$this->db->select($this->_columns1());
 		$this->db->from($this->tb_project);
 		$this->db->join($this->tb_company, $this->tb_company.'.company_id='.$this->tb_project.'.ID_company', 'left');
@@ -20,6 +20,10 @@ class Project_model extends CI_Model {
 			'tb_project.ID_company' 			=> $comp_id,
 			'tb_project.project_archive !='	=> 1
 		]);
+		if ($limit != FALSE) {
+			$this->db->limit($limit, 0);
+		}
+		$this->db->order_by('project_id DESC');
 		return $this->db->get();
 	}
 
