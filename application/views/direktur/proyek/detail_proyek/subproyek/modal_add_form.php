@@ -24,13 +24,42 @@
 
   <div class="col-12 mb-2">
     <label>Pilih Warna Panel Sub-proyek</label>
-    <div class="d-flex flex-wrap">
-      <input type="radio" name="panel_color" value="kanban-danger" class="custom-radio mr-2" checked>
-      <input type="radio" name="panel_color" value="kanban-success" class="custom-radio mr-2">
-      <input type="radio" name="panel_color" value="kanban-info" class="custom-radio mr-2">
-      <input type="radio" name="panel_color" value="kanban-warning" class="custom-radio mr-2">
-      <input type="radio" name="panel_color" value="kanban-purple" class="custom-radio mr-2">
-      <input type="radio" name="panel_color" value="kanban-primary" class="custom-radio mr-2">
+    <div class="input-radio">
+      <!-- Color 1 -->
+      <input type="radio" id="kanbanSuccess" name="panel_color" value="kanban-success" class="d-none custom-radio-input" checked>
+      <label for="kanbanSuccess" class="label-box bg-success">
+        <i class="fas fa-check text-white check-icon"></i>
+      </label>
+
+      <!-- Color 2 -->
+      <input type="radio" id="kanbanDanger" name="panel_color" value="kanban-danger" class="d-none custom-radio-input">
+      <label for="kanbanDanger" class="label-box bg-danger">
+        <i class="fas fa-check text-white check-icon"></i>
+      </label>
+
+      <!-- Color 3 -->
+      <input type="radio" id="kanbanWarning" name="panel_color" value="kanban-warning" class="d-none custom-radio-input">
+      <label for="kanbanWarning" class="label-box bg-warning">
+        <i class="fas fa-check text-white check-icon"></i>
+      </label>
+
+      <!-- Color 4 -->
+      <input type="radio" id="kanbanInfo" name="panel_color" value="kanban-info" class="d-none custom-radio-input">
+      <label for="kanbanInfo" class="label-box bg-info">
+        <i class="fas fa-check text-white check-icon"></i>
+      </label>
+
+      <!-- Color 5 -->
+      <input type="radio" id="kanbanPurple" name="panel_color" value="kanban-purple" class="d-none custom-radio-input">
+      <label for="kanbanPurple" class="label-box bg-purple">
+        <i class="fas fa-check text-white check-icon"></i>
+      </label>
+
+      <!-- Color 6 -->
+      <input type="radio" id="kanbanPrimary" name="panel_color" value="kanban-primary" class="d-none custom-radio-input">
+      <label for="kanbanPrimary" class="label-box bg-primary">
+        <i class="fas fa-check text-white check-icon"></i>
+      </label>
     </div>
   </div>
 </div>
