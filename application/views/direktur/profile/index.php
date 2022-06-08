@@ -157,7 +157,7 @@
 										<span class="text-primary small d-block mb-1">#<?= $company->comp_code ?></span>
 										<p class="text-secondary small mb-1"><?= 'Didirikan: '.dateTimeIDN($company->comp_since) ?></p>
 										<div>
-											<button class="btn btn-custom px-4 btn-sm mr-1" onclick="uploadLogo(<?= "'".urlencode(base64_encode($company->comp_code))."'" ?>)">Ganti Logo</button>
+											<button class="btn btn-custom px-4 btn-sm mr-1" onclick="uploadLogo(<?= "'".$company->comp_code."'" ?>)">Ganti Logo</button>
 										</div>
 									</div>
 								</div>
@@ -167,7 +167,9 @@
 								<form id="editProfilePerusahaan" action="<?= site_url('direktur/perusahaan/edit') ?>" method="POST">
 									<div class="form-row">
 										<input type="hidden" name="company_id" value="<?= $company->company_id ?>">
-										<input type="hidden" name="comp_code" value="<?= urlencode(base64_encode($company->comp_code)) ?>">
+										<input type="hidden" name="comp_code" value="<?= $company->comp_code ?>">
+										<input type="hidden" name="old_comp_since" value="<?= $company->comp_since ?>">
+
 										<div class="col-12 col-sm-6 col-md-7 mb-3">
 											<label for="comp_name">Nama Perusahaan <span class="text-danger small">*</span></label>
 											<input type="text" name="comp_name" id="comp_name" class="form-control" value="<?= $company->comp_name ?>" placeholder="Isi nama perusahaan" autocomplete="off">
@@ -199,6 +201,11 @@
 
 									<div class="form-row mb-3">
 										<div class="col-12 mb-3">
+											<label for="comp_since">Tanggal berdiri <span class="text-muted small">(Opsional)</span></label>
+											<input type="date" name="comp_since" id="comp_since" class="form-control" value="<?= $company->comp_since ?>" autocomplete="off">
+										</div>
+
+										<div class="col-12 mb-3">
 											<label for="comp_address">Alamat <span class="text-muted small">(Opsional)</span></label>
 											<input type="text" name="comp_address" id="comp_address" class="form-control" value="<?= $company->comp_address ?>" placeholder="Isi alamat lengkap" autocomplete="off">
 										</div>
@@ -226,4 +233,5 @@
 </div>
 
 <?php $this->view('direktur/profile/modal'); ?>
+<?php $this->view('direktur/profile/modal_upload_logo') ?>
 <?php $this->view('direktur/profile/script'); ?>

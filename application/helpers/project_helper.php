@@ -19,3 +19,10 @@ function subproject_progress($subproject_id, $total_subelemen = 0) {
 	$progress = $progress >= 100 ? 100 : $progress;
 	return ceil($progress);
 }
+
+function countProjectPM($pm_id) {
+	$ci =& get_instance();
+	$ci->db->from('tb_project');
+	$ci->db->where(['ID_pm' => $pm_id, 'project_status' => 'on_progress']);
+	return $ci->db->count_all_results();
+}

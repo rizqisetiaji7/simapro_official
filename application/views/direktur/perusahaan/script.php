@@ -16,56 +16,6 @@
         $(this).next().html('');
     });
 
-    // Add Data Company
-    // function addCompanyModal(maincompid=null) {
-    //     title.text('Tambah anak perusahaan');
-    //     modalDialog.addClass('modal-lg');
-    //     formModal.attr('action','tambah');
-    //     hiddenId.attr('value', maincompid);
-
-    //     $.ajax({
-    //         url: `<?= site_url('direktur/perusahaan/show_form') ?>`,
-    //         method: 'POST',
-    //         dataType: 'html',
-    //         data: {modal_type: 'add'},
-    //         success: function(data) {
-    //             modalBody.html(data);
-    //             modal.modal('show');
-    //         },
-    //         error: function(xhr) {
-    //             alert('Oops! Terjadi kesalahan pada server! silahkan coba beberapa saat.');
-    //             modal.modal('hide');
-    //         }
-    //     });
-    // }
-
-    // function editCompanyModal(company_id, comp_parent_id) {
-    //     title.text('Ubah data anak perusahaan');
-    //     modalDialog.addClass('modal-lg');
-    //     formModal.attr('action','edit');
-    //     btnSubmit.text('Update');
-    //     hiddenId.attr('value', company_id);
-
-    //     $.ajax({
-    //         url: `<?= site_url('direktur/perusahaan/show_form') ?>`,
-    //         method: 'POST',
-    //         dataType: 'html',
-    //         data: {
-    //             modal_type: 'edit',
-    //             company_id: company_id,
-    //             parent_id: comp_parent_id
-    //         },
-    //         success: function(data) {
-    //             modalBody.html(data);
-    //             modal.modal('show');
-    //         },
-    //         error: function(xhr) {
-    //             alert('Oops! Terjadi kesalahan pada server! silahkan coba beberapa saat.');
-    //             modal.modal('hide');
-    //         }
-    //     });
-    // }
-
     // Choose file from computer
     chooseFile('#chooseFileImage', '#inputProfile');
 

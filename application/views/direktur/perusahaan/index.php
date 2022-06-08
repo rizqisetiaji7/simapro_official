@@ -143,7 +143,7 @@
 
                         <div>
                             <span class="d-block mb-1"><strong>Jumlah proyek berjalan</strong></span>
-                            <p class="text-secondary mb-0">0</p>
+                            <p class="text-secondary mb-0"><?= countProjectPM($pm->user_id) ?></p>
                         </div>
                     </div>
 

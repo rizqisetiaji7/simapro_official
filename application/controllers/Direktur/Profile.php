@@ -19,7 +19,6 @@ class Profile extends CI_Controller {
          'encrypt_name'  => TRUE,
          'remove_spaces' => TRUE
       ];
-
       return $config;
    }
 
