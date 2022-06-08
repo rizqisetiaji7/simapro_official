@@ -13,7 +13,7 @@
     <div class="invalid-feedback"></div>
   </div>
 
-  <div class="col-12 mb-3">
+  <!-- <div class="col-12 mb-3">
     <label for="subproject_status">Status</label>
     <select id="subproject_status" name="subproject_status" class="form-control">
         <option value="">-- Pilih status subproyek</option>
@@ -22,7 +22,7 @@
         <option value="finish" <?= $subproject->subproject_status == 'finish' ? 'selected' : NULL ?>>Selesai</option>
     </select>
     <div class="invalid-feedback"></div>
-  </div>
+  </div> -->
 
   <div class="col-12 mb-3">
     <label for="priority_level">Level Prioritas</label>

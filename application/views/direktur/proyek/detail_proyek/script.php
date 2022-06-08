@@ -78,13 +78,15 @@
 	}
 
 	// CRUD Sub-Elemen Proyek
-	function add_subElemenProject() {
+	function add_subElemenProject(subproject_id) {
 		title.text('Tambah Sub-Elemen Proyek');
 		formModal.attr('action', `<?= site_url('direktur/manajemen_proyek/tambah_subelemen_proyek') ?>`);
 		$.ajax({
 			url: `<?= site_url('direktur/manajemen_proyek/form_tambah_subelemen_proyek') ?>`,
 			dataType: 'html',
+			method: 'POST',
 			cache: false,
+			data: {subproject_id: subproject_id},
 			success: function(data) {
 				modalBody.html(data);
 				modal.modal('show');
@@ -92,13 +94,18 @@
 		});
 	}
 
-	function edit_subElemenProject() {
+	function edit_subElemenProject(se_task_id, subproject_id) {
 		title.text('Edit Sub-Elemen Proyek');
 		formModal.attr('action', `<?= site_url('direktur/manajemen_proyek/edit_subelemen_proyek') ?>`);
 		$.ajax({
 			url: `<?= site_url('direktur/manajemen_proyek/form_edit_subelemen_proyek') ?>`,
 			dataType: 'html',
+			method: 'POST',
 			cache: false,
+			data: {
+				subelemen_id: se_task_id,
+				subproject_id: subproject_id
+			},
 			success: function(data) {
 				modalBody.html(data);
 				modal.modal('show');

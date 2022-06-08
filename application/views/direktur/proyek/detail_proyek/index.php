@@ -110,16 +110,6 @@
     </div>
 </div>
 
-<!-- 
-Kanban Color Panel
-1. kanban-danger
-2. kanban-success
-3. kanban-info
-4. kanban-warning
-5. kanban-purple
-6. kanban-primary
--->
-
 <div class="kanban-board card mb-0">
     <div class="card-body">
         <?php if ($subproject->num_rows() > 0) { ?>
@@ -152,9 +142,10 @@ Kanban Color Panel
                         <div class="pro-progress-bar">
                             <h5>Progres</h5>
                             <div class="progress">
-                                <div class="progress-bar bg-success" role="progressbar" <?= 'style="width: '.subproject_progress($sp->subproject_id, $total_subelemen).'%;"' ?>></div>
+                                <!-- <div class="progress-bar bg-success" role="progressbar" <?= 'style="width: '.subproject_progress($sp->subproject_id, $total_subelemen).'%;"' ?>></div> -->
+                                <div class="progress-bar bg-success" role="progressbar" style="width:0%;"></div>
                             </div>
-                            <span><?= subproject_progress($sp->subproject_id, $total_subelemen).'%' ?></span>
+                            <span>0%</span>
                         </div>
                     </div>
 
@@ -170,7 +161,7 @@ Kanban Color Panel
                                                 <i class="fa fa-angle-down"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="javascript:void(0)" onclick="edit_subElemenProject()">Edit</a>
+                                                <a class="dropdown-item" href="javascript:void(0)" onclick="edit_subElemenProject(<?= $se->project_task_id ?>, <?= $sp->subproject_id ?>)">Edit</a>
                                                 <a class="dropdown-item" href="javascript:void(0)" onclick="hapus_subElProject('sub_elemen')">Hapus</a>
                                             </div>
                                         </div>
@@ -223,7 +214,7 @@ Kanban Color Panel
 
                 <!-- Button Add new Kanban "Subproyek" Task -->
                 <div class="add-new-task">
-                    <button type="button" onclick="add_subElemenProject()" class="btn btn-light btn-sm btn-block"><i class="fas fa-plus mr-2 small"></i>Buat List</button>
+                    <button type="button" onclick="add_subElemenProject(<?= $sp->subproject_id ?>)" class="btn btn-light btn-sm btn-block"><i class="fas fa-plus mr-2 small"></i>Buat List</button>
                     <!-- <a href="javascript:void(0);" >Tambah Sub-elemen</a> -->
                 </div>
 

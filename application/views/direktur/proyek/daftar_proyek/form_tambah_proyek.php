@@ -19,7 +19,7 @@
             <div class="invalid-feedback"></div>
         </div>
         <div class="form-group">
-            <label for="ID_pm">Penanggung Jawab Lapangan</label>
+            <label for="ID_pm">Manajer Proyek (Penanggung jawab)</label>
             <select name="ID_pm" class="custom-select formSelect">
                 <option value="">-- Pilih --</option>
                 <?php foreach ($project_man as $pm) { ?>
