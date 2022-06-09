@@ -214,9 +214,22 @@ class Proyek extends CI_Controller {
       $this->load->view('direktur/proyek/riwayat_proyek/filtered_data', $data);
    }
 
+   /**
+    *
+    * Download method
+    * Mendownload laporan proyek yang sudah Selesai pengerjaannya
+    * 
+    */
+
    function download() {
+      $post = $this->input->post(NULL, TRUE);
+      $ym_awal = $post['tahun_proyek'].'-'.$post['bulan_awal'];
+      $ym_akhir = $post['tahun_proyek'].'-'.$post['bulan_akhir'];
+      var_dump($post);
       echo "Selamat Mendownload";
    }
+
+   // ==================================================================
 
    function arsip_proyek() {
       $archived = $this->project_model->get_project_archive(user_company()->company_id)->result();
