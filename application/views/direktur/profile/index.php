@@ -79,7 +79,7 @@
 
 									<div class="form-row mb-3">
 										<div class="col-12 mb-3">
-											<label for="user_email">Email <span class="text-danger small">*</span></label>
+											<label for="user_email">Email <span class="text-danger small">(Wajib email aktif)</span></label>
 											<input type="text" name="user_email" id="user_email" class="form-control" value="<?= user_login()->user_email ?>" placeholder="Alamat email" autocomplete="off">
 											<div class="invalid-feedback"></div>
 										</div>

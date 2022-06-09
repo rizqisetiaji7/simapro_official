@@ -222,11 +222,42 @@ class Proyek extends CI_Controller {
     */
 
    function download() {
+      $query = '';
       $post = $this->input->post(NULL, TRUE);
       $ym_awal = $post['tahun_proyek'].'-'.$post['bulan_awal'];
       $ym_akhir = $post['tahun_proyek'].'-'.$post['bulan_akhir'];
-      var_dump($post);
-      echo "Selamat Mendownload";
+      // var_dump($post);
+      // echo "Selamat Mendownload";
+
+      if ($post['bulan_awal'] == '' && $post['bulan_akhir'] == '') {
+         $query = $this->project_model->get_finished_project(user_company()->company_id);
+      } else if ($post['bulan_awal'] == '' && $post['bulan_akhir'] != '') {
+         $query = $this->project_model->get_finished_project(user_company()->company_id);
+      } else if ($post['bulan_awal'] != '' && $post['bulan_akhir'] == '') {
+         $query = $this->project_model->get_finished_project(user_company()->company_id);
+      } else if ($post['bulan_awal'] != '' && $post['bulan_akhir'] != ''){
+         $ym_awal = $post['tahun_proyek'].'-'.$post['bulan_awal'];
+         $ym_akhir = $post['tahun_proyek'].'-'.$post['bulan_akhir'];
+         $query = $this->project_model->get_riwayat_filter($ym_awal, $ym_akhir, user_company()->company_id);
+      }
+
+      if ($query->num_rows() > 0) {
+         // Print PDF
+         $data['query'] = $query->result();
+         $data['title'] = 'PT. Arya Bakti Saluyu';
+         $this->load->view('laporan_proyek', $data);
+
+         // Generate nama file PDF
+         // $filename = 'TAG-'.date('Ymdhis', time()).$this->mylibs->_randomID();
+
+         // Menjalankan print dari library dompdf dengan mengirimkan data dari database
+         // $this->cipdf->print('tagihan/print_daftar_tagihan', $data, $filename, 'A4', 'landscape');
+      } else {
+         echo "<script>
+            alert('Oops! Data informasi yang ingin anda download tidak tersedia.');
+            window.location = `".site_url('direktur/proyek/riwayat')."`;
+         </script>";
+      }
    }
 
    // ==================================================================

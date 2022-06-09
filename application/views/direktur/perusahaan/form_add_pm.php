@@ -16,7 +16,7 @@
   </div>
 
   <div class="col-12 mb-3">
-    <label for="user_email">Email <span class="text-danger">*</span></label>
+    <label for="user_email">Email <span class="text-danger small">(Wajib email aktif)</span></label>
     <input type="text" name="user_email" id="user_email" class="form-control" placeholder="Contoh: nama@mail.com" autocomplete="off">
     <div class="invalid-feedback"></div>
   </div>

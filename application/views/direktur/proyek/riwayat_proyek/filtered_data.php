@@ -1,4 +1,3 @@
-<!-- <?php var_dump($filtered->result()) ?> -->
 <?php if ($filtered->num_rows() > 0) { ?>
 	<?php foreach($filtered->result() as $ft) { ?>
 		<tr>

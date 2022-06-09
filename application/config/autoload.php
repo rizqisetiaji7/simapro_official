@@ -65,7 +65,8 @@ $autoload['libraries'] = [
 	'form_validation', 
 	'theme', 
 	'datatables', 
-	'mylibs'
+	'mylibs',
+	'cipdf'
 ];
 
 /*
