@@ -337,4 +337,39 @@ class Manajemen_proyek extends CI_Controller {
       $data['docs'] =$this->project_model->get_documentation_project($project_id);
       $this->load->view('direktur/proyek/detail_proyek/foto_dokumentasi_proyek', $data);
    }
+
+   // Dokumentasi Foto Proyek Utama
+   function tampil_dokumentasi_subproyek() {
+      $project_id = $this->input->post('project_id');
+      $subproject_id = $this->input->post('subproject_id');
+      $data['docs'] =$this->project_model->get_documentation_subproject($project_id, $subproject_id);
+      $this->load->view('direktur/proyek/detail_proyek/foto_dokumentasi_subproyek', $data);
+   }
+
+   // Status Proyek Telah Selesai
+   function status_proyek_selesai() {
+      $message = [];
+      $project_id = $this->input->post('project_id', TRUE);
+
+      $this->bm->update('tb_project', [
+         'project_current_deadline' => date('Y-m-d', now('Asia/Jakarta')),
+         'project_status'           => 'finish',
+         'updated'                  => date('Y-m-d H:i:s', now('Asia/Jakarta'))
+      ], [
+         'project_id'   => $project_id
+      ]);
+
+      if ($this->db->affected_rows() > 0) {
+         $message = [
+            'status'    => 'success',
+            'message'   => 'Proyek yang telah anda kerjakan telah selesai.'
+         ];
+      } else {
+         $message = [
+            'status'    => 'failed',
+            'message'   => 'Oop! Terjadi kesalahan, coba lagi beberapa saat.'
+         ];
+      }
+      $this->output->set_content_type('application/json')->set_output(json_encode($message));
+   }
 }

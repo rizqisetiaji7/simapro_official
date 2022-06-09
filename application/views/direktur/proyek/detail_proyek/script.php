@@ -5,6 +5,7 @@
    	const modalBody = $('#manageProjectModal .modal-body');
    	const formModal = $('#form_modal_manageProject');
    	const btnSubmit = $('#btnSubmit-manageProject');
+   	const modalFooter = $('#manageProjectModal .modal-footer');
 
     $(document).on('keyup', '.form-control', function(e) {
         $(this).removeClass('is-invalid');
@@ -163,10 +164,61 @@
       });
 	}
 
+	function finishProject(project_id) {
+		Swal.fire({
+			icon: 'warning',
+			html: `
+				<h4>Proyek telah selesai?</h4>
+				<p class="text-muted">Status proyek otomatis akan dinyatakan selesai.</p>
+				<p class="text-danger small">Pastikan periksa dokumentasi, Sub-proyek, maupun <br> list setiap tugas pekerjaan terlebih dahulu.</p>
+			`,
+			confirmButtonText: 'Proyek selesai',
+			confirmButtonColor: '#28a745',
+			showCancelButton: true,
+			cancelButtonText: 'Batal'
+     	}).then((result) => {
+     		if (result.isConfirmed) {
+     			$.ajax({
+				url: `<?= site_url('direktur/manajemen_proyek/status_proyek_selesai') ?>`,
+				method: 'POST',
+				dataType: 'json',
+				cache: false,
+				data: {
+					project_id: project_id
+				},
+				success: function(data) {
+					if (data.status == 'success') {
+						Swal.fire({
+							icon: 'success',
+							title: 'Berhasil',
+							text: `${data.message}`,
+							showConfirmButton: false,
+							timer: 2000,
+						}).then((result) => {
+							window.location = `<?= site_url('direktur/proyek/daftar_proyek') ?>`;
+						});		
+					} else if (data.status == 'failed') {
+						Swal.fire({
+							icon: 'error',
+							title: 'Gagal',
+							text: `${data.message}`,
+							showConfirmButton: false,
+							timer: 2000,
+						}).then((result) => {
+							window.location = `<?= site_url('direktur/proyek/daftar_proyek') ?>`;
+						});
+					}
+				}
+			});
+     		}
+     	});
+	}
+
 	// Tampil Dokumentasi Proyek
 	function tampilDocumentasiProyek(project_id, project_title) {
 		title.html(`Dokumentasi Proyek : <span class="text-secondary small">${project_title}</span>`);
 		modalDialog.addClass('modal-lg');
+		modalFooter.addClass('d-none');
 		$.ajax({
 			url: `<?= site_url('direktur/manajemen_proyek/tampil_dokumentasi_proyek') ?>`,
 			dataType: 'html',
@@ -177,6 +229,29 @@
 			},
 			data: {
 				project_id: project_id
+			},
+			success: function(data) {
+				modalBody.html(data);
+			}
+		});
+		modal.modal('show');
+	}
+
+	function tampilDocumentasiSubproyek(project_id, subproject_id, project_title) {
+		title.html(`Dokumentasi Proyek : <span class="text-secondary small">${project_title}</span>`);
+		modalDialog.addClass('modal-lg');
+		modalFooter.addClass('d-none');
+		$.ajax({
+			url: `<?= site_url('direktur/manajemen_proyek/tampil_dokumentasi_subproyek') ?>`,
+			dataType: 'html',
+			method: 'POST',
+			cache: false,
+			beforeSend: function() {
+				modalBody.html('Memuat gambar...');
+			},
+			data: {
+				project_id: project_id,
+				subproject_id: subproject_id
 			},
 			success: function(data) {
 				modalBody.html(data);
@@ -252,6 +327,7 @@
 		modalDialog.removeClass('modal-lg');
 		// modalDialog.removeClass('modal-xl');
 		modalBody.empty();
+		modalFooter.removeClass('d-none');
 		formModal.removeAttr('action');
 		btnSubmit.text('Simpan');
 	});

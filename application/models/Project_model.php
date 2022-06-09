@@ -115,4 +115,12 @@ class Project_model extends CI_Model {
 		$this->db->where(['tb_photo.ID_project' => $project_id, 'tb_photo.ID_subproject' => NULL]);
 		return $this->db->get();
 	}
+
+	public function get_documentation_subproject($project_id, $subproject_id) {
+		$this->db->select('tb_photo.photo_id, tb_photo.ID_project as proj_ID, tb_photo.photo_url as url, tb_photo.created as photo_created, tb_project.project_id');
+		$this->db->from('tb_photo');
+		$this->db->join('tb_project', 'tb_photo.ID_project=tb_project.project_id', 'left');
+		$this->db->where(['tb_photo.ID_project' => $project_id, 'tb_photo.ID_subproject' => $subproject_id]);
+		return $this->db->get();
+	}
 }

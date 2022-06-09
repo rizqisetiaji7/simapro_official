@@ -6,11 +6,9 @@
 		<select name="project_status" class="form-control" id="project_status" required>
 			<option <?= $project_status->project_status == 'on_progress' ? 'selected' : NULL ?> value="on_progress">Berjalan</option>
 			<option <?= $project_status->project_status == 'revision' ? 'selected' : NULL ?> value="revision">Revisi</option>
-			<?php if ($project_status->project_progress >= 100 && $docs->num_rows() > 0) { ?>
-				<option <?= $project_status->project_status == 'finish' ? 'selected' : NULL ?> value="finish">Selesai</option>
-			<?php } ?>
 			<option <?= $project_status->project_status == 'review' ? 'selected' : NULL ?> value="review">Ditinjau / Diperiksa</option>
 			<option <?= $project_status->project_status == 'pending' ? 'selected' : NULL ?> value="pending">Ditunda / Pending</option>
+			<option <?= $project_status->project_status == 'approved' ? 'selected' : NULL ?> value="approved">Approved / Disetujui</option>
 		</select>
 	</div>
 </div>

@@ -61,7 +61,7 @@
 
         <button type="button" class="btn btn-info mb-1 btn-sm" data-toggle="tooltip" title="Buat Sub-Proyek" onclick="add_subProject(<?= $project->project_id ?>)"><i class="fas fa-plus"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Sub-proyek</span></button>
 
-        <?php if ($project->project_progress >= 100 && $docs->num_rows() > 0) { ?>
+        <?php if ($project->project_progress >= 100 && $docs->num_rows() > 0 && $project->project_status == 'approved') { ?>
             <button type="button" class="btn btn-success mb-1 btn-sm" data-toggle="tooltip" title="Klik proyek dinyatakan selesai" onclick="finishProject(<?= $project->project_id ?>)"><i class="fas fa-check"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Proyek Selesai</span></button>
         <?php } ?>
     </div>
@@ -83,6 +83,8 @@
                         $status_badge = '<span class="badge bg-inverse-success px-2 py-1">Berjalan</span>';
                     } else if ($project->project_status == 'finish') {
                         $status_badge = '<span class="badge bg-inverse-success px-2 py-1">Selesai</span>';
+                    } else if ($project->project_status == 'approved') {
+                        $status_badge = '<span class="badge bg-inverse-purple px-2 py-1"><i class="fas fa-check mr-1"></i>Approved</span>';
                     }
                 ?>
                 <i class="fa-solid fa-map-pin mr-2"></i><?= $status_badge ?>
@@ -168,9 +170,10 @@
 
                     <!-- Task Sub-Element "Proyek" -->
                     <?php if ($total_subelemen > 0) { ?>
-
                         <!-- Sub-Element Cards -->
                         <?php foreach(subelemen_project($sp->subproject_id)->result() as $se) { ?>
+
+                            <button type="button" class="btn btn-light btn-block btn-sm mb-3" data-toggle="tooltip" title="Lihat Foto dokumentasi lapangan" onclick="tampilDocumentasiSubproyek(<?= $project->project_id ?>, <?= $sp->subproject_id ?>, <?= "'".$sp->subproject_name."'" ?>)"><i class="fa-solid fa-camera mr-1"></i> Dokumentasi</button>
                             
                             <div class="card panel">
                                 <div class="kanban-box ui-sortable-handle">
