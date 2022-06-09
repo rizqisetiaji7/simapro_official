@@ -99,7 +99,7 @@ function dateTimeIDN($datetime, $setDay = FALSE, $setTime = FALSE) {
 	$d = substr($datetime, 8, 2);
 	$t = str_replace(':','.', substr($datetime, 11, 5));
 
-	$tId = !$t ? '' : ' | Pukul '.$t.' WIB';
+	$tId = !$t ? '' : ' | '.$t.' WIB';
 
 	$monthId = $dTimeData['months'][$m];
 	$dIdx = date('w', mktime(0,0,0, $m, $d, $y));

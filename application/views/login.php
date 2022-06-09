@@ -14,7 +14,7 @@
                     <form id="form-login" action="<?= site_url('login/login_process') ?>" method="POST">
                         <div class="form-group mt-1">
                             <label for="email">Email <span class="text-danger">*</span></label>
-                            <input type="text" id="email" value="rizqisetiaji9@gmail.com" name="email" class="form-control" placeholder="Alamat email" autofocus autocomplete="off">
+                            <input type="text" id="email" name="email" class="form-control" placeholder="Alamat email" autofocus autocomplete="off">
                             <div class="invalid-feedback"></div>
                         </div>
 
@@ -27,7 +27,7 @@
                                     <a class="text-muted" href="<?= site_url('forgot_password') ?>">Lupa password?</a>
                                 </div>
                             </div>
-                            <input type="password" id="password" value="admin123" name="password" class="form-control" placeholder="Password" autofocus>
+                            <input type="password" id="password" name="password" class="form-control" placeholder="Password" autofocus>
                             <div class="invalid-feedback"></div>
                         </div>
 

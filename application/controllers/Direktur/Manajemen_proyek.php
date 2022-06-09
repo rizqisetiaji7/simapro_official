@@ -330,4 +330,11 @@ class Manajemen_proyek extends CI_Controller {
 
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
+
+   // Dokumentasi Foto Proyek Utama
+   function tampil_dokumentasi_proyek() {
+      $project_id = $this->input->post('project_id');
+      $data['docs'] =$this->project_model->get_documentation_project($project_id);
+      $this->load->view('direktur/proyek/detail_proyek/foto_dokumentasi_proyek', $data);
+   }
 }

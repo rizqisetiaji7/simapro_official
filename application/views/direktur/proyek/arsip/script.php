@@ -1,4 +1,36 @@
 <script>
+	const modal = $('#projectArchiveModal');
+	const title = $('#projectArchiveModalLabel');
+	const modalDialog = $('#projectArchiveModal .modal-dialog');
+	const modalBody = $('#projectArchiveModal .modal-body');
+	const formModal = $('#form_project_archive');
+	// const btnSubmit = $('#btnSubmit-project');
+
+	// Tampil Detail Proyek Arsip
+	function viewDetailInfo(project_id, project_code_ID) {
+		title.text('Detail Proyek');
+		modalDialog.addClass('modal-xl');
+
+		$.ajax({
+			url: `<?= site_url('direktur/proyek/detail_proyek_arsip') ?>`,
+			method: 'POST',
+			dataType: 'html',
+			cache: false,
+			data: {
+				project_id: project_id,
+				project_code: project_code_ID
+			},
+			beforeSend: function() {
+				modalBody.html(`Memuat data...`);
+			},
+			success: function(data) {
+				modalBody.html(data);
+			}
+		});
+		modal.modal('show');
+	}
+
+	// Hapus Archive (Mengembalikan status proyek menjadi on progress)
 	function removeArchive(projectID) {
 		Swal.fire({
          icon: 'info',
@@ -44,4 +76,12 @@
       	}
       });
 	}
+
+	modal.on('hidden.bs.modal', function() {
+		title.empty();
+		modalDialog.removeClass('modal-xl');
+		modalBody.empty();
+		formModal.removeAttr('action');
+		// btnSubmit.text('Simpan');
+	});
 </script>

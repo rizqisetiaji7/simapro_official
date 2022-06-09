@@ -64,6 +64,8 @@
                                             echo '<span class="badge bg-inverse-light p-2"><span class="text-dark">Belum ada</span></span>';
                                         } else if ($pro->project_status == 'pending') {
                                             echo '<span class="badge bg-inverse-danger p-2">Ditunda</span>';
+                                        } else if ($pro->project_status == 'finish') {
+                                            echo '<span class="badge bg-inverse-success p-2">Selesai</span>';
                                         } else if ($pro->project_status == 'revision') {
                                             echo '<span class="badge bg-inverse-warning p-2">Direvisi</span>';
                                         } else if ($pro->project_status == 'review') {

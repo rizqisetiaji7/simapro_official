@@ -25,11 +25,11 @@
 </div> -->
 
 <div class="row">
-    <div class="col-12 col-sm-6">
+    <div class="col-12 col-sm-8">
         <div class="d-flex flex-row align-items-start justify-content-between justify-content-sm-start">
-            <div class="mr-3">
+            <div class="mr-5">
                 <h4 class="mb-0"><?= $project->project_name ?></h4>
-                <p class="text-secondary mb-2"><?= $project->project_address ?></p>
+                <p class="text-secondary small mb-2"><?= $project->project_address ?></p>
                 <?php if ($project->user_id != NULL) { ?>
                     <span class="d-inline-block text-primary mb-1 small">Penanggung Jawab</span>
                     <div class="d-flex align-items-center mb-3">
@@ -45,14 +45,25 @@
                     <span class="d-inline-block text-danger mb-1 small"><i class="fas fa-user mr-2"></i>Penanggung Jawab Tidak Terdaftar</span>
                 <?php } ?>
             </div>
-            <button type="button" class="btn btn-sm btn-info" onclick="editProyek(<?= "'".$project->projectID."'" ?>)" data-toggle="tooltip" title="Edit proyek">
-                <i class="fa fa-pencil"></i>
-            </button>
+            <div>
+                <button type="button" class="btn btn-sm mb-1 mr-1 btn-info" onclick="editProyek(<?= "'".$project->projectID."'" ?>)" data-toggle="tooltip" title="Edit proyek">
+                    <i class="fa fa-pencil"></i>
+                </button>
+                <button type="button" class="btn btn-sm mb-1 btn-purple" onclick="tampilDocumentasiProyek(<?= "'".$project->project_id."'" ?>, <?= "'".$project->project_name."'" ?>)" data-toggle="tooltip" title="Lihat Foto Dokumentasi">
+                    <i class="fa-solid fa-camera"></i> <span class="d-none d-lg-inline-block ml-1">Foto Dokumentasi</span>
+                </button>
+            </div>
+            
         </div>
     </div>
-    <div class="col-12 col-sm-6 text-sm-right">
-        <a href="<?= site_url('direktur/chat') ?>" class="btn btn-primary py-2 px-3" data-toggle="tooltip" title="Kirim Pesan"><i class="fa-solid fa-message"></i></a>
-        <button type="button" class="btn btn-success py-2 px-4 ml-1" onclick="add_subProject(<?= $project->project_id ?>)">Buat Sub-proyek</button>
+    <div class="col-12 col-sm-4 text-sm-right">
+        <a href="<?= site_url('direktur/chat') ?>" class="btn btn-primary mb-1 btn-sm" style="position: relative;" data-toggle="tooltip" title="Kirim Pesan"><i class="fa-solid fa-message"></i></a>
+
+        <button type="button" class="btn btn-info mb-1 btn-sm" data-toggle="tooltip" title="Buat Sub-Proyek" onclick="add_subProject(<?= $project->project_id ?>)"><i class="fas fa-plus"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Sub-proyek</span></button>
+
+        <?php if ($project->project_progress >= 100 && $docs->num_rows() > 0) { ?>
+            <button type="button" class="btn btn-success mb-1 btn-sm" data-toggle="tooltip" title="Klik proyek dinyatakan selesai" onclick="finishProject(<?= $project->project_id ?>)"><i class="fas fa-check"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Proyek Selesai</span></button>
+        <?php } ?>
     </div>
 
     <div class="col-12">
@@ -70,6 +81,8 @@
                         $status_badge = '<span class="badge bg-inverse-info px-2 py-1">Diperiksa</span>';
                     } else if ($project->project_status == 'on_progress') {
                         $status_badge = '<span class="badge bg-inverse-success px-2 py-1">Berjalan</span>';
+                    } else if ($project->project_status == 'finish') {
+                        $status_badge = '<span class="badge bg-inverse-success px-2 py-1">Selesai</span>';
                     }
                 ?>
                 <i class="fa-solid fa-map-pin mr-2"></i><?= $status_badge ?>
@@ -135,9 +148,11 @@
                 </div>
                 <!-- End Kanban Header -->
 
-                <?php $total_subelemen = subelemen_project($sp->subproject_id)->num_rows(); ?>
                 <!-- "Subproyek" Content -->
+                <?php $total_subelemen = subelemen_project($sp->subproject_id)->num_rows(); ?>
                 <div class="kanban-wrap">
+
+                    <!-- Subproyek Progress (Belum Berjalan) -->
                     <div class="pro-progress mb-3">
                         <div class="pro-progress-bar">
                             <h5>Progres</h5>
@@ -148,10 +163,15 @@
                             <span>0%</span>
                         </div>
                     </div>
+                    <!-- ./ Subproyek Progress (Belum Berjalan) -->
 
+
+                    <!-- Task Sub-Element "Proyek" -->
                     <?php if ($total_subelemen > 0) { ?>
+
+                        <!-- Sub-Element Cards -->
                         <?php foreach(subelemen_project($sp->subproject_id)->result() as $se) { ?>
-                            <!-- Task Sub-Element "Proyek" -->
+                            
                             <div class="card panel">
                                 <div class="kanban-box ui-sortable-handle">
                                     <div class="task-board-header">
@@ -166,6 +186,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="task-board-body">
                                         <div class="kanban-info">
                                             <div class="progress progress-xs">
@@ -173,7 +194,8 @@
                                             </div>
                                             <span><?= $se->project_task_progress >= 100 ? 100 : $se->project_task_progress ?>%</span>
                                         </div>
-                                        <div class="kanban-footer mb-3">
+                                        
+                                        <div class="kanban-footer mb-4">
                                             <span class="task-info-cont">
                                                 <span class="task-date"><i class="fa-solid fa-clock"></i> <?= datetimeIDN($se->project_task_deadline) ?></span>
                                                 <span class="task-priority badge <?= $se->priority_color ?>"><?= $se->priority_name ?></span>
@@ -195,19 +217,21 @@
                                         </div>
                                         <?php if ($se->updated != NULL) { ?>
                                             <div class="d-block text-center">
-                                                <span class="text-xs text-muted small">Diperbarui: <strong><?= datetimeIDN($se->updated, TRUE) ?></strong></span>
+                                                <span class="text-xs text-muted small">Update: <?= datetimeIDN($se->updated, FALSE, TRUE) ?></span>
                                             </div>
                                         <?php } ?>
                                     </div>
                                 </div>
                             </div>
-                            <!-- End Task Sub-Element "Proyek" -->
+                            
                         <?php } ?>
+                        <!-- End Sub-Element Cards -->
                     <?php } else { ?>
                     <div class="text-center">
                         <p class="mb-0 text-secondary small">List Belum tersedia</p>
                     </div>
                     <?php } ?>
+                    <!-- End Task Sub-Element "Proyek" -->
 
                 </div>
                 <!-- End "Subproyek" Content -->

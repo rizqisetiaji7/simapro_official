@@ -66,7 +66,14 @@ class Proyek extends CI_Controller {
 
    function form_edit_status() {
       $id = $this->input->post('project_code', TRUE);
-      $data['project_status'] = $this->bm->get($this->tb_project, 'project_id, ID_pm, ID_company, project_code_ID, project_progress, project_status', ['project_code_ID' => $id])->row();
+      $project_status = $this->bm->get($this->tb_project, 'project_id, ID_pm, ID_company, project_code_ID, project_progress, project_status', ['project_code_ID' => $id])->row();
+      $docs = $this->project_model->get_documentation_project($project_status->project_id);
+
+      $data = [
+         'project_status'  => $project_status,
+         'docs'            => $docs
+      ];
+
       $this->load->view('direktur/proyek/daftar_proyek/form_edit_status', $data);
    }
 
@@ -171,14 +178,16 @@ class Proyek extends CI_Controller {
    }
 
    public function riwayat_proyek() {
+      $projects = $this->project_model->get_finished_project(user_company()->company_id, 10);
       $data = [
          'app_name'  => APP_NAME,
          'author'    => APP_AUTHOR,
          'title'     => 'Riwayat Proyek',
+         'projects'  => $projects,
          'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
          'page'      => 'riwayat_proyek'
       ];
-      $this->theme->view('templates/main', 'direktur/proyek/riwayat', $data);
+      $this->theme->view('templates/main', 'direktur/proyek/riwayat_proyek/index', $data);
    }
 
    public function arsip_proyek() {
@@ -192,17 +201,6 @@ class Proyek extends CI_Controller {
          'page'      => 'arsip_proyek'
       ];
       $this->theme->view('templates/main', 'direktur/proyek/arsip/index', $data);
-   }
-
-   function detail_arsip() {
-      $data = [
-         'app_name'  => APP_NAME,
-         'author'    => APP_AUTHOR,
-         'title'     => 'Detail Arsip Proyek',
-         'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
-         'page'      => 'detail_arsip_proyek'
-      ];
-      $this->theme->view('templates/main', 'direktur/proyek/arsip/arsip_detail', $data);
    }
 
    function arsip_process() {
@@ -252,6 +250,7 @@ class Proyek extends CI_Controller {
       $subproject = $this->project_model->get_subproject([
          'ID_project' => $project->project_id
       ]);
+      $docs = $this->project_model->get_documentation_project($project->project_id);
 
       $data = [
          'app_name'     => APP_NAME,
@@ -260,9 +259,37 @@ class Proyek extends CI_Controller {
          'desc'         => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
          'project'      => $project,
          'subproject'   => $subproject,
+         'docs'         => $docs,
          'page'         => 'detail_proyek'
       ];
       $this->theme->view('templates/main', 'direktur/proyek/detail_proyek/index', $data);
+   }
+
+   function detail_arsip($company_id, $project_code_ID) {
+      // Get Archived Project
+      $project = $this->project_model->get_project_detail($company_id, $project_code_ID, TRUE)->row();
+      $subproject = $this->project_model->get_subproject([
+         'ID_project' => $project->project_id
+      ]);
+
+      $data = [
+         'app_name'     => APP_NAME,
+         'author'       => APP_AUTHOR,
+         'title'        => 'Detail Arsip Proyek',
+         'desc'         => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
+         'project'      => $project,
+         'subproject'   => $subproject,
+         'page'         => 'detail_arsip_proyek'
+      ];
+      $this->theme->view('templates/main', 'direktur/proyek/arsip/arsip_detail', $data);
+   }
+
+   function detail_proyek_arsip() {
+      $project_id = $this->input->post('project_id', TRUE);
+      $project_code_ID = $this->input->post('project_code', TRUE);
+      $data['docs'] = $this->project_model->get_documentation_project($project_id);
+      $data['project'] = $this->project_model->detail_archive($project_id, $project_code_ID, TRUE)->row();
+      $this->load->view('direktur/proyek/arsip/detail_proyek_arsip', $data);
    }
 
    public function form_edit_proyek() {

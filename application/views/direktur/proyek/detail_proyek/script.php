@@ -163,6 +163,28 @@
       });
 	}
 
+	// Tampil Dokumentasi Proyek
+	function tampilDocumentasiProyek(project_id, project_title) {
+		title.html(`Dokumentasi Proyek : <span class="text-secondary small">${project_title}</span>`);
+		modalDialog.addClass('modal-lg');
+		$.ajax({
+			url: `<?= site_url('direktur/manajemen_proyek/tampil_dokumentasi_proyek') ?>`,
+			dataType: 'html',
+			method: 'POST',
+			cache: false,
+			beforeSend: function() {
+				modalBody.html('Memuat gambar...');
+			},
+			data: {
+				project_id: project_id
+			},
+			success: function(data) {
+				modalBody.html(data);
+			}
+		});
+		modal.modal('show');
+	}
+
 	$(document).on('change', '#inputProfile', function() {
 		if (this.files && this.files[0]) {
 			// Get and display filename
@@ -228,6 +250,7 @@
 	modal.on('hidden.bs.modal', function() {
 		title.empty();
 		modalDialog.removeClass('modal-lg');
+		// modalDialog.removeClass('modal-xl');
 		modalBody.empty();
 		formModal.removeAttr('action');
 		btnSubmit.text('Simpan');
