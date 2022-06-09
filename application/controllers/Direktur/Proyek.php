@@ -129,6 +129,9 @@ class Proyek extends CI_Controller {
             'project_description'   => $post['project_description'],
             'project_start'         => $post['project_start'],
             'project_deadline'      => $post['project_deadline'],
+            'project_current_deadline' => NULL,
+            'project_deadline_month'   => NULL,
+            'project_status'        => 'on_progress',
             'project_progress'      => 0,
             'project_archive'       => '0',
             'created'               => date('Y-m-d H:i:s', now('Asia/Jakarta'))
@@ -178,19 +181,44 @@ class Proyek extends CI_Controller {
    }
 
    public function riwayat_proyek() {
-      $projects = $this->project_model->get_finished_project(user_company()->company_id, 10);
       $data = [
          'app_name'  => APP_NAME,
          'author'    => APP_AUTHOR,
          'title'     => 'Riwayat Proyek',
-         'projects'  => $projects,
          'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
          'page'      => 'riwayat_proyek'
       ];
       $this->theme->view('templates/main', 'direktur/proyek/riwayat_proyek/index', $data);
    }
 
-   public function arsip_proyek() {
+   function show_riwayat_proyek() {
+      $data['projects'] = $this->project_model->get_finished_project(user_company()->company_id, 10);
+      $this->load->view('direktur/proyek/riwayat_proyek/list_proyek', $data);
+   }
+
+   function filterData() {
+      $post = $this->input->post(NULL, TRUE);
+      $query = '';
+      if ($post['bulan_awal'] == '' && $post['bulan_akhir'] == '') {
+         $query = $this->project_model->get_finished_project(user_company()->company_id);
+      } else if ($post['bulan_awal'] == '' && $post['bulan_akhir'] != '') {
+         $query = $this->project_model->get_finished_project(user_company()->company_id);
+      } else if ($post['bulan_awal'] != '' && $post['bulan_akhir'] == '') {
+         $query = $this->project_model->get_finished_project(user_company()->company_id);
+      } else if ($post['bulan_awal'] != '' && $post['bulan_akhir'] != ''){
+         $ym_awal = $post['tahun'].'-'.$post['bulan_awal'];
+         $ym_akhir = $post['tahun'].'-'.$post['bulan_akhir'];
+         $query = $this->project_model->get_riwayat_filter($ym_awal, $ym_akhir, user_company()->company_id);
+      }
+      $data['filtered'] = $query;
+      $this->load->view('direktur/proyek/riwayat_proyek/filtered_data', $data);
+   }
+
+   function download() {
+      echo "Selamat Mendownload";
+   }
+
+   function arsip_proyek() {
       $archived = $this->project_model->get_project_archive(user_company()->company_id)->result();
       $data = [
          'app_name'  => APP_NAME,
@@ -245,7 +273,7 @@ class Proyek extends CI_Controller {
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
-   public function detail_proyek($company_id, $project_code_ID) {
+   function detail_proyek($company_id, $project_code_ID) {
       $project = $this->project_model->get_project_detail($company_id, $project_code_ID)->row();
       $subproject = $this->project_model->get_subproject([
          'ID_project' => $project->project_id
@@ -292,7 +320,7 @@ class Proyek extends CI_Controller {
       $this->load->view('direktur/proyek/arsip/detail_proyek_arsip', $data);
    }
 
-   public function form_edit_proyek() {
+   function form_edit_proyek() {
       $code_ID = $this->input->post('project_code_ID', TRUE);
       $project = $this->project_model->get_project_detail(user_company()->company_id, $code_ID)->row();
       $project_manajer = $this->bm->get('tb_users', '*', [
@@ -308,7 +336,7 @@ class Proyek extends CI_Controller {
       $this->load->view('direktur/proyek/detail_proyek/form_edit_proyek', $data);
    }
 
-   public function edit_detail_proyek() {
+   function edit_detail_proyek() {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
 

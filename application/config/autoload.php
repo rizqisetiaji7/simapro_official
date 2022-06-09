@@ -102,7 +102,8 @@ $autoload['helper'] = [
 	'form', 
 	'date', 
 	'security', 
-	'string', 
+	'string',
+	'text', 
 	'base',
 	'project'
 ];

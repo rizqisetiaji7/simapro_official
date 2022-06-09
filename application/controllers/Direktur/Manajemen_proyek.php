@@ -353,6 +353,7 @@ class Manajemen_proyek extends CI_Controller {
 
       $this->bm->update('tb_project', [
          'project_current_deadline' => date('Y-m-d', now('Asia/Jakarta')),
+         'project_deadline_month'   => date('Y-m', now('Asia/Jakarta')),
          'project_status'           => 'finish',
          'updated'                  => date('Y-m-d H:i:s', now('Asia/Jakarta'))
       ], [

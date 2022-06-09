@@ -40,6 +40,23 @@
     	});
     }
 
+    // Edit Status Proyek
+    function editProjectStatus(project_code) {
+		title.text('Ubah Status Proyek');
+		formModal.attr('action', `<?= site_url('direktur/proyek/edit_status_process') ?>`);
+		$.ajax({
+			url: `<?= site_url('direktur/proyek/form_edit_status') ?>`,
+			method: 'POST',
+			dataType: 'html',
+			cache: false,
+			data: { project_code: project_code },
+			success: function(data) {
+				modalBody.html(data);
+				modal.modal('show');
+			}
+		});
+	}
+
     // CRUD Sub Proyek
 	function add_subProject(project_id) {
 		title.text('Tambah Sub-Proyek');
