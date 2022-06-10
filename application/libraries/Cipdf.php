@@ -24,7 +24,9 @@ class Cipdf {
 
     public function __construct() {
         $this->ci = &get_instance();
-        $this->dompdf = new Dompdf();
+        $this->dompdf = new Dompdf([
+            'isRemoteEnabled' => true
+        ]);
     }
 
     /**

@@ -11,6 +11,12 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-12">
+        <?= $_SERVER['DOCUMENT_ROOT'].'/assets/' ?>
+    </div>
+</div>
+
 <form action="<?= site_url('direktur/proyek/download') ?>" id="formFilterRiwayat" method="POST" accept-charset="utf-8">
     <div class="row">
         <div class="col-4 col-sm-6 col-md-3">

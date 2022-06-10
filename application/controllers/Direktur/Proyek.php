@@ -223,41 +223,86 @@ class Proyek extends CI_Controller {
 
    function download() {
       $query = '';
+      $bulan = '';
       $post = $this->input->post(NULL, TRUE);
       $ym_awal = $post['tahun_proyek'].'-'.$post['bulan_awal'];
       $ym_akhir = $post['tahun_proyek'].'-'.$post['bulan_akhir'];
-      // var_dump($post);
-      // echo "Selamat Mendownload";
 
       if ($post['bulan_awal'] == '' && $post['bulan_akhir'] == '') {
+         $bulan = '';
          $query = $this->project_model->get_finished_project(user_company()->company_id);
       } else if ($post['bulan_awal'] == '' && $post['bulan_akhir'] != '') {
+         $bulan = '';
          $query = $this->project_model->get_finished_project(user_company()->company_id);
       } else if ($post['bulan_awal'] != '' && $post['bulan_akhir'] == '') {
+         $bulan = '';
          $query = $this->project_model->get_finished_project(user_company()->company_id);
       } else if ($post['bulan_awal'] != '' && $post['bulan_akhir'] != ''){
          $ym_awal = $post['tahun_proyek'].'-'.$post['bulan_awal'];
          $ym_akhir = $post['tahun_proyek'].'-'.$post['bulan_akhir'];
+         $bulan = $this->_getMonthID($post['bulan_awal']).' s/d '.$this->_getMonthID($post['bulan_akhir']).' '.$post['tahun_proyek'];
          $query = $this->project_model->get_riwayat_filter($ym_awal, $ym_akhir, user_company()->company_id);
       }
 
       if ($query->num_rows() > 0) {
          // Print PDF
-         $data['query'] = $query->result();
+         $data['month'] = $bulan;
+         $data['total_count'] = $query->num_rows();
+         $data['company'] = user_company()->comp_name;
+         $data['logo'] = user_company()->comp_logo;
          $data['title'] = 'PT. Arya Bakti Saluyu';
-         $this->load->view('laporan_proyek', $data);
 
-         // Generate nama file PDF
-         // $filename = 'TAG-'.date('Ymdhis', time()).$this->mylibs->_randomID();
+         $rows = [];
+         foreach($query->result() as $qr) {
+            $deadline = '';
 
-         // Menjalankan print dari library dompdf dengan mengirimkan data dari database
-         // $this->cipdf->print('tagihan/print_daftar_tagihan', $data, $filename, 'A4', 'landscape');
+            if ($qr->project_deadline > $qr->project_current_deadline) {
+               $deadline = 'Lebih Awal';
+            } else if ($qr->project_deadline < $qr->project_current_deadline) {
+               $deadline = 'Terlambat';
+            } else if ($qr->project_deadline == $qr->project_current_deadline) {
+               $deadline = 'Tepat Waktu';
+            }
+            $rows[] = [
+               'proID'         => $qr->projectID,
+               'thumbnail'     => $qr->project_thumbnail,
+               'project_name'  => $qr->project_name,
+               'pm'            => $qr->user_id == null ? ' - ' : $qr->user_fullname,
+               'address'       => $qr->project_address,
+               'deadline'      => dateTimeIDN($qr->project_deadline),
+               'curr_deadline' => dateTimeIDN($qr->project_current_deadline),
+               'keterangan'    => $deadline
+            ];
+         }
+         $data['query'] = $rows;
+         $rand_id = $this->mylibs->_randomID();
+         $filename = 'LAPPROJ-'.date('Ymdhis', time()).$rand_id;
+         $this->cipdf->print('laporan_proyek', $data, $filename, 'A4', 'landscape');
       } else {
          echo "<script>
             alert('Oops! Data informasi yang ingin anda download tidak tersedia.');
             window.location = `".site_url('direktur/proyek/riwayat')."`;
          </script>";
       }
+   }
+
+   protected function _getMonthID($month_num) {
+      $months = [
+         '01'  => 'Januari',
+         '02'  => 'Februari',
+         '03'  => 'Maret',
+         '04'  => 'April',
+         '05'  => 'Mei',
+         '06'  => 'Juni',
+         '07'  => 'Juli',
+         '08'  => 'Agustus',
+         '09'  => 'September',
+         '10'  => 'Oktober',
+         '11'  => 'November',
+         '12'  => 'Desember'
+      ];
+      $m = $months[$month_num];
+      return $m;
    }
 
    // ==================================================================
