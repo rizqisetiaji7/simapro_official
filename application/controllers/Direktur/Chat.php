@@ -15,6 +15,6 @@ class Chat extends CI_Controller {
          'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
          'page'      => 'chat_room'
       ];
-      $this->theme->view('templates/main', 'direktur/proyek/chat/index', $data);  
+      $this->theme->view('templates/main', 'direktur/proyek/chat/index', $data);
    }
 }
