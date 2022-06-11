@@ -72,7 +72,6 @@ $route['direktur'] = 'direktur/dashboard/index';
 $route['direktur/proyek/daftar_proyek'] = 'direktur/proyek/index';
 $route['direktur/proyek/riwayat'] = 'direktur/proyek/riwayat_proyek';
 $route['direktur/proyek/arsip'] = 'direktur/proyek/arsip_proyek';
-
 $route['direktur/chat'] = 'direktur/chat/index';
 
 
@@ -81,18 +80,4 @@ $route['direktur/chat'] = 'direktur/chat/index';
  * PROJECT MANAGER ROUTES
  * Allow only Project Manajer role access
  */ 
-$route['pm']                  = 'proyek_manajer/dashboard/index';
-$route['pm/proyek']           = 'proyek_manajer/proyek/index';
-$route['pm/proyek/detail']    = 'proyek_manajer/proyek/detail';
-$route['pm/proyek/chat']      = 'proyek_manajer/proyek/chat';
-$route['pm/proyek/riwayat']   = 'proyek_manajer/proyek/riwayat';
-$route['pm/proyek/arsip']     = 'proyek_manajer/proyek/arsip';
-
-$route['pm/profile']                          = 'proyek_manajer/profile/index';
-$route['pm/profile/show_upload_profile_form'] = 'proyek_manajer/profile/show_upload_profile_form';
-$route['pm/profile/update_profile']           = 'proyek_manajer/profile/update_profile';
-$route['pm/profile/remove_profile']           = 'proyek_manajer/profile/remove_profile';
-$route['pm/profile/edit_data']                = 'proyek_manajer/profile/edit_data';
-$route['pm/profile/edit_password']            = 'proyek_manajer/profile/edit_password';
-
-$route['pm/chat']            = 'proyek_manajer/chat/index';
+$route['pm']                  = 'pm/dashboard/index';
