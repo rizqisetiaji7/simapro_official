@@ -26,12 +26,28 @@
             $('#profileFileName').addClass('mb-3').html(`<p class="mb-0 small text-muted">Gambar: <strong class="text-dark">${this.files[0].name}</strong></p>`);
         }
     });
+
+    // Tampil Data Proyek Manajer
+    function tampilProyekManajer() {
+        $.ajax({
+            url: `<?=site_url('direktur/kelola_pm/tampil_pm') ?>`,
+            method: 'POST',
+            dataType: 'html',
+            cache: false,
+            success: function(data) {
+                $('#dataProyekManajer').html(data);
+            }
+        });
+    }
+
+    // Jalankan fungsi tampilProyekManajer()
+    tampilProyekManajer()
     
     function addProjectManager() {
         title.text('Tambah Proyek Manajer');
-        formModal.attr('action', `<?= site_url('direktur/proyek_manajer/tambah') ?>`);
+        formModal.attr('action', `<?= site_url('direktur/kelola_pm/tambah') ?>`);
         $.ajax({
-            url: `<?= site_url('direktur/proyek_manajer/show_form_add') ?>`,
+            url: `<?= site_url('direktur/kelola_pm/show_form_add') ?>`,
             dataType: 'html',
             cache: false,
             success: function(data) {
@@ -43,9 +59,9 @@
 
     function editProjectManager(user_unique_id, user_role) {
         title.text('Edit Proyek Manajer');
-        formModal.attr('action', `<?= site_url('direktur/proyek_manajer/edit') ?>`);
+        formModal.attr('action', `<?= site_url('direktur/kelola_pm/edit') ?>`);
         $.ajax({
-            url: `<?= site_url('direktur/proyek_manajer/show_form_edit') ?>`,
+            url: `<?= site_url('direktur/kelola_pm/show_form_edit') ?>`,
             dataType: 'html',
             method: 'POST',
             cache: false,
@@ -73,7 +89,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: `<?= site_url('direktur/proyek_manajer/delete_pm') ?>`,
+                    url: `<?= site_url('direktur/kelola_pm/hapus') ?>`,
                     method: 'POST',
                     dataType: 'json',
                     cache: false,
@@ -111,9 +127,9 @@
 
     function changePasswordPM(unique_id, user_role) {
         title.text('Ubah Password');
-        formModal.attr('action', `<?= site_url('direktur/proyek_manajer/ubah_password') ?>`);
+        formModal.attr('action', `<?= site_url('direktur/kelola_pm/ubah_password') ?>`);
         $.ajax({
-            url: `<?= site_url('direktur/proyek_manajer/show_form_password') ?>`,
+            url: `<?= site_url('direktur/kelola_pm/show_form_password') ?>`,
             dataType: 'html',
             method: 'POST',
             cache: false,

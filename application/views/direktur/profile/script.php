@@ -17,7 +17,7 @@
 	function uploadProfile(unique_id, user_role) {
 		modalHeader.addClass('d-none');
 		modalFooter.addClass('d-none');
-		formModal.attr('action', 'update_profile');
+		formModal.attr('action', 'upload_foto_profile');
 
 		$.ajax({
 			url: `<?= site_url('direktur/profile/show_upload_profile_form') ?>`,
@@ -50,7 +50,7 @@
       }).then((result) => {
       	if (result.isConfirmed) {
       		$.ajax({
-					url: `<?= site_url('direktur/profile/remove_profile') ?>`,
+					url: `<?= site_url('direktur/profile/hapus_foto_profile') ?>`,
 					method: 'POST',
 					dataType: 'json',
 					cache: false,
@@ -192,7 +192,7 @@
 			contentType: false,
 			data: dataForm,
 			beforeSend: function() {
-				if (url == 'update_profile') {
+				if (url == 'upload_foto_profile') {
 					$('#btnSubmitProfile').attr('disabled', true).text('Mengunggah...');
 				}
 			},

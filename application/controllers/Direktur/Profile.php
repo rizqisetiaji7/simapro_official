@@ -80,6 +80,10 @@ class Profile extends CI_Controller {
       return $config;
    }
 
+   function tampil_profile($tb, $field, $data) {
+      return $this->bm->get($tb, $field, $data)->row();
+   }
+
    public function index() {
       $data = [
          'app_name'  => APP_NAME,
@@ -96,15 +100,15 @@ class Profile extends CI_Controller {
       $unique_id = base64_decode(urldecode($this->input->post('unique_id', TRUE)));
       $user_role = base64_decode(urldecode($this->input->post('user_role', TRUE)));     
 
-      $data['user'] = $this->bm->get($this->tb_users, 'user_profile, user_unique_id, user_role', [
+      $data['user'] = $this->tampil_profile($this->tb_users, 'user_profile, user_unique_id, user_role', [
          'user_unique_id' => $unique_id,
          'user_role'      => $user_role
-      ])->row();
+      ]);
 
       $this->load->view('direktur/profile/upload_profile_form', $data);
    }
 
-   function update_profile() {
+   function upload_foto_profile() {
       $message = [];
       $unique_id = urldecode(base64_decode($this->input->post('unique_id', TRUE)));
       $user_role = urldecode(base64_decode($this->input->post('user_role', TRUE)));
@@ -152,7 +156,7 @@ class Profile extends CI_Controller {
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
-   function remove_profile() {
+   function hapus_foto_profile() {
       $message = [];
       $unique_id = urldecode(base64_decode($this->input->post('unique_id', TRUE)));
       $user_profile = urldecode(base64_decode($this->input->post('user_profile', TRUE)));
@@ -181,7 +185,7 @@ class Profile extends CI_Controller {
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
-   function edit_data() {
+   function edit_direktur() {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
       $this->form_validation->set_rules($this->_rules());
@@ -228,7 +232,7 @@ class Profile extends CI_Controller {
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
-   function edit_password() {
+   function ganti_password() {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
 

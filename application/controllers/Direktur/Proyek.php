@@ -104,7 +104,7 @@ class Proyek extends CI_Controller {
    }
 
    // CRUD List Proyek
-   function tambah() {
+   function tambah_proyek() {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
 
@@ -221,7 +221,7 @@ class Proyek extends CI_Controller {
     * 
     */
 
-   function download() {
+   function download_laporan() {
       $query = '';
       $bulan = '';
       $post = $this->input->post(NULL, TRUE);

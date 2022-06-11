@@ -9,10 +9,10 @@
 			box-sizing: border-box;
 			margin: 0;
 			padding: 0;
+			font-family: 'Poppins', sans-serif;
 		}
 
 		body {
-			font-family: 'Poppins', sans-serif;
 			font-size: 0.9rem;
 		}
 
@@ -30,7 +30,8 @@
 			overflow: hidden;
 		}
 
-		th {
+		table tr th {
+			font-family: sans-serif;
 			padding: 15px 10px;
 			text-transform: uppercase;
 			letter-spacing: 0.025rem;
@@ -92,14 +93,14 @@
 			margin-bottom: 30px;
 		}
 
-		.header .header-logo {
-			margin-right: 20px;
+		.header-logo {
+			text-align: center;
 		}
 
-		.header .header-desc h3 {
+		.header-desc h3 {
 			margin-bottom: 10px;
 		}
-		.header .header-desc p {
+		.header-desc p {
 			font-size: .8rem;
 			margin-bottom: .5rem;
 			font-weight: 600;
@@ -109,15 +110,14 @@
 </head>
 <body>
 	<div class="container">
-		<div class="header">
-			<div class="header-logo">
-				<img src="<?= base_url('uploads/company/'.$logo) ?>" height="80">
-			</div>
-			<div class="header-desc">
-				<h3><?= $company ?></h3>
-				<p>Periode : <?= $month == '' ? ' ~ ' : $month ?></p>
-				<p>Jumlah Proyek : <?= $total_count ?></p>
-			</div>
+		<div class="header-logo">
+			<img src="<?= base_url('uploads/company/'.$logo) ?>" height="80">
+		</div>
+
+		<div class="header-desc">
+			<h3><?= $company ?></h3>
+			<p>Periode : <?= $month == '' ? ' ~ ' : $month ?></p>
+			<p>Jumlah Proyek : <?= $total_count ?></p>
 		</div>
 
 		<table>

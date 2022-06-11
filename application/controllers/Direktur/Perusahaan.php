@@ -67,15 +67,12 @@ class Perusahaan extends CI_Controller {
 
    public function index() {
       $getMainComp = $this->company_model->get_company(user_login()->user_id)->row();
-      $pm = $this->bm->get($this->table_users, '*', ['ID_company' => $getMainComp->company_id, 'user_role' => 'pm'])->result();
-
       $data = [
          'app_name'        => APP_NAME,
          'author'          => APP_AUTHOR,
          'title'           => 'Perusahaan',
          'desc'            => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
          'main_comp'       => $getMainComp,
-         'projek_manajer'  => $pm,
          'page'            => 'perusahaan'
       ];
       $this->theme->view('templates/main', 'direktur/perusahaan/index', $data);

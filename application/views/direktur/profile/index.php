@@ -60,7 +60,7 @@
 
 								<div class="divider mt-3 mb-3"></div>
 
-								<form id="editProfileData" action="<?= site_url('direktur/profile/edit_data') ?>" method="POST">
+								<form id="editProfileData" action="<?= site_url('direktur/profile/edit_direktur') ?>" method="POST">
 									<div class="form-row">
 										<input type="hidden" name="user_unique_id" value="<?= urlencode(base64_encode(user_login()->user_unique_id)) ?>">
 										<input type="hidden" name="user_role" value="<?= urlencode(base64_encode(user_login()->user_role)) ?>">
@@ -112,7 +112,7 @@
 								<div class="row">
 									<div class="col-12 col-md-7 m-auto">
 										<h4 class="project-title mt-2 mb-4">Ganti password akun login</h4>
-										<form id="editPassword" action="<?= site_url('direktur/profile/edit_password') ?>" method="POST">
+										<form id="editPassword" action="<?= site_url('direktur/profile/ganti_password') ?>" method="POST">
 											<input type="hidden" name="user_unique_id" value="<?= urlencode(base64_encode(user_login()->user_unique_id)) ?>">
 											<input type="hidden" name="user_role" value="<?= urlencode(base64_encode(user_login()->user_role)) ?>">
 											<div class="form-row">

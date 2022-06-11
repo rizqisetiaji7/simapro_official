@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Proyek_manajer extends CI_Controller {
+class Kelola_pm extends CI_Controller {
    private $table_users = 'tb_users';
    private $default_avatar = 'default-avatar.jpg';
 
@@ -148,6 +148,12 @@ class Proyek_manajer extends CI_Controller {
       $data['unique_id'] = $this->input->post('unique_id', TRUE);
       $data['user_role'] = $this->input->post('user_role', TRUE);
       $this->load->view('direktur/perusahaan/form_password_pm', $data);
+   }
+
+   function tampil_pm() {
+      $pm = $this->bm->get($this->table_users, '*', ['ID_company' => user_company()->company_id, 'user_role' => 'pm'])->result();
+      $data['projek_manajer'] = $pm;
+      $this->load->view('direktur/perusahaan/data_proyek_manajer', $data);
    }
 
    function tambah() {
@@ -336,7 +342,7 @@ class Proyek_manajer extends CI_Controller {
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
-   function delete_pm() {
+   function hapus() {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
 
