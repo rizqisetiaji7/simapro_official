@@ -132,12 +132,12 @@
                <div class="message-bar">
                   <div class="message-inner">
                      <div class="message-area">
-                        <div class="input-group">
+                        <form class="input-group">
                            <textarea class="form-control" placeholder="Tulis pesan..."></textarea>
                            <span class="input-group-append">
-                              <button class="btn btn-custom" type="button"><i class="fa fa-paper-plane"></i></button>
+                              <button class="btn btn-custom" type="submit"><i class="fa fa-paper-plane"></i></button>
                            </span>
-                        </div>
+                        </form>
                      </div>
                   </div>
                </div>
@@ -150,17 +150,4 @@
 </div>
 
 <?php $this->view('direktur/proyek/chat/task_modal'); ?>
-<script>
-   const modal    = $('#chatModal');
-   const form     = $('#form_modal_chat');
-   const btnSend  = $('#btnModalSubmit-chat');
-
-   function editMessage() {
-      modal.modal('show');
-   }
-
-   modal.on('hidden.bs.modal', function() {
-      btnSend.text('kirim');
-   });
-
-</script>
+<?php $this->view('direktur/proyek/chat/script'); ?>
