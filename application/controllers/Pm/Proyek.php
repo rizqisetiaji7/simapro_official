@@ -15,7 +15,7 @@ class Proyek extends CI_Controller {
          'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
          'page'      => 'proyek'
       ];
-      $this->theme->view('templates/main', 'pm/proyek/index', $data);
+      $this->theme->view('templates/main', 'pm/proyek/daftar/index', $data);
    }
 
    public function detail() {
@@ -37,7 +37,7 @@ class Proyek extends CI_Controller {
          'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
          'page'      => 'proyek_arsip'
       ];
-      $this->theme->view('templates/main', 'pm/proyek/arsip', $data);
+      $this->theme->view('templates/main', 'pm/proyek/arsip/index', $data);
    }
 
    public function riwayat() {
@@ -48,6 +48,6 @@ class Proyek extends CI_Controller {
          'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
          'page'      => 'proyek_riwayat'
       ];
-      $this->theme->view('templates/main', 'pm/proyek/riwayat', $data);
+      $this->theme->view('templates/main', 'pm/proyek/riwayat/index', $data);
    }
 }

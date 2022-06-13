@@ -27,10 +27,10 @@
 		      <span class="badge bg-inverse-success p-2"><?= $project->project_status == 'finish' ? 'Selesai' : NULL ?></span>
 		  </td>
 		  <td class="text-nowrap">
-		      <span class="text-muted small"><?= datetimeIDN($project->project_deadline) ?></span>
+		      <span class="text-secondary small"><?= datetimeIDN($project->project_deadline) ?></span>
 		  </td>
 		  <td class="text-nowrap">
-		      <span class="text-muted small"><?= datetimeIDN($project->project_current_deadline) ?></span>
+		      <span class="text-secondary small"><?= datetimeIDN($project->project_current_deadline) ?></span>
 		  </td>
 		  <td class="text-nowrap">
 		      <!-- <p class="text-xs mb-1">Completed Projects <strong>(8/12)</strong></p> -->

@@ -40,7 +40,7 @@
                                     <div class="d-flex align-items-center">
                                         <img src="<?= $pro->project_thumbnail == 'placeholder.jpg' ? base_url('assets/img/placeholder.jpg') : base_url('uploads/thumbnail/'.$pro->project_thumbnail) ?>" class="rounded-lg" width="50">
                                         <div class="ml-3">
-                                            <h4 class="mb-0"><?= $pro->project_name ?></h4>
+                                            <h5 class="mb-0"><?= $pro->project_name ?></h5>
                                             <p class="mb-0 text-xs text-muted"><?= $pro->project_address ?></p>
                                         </div>
                                     </div>
@@ -77,7 +77,9 @@
                                         }
                                     ?>
                                 </td>
-                                <td class="text-nowrap"><?= datetimeIDN($pro->project_deadline) ?></td>
+                                <td class="text-nowrap">
+                                    <span class="text-secondary small"><?= datetimeIDN($pro->project_deadline) ?></span>
+                                </td>
                                 <td class="text-nowrap">
                                     <?php 
                                         $progress_bg = '';

@@ -2,10 +2,9 @@
 
 function is_login() {
 	$ci =& get_instance();
-	$session = $ci->session->userdata('user_id');
-	if ($session) {
-		$user = $ci->bm->get('tb_users','*', ['user_id' => $session])->row();
-
+	$userid_sess = $ci->session->userdata('user_id');
+	if ($userid_sess) {
+		$user = $ci->bm->get('tb_users','*', ['user_id' => $userid_sess])->row();
 		if ($user->user_role == 'direktur') {
 			redirect(site_url('direktur'));	
 		} else {
@@ -16,8 +15,9 @@ function is_login() {
 
 function is_not_login() {
 	$ci =& get_instance();
-	$session = $ci->session->userdata('user_id');
-	if (!$session) {
+	$userid_sess = $ci->session->userdata('user_id');
+	$login_sess = $ci->session->userdata('login_status');
+	if (!$userid_sess && !$login_sess) {
 		redirect('login');
 	}
 }

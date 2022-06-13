@@ -59,8 +59,8 @@
         </div>
 
         <div class="col-12 col-sm-8 col-md-3">
-            <button type="button" class="btn btn-purple py-2 mr-1 mb-3" id="btn-filterData" data-toggle="tooltip" title="Filter"><i class="fa-solid fa-filter"></i> Filter data</button>
-            <button type="submit" class="btn btn-success py-2 mb-3" id="btn-downloadData" data-toggle="tooltip" title="Download"><i class="fa-solid fa-download"></i> Download</button>
+            <button type="button" class="btn btn-info py-2 mr-1 mb-3" id="btn-filterData" data-toggle="tooltip" title="Filter"><i class="fa-solid fa-filter"></i> Filter data</button>
+            <button type="submit" class="btn btn-success py-2 mb-3" id="btn-downloadData" data-toggle="tooltip"><i class="fa-solid fa-download"></i> Download</button>
         </div>
     </div>
 </form>

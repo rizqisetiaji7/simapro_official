@@ -72,7 +72,7 @@
                                                 <div class="ml-3">
                                                     <h2><?= $p->project_name ?></h2>
                                                     <small class="block text-ellipsis">
-                                                        <span class="text-muted">open tasks</span>
+                                                        <span class="text-muted"><?= $p->project_address ?></span>
                                                     </small>
                                                 </div>
                                             </div>
@@ -98,7 +98,9 @@
                                                 }
                                             ?>
                                         </td>
-                                        <td><?= datetimeIDN($p->project_deadline) ?></td>
+                                        <td>
+                                            <span class="small text-secondary"><?= datetimeIDN($p->project_deadline) ?></span>
+                                        </td>
                                         <td>
                                             <?php 
                                                 $progress_bg = '';

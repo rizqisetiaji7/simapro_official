@@ -9,68 +9,60 @@
             </ul>
         </div>
     </div>
-
-    <!-- <div class="col-12 col-sm-6 text-sm-right">
-        <button type="button" class="btn btn-success py-2 px-3 ml-1" data-toggle="tooltip" title="Download laporan proyek">
-            <i class="fa-solid fa-download"></i> Download
-        </button>
-    </div> -->
 </div>
 
-<div class="form-row">
-    <div class="col-5 col-sm-3">
-        <select name="from_month" class="form-control mb-3">
-            <option value="01">Januari</option>
-            <option value="02">Februari</option>
-            <option value="03">Maret</option>
-            <option value="04">April</option>
-            <option value="05">Mei</option>
-            <option value="06">Juni</option>
-            <option value="07">Juli</option>
-            <option value="08">Agustus</option>
-            <option value="09">September</option>
-            <option value="10">Oktober</option>
-            <option value="11">November</option>
-            <option value="12">Desember</option>
-        </select>
-    </div>
-    
-    <div class="col-1 text-center">
-        <span class="text-muted d-block my-2">s/d</span>
-    </div>
+<form action="" method="POST" accept-charset="utf-8">
+    <div class="row">
+        <div class="col-4 col-sm-6 col-md-3">
+            <select id="first_month" name="bulan_awal" class="form-control mb-3">
+                <option value="">-- Pilih Bulan Awal --</option>
+                <option value="01">Januari</option>
+                <option value="02">Februari</option>
+                <option value="03">Maret</option>
+                <option value="04">April</option>
+                <option value="05">Mei</option>
+                <option value="06">Juni</option>
+                <option value="07">Juli</option>
+                <option value="08">Agustus</option>
+                <option value="09">September</option>
+                <option value="10">Oktober</option>
+                <option value="11">November</option>
+                <option value="12">Desember</option>
+            </select>
+        </div>
+        
+        <div class="px-3 text-center d-none d-md-block">
+            <span class="text-muted d-block my-2">s/d</span>
+        </div>
 
-    <div class="col-6 col-sm-3">
-        <select name="to_month" class="form-control mb-3">
-            <option value="01">Januari</option>
-            <option value="02">Februari</option>
-            <option value="03">Maret</option>
-            <option value="04">April</option>
-            <option value="05">Mei</option>
-            <option value="06">Juni</option>
-            <option value="07">Juli</option>
-            <option value="08">Agustus</option>
-            <option value="09">September</option>
-            <option value="10">Oktober</option>
-            <option value="11">November</option>
-            <option value="12">Desember</option>
-        </select>
-    </div>
+        <div class="col-4 col-sm-6 col-md-3">
+            <select id="last_month" name="bulan_akhir" class="form-control mb-3">
+                <option value="">-- Pilih Bulan Akhir --</option>
+                <option value="01">Januari</option>
+                <option value="02">Februari</option>
+                <option value="03">Maret</option>
+                <option value="04">April</option>
+                <option value="05">Mei</option>
+                <option value="06">Juni</option>
+                <option value="07">Juli</option>
+                <option value="08">Agustus</option>
+                <option value="09">September</option>
+                <option value="10">Oktober</option>
+                <option value="11">November</option>
+                <option value="12">Desember</option>
+            </select>
+        </div>
 
-    <div class="col-9 col-sm-3 pr-0">
-        <select name="year" class="form-control mb-3" id="">
-            <option value="2022">2022</option>
-            <option value="2021">2021</option>
-            <option value="2020">2020</option>
-            <option value="2019">2019</option>
-            <option value="2018">2018</option>
-        </select>
-    </div>
+        <div class="col-4 col-sm-4 col-md-2">
+            <select id="selectYear" name="tahun_proyek" class="form-control mb-3"></select>
+        </div>
 
-    <div class="col-3 col-sm-2 text-right text-md-center">
-        <button type="submit" class="btn btn-secondary py-2 mr-1 mb-3" data-toggle="tooltip" title="Filter"><i class="fa-solid fa-filter"></i></button>
-        <button type="submit" class="btn btn-success py-2 mb-3" data-toggle="tooltip" title="Download"><i class="fa-solid fa-download"></i></button>
+        <div class="col-12 col-sm-8 col-md-3">
+            <button type="button" class="btn btn-info py-2 mr-1 mb-3" id="btn-filterData" data-toggle="tooltip" title="Filter"><i class="fa-solid fa-filter"></i> Filter data</button>
+            <button type="submit" class="btn btn-success py-2 mb-3" id="btn-downloadData" data-toggle="tooltip"><i class="fa-solid fa-download"></i> Download</button>
+        </div>
     </div>
-</div>
+</form>
 
 <div class="row">
     <div class="col-12 d-flex">
@@ -84,7 +76,8 @@
                                 <th>Penanggung Jawab</th>
                                 <th>Status</th>
                                 <th>Deadline</th>
-                                <th width="140px">Progres</th>
+                                <th>Deadline Akhir</th>
+                                <th width="140px">Progress</th>
                                 <th class="text-center">Opsi</th>
                             </tr>
                         </thead>
@@ -94,8 +87,8 @@
                                     <div class="d-flex align-items-center">
                                         <img src="<?= base_url('assets/img/profiles/avatar-02.jpg') ?>" class="rounded-lg" width="50" alt="">
                                         <div class="ml-3">
-                                            <h4 class="mb-0">Proyek Rumah Sakit Kawali</h4>
-                                            <p class="mb-0 text-xs text-muted">Jl. Martadinata, No. 13, Kab. Ciamis</p>
+                                            <h5 class="mb-0">Proyek Irigasi Sungai</h5>
+                                            <p class="mb-0 text-xs text-muted">Kab. Ciamis</p>
                                         </div>
                                     </div>
                                 </td>
@@ -103,7 +96,7 @@
                                     <div class="d-flex align-items-center">
                                         <img src="<?= base_url('assets/img/profiles/avatar-02.jpg') ?>" class="rounded-lg" width="40" alt="">
                                         <div class="ml-3">
-                                            <h5 class="mb-0">Rizqi Setiaji</h5>
+                                            <h5 class="mb-0">Rizqi PM</h5>
                                             <p class="mb-0 text-xs text-secondary">PT. Aryabakti Saluyu</p>
                                         </div>
                                     </div>
@@ -111,7 +104,12 @@
                                 <td class="text-nowrap">
                                     <span class="badge bg-inverse-success p-2">Selesai</span>
                                 </td>
-                                <td class="text-nowrap">12 Agustus 2022</td>
+                                <td class="text-nowrap">
+                                    <span class="text-muted small">12 Februari 2022</span>
+                                </td>
+                                <td class="text-nowrap">
+                                    <span class="text-muted small">20 Februari 2022</span>
+                                </td>
                                 <td class="text-nowrap">
                                     <!-- <p class="text-xs mb-1">Completed Projects <strong>(8/12)</strong></p> -->
                                     <div class="progress progress-lg">
@@ -123,14 +121,13 @@
                                     <a href="<?= site_url('direktur/proyek/detail_proyek') ?>" class="btn btn-sm my-1 btn-primary text-nowrap" data-toggle="tooltip" title="Lihat Proyek">Detail</a>
                                 </td>
                             </tr>
-
                             <tr>
                                 <td class="text-nowrap">
                                     <div class="d-flex align-items-center">
                                         <img src="<?= base_url('assets/img/profiles/avatar-02.jpg') ?>" class="rounded-lg" width="50" alt="">
                                         <div class="ml-3">
-                                            <h4 class="mb-0">Proyek Rumah Sakit Kawali</h4>
-                                            <p class="mb-0 text-xs text-muted">Jl. Martadinata, No. 13, Kab. Ciamis</p>
+                                            <h5 class="mb-0">Pembangunan Mall</h5>
+                                            <p class="mb-0 text-xs text-muted">Kab. Ciamis</p>
                                         </div>
                                     </div>
                                 </td>
@@ -138,7 +135,7 @@
                                     <div class="d-flex align-items-center">
                                         <img src="<?= base_url('assets/img/profiles/avatar-02.jpg') ?>" class="rounded-lg" width="40" alt="">
                                         <div class="ml-3">
-                                            <h5 class="mb-0">Rizqi Setiaji</h5>
+                                            <h5 class="mb-0">Rizqi PM</h5>
                                             <p class="mb-0 text-xs text-secondary">PT. Aryabakti Saluyu</p>
                                         </div>
                                     </div>
@@ -146,7 +143,12 @@
                                 <td class="text-nowrap">
                                     <span class="badge bg-inverse-success p-2">Selesai</span>
                                 </td>
-                                <td class="text-nowrap">12 Agustus 2022</td>
+                                <td class="text-nowrap">
+                                    <span class="text-muted small">15 November 2020</span>
+                                </td>
+                                <td class="text-nowrap">
+                                    <span class="text-muted small">8 November 2020</span>
+                                </td>
                                 <td class="text-nowrap">
                                     <!-- <p class="text-xs mb-1">Completed Projects <strong>(8/12)</strong></p> -->
                                     <div class="progress progress-lg">
@@ -158,41 +160,9 @@
                                     <a href="<?= site_url('direktur/proyek/detail_proyek') ?>" class="btn btn-sm my-1 btn-primary text-nowrap" data-toggle="tooltip" title="Lihat Proyek">Detail</a>
                                 </td>
                             </tr>
-
-                            <tr>
-                                <td class="text-nowrap">
-                                    <div class="d-flex align-items-center">
-                                        <img src="<?= base_url('assets/img/profiles/avatar-02.jpg') ?>" class="rounded-lg" width="50" alt="">
-                                        <div class="ml-3">
-                                            <h4 class="mb-0">Proyek Rumah Sakit Kawali</h4>
-                                            <p class="mb-0 text-xs text-muted">Jl. Martadinata, No. 13, Kab. Ciamis</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="text-nowrap">
-                                    <div class="d-flex align-items-center">
-                                        <img src="<?= base_url('assets/img/profiles/avatar-02.jpg') ?>" class="rounded-lg" width="40" alt="">
-                                        <div class="ml-3">
-                                            <h5 class="mb-0">Rizqi Setiaji</h5>
-                                            <p class="mb-0 text-xs text-secondary">PT. Aryabakti Saluyu</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="text-nowrap">
-                                    <span class="badge bg-inverse-success p-2">Selesai</span>
-                                </td>
-                                <td class="text-nowrap">12 Agustus 2022</td>
-                                <td class="text-nowrap">
-                                    <!-- <p class="text-xs mb-1">Completed Projects <strong>(8/12)</strong></p> -->
-                                    <div class="progress progress-lg">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
-                                    </div>
-                                </td>
-                                <td class="text-nowrap text-center">
-                                    <!-- <button type="button" class="btn btn-sm my-1 btn-info" data-toggle="tooltip" title="Download laporan"><i class="la la-download"></i></button> -->
-                                    <a href="<?= site_url('direktur/proyek/detail_proyek') ?>" class="btn btn-sm my-1 btn-primary text-nowrap" data-toggle="tooltip" title="Lihat Proyek">Detail</a>
-                                </td>
-                            </tr>
+                            <!-- <tr>
+                                <td colspan="7" class="text-center">Riwayat Proyek Kosong.</td>
+                            </tr> -->
                         </tbody>
                     </table>
                 </div>
@@ -200,3 +170,15 @@
         </div> 
     </div>
 </div>
+
+<script>
+    // Year Dropdown Lists
+    let start = 2000;
+    let end = new Date().getFullYear() + 50;
+    let currDate = new Date().getFullYear();
+    let options = "";
+    for(let year = start ; year <= end; year++){
+      options += `<option value="${year}" ${year == currDate ? 'selected' : ''}>${year}</option>`;
+    }
+    $('#selectYear').append(options);
+</script>

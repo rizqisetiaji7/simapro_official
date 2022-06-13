@@ -2,7 +2,6 @@
 
 class Login extends CI_Controller {
 	private $table = 'tb_users';
-   // private $col_select = 'user_id, tb_user_role.role_id, role_code, password';
 
 	public function __construct() {
       parent::__construct();
@@ -86,8 +85,8 @@ class Login extends CI_Controller {
                } else {
                   $redirect_url = site_url('pm');
                }
-
-               $this->session->set_userdata(['user_id' => $user->user_id]);
+               $this->session->set_userdata(['user_id' => $user->user_id, 'login_status' => 'on']);
+               $this->_login_status($user->user_id, 'on');
                $this->_set_response('success', ['email','password'], ['redirect' => $redirect_url], 'Selamat Anda telah berhasil login.');
             } else {
                $this->_set_response('failed', 'password', ['form' => 'Password'], 'Silahkan isi password dengan benar.');
@@ -99,7 +98,13 @@ class Login extends CI_Controller {
    }
 
    function logout() {
-      $this->session->unset_userdata(['user_id']);
+      $this->_login_status($this->session->userdata('user_id'), 'off');
+      $this->session->unset_userdata(['user_id', 'login_status']);
       redirect('login');
+   }
+
+   private function _login_status($user_id, $status = 'off') {
+      $this->bm->update($this->table, ['login_status' => $status], ['user_id' => $user_id]);
+      return false;
    }
 }
