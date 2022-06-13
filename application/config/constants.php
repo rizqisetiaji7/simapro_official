@@ -94,8 +94,8 @@ defined('DARK_STYLE') 	 		 	OR define('DARK_STYLE', 'assets/css/style-dark.css')
 
 // Email Configuration
 defined('EMAIL')						OR define('EMAIL', 'rizqisetiaji9@gmail.com');				// Email Pengirim
-defined('EMAIL_PASS')				OR define('EMAIL_PASS', 'GTx://147-0-0-28-11//RZQ;');		// Password dari email pengirim
+defined('EMAIL_PASS')				OR define('EMAIL_PASS', 'igjrngathaoybnvj');					// Password dari email pengirim
 defined('EMAIL_PROTOCOL')			OR define('EMAIL_PROTOCOL', 'smtp');							// Protocol yang digunakan (Default smtp)
-defined('SMTP_HOST')					OR define('SMTP_HOST', 'smtp.googlemail.com');				// Host dari email provicer yang digunakan
+defined('SMTP_HOST')					OR define('SMTP_HOST', 'smtp.googlemail.com');				// Host dari email provider yang digunakan
 defined('SMTP_USER')					OR define('SMTP_USER', 'rizqisetiaji9@gmail.com');			// smtp user
 defined('SMTP_PORT')					OR define('SMTP_PORT', 465);										// Smtp port (Google mail default 465)

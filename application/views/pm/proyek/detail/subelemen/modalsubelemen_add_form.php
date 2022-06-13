@@ -1,0 +1,24 @@
+<input type="hidden" name="ID_subproject" value="">
+<div class="form-row">
+  <div class="col-12 mb-3">
+    <label for="project_task_name">Nama Sub-Elemen Proyek <span class="text-danger small">*</span></label>
+    <input type="text" name="project_task_name" id="project_task_name" class="form-control" placeholder="" autocomplete="off">
+    <div class="invalid-feedback"></div>
+  </div>
+
+  <div class="col-12 mb-3">
+    <label for="task_priority_level">Level Prioritas <span class="text-danger small">*</span></label>
+    <select id="task_priority_level" name="task_priority_level" class="form-control">
+      <option value="">Rendah</option>
+      <option value="">Normal</option>
+      <option value="">Tinggi</option>
+    </select>
+    <div class="invalid-feedback"></div>
+  </div>
+
+  <div class="col-12 mb-3">
+    <label for="project_task_deadline">Deadline / Proyek Selesai <span class="text-danger small">*</span></label>
+    <input type="date" name="project_task_deadline" id="project_task_deadline" class="form-control" placeholder="" autocomplete="off">
+    <div class="invalid-feedback"></div>
+  </div>
+</div>

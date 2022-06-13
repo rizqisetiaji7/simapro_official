@@ -7,6 +7,46 @@ class Proyek extends CI_Controller {
       is_not_pm();
    }
 
+   function tampil_form_edit_proyek() {
+      // $post = $this->input->post(NULL, TRUE);
+      $this->load->view('pm/proyek/detail/form_edit_proyek');
+   }
+
+   function tampil_form_edit_status_proyek() {
+      // $post = $this->input->post(NULL, TRUE);
+      $this->load->view('pm/proyek/detail/form_edit_status_proyek');
+   }
+
+   function tampil_foto_proyek() {
+      // $post = $this->input->post(NULL, TRUE);
+      $this->load->view('pm/proyek/detail/foto_dokumentasi_proyek');
+   }
+
+   function tampil_foto_subproyek() {
+      // $post = $this->input->post(NULL, TRUE);
+      $this->load->view('pm/proyek/detail/foto_dokumentasi_subproyek');
+   }
+
+   function tampil_form_tambah_subproyek() {
+      // $post = $this->input->post(NULL, TRUE);
+      $this->load->view('pm/proyek/detail/subproyek/modal_add_form');
+   }
+
+   function tampil_form_edit_subproyek() {
+      // $post = $this->input->post(NULL, TRUE);
+      $this->load->view('pm/proyek/detail/subproyek/modal_edit_form');
+   }
+
+   function form_tambah_subelemen_proyek() {
+      // $post = $this->input->post(NULL, TRUE);
+      $this->load->view('pm/proyek/detail/subelemen/modalsubelemen_add_form');
+   }
+
+   function form_edit_subelemen_proyek() {
+      // $post = $this->input->post(NULL, TRUE);
+      $this->load->view('pm/proyek/detail/subelemen/modalsubelemen_edit_form');
+   }
+
    public function index() {
       $data = [
          'app_name'  => APP_NAME,

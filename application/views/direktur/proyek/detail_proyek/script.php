@@ -97,7 +97,7 @@
 
 	// CRUD Sub-Elemen Proyek
 	function add_subElemenProject(subproject_id) {
-		title.text('Tambah Sub-Elemen Proyek');
+		title.text('Tambah List');
 		formModal.attr('action', `<?= site_url('direktur/manajemen_proyek/tambah_subelemen_proyek') ?>`);
 		$.ajax({
 			url: `<?= site_url('direktur/manajemen_proyek/form_tambah_subelemen_proyek') ?>`,
@@ -113,7 +113,7 @@
 	}
 
 	function edit_subElemenProject(se_task_id, subproject_id) {
-		title.text('Edit Sub-Elemen Proyek');
+		title.text('Edit List');
 		formModal.attr('action', `<?= site_url('direktur/manajemen_proyek/edit_subelemen_proyek') ?>`);
 		$.ajax({
 			url: `<?= site_url('direktur/manajemen_proyek/form_edit_subelemen_proyek') ?>`,
@@ -142,42 +142,42 @@
 			showCancelButton: true,
 			cancelButtonText: 'Batal'
      	}).then((result) => {
-      	if (result.isConfirmed) {
-   			$.ajax({
-				url: `<?= site_url('direktur/manajemen_proyek/hapus') ?>`,
-				method: 'POST',
-				dataType: 'json',
-				cache: false,
-				data: {
-					task_type: task_type,
-					id_sub: id_sub,
-					project_id: project_id
-				},
-				success: function(data) {
-					if (data.status == 'success') {
-						Swal.fire({
-							icon: 'success',
-							title: 'Berhasil',
-							text: `${data.message}`,
-							showConfirmButton: false,
-							timer: 2000,
-						}).then((result) => {
-							window.location.reload();
-						});		
-					} else if (data.status == 'failed') {
-						Swal.fire({
-							icon: 'error',
-							title: 'Gagal',
-							text: `${data.message}`,
-							showConfirmButton: false,
-							timer: 2000,
-						}).then((result) => {
-							window.location.reload();
-						});
+	      	if (result.isConfirmed) {
+	   			$.ajax({
+					url: `<?= site_url('direktur/manajemen_proyek/hapus') ?>`,
+					method: 'POST',
+					dataType: 'json',
+					cache: false,
+					data: {
+						task_type: task_type,
+						id_sub: id_sub,
+						project_id: project_id
+					},
+					success: function(data) {
+						if (data.status == 'success') {
+							Swal.fire({
+								icon: 'success',
+								title: 'Berhasil',
+								text: `${data.message}`,
+								showConfirmButton: false,
+								timer: 2000,
+							}).then((result) => {
+								window.location.reload();
+							});		
+						} else if (data.status == 'failed') {
+							Swal.fire({
+								icon: 'error',
+								title: 'Gagal',
+								text: `${data.message}`,
+								showConfirmButton: false,
+								timer: 2000,
+							}).then((result) => {
+								window.location.reload();
+							});
+						}
 					}
-				}
-			});
-      	}
+				});
+	      	}
       });
 	}
 
@@ -342,7 +342,6 @@
 	modal.on('hidden.bs.modal', function() {
 		title.empty();
 		modalDialog.removeClass('modal-lg');
-		// modalDialog.removeClass('modal-xl');
 		modalBody.empty();
 		modalFooter.removeClass('d-none');
 		formModal.removeAttr('action');

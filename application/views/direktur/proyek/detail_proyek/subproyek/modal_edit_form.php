@@ -13,17 +13,6 @@
     <div class="invalid-feedback"></div>
   </div>
 
-  <!-- <div class="col-12 mb-3">
-    <label for="subproject_status">Status</label>
-    <select id="subproject_status" name="subproject_status" class="form-control">
-        <option value="">-- Pilih status subproyek</option>
-        <option value="onprogress" <?= $subproject->subproject_status == 'onprogress' ? 'selected' : NULL ?>>Berjalan</option>
-        <option value="pending" <?= $subproject->subproject_status == 'pending' ? 'selected' : NULL ?>>Pending</option>
-        <option value="finish" <?= $subproject->subproject_status == 'finish' ? 'selected' : NULL ?>>Selesai</option>
-    </select>
-    <div class="invalid-feedback"></div>
-  </div> -->
-
   <div class="col-12 mb-3">
     <label for="priority_level">Level Prioritas</label>
     <select id="priority_level" name="priority_level" class="form-control">

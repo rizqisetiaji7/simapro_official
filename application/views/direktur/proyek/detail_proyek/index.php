@@ -57,6 +57,7 @@
             
         </div>
     </div>
+    
     <div class="col-12 col-sm-4 text-sm-right">
         <a href="<?= site_url('direktur/chat') ?>" class="btn btn-primary mb-1 btn-sm" style="position: relative;" data-toggle="tooltip" title="Kirim Pesan"><i class="fa-solid fa-message"></i></a>
 
