@@ -206,4 +206,41 @@ input.custom-radio-input:checked + label.label-box i.check-icon {
 	display: block;
 }
 
-input.custom-radio-input:checked +
+
+.circle-btn-msg {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	border: none;
+	background-color: #e7e7e7;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all .3s ease-in-out;
+}
+
+.circle-btn-msg i {
+	font-size: 13px;
+	color: #a4a4a4;
+	transition: all .3s ease-in-out;
+}
+
+.circle-btn-msg:hover i {
+	color: #fff;
+}
+
+.circle-btn-msg.data_status_pending:hover,
+.circle-btn-msg.data_status_pending.active {
+	background-color: red;
+}
+
+.circle-btn-msg.data_status_success:hover,
+.circle-btn-msg.data_status_success.active {
+	background-color: green;
+}
+
+.circle-btn-msg.data_status_pending.active i,
+.circle-btn-msg.data_status_success.active i{
+	color: #fff;
+}

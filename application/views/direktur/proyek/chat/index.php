@@ -111,6 +111,7 @@
                                           <span class="badge bg-inverse-danger p-2"><i class="fas fa-times mr-1"></i> Pending</span>
                                        </div>
                                     </div>
+
                                     <div class="chat-action-btns">
                                        <ul>
                                           <li>
