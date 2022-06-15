@@ -37,7 +37,7 @@
         <button type="button" class="btn btn-info mb-1 btn-sm" data-toggle="tooltip" title="Buat Sub-Proyek" onclick="add_subProject()"><i class="fas fa-plus"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Sub-proyek</span></button>
 
         <!-- Button ini akan muncul jika progress mencapai 100% dan dokumentasi telah lengkap -->
-        <button type="button" class="btn btn-success btn-sm mb-1" data-toggle="tooltip" title="Klik proyek dinyatakan selesai" onclick="finishProject('')"><i class="fas fa-check"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Proyek Selesai</span></button>
+        <button type="button" class="btn btn-dark btn-sm mb-1" data-toggle="tooltip" title="Klik untuk ditinjau oleh Direktur" onclick="sendTinjau('')"><i class="fas fa-check"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Tinjau ke Direktur</span></button>
     </div>
 
     <div class="col-12">

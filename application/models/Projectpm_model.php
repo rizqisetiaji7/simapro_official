@@ -24,4 +24,22 @@ class Projectpm_model extends CI_Model {
 		$this->db->order_by('project_id DESC');
 		return $this->db->get();
 	}
+
+	public function get_pm_project_archive($comp_id, $pm_id, $limit = FALSE) {
+		$this->db->select($this->_columns());
+		$this->db->from('tb_project');
+		$this->db->join('tb_company', 'tb_company.company_id=tb_project.ID_company', 'left');
+		$this->db->join('tb_users', 'tb_users.user_id=tb_project.ID_pm', 'left');
+		$this->db->where([
+			'tb_project.ID_company' 		=> $comp_id,
+			'tb_project.project_status'	=> 'pending',
+			'tb_project.project_archive'	=> 1,
+			'tb_project.ID_pm'				=> $pm_id
+		]);
+		if ($limit != FALSE) {
+			$this->db->limit($limit, 0);
+		}
+		$this->db->order_by('project_id DESC');
+		return $this->db->get();
+	}
 }

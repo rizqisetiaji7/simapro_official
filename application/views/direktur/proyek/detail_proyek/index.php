@@ -63,9 +63,16 @@
 
         <button type="button" class="btn btn-info mb-1 btn-sm" data-toggle="tooltip" title="Buat Sub-Proyek" onclick="add_subProject(<?= $project->project_id ?>)"><i class="fas fa-plus"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Sub-proyek</span></button>
 
-        <?php if ($project->project_progress >= 100 && $docs->num_rows() > 0 && $project->project_status == 'approved') { ?>
-            <button type="button" class="btn btn-success mb-1 btn-sm" data-toggle="tooltip" title="Klik proyek dinyatakan selesai" onclick="finishProject(<?= $project->project_id ?>)"><i class="fas fa-check"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Proyek Selesai</span></button>
-        <?php } ?>
+        <?php 
+                $finished = '';
+                if ($project->project_progress >= 100 && $docs->num_rows() > 0 && $project->project_status == 'review') {
+                    $finished = 'onclick="finishProject('.$project->project_id.')"';
+                } else if ($project->project_progress >= 100 && $docs->num_rows() > 0 && $project->project_status == 'revision') {
+                    $finished = 'disabled="disabled"';
+                }
+
+        ?>
+        <button type="button" class="btn btn-success mb-1 btn-sm" data-toggle="tooltip" title="Klik proyek dinyatakan selesai" <?= $finished ?>><i class="fas fa-check"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Proyek Selesai</span></button>
     </div>
 
     <div class="col-12">

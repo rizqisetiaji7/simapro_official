@@ -5,10 +5,7 @@
 		<label for="project_status">Status proyek</label>
 		<select name="project_status" class="form-control" id="project_status" required>
 			<option value="on_progress">Berjalan</option>
-			<option value="revision">Revisi</option>
-			<option value="review">Ditinjau / Diperiksa</option>
-			<option value="pending">Ditunda / Pending</option>
-			<option value="approved">Approved / Disetujui</option>
+			<option value="pending">Ditunda</option>
 		</select>
 	</div>
 </div>
