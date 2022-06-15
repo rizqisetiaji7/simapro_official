@@ -106,7 +106,8 @@ $autoload['helper'] = [
 	'string',
 	'text', 
 	'base',
-	'project'
+	'project',
+	'projectpm'
 ];
 
 /*
