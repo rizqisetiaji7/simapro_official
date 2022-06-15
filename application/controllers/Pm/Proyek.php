@@ -176,10 +176,19 @@ class Proyek extends CI_Controller {
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
+   function update_status_proyek() {
+
+   }
+
    // =========== END CRUD =========== //
 
    function form_tambah_proyek() {
       $data['project_code_ID'] = getIDCode('PROY', user_company()->comp_prefix);
+      $this->load->view('pm/proyek/daftar/form/tambah_proyek', $data);
+   }
+
+   function form_update_status() {
+      $id = $this->input->post('project_code', TRUE);
       $this->load->view('pm/proyek/daftar/form/tambah_proyek', $data);
    }
 

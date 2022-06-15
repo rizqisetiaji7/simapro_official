@@ -48,7 +48,24 @@
 		modal.modal('show');
 	}
 
+	// EDIT PROJECT STATUS
+	function editProjectStatus(project_code) {
+		title.text('Ubah Status Proyek');
+		formModal.attr('action', `<?= site_url('pm/proyek/update_status_proyek') ?>`);
+		$.ajax({
+			url: `<?= site_url('pm/proyek/form_update_status') ?>`,
+			method: 'POST',
+			dataType: 'html',
+			cache: false,
+			data: { project_code: project_code },
+			success: function(data) {
+				modalBody.html(data);
+				modal.modal('show');
+			}
+		});
+	}
 
+	// MODAL SUBMIT FORM
 	formModal.on('submit', function(e) {
 		e.preventDefault();
 		$.ajax({

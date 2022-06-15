@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 09, 2022 at 03:02 PM
+-- Generation Time: Jun 15, 2022 at 01:59 PM
 -- Server version: 10.5.11-MariaDB-log
 -- PHP Version: 7.4.21
 
@@ -115,7 +115,7 @@ CREATE TABLE `tb_priority` (
 
 INSERT INTO `tb_priority` (`priority_id`, `priority_name`, `priority_color`) VALUES
 (1, 'Rendah', 'bg-inverse-success'),
-(2, 'Sedang', 'bg-inverse-info'),
+(2, 'Normal', 'bg-inverse-info'),
 (3, 'Tinggi', 'bg-inverse-danger');
 
 -- --------------------------------------------------------
@@ -150,11 +150,17 @@ CREATE TABLE `tb_project` (
 --
 
 INSERT INTO `tb_project` (`project_id`, `ID_pm`, `ID_company`, `project_code_ID`, `project_name`, `project_thumbnail`, `project_address`, `project_description`, `project_start`, `project_deadline`, `project_current_deadline`, `project_status`, `project_deadline_status`, `project_deadline_month`, `project_progress`, `project_archive`, `created`, `updated`) VALUES
-(10, 17, 1, 'PROYM48329', 'Rumah Sakit Kawali', 'b782e0cd9b78ed899e3453ff74651f11.jpg', 'Desa Kawali, Kab. Ciamis', 'Proyek pembangunan Rumah Sakit umum daerah Kawali.', '2022-06-09', '2022-06-14', '2022-06-09', 'finish', NULL, '2022-06', 100, '0', '2022-06-08 17:12:36', '2022-06-09 21:38:11'),
-(11, 17, 1, 'PROYM65027', 'oke proyek', 'placeholder.jpg', 'banjar', '', '2022-06-14', '2022-06-26', '2022-10-03', 'finish', NULL, '2022-10', 100, '0', '2022-06-08 20:05:39', NULL),
+(10, 22, 1, 'PROYM48329', 'Rumah Sakit Kawali', 'b782e0cd9b78ed899e3453ff74651f11.jpg', 'Desa Kawali, Kab. Ciamis', 'Proyek pembangunan Rumah Sakit umum daerah Kawali.', '2022-06-09', '2022-06-14', '2022-06-09', 'finish', NULL, '2022-06', 100, '0', '2022-06-08 17:12:36', '2022-06-11 15:04:30'),
+(11, 18, 1, 'PROYM65027', 'Pembangunan SDN 1 Kujangsari', 'placeholder.jpg', 'Kota Banjar, Jawa Barat', '', '2022-06-14', '2022-06-26', '2022-10-03', 'finish', NULL, '2022-10', 100, '0', '2022-06-08 20:05:39', '2022-06-10 15:31:13'),
 (12, 18, 1, 'PROYM60172', 'Proyek Pembangunan SMPN 8 Banjar', '5e1e26a2b79e3c8c3e162cfa9acd4c47.jpg', 'Jl. Raya Kujang No. 77, Kota Banjar', 'Pembangunan proyek sekolah menengah negeri, yang dibagun di wilayah pedesaan di kota banjar', '2022-06-08', '2022-12-02', '2022-06-09', 'pending', NULL, '2022-06', 100, '1', '2022-06-08 20:06:55', '2022-06-09 20:21:43'),
 (13, 18, 1, 'PROYM27016', 'dsgdhsgd', 'placeholder.jpg', 'jhdjshjds', 'sdssjhds', '2022-06-09', '2022-06-30', NULL, 'on_progress', NULL, NULL, 0, '0', '2022-06-09 21:09:47', NULL),
-(14, 18, 1, 'PROYM56814', 'oke id', '7cb6a6ba38b9f0ce568688b1488afcff.jpg', 'yes', 'ok', '2022-06-09', '2023-07-14', NULL, 'approved', NULL, NULL, 0, '0', '2022-06-09 21:25:03', NULL);
+(14, 22, 1, 'PROYM56814', 'Perbaikan Jembatan Cirahong', '7cb6a6ba38b9f0ce568688b1488afcff.jpg', 'Desa Cirahong, Kab. Ciamis', 'Project Perbaikan jembatan', '2022-06-09', '2023-07-14', NULL, 'on_progress', NULL, NULL, 0, '0', '2022-06-09 21:25:03', '2022-06-10 16:38:46'),
+(15, 24, 1, 'PROYM78439', 'Proyek anu 1', 'placeholder.jpg', 'Banjar', '', '2022-06-03', '2022-07-09', NULL, 'on_progress', NULL, NULL, 0, '0', '2022-06-15 16:00:02', NULL),
+(16, 24, 1, 'PROYM06217', 'Proyek PT.Anu 003', 'placeholder.jpg', 'Bandung, Jabar', '', '2022-06-10', '2022-08-26', NULL, 'on_progress', NULL, NULL, 0, '0', '2022-06-15 16:00:43', NULL),
+(17, 24, 1, 'PROYM58169', 'Pembangunan Pesantren Darussalam', '11ea7189c53d10192a317ffb27bfec22.jpg', 'Kab. Ciamis, Jawa Barat', '', '2022-06-15', '2022-11-26', NULL, 'on_progress', NULL, NULL, 0, '0', '2022-06-15 19:15:15', NULL),
+(18, 24, 1, 'PROYM69413', 'okeokok', 'placeholder.jpg', 'anjay alamat', '', '2022-06-03', '2022-09-24', NULL, 'on_progress', NULL, NULL, 0, '0', '2022-06-15 20:15:22', NULL),
+(19, 22, 1, 'PROYM93468', 'oke lagi', '8de2fdbfab275a58d06eccc7c419522c.jpg', 'banjarsari', '', '2022-06-08', '2024-01-04', NULL, 'on_progress', NULL, NULL, 0, '0', '2022-06-15 20:26:25', NULL),
+(20, 24, 1, 'PROYM79158', 'tes lagi', '5651f82d8b9dd2da46e0c52f681303ab.png', 'okeokeoko', '', '2022-08-17', '2023-05-25', NULL, 'on_progress', NULL, NULL, 0, '0', '2022-06-15 20:35:15', NULL);
 
 -- --------------------------------------------------------
 
@@ -182,7 +188,8 @@ INSERT INTO `tb_project_task` (`project_task_id`, `ID_subproject`, `ID_priority`
 (10, 13, 1, 'List 2', '2022-06-25', NULL, 0, '2022-06-08 23:32:51', NULL),
 (12, 14, 1, 'List 1', '2022-07-01', NULL, 0, '2022-06-08 23:34:47', NULL),
 (13, 14, 3, 'List 2', '2022-06-22', NULL, 0, '2022-06-08 23:35:03', NULL),
-(14, 18, 1, 'llk yes', '2022-06-14', 'onprogress', 50, '2022-06-09 01:16:52', '2022-06-09 13:04:20');
+(14, 18, 1, 'llk yes', '2022-06-14', 'onprogress', 50, '2022-06-09 01:16:52', '2022-06-09 13:04:20'),
+(15, 19, 1, 'Ngecor', '2022-06-29', NULL, 0, '2022-06-11 16:25:50', NULL);
 
 -- --------------------------------------------------------
 
@@ -212,7 +219,9 @@ INSERT INTO `tb_subproject` (`subproject_id`, `ID_project`, `ID_priority`, `subp
 (14, 10, 2, 'Subproyek 2', '2022-07-22', NULL, 0, 'kanban-danger', '2022-06-08 23:34:30', NULL),
 (15, 12, 3, 'oke', '2022-06-17', NULL, 0, 'kanban-success', '2022-06-09 01:08:32', NULL),
 (17, 12, 1, 'ofok', '2022-06-23', NULL, 0, 'kanban-danger', '2022-06-09 01:10:44', '2022-06-09 01:16:09'),
-(18, 12, 1, 'oke yeyeyey', '2022-06-17', NULL, 0, 'kanban-info', '2022-06-09 01:16:37', '2022-06-09 12:43:56');
+(18, 12, 1, 'oke yeyeyey', '2022-06-17', NULL, 0, 'kanban-info', '2022-06-09 01:16:37', '2022-06-09 12:43:56'),
+(19, 14, 1, 'Pondasi', '2022-06-17', NULL, 0, 'kanban-danger', '2022-06-11 16:24:16', NULL),
+(20, 14, 1, 'Pemasangan rangka besi', '2022-06-30', NULL, 0, 'kanban-success', '2022-06-11 16:42:10', NULL);
 
 -- --------------------------------------------------------
 
@@ -234,6 +243,7 @@ CREATE TABLE `tb_users` (
   `token` text DEFAULT NULL,
   `token_expiry` bigint(20) DEFAULT NULL,
   `theme_mode` enum('1','0') NOT NULL DEFAULT '0',
+  `login_status` enum('on','off') NOT NULL DEFAULT 'off',
   `created` datetime NOT NULL DEFAULT current_timestamp(),
   `updated` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -242,13 +252,15 @@ CREATE TABLE `tb_users` (
 -- Dumping data for table `tb_users`
 --
 
-INSERT INTO `tb_users` (`user_id`, `ID_company`, `user_role`, `user_unique_id`, `user_profile`, `user_fullname`, `user_email`, `user_password`, `user_phone`, `user_address`, `token`, `token_expiry`, `theme_mode`, `created`, `updated`) VALUES
-(1, 1, 'direktur', 'DIRUTM39542', 'default-avatar.jpg', 'Rizqi Setiaji', 'rizqisetiaji9@gmail.com', '$2y$10$1SDT7PtrpCymPPnJo1vL3uKifPtplDeDyKf4uDz8sDJwuQ9W4V2IS', '08766889388', 'Kota Banjar, Jabar', NULL, NULL, '0', '2022-05-10 14:06:07', '2022-06-08 20:25:04'),
-(3, 2, 'direktur', 'DIRUTM103872', 'efb1ae2c2552c5e93266265d3a109783.jpg', 'Om Jay', 'omjay@gmail.com', '$2y$10$Roey8h73Xam7pzc.HHnFHe/vfjFtQHCN2evfmEAfXJiTIiG1epG1a', '087321445778', NULL, NULL, NULL, '0', '2022-05-19 23:00:34', '2022-05-23 18:29:25'),
-(7, 2, 'direktur', 'MDRM189760', 'default-avatar.jpg', 'Azhar Gunawan', 'gunawanazhar6@gmail.com', '$2y$10$ZqXNbZntAs7xx4Lw0eZ6BuTiwTchrj7XVmd9tVesdUVqA9ueu9opy', '081778554326', NULL, NULL, NULL, '0', '2022-05-24 12:27:42', NULL),
-(8, 2, 'direktur', 'MDRM102657', 'default-avatar.jpg', 'Hari Nurdin', 'harnurdin@gmail.com', '$2y$10$H4GvUHgMbOItaoyTCY7cmuT0uf0lnD5/8CoocLprDWApb7TXLGKnm', NULL, 'Banjarsari, Kab. Ciamis', NULL, NULL, '0', '2022-05-24 12:27:42', NULL),
-(9, 3, 'direktur', 'DIRUTM283140', '0a42c31ca7985807b73cc1f69c244195.jpg', 'Anya Forger', 'anyakawai@gmail.com', '$2y$10$8p9mkVyIJxS50Al7CMuJ6uVhhXHOTTLnj.Is6papl2yL26gKLn1vy', '0991887556', 'Ostania, Germany', NULL, NULL, '0', '2022-05-24 13:15:00', '2022-05-24 13:16:33'),
-(18, 1, 'pm', 'PMM79540', 'default-avatar.jpg', 'User PM 3', 'userpm3@gmail.com', '$2y$10$yvB.WA9Y.yp036eE5Tfo1e.D1nlRJPNGEQ.1yaLl9bnRghfun3W1e', '', '', NULL, NULL, '0', '2022-06-07 21:46:42', NULL);
+INSERT INTO `tb_users` (`user_id`, `ID_company`, `user_role`, `user_unique_id`, `user_profile`, `user_fullname`, `user_email`, `user_password`, `user_phone`, `user_address`, `token`, `token_expiry`, `theme_mode`, `login_status`, `created`, `updated`) VALUES
+(1, 1, 'direktur', 'DIRUTM39542', 'default-avatar.jpg', 'Rizqi Setiaji', 'rizqisetiaji9@gmail.com', '$2y$10$OQPFbuCTg1modHfYa1qaFeTE437ApFz2slZxxY9Fnlg5EeT0Hwgka', '08766889388', 'Kota Banjar, Jabar', NULL, NULL, '0', 'on', '2022-05-10 14:06:07', '2022-06-11 09:44:04'),
+(3, 2, 'direktur', 'DIRUTM103872', 'efb1ae2c2552c5e93266265d3a109783.jpg', 'Om Jay', 'omjay@gmail.com', '$2y$10$Roey8h73Xam7pzc.HHnFHe/vfjFtQHCN2evfmEAfXJiTIiG1epG1a', '087321445778', NULL, NULL, NULL, '0', 'off', '2022-05-19 23:00:34', '2022-05-23 18:29:25'),
+(7, 2, 'direktur', 'MDRM189760', 'default-avatar.jpg', 'Azhar Gunawan', 'gunawanazhar6@gmail.com', '$2y$10$ZqXNbZntAs7xx4Lw0eZ6BuTiwTchrj7XVmd9tVesdUVqA9ueu9opy', '081778554326', NULL, NULL, NULL, '0', 'off', '2022-05-24 12:27:42', NULL),
+(8, 2, 'direktur', 'MDRM102657', 'default-avatar.jpg', 'Hari Nurdin', 'harnurdin@gmail.com', '$2y$10$H4GvUHgMbOItaoyTCY7cmuT0uf0lnD5/8CoocLprDWApb7TXLGKnm', NULL, 'Banjarsari, Kab. Ciamis', NULL, NULL, '0', 'off', '2022-05-24 12:27:42', NULL),
+(9, 3, 'direktur', 'DIRUTM283140', '0a42c31ca7985807b73cc1f69c244195.jpg', 'Anya Forger', 'anyakawai@gmail.com', '$2y$10$8p9mkVyIJxS50Al7CMuJ6uVhhXHOTTLnj.Is6papl2yL26gKLn1vy', '0991887556', 'Ostania, Germany', NULL, NULL, '0', 'off', '2022-05-24 13:15:00', '2022-05-24 13:16:33'),
+(18, 1, 'pm', 'PMM79540', 'default-avatar.jpg', 'User PM 3 3', 'userpm3@gmail.com', '$2y$10$yvB.WA9Y.yp036eE5Tfo1e.D1nlRJPNGEQ.1yaLl9bnRghfun3W1e', '', '', NULL, NULL, '0', 'off', '2022-06-07 21:46:42', '2022-06-11 15:44:31'),
+(22, 1, 'pm', 'PMM79812', 'default-avatar.jpg', 'Hari Nurdin', 'harister@gmail.com', '$2y$10$dUtPCptmXo1SuNcV53EdJOLhtBKIcLxoHWbdhW2bEEMQdDA4sRkeS', '', '', NULL, NULL, '0', 'off', '2022-06-10 16:34:53', NULL),
+(24, 1, 'pm', 'PMM87690', 'default-avatar.jpg', 'Rizqi PM', 'rizqisetiaji1@gmail.com', '$2y$10$qvZ49TmU1QrSSxfaKyiCN.x7p8AA6Zt8eOOCgFRMsUHIL1074aoTa', '089519598888', '', NULL, NULL, '0', 'on', '2022-06-11 18:39:13', '2022-06-15 17:48:15');
 
 --
 -- Indexes for dumped tables
@@ -346,25 +358,25 @@ ALTER TABLE `tb_priority`
 -- AUTO_INCREMENT for table `tb_project`
 --
 ALTER TABLE `tb_project`
-  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `tb_project_task`
 --
 ALTER TABLE `tb_project_task`
-  MODIFY `project_task_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `project_task_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `tb_subproject`
 --
 ALTER TABLE `tb_subproject`
-  MODIFY `subproject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `subproject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `tb_users`
 --
 ALTER TABLE `tb_users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
