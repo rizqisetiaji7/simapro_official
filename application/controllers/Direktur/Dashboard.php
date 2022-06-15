@@ -9,7 +9,7 @@ class Dashboard extends CI_Controller {
    }
 
    public function index() {
-      $projects = $this->project_model->get_all_user_project(user_login()->ID_company, 5)->result();
+      $projects = $this->project_model->get_all_user_project(user_login()->ID_company, 10)->result();
       $data = [
          'app_name'     => APP_NAME,
          'author'       => APP_AUTHOR,

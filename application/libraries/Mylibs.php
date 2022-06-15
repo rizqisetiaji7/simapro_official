@@ -14,6 +14,11 @@ class Mylibs {
    protected $ci;
    protected $mail;
 
+   private $encrypt_method;
+   private $secret_key;
+   private $secret_iv;
+   private $key_hash;
+
    public function __construct() {
       $this->ci =& get_instance();
 
@@ -22,6 +27,11 @@ class Mylibs {
 
       // Create an instance; passing `true` enables exceptions
       $this->mail = new PHPMailer(true);
+
+      $this->encrypt_method = "AES-256-CBC";
+      $this->secret_key = "1029384756qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM";
+      $this->secret_iv = "1209385467zaqplwsxokmcdeijnrfvbhutgyASDFGLKJHQWERTPOIUYZXCVMNB";
+      $this->key_hash = hash("sha256", $this->secret_key);
    }
 
    function _randomID($size=10) {
@@ -68,5 +78,17 @@ class Mylibs {
       }
 
       return $response;
+   }
+
+   public function encryptid($str='') {
+      $iv = substr(hash("sha256", $this->secret_iv), 0, 16);
+      $output = openssl_encrypt($str, $this->encrypt_method, $this->key_hash, 0, $iv);
+      return base64_encode($output);
+   }
+    
+   public function decryptid($str='') {
+      $iv = substr(hash("sha256", $this->secret_iv), 0, 16);
+      $output = openssl_decrypt(base64_decode($str), $this->encrypt_method, $this->key_hash, 0, $iv);
+      return $output;
    }
 }

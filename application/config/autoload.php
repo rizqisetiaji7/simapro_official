@@ -66,7 +66,8 @@ $autoload['libraries'] = [
 	'theme', 
 	'datatables', 
 	'mylibs',
-	'cipdf'
+	'cipdf',
+	'str_secure'
 ];
 
 /*
@@ -152,5 +153,6 @@ $autoload['language'] = array();
 |	$autoload['model'] = array('first_model' => 'first');
 */
 $autoload['model'] = [
-	'base_model'	=> 'bm'
+	'base_model'	=> 'bm',
+	'projectpm_model' => 'ppm'
 ];
