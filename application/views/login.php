@@ -11,6 +11,23 @@
             
             <div class="card mx-2 mb-0">
                 <div class="card-body py-4 px-5">
+                    <!-- Login Info for Test -->
+                    <div class="bg-light p-3 mb-3">
+                        <p class="mb-2 text-warning">User Login Test</p>
+                        <div>
+                            <h5 class="mb-1">Direktur</h5>
+                            <p class="text-muted mb-0 small"><strong class="text-dark">Email:</strong> rizqisetiaji9@gmail.com</p>
+                            <p class="text-muted mb-0 small"><strong class="text-dark">Password:</strong> admin123</p>
+                        </div>
+                        <div style="height: 1px; width: 100%; background-color: #ececec; margin: 10px 0;"></div>
+                        <div>
+                            <h5 class="mb-1">Proyek Manajer</h5>
+                            <p class="text-muted mb-0 small"><strong class="text-dark">Email:</strong> rizqisetiaji1@gmail.com</p>
+                            <p class="text-muted mb-0 small"><strong class="text-dark">Password:</strong> user_pm123</p>
+                        </div>
+                    </div>
+                    <!-- ./ Login Info for Test -->
+
                     <form id="form-login" action="<?= site_url('login/login_process') ?>" method="POST">
                         <div class="form-group mt-1">
                             <label for="email">Email <span class="text-danger">*</span></label>
