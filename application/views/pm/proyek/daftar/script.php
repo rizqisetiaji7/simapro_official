@@ -58,11 +58,60 @@
 			dataType: 'html',
 			cache: false,
 			data: { project_code: project_code },
+			beforeSend: function() {
+				modalBody.html(`<p class="text-secondary">Memuat konten...</p>`);
+			},
 			success: function(data) {
+				modalBody.empty();
 				modalBody.html(data);
-				modal.modal('show');
 			}
 		});
+		modal.modal('show');
+	}
+
+	// PROJECT ARCHIVE
+	function archiveProject(project_code) {
+		Swal.fire({
+         icon: 'warning',
+         title: 'Arsipkan proyek ini?',
+         text: `Data akan disimpan sebagai arsip, dan tidak akan terhapus.`,
+         confirmButtonText: 'Ya, Arsipkan',
+         confirmButtonColor: '#f31a69',
+         showCancelButton: true,
+         cancelButtonText: 'Batal'
+      }).then((result) => {
+      	if (result.isConfirmed) {
+      		$.ajax({
+					url: `<?= site_url('pm/proyek/arsip_proyek') ?>`,
+					method: 'POST',
+					dataType: 'json',
+					cache: false,
+					data: { project_code: project_code },
+					success: function(data) {
+						if (data.status == 'success') {
+							Swal.fire({
+				            icon: 'success',
+				            title: 'Berhasil',
+				            text: `${data.message}`,
+				            confirmButtonText: 'Oke, Sip!',
+				         }).then((result) => {
+				         	window.location.reload();
+				         });
+						} else if (data.status == 'failed') {
+							Swal.fire({
+				            icon: 'error',
+				            title: 'Gagal',
+				            text: `${data.message}`,
+				            showConfirmButton: false,
+				            timer: 2000,
+				         }).then((result) => {
+				         	window.location.reload();
+				         });
+						}
+					}
+				});
+      	}
+      });
 	}
 
 	// MODAL SUBMIT FORM

@@ -177,7 +177,41 @@ class Proyek extends CI_Controller {
    }
 
    function update_status_proyek() {
+      $message = [];
+      $post = $this->input->post(NULL, TRUE);
+      $this->bm->update('tb_project', ['project_status' => $post['project_status']],[
+         'project_code_ID' => $post['project_code_ID']
+      ]);
+      if ($this->db->affected_rows() >= 0) {
+         $message = [
+            'status'    => 'success',
+            'message'   => 'Status berhasil diperbarui.'
+         ];
+      } else {
+         $message = [
+            'status'    => 'failed',
+            'message'   => 'Oops! Status gagal diperbarui.'
+         ];
+      }
+      $this->output->set_content_type('application/json')->set_output(json_encode($message));
+   }
 
+   function arsip_proyek() {
+      $message = [];
+      $code_id = $this->input->post('project_code', TRUE);
+      $this->bm->update('tb_project', ['project_archive' => 1], ['project_code_ID' => $code_id]);
+      if ($this->db->affected_rows() > 0) {
+         $message = [
+            'status'    => 'success',
+            'message'   => 'Proyek telah berhasil diarsipkan.'
+         ];
+      } else {
+         $message = [
+            'status'    => 'failed',
+            'message'   => 'Oops! Proyek gagal disimpan sebagai arsip'
+         ];
+      }
+      $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
    // =========== END CRUD =========== //
@@ -189,7 +223,8 @@ class Proyek extends CI_Controller {
 
    function form_update_status() {
       $id = $this->input->post('project_code', TRUE);
-      $this->load->view('pm/proyek/daftar/form/tambah_proyek', $data);
+      $data['project_status'] = $this->bm->get('tb_project', 'project_id, ID_pm, ID_company, project_code_ID, project_progress, project_status', ['project_code_ID' => $id])->row();
+      $this->load->view('pm/proyek/daftar/form/update_status', $data);
    }
 
    function tampil_form_edit_proyek() {
