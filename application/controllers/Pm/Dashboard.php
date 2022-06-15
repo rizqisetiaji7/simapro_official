@@ -5,14 +5,20 @@ class Dashboard extends CI_Controller {
       parent::__construct();
       is_not_login();
       is_not_pm();
+      $this->load->model('projectpm_model');
    }
 
    public function index() {
+      $comp_id = user_company()->company_id;
+      $pm_id = user_company()->user_id;
+      $projects = $this->projectpm_model->get_pm_projects($comp_id, $pm_id, 10)->result();
+
       $data = [
          'app_name'  => APP_NAME,
          'author'    => APP_AUTHOR,
-         'title'     => 'Dashboard Direktur',
+         'title'     => 'Dashboard PM',
          'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
+         'projects'  => $projects,
          'page'      => 'proyek_manajer'
       ];
       $this->theme->view('templates/main', 'pm/dashboard', $data);
