@@ -9,7 +9,7 @@
                         </div>
                         <i class="la la-rocket text-xl text-success"></i>
                     </div>
-                    <h1 class="mb-3">2</h1>
+                    <h1 class="mb-3"><?= count_project_pm('finish') ?></h1>
                     <p class="mb-0 text-muted text-sm">Total project selesai</p>
                 </div>
             </div>
@@ -22,7 +22,7 @@
                         </div>
                         <i class="la la-rocket text-xl text-success"></i>
                     </div>
-                    <h1 class="mb-3">2</h1>
+                    <h1 class="mb-3"><?= count_project_pm() ?></h1>
                     <p class="mb-0 text-muted text-sm">Proyek sedang di kerjakan</p>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                         </div>
                         <i class="la la-rocket text-xl text-success"></i>
                     </div>
-                    <h1 class="mb-3">1</h1>
+                    <h1 class="mb-3"><?= count_project_pm('archive') ?></h1>
                     <p class="mb-0 text-muted text-sm">Proyek yang diarsipkan</p>
                 </div>
             </div>
@@ -47,7 +47,7 @@
     <div class="col-12 d-flex">
         <div class="card card-table flex-fill">
             <div class="card-header">
-                <h3 class="card-title mb-0">Project Terbaru <span class="text-xs text-secondary">(Daftar proyek yang sedang di kerjakan)</span></h3>
+                <h3 class="card-title mb-0">Project Anda <span class="text-xs text-secondary">(Daftar proyek yang sedang di kerjakan)</span></h3>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -63,116 +63,78 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    <div class="d-flex flex-row align-items-center">
-                                        <img src="<?= base_url('assets/img/placeholder.jpg')?>" class="rounded-lg" width="50">
-                                        <div class="ml-3">
-                                            <h2>Perbaikan Jembatan Cirahong</h2>
+                            <?php if ($projects) { ?>
+                                <?php foreach($projects as $p) { ?>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex flex-row align-items-center">
+                                                <img src="<?= $p->project_thumbnail == 'placeholder.jpg' ? base_url('assets/img/placeholder.jpg') : base_url('uploads/thumbnail/'.$p->project_thumbnail) ?>" class="rounded-lg" width="50">
+                                                <div class="ml-3">
+                                                    <h2><?= $p->project_name ?></h2>
+                                                    <small class="block text-ellipsis">
+                                                        <span class="text-muted"><?= $p->project_address ?></span>
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h5 class="mb-0"><?= $p->user_fullname ?></h5>
                                             <small class="block text-ellipsis">
-                                                <span class="text-muted">Desa Cirahong, Kab. Ciamis</span>
+                                                <span class="text-muted"><?= $p->comp_name ?></span>
                                             </small>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5 class="mb-0">Rizqi PM</h5>
-                                    <small class="block text-ellipsis">
-                                        <span class="text-muted">PT. Aryabakti Saluyu</span>
-                                    </small>
-                                </td>
-                                <td>
-                                    <span class="badge bg-inverse-warning p-2">Direvisi</span>
-                                </td>
-                                <td>14 Juli 2023</td>
-                                <td>
-                                    <div class="progress progress-xs progress-striped">
-                                        <div class="progress-bar bg-info" role="progressbar" data-toggle="tooltip" title="70%" data-original-title="70%" style="width: 70%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <div class="dropdown dropdown-action">
-                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i class="fas fa-pencil m-r-5"></i>Detail</a>
-                                        </div>
-                                    </div>
+                                        </td>
+                                        <td>
+                                            <?php 
+                                                if ($p->project_status == NULL) {
+                                                    echo '<span class="badge bg-inverse-light p-2"><span class="text-dark">Belum ada</span></span>';
+                                                } else if ($p->project_status == 'pending') {
+                                                    echo '<span class="badge bg-inverse-danger p-2">Ditunda</span>';
+                                                } else if ($p->project_status == 'revision') {
+                                                    echo '<span class="badge bg-inverse-warning p-2">Direvisi</span>';
+                                                } else if ($p->project_status == 'review') {
+                                                    echo '<span class="badge bg-inverse-primary p-2">Diperiksa</span>';
+                                                } else if ($p->project_status == 'on_progress') {
+                                                    echo '<span class="badge bg-inverse-info p-2">Berjalan</span>';
+                                                }
+                                            ?>
+                                        </td>
+                                        <td>
+                                            <span class="small text-secondary"><?= datetimeIDN($p->project_deadline) ?></span>
+                                        </td>
+                                        <td>
+                                            <?php 
+                                                $progress_bg = '';
+                                                if ($p->project_progress <= 25) {
+                                                    $progress_bg = 'bg-danger';
+                                                } else if ($p->project_progress <= 50) {
+                                                    $progress_bg = 'bg-warning';
+                                                } else if ($p->project_progress <= 75) {
+                                                    $progress_bg = 'bg-info';
+                                                } else {
+                                                    $progress_bg = 'bg-success';
+                                                }
+                                            ?>
+                                            <div class="progress progress-xs progress-striped">
+                                                <div class="progress-bar <?= $progress_bg ?>" role="progressbar" data-toggle="tooltip" title="<?= $p->project_progress.'%' ?>" data-original-title="<?= $p->project_progress.'%' ?>" <?= 'style="width: '.$p->project_progress.'%;"' ?> aria-valuenow="<?= $p->project_progress ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item" href="<?= site_url('direktur/proyek/detail_proyek/'.$p->company_id.'/'.$p->projectID) ?>"><i class="fas fa-pencil m-r-5"></i>Detail</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            <?php } else { ?>
+                            <tr>
+                                <td colspan="6" class="text-center">
+                                    <p class="mb-0 text-secondary">Proyek Telah selesai.</p>
                                 </td>
                             </tr>
-
-                            <tr>
-                                <td>
-                                    <div class="d-flex flex-row align-items-center">
-                                        <img src="<?= base_url('assets/img/placeholder.jpg')?>" class="rounded-lg" width="50">
-                                        <div class="ml-3">
-                                            <h2>Pembangunan SMPN 2 Cijeungjing</h2>
-                                            <small class="block text-ellipsis">
-                                                <span class="text-muted">Desa Cijeungjing, Kab. Ciamis</span>
-                                            </small>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5 class="mb-0">Rizqi PM</h5>
-                                    <small class="block text-ellipsis">
-                                        <span class="text-muted">PT. Aryabakti Saluyu</span>
-                                    </small>
-                                </td>
-                                <td>
-                                    <span class="badge bg-inverse-info p-2">Berjalan</span>
-                                </td>
-                                <td>24 Mei 2023</td>
-                                <td>
-                                    <div class="progress progress-xs progress-striped">
-                                        <div class="progress-bar bg-success" role="progressbar" data-toggle="tooltip" title="80%" data-original-title="80%" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <div class="dropdown dropdown-action">
-                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i class="fas fa-pencil m-r-5"></i>Detail</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <div class="d-flex flex-row align-items-center">
-                                        <img src="<?= base_url('assets/img/placeholder.jpg')?>" class="rounded-lg" width="50">
-                                        <div class="ml-3">
-                                            <h2>Rumah Sakit Kawali</h2>
-                                            <small class="block text-ellipsis">
-                                                <span class="text-muted">Desa Kawali, Kab. Ciamis</span>
-                                            </small>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5 class="mb-0">Rizqi PM</h5>
-                                    <small class="block text-ellipsis">
-                                        <span class="text-muted">PT. Aryabakti Saluyu</span>
-                                    </small>
-                                </td>
-                                <td>
-                                    <span class="badge bg-inverse-info p-2">Berjalan</span>
-                                </td>
-                                <td>24 Desember 2023</td>
-                                <td>
-                                    <div class="progress progress-xs progress-striped">
-                                        <div class="progress-bar bg-warning" role="progressbar" data-toggle="tooltip" title="40%" data-original-title="40%" style="width: 40%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <div class="dropdown dropdown-action">
-                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i class="fas fa-pencil m-r-5"></i>Detail</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>
