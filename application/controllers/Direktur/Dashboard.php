@@ -13,7 +13,7 @@ class Dashboard extends CI_Controller {
       $data = [
          'app_name'     => APP_NAME,
          'author'       => APP_AUTHOR,
-         'title'        => 'Dashboard Direktur',
+         'title'        => '(Direktur) Dashboard',
          'desc'         => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
          'projects'     => $projects,
          'finished'     => countProjectFinish(user_company()->company_id),

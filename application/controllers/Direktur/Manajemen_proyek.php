@@ -192,7 +192,7 @@ class Manajemen_proyek extends CI_Controller {
             'ID_priority'           => $post['task_priority_level'],
             'project_task_name'     => $post['project_task_name'],
             'project_task_deadline' => $post['project_task_deadline'],
-            'project_task_status'   => NULL,
+            'project_task_status'   => 'none',
             'project_task_progress' => 0
          ];
          $this->bm->save('tb_project_task', $data);
@@ -238,27 +238,17 @@ class Manajemen_proyek extends CI_Controller {
             ]
          ];
       } else {
-         $progress = '';
-         if ($post['project_task_status'] == 'onprogress') {
-            $progress = 50;
-         } else if ($post['project_task_status'] == 'finish') {
-            $progress = 100;
-         } else if ($post['project_task_status'] == '') {
-            $progress = 0;
-         } else {
-            $progress = $post['current_progress'];
-         }
-
          $data = [
             'ID_priority'           => $post['task_priority_level'],
             'project_task_name'     => $post['project_task_name'],
             'project_task_deadline' => $post['project_task_deadline'],
-            'project_task_status'   => $post['project_task_status'],
-            'project_task_progress' => $progress,
             'updated'               => date('Y-m-d H:i:s', now('Asia/Jakarta'))
          ];
 
-         $this->bm->update('tb_project_task', $data, ['project_task_id' => $post['project_task_id'], 'ID_subproject' => $post['ID_subproject']]);
+         $this->bm->update('tb_project_task', $data, [
+            'project_task_id' => $post['project_task_id'], 
+            'ID_subproject' => $post['ID_subproject']
+         ]);
 
          if ($this->db->affected_rows() >= 0) {
             $message = [

@@ -20,17 +20,6 @@
   </div>
 
   <div class="col-12 mb-3">
-    <label for="project_task_status">Status</label>
-    <select id="project_task_status" name="project_task_status" class="form-control">
-        <option value="">-- Pilih status --</option>
-        <option value="onprogress" <?= $subelemen->project_task_status == 'onprogress' ? 'selected' : NULL ?>>Berjalan</option>
-        <option value="pending" <?= $subelemen->project_task_status == 'pending' ? 'selected' : NULL ?>>Pending</option>
-        <option value="finish" <?= $subelemen->project_task_status == 'finish' ? 'selected' : NULL ?>>Selesai</option>
-    </select>
-    <div class="invalid-feedback"></div>
-  </div>
-
-  <div class="col-12 mb-3">
     <label for="project_task_deadline">Deadline / Proyek Selesai <span class="text-danger small">*</span></label>
     <input type="date" name="project_task_deadline" id="project_task_deadline" class="form-control" value="<?= $subelemen->project_task_deadline ?>" autocomplete="off">
     <div class="invalid-feedback"></div>

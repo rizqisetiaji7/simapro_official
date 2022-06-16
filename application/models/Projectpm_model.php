@@ -42,4 +42,28 @@ class Projectpm_model extends CI_Model {
 		$this->db->order_by('project_id DESC');
 		return $this->db->get();
 	}
+
+	public function get_projectpm_detail($company_id, $proj_ID, $pm_id, $archived = FALSE) {
+		$this->db->select($this->_columns());
+		$this->db->from('tb_project');
+		$this->db->join('tb_company', 'tb_company.company_id=tb_project.ID_company', 'left');
+		$this->db->join('tb_users', 'tb_users.user_id=tb_project.ID_pm', 'left');
+		$this->db->where([
+			'tb_project.ID_company' 		=> $company_id,
+			'tb_project.project_code_ID'	=> $proj_ID,
+			'tb_project.ID_pm'				=> $pm_id
+		]);
+		if ($archived != FALSE) {
+			$this->db->where('tb_project.project_archive', 1);
+		}
+		return $this->db->get();
+	}
+
+	public function get_subprojectpm($project_id) {
+		$this->db->from('tb_subproject');
+		$this->db->join('tb_priority', 'tb_subproject.ID_priority=tb_priority.priority_id');
+		$this->db->where(['ID_project' => $project_id]);
+		$this->db->order_by('subproject_id DESC');
+		return $this->db->get();
+	}
 }

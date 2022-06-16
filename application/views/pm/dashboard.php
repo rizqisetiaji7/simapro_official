@@ -85,7 +85,7 @@
                                         </td>
                                         <td>
                                             <?php 
-                                                if ($p->project_status == NULL) {
+                                                if ($p->project_status == 'none') {
                                                     echo '<span class="badge bg-inverse-light p-2"><span class="text-dark">Belum ada</span></span>';
                                                 } else if ($p->project_status == 'pending') {
                                                     echo '<span class="badge bg-inverse-danger p-2">Ditunda</span>';
@@ -122,7 +122,7 @@
                                             <div class="dropdown dropdown-action">
                                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <a class="dropdown-item" href="<?= site_url('direktur/proyek/detail_proyek/'.$p->company_id.'/'.$p->projectID) ?>"><i class="fas fa-pencil m-r-5"></i>Detail</a>
+                                                    <a class="dropdown-item" href="<?= site_url('pm/proyek/detail/'.$p->company_id.'/'.$p->projectID) ?>"><i class="fas fa-pencil m-r-5"></i>Detail</a>
                                                 </div>
                                             </div>
                                         </td>

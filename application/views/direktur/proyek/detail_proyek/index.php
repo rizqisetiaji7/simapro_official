@@ -63,7 +63,7 @@
 
         <button type="button" class="btn btn-info mb-1 btn-sm" data-toggle="tooltip" title="Buat Sub-Proyek" onclick="add_subProject(<?= $project->project_id ?>)"><i class="fas fa-plus"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Sub-proyek</span></button>
 
-        <?php 
+        <!-- <?php 
                 $finished = '';
                 if ($project->project_progress >= 100 && $docs->num_rows() > 0 && $project->project_status == 'review') {
                     $finished = 'onclick="finishProject('.$project->project_id.')"';
@@ -71,8 +71,13 @@
                     $finished = 'disabled="disabled"';
                 }
 
-        ?>
-        <button type="button" class="btn btn-success mb-1 btn-sm" data-toggle="tooltip" title="Klik proyek dinyatakan selesai" <?= $finished ?>><i class="fas fa-check"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Proyek Selesai</span></button>
+        ?> -->
+        <?php if ($project->project_progress >= 100 && $docs->num_rows() > 0) { ?>
+            <?php if ($project->project_status == 'review') { ?>
+                <button type="button" class="btn btn-success mb-1 btn-sm" data-toggle="tooltip" title="Klik proyek dinyatakan selesai" onclick="finishProject(<?= $project->project_id ?>)"><i class="fas fa-check"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Proyek Selesai</span></button>
+            <?php }?>
+        <?php } ?>
+        
     </div>
 
     <div class="col-12">
@@ -80,7 +85,7 @@
             <div class="mr-4 ml-0">
                 <?php 
                     $status_badge = '';
-                    if ($project->project_status == NULL) {
+                    if ($project->project_status == 'none') {
                         $status_badge = '<span class="badge bg-inverse-light px-2 py-1"><span class="text-dark">Belum ada</span></span>';
                     } else if ($project->project_status == 'pending') {
                         $status_badge = '<span class="badge bg-inverse-danger px-2 py-1">Ditunda</span>';
@@ -92,8 +97,6 @@
                         $status_badge = '<span class="badge bg-inverse-success px-2 py-1">Berjalan</span>';
                     } else if ($project->project_status == 'finish') {
                         $status_badge = '<span class="badge bg-inverse-success px-2 py-1">Selesai</span>';
-                    } else if ($project->project_status == 'approved') {
-                        $status_badge = '<span class="badge bg-inverse-purple px-2 py-1"><i class="fas fa-check mr-1"></i>Approved</span>';
                     }
                 ?>
                 <i class="fa-solid fa-map-pin mr-2"></i><?= $status_badge ?>
@@ -176,13 +179,12 @@
                     </div>
                     <!-- ./ Subproyek Progress (Belum Berjalan) -->
 
+                    <button type="button" class="btn btn-light btn-block btn-sm mb-3" data-toggle="tooltip" title="Lihat Foto dokumentasi lapangan" onclick="tampilDocumentasiSubproyek(<?= $project->project_id ?>, <?= $sp->subproject_id ?>, <?= "'".$sp->subproject_name."'" ?>)"><i class="fa-solid fa-camera mr-1"></i> Dokumentasi</button>
 
                     <!-- Task Sub-Element "Proyek" -->
                     <?php if ($total_subelemen > 0) { ?>
                         <!-- Sub-Element Cards -->
                         <?php foreach(subelemen_project($sp->subproject_id)->result() as $se) { ?>
-
-                            <button type="button" class="btn btn-light btn-block btn-sm mb-3" data-toggle="tooltip" title="Lihat Foto dokumentasi lapangan" onclick="tampilDocumentasiSubproyek(<?= $project->project_id ?>, <?= $sp->subproject_id ?>, <?= "'".$sp->subproject_name."'" ?>)"><i class="fa-solid fa-camera mr-1"></i> Dokumentasi</button>
                             
                             <div class="card panel">
                                 <div class="kanban-box ui-sortable-handle">
@@ -215,7 +217,7 @@
                                             <span class="task-users">
                                                 <span class="task-date"><i class="fa-solid fa-map-pin"></i> Status</span>
                                                 <?php 
-                                                    if ($se->project_task_status == NULL) {
+                                                    if ($se->project_task_status == 'none') {
                                                         echo '<span class="task-priority badge bg-inverse-light"><span class="text-dark">Belum ada</span></span>';
                                                     } else if ($se->project_task_status == 'pending') {
                                                         echo '<span class="task-priority badge bg-inverse-danger">Ditunda</span>';

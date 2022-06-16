@@ -56,7 +56,7 @@ class Proyek extends CI_Controller {
       $data = [
          'app_name'  => APP_NAME,
          'author'    => APP_AUTHOR,
-         'title'     => 'Daftar Proyek',
+         'title'     => '(Direktur) Daftar Proyek',
          'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
          'projects'  => $projects,
          'page'      => 'daftar_proyek'
@@ -131,7 +131,7 @@ class Proyek extends CI_Controller {
             'project_deadline'      => $post['project_deadline'],
             'project_current_deadline' => NULL,
             'project_deadline_month'   => NULL,
-            'project_status'        => 'on_progress',
+            'project_status'        => 'none',
             'project_progress'      => 0,
             'project_archive'       => '0',
             'created'               => date('Y-m-d H:i:s', now('Asia/Jakarta'))
@@ -184,7 +184,7 @@ class Proyek extends CI_Controller {
       $data = [
          'app_name'  => APP_NAME,
          'author'    => APP_AUTHOR,
-         'title'     => 'Riwayat Proyek',
+         'title'     => '(Direktur) Riwayat Proyek',
          'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
          'page'      => 'riwayat_proyek'
       ];
@@ -312,7 +312,7 @@ class Proyek extends CI_Controller {
       $data = [
          'app_name'  => APP_NAME,
          'author'    => APP_AUTHOR,
-         'title'     => 'Arsip Proyek',
+         'title'     => '(Direktur) Arsip Proyek',
          'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
          'archived'  => $archived,
          'page'      => 'arsip_proyek'
@@ -372,7 +372,7 @@ class Proyek extends CI_Controller {
       $data = [
          'app_name'     => APP_NAME,
          'author'       => APP_AUTHOR,
-         'title'        => 'Detail Proyek',
+         'title'        => '(Direktur) Detail Proyek',
          'desc'         => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
          'project'      => $project,
          'subproject'   => $subproject,
@@ -392,7 +392,7 @@ class Proyek extends CI_Controller {
       $data = [
          'app_name'     => APP_NAME,
          'author'       => APP_AUTHOR,
-         'title'        => 'Detail Arsip Proyek',
+         'title'        => '(Direktur) Detail Arsip',
          'desc'         => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
          'project'      => $project,
          'subproject'   => $subproject,

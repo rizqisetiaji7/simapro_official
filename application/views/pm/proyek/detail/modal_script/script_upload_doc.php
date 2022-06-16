@@ -5,19 +5,56 @@
 	const docFilename = $('#docFileName');
 	
 	// Upload Sub Proyek
-	function uploadDocumentation() {
+	function uploadDocumentation(type_pro = 'proyek', project_id, subproject_id = null) {
+		formUpload.attr('action', `<?= site_url('pm/manajemen_proyek/upload_dokumentasi') ?>`);
+		if (type_pro == 'proyek') {
+			$('#project_type_pro').attr('value', 'proyek');
+		} else if (type_pro == 'subproyek') {
+			$('#project_type_pro').attr('value', 'subproyek');
+		}
+		$('#projId').attr('value', project_id);
+		$('#subProj_ID').attr('value', subproject_id);
 		modalUpGambar.modal('show');
 	}
 	
 	// Custom click to choose file upload Proyek & Subproyek Documentation
 	chooseFile('#choosePhotoDoc', '#upPhotoProject');
 
+	formUpload.on('submit', function(e) {
+		e.preventDefault();
+		$.ajax({
+			url: $(this).attr('action'),
+			method: 'POST',
+			dataType: 'json',
+			cache: false,
+			processData: false,
+			contentType: false,
+			data: new FormData(this),
+			beforeSend: function() {
+				btnUpload.text('Mengupload...').attr('disabled', true);
+			},
+			complete: function() {
+				btnUpload.text('Upload')
+				btnUpload.removeClass('btn-custom');
+				btnUpload.addClass('btn-secondary');
+			},
+			success: function(data) {
+				console.log(data);
+				modalUpGambar.modal('hide');
+			}
+		});
+	});
+
 	// Modal Upload input type file change event
 	$(document).on('change', '#upPhotoProject', function() {
-		if (this.files && this.files[0]) {
+		if (this.files) {
 			// Get and display filename
 			docFilename.removeClass('d-none');
-			docFilename.addClass('mb-3').html(`<p class="mb-0 small text-muted">Gambar: <strong class="text-dark">${this.files[0].name}</strong></p>`);
+			let txt = '';
+			for (let i = 0; i < this.files.length; i++) {
+				txt += `<p class="mb-1 small text-muted">Gambar ${i+1}: <strong class="text-dark">${this.files[i].name}</strong></p>`;
+			}
+			docFilename.addClass('mb-3').html(txt);
 			btnUpload.removeClass('btn-secondary').removeAttr('disabled');
 			btnUpload.addClass('btn-custom');
 		}

@@ -60,7 +60,7 @@
                                 </td>
                                 <td class="text-nowrap">
                                     <?php 
-                                        if ($pro->project_status == NULL) {
+                                        if ($pro->project_status == 'none') {
                                             echo '<span class="badge bg-inverse-light p-2"><span class="text-dark">Belum ada</span></span>';
                                         } else if ($pro->project_status == 'pending') {
                                             echo '<span class="badge bg-inverse-danger p-2">Ditunda</span>';
@@ -72,8 +72,6 @@
                                             echo '<span class="badge bg-inverse-primary p-2">Diperiksa</span>';
                                         } else if ($pro->project_status == 'on_progress') {
                                             echo '<span class="badge bg-inverse-info p-2">Berjalan</span>';
-                                        } else if ($pro->project_status == 'approved') {
-                                            echo '<span class="badge bg-inverse-purple p-2"><i class="fas fa-check mr-1"></i>Approved</span>';
                                         }
                                     ?>
                                 </td>

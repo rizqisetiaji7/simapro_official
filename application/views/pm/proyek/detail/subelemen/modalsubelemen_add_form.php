@@ -1,4 +1,4 @@
-<input type="hidden" name="ID_subproject" value="">
+<input type="hidden" name="ID_subproject" value="<?= $subproject_id ?>">
 <div class="form-row">
   <div class="col-12 mb-3">
     <label for="project_task_name">Nama Sub-Elemen Proyek <span class="text-danger small">*</span></label>
@@ -9,9 +9,9 @@
   <div class="col-12 mb-3">
     <label for="task_priority_level">Level Prioritas <span class="text-danger small">*</span></label>
     <select id="task_priority_level" name="task_priority_level" class="form-control">
-      <option value="">Rendah</option>
-      <option value="">Normal</option>
-      <option value="">Tinggi</option>
+      <?php foreach ($priority as $pr) { ?>
+      <option value="<?= $pr->priority_id ?>"><?= $pr->priority_name ?></option>
+      <?php } ?>
     </select>
     <div class="invalid-feedback"></div>
   </div>

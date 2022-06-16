@@ -29,7 +29,7 @@
 	});
 
 	// EDIT PROJECT
-	function editProyek() {
+	function editProyek(project_code) {
 		title.text('Edit Detail Proyek');
 		formModal.attr('action', `<?= site_url('pm/manajemen_proyek/edit_proyek') ?>`);
 		$.ajax({
@@ -37,7 +37,7 @@
 			method: 'POST',
 			dataType: 'html',
 			cache: false,
-			// data: {},
+			data: {project_code_ID: project_code},
 			beforeSend: function() {
 				modalBody.html('<p>Memuat konten...</p>');
 			},
@@ -50,17 +50,17 @@
 	}
 
 	// EDIT PROJECT STATUS
-	function editProjectStatus() {
-		title.text('Edit Status Proyek');
-		formModal.attr('action', `<?= site_url('pm/manajemen_proyek/edit_status_proyek') ?>`);
+	function editProjectStatus(project_code) {
+		title.text('Ubah Status Proyek');
+		formModal.attr('action', `<?= site_url('pm/proyek/update_status_proyek') ?>`);
 		$.ajax({
-			url: `<?= site_url('pm/proyek/tampil_form_edit_status_proyek') ?>`,
+			url: `<?= site_url('pm/proyek/form_update_status') ?>`,
 			method: 'POST',
 			dataType: 'html',
 			cache: false,
-			// data: {},
+			data: { project_code: project_code },
 			beforeSend: function() {
-				modalBody.html('<p>Memuat konten...</p>');
+				modalBody.html(`<p class="text-secondary">Memuat konten...</p>`);
 			},
 			success: function(data) {
 				modalBody.empty();
@@ -115,7 +115,7 @@
 	}
 
 	// ADD SUB-PROJECT
-	function add_subProject() {
+	function add_subProject(project_id) {
 		title.text('Tambah Sub-Proyek');
 		formModal.attr('action', `<?= site_url('pm/manajemen_proyek/tambah_subproyek') ?>`);
 		$.ajax({
@@ -123,7 +123,7 @@
 			method: 'POST',
 			dataType: 'html',
 			cache: false,
-			// data: {},
+			data: {project_id: project_id},
 			beforeSend: function() {
 				modalBody.html('<p>Memuat konten...</p>');
 			},
@@ -136,7 +136,7 @@
 	}
 
 	// EDIT SUB-PROJECT
-	function edit_subProject() {
+	function edit_subProject(project_id, subproject_id) {
 		title.text('Edit data Sub-Proyek');
 		formModal.attr('action', `<?= site_url('pm/manajemen_proyek/edit_subproyek') ?>`);
 		$.ajax({
@@ -144,7 +144,10 @@
 			method: 'POST',
 			dataType: 'html',
 			cache: false,
-			// data: {},
+			data: {
+				project_id: project_id,
+				subproject_id: subproject_id
+			},
 			beforeSend: function() {
 				modalBody.html('<p>Memuat konten...</p>');
 			},
@@ -157,7 +160,7 @@
 	}
 
 	// ADD SUB-ELEMENT / Task Lists
-	function add_subElemenProject() {
+	function add_subElemenProject(subproject_id) {
 		title.text('Tambah List');
 		formModal.attr('action', `<?= site_url('pm/manajemen_proyek/tambah_subelemen_proyek') ?>`);
 		$.ajax({
@@ -165,7 +168,9 @@
 			method: 'POST',
 			dataType: 'html',
 			cache: false,
-			// data: {},
+			data: {
+				subproject_id: subproject_id
+			},
 			beforeSend: function() {
 				modalBody.html('<p>Memuat konten...</p>');
 			},
@@ -178,7 +183,7 @@
 	}
 
 	// EDIT SUB-ELEMENT / Task Lists
-	function edit_subElemenProject() {
+	function edit_subElemenProject(task_id, subproject_id) {
 		title.text('Edit List');
 		formModal.attr('action', `<?= site_url('pm/manajemen_proyek/edit_subelemen_proyek') ?>`);
 		$.ajax({
@@ -186,7 +191,10 @@
 			method: 'POST',
 			dataType: 'html',
 			cache: false,
-			// data: {},
+			data: {
+				task_id: task_id,
+				subproject_id: subproject_id
+			},
 			beforeSend: function() {
 				modalBody.html('<p>Memuat konten...</p>');
 			},
@@ -199,7 +207,7 @@
 	}
 
 	// DELETE SUBPROYEK / SUB-ELEMENT PROJECT
-	function delete_subElProject(task_type) {
+	function delete_subElProject(task_type, subid, project_id) {
 		let task_name = task_type == 'subproject' ? 'Sub-Proyek' : 'Sub-Elemen Proyek' ;
 		let textFill = task_type == 'subproject' ? 'Data Subproyek akan terhapus beserta Sub-elemennya' : 'Anda akan menghapus Sub-elemen Proyek.' ;
 		Swal.fire({
@@ -211,7 +219,41 @@
 			cancelButtonText: 'Batal'
      	}).then((result) => {
      		if (result.isConfirmed) {
-     			alert(`Action to : <?= site_url('pm/manajemen_proyek/hapus') ?>`);
+     			// alert(`Action to : <?= site_url('pm/manajemen_proyek/hapus') ?>`);
+     			$.ajax({
+					url: `<?= site_url('pm/manajemen_proyek/hapus') ?>`,
+					method: 'POST',
+					dataType: 'json',
+					cache: false,
+					data: {
+						task_type: task_type,
+						id_sub: subid,
+						project_id: project_id
+					},
+					success: function(data) {
+						if (data.status == 'success') {
+							Swal.fire({
+								icon: 'success',
+								title: 'Berhasil',
+								text: `${data.message}`,
+								showConfirmButton: false,
+								timer: 2000,
+							}).then((result) => {
+								window.location.reload();
+							});		
+						} else if (data.status == 'failed') {
+							Swal.fire({
+								icon: 'error',
+								title: 'Gagal',
+								text: `${data.message}`,
+								showConfirmButton: false,
+								timer: 2000,
+							}).then((result) => {
+								window.location.reload();
+							});
+						}
+					}
+				});
      		}
      	});
 	}
@@ -234,6 +276,61 @@
      		}
      	});
 	}
+
+	// Submit Data
+	formModal.on('submit', function(e) {
+		e.preventDefault();
+		$.ajax({
+			url: $(this).attr('action'),
+			method: 'POST',
+			dataType: 'json',
+			processData: false,
+			contentType: false,
+			cache: false,
+			data: new FormData(this),
+			beforeSend: function() {
+				btnSubmit.attr('disabled', true).text('Memproses...');
+			},
+			complete: function() {
+				btnSubmit.attr('disabled', false).text('Simpan');
+			},
+			success: function(data) {
+				if (data.status == 'validation_error') {
+					for (let i = 0; i < data.message.length; i++) {
+						if (data.message[i].err_message == '') {
+							$(`[name="${data.message[i].field}"]`).removeClass('is-invalid');
+			            	$(`[name="${data.message[i].field}"]`).next().html('');
+						} else {
+							$(`[name="${data.message[i].field}"]`).addClass('is-invalid');
+			            	$(`[name="${data.message[i].field}"]`).next().html(data.message[i].err_message);
+						}
+					}
+				} else if (data.status == 'success') {
+					modal.modal('hide');
+					Swal.fire({
+		            icon: 'success',
+		            title: 'Berhasil',
+		            text: `${data.message}`,
+		            showConfirmButton: false,
+		            timer: 2000,
+		         }).then((result) => {
+		         	window.location.reload();
+		         });
+				} else {
+					modal.modal('hide');
+					Swal.fire({
+		            icon: 'error',
+		            title: 'Gagal',
+		            text: `${data.message}`,
+		            showConfirmButton: false,
+		            timer: 2000,
+		         }).then((result) => {
+		         	window.location.reload();
+		         });
+				}
+			}
+		});
+	});
 
 	modal.on('hidden.bs.modal', function() {
 		title.empty();

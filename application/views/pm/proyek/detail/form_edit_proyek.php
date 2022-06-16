@@ -1,5 +1,5 @@
-<input type="hidden" name="old_thumbnail" value="">
-<input type="hidden" name="project_code_ID" value="">
+<input type="hidden" name="old_thumbnail" value="<?= $project->project_thumbnail ?>">
+<input type="hidden" name="project_code_ID" value="<?= $project->project_code_ID ?>">
 <input type="file" name="profile_image" id="inputProfile" accept=".jpg,.png,.jpeg" class="d-none">
 <div class="row">
     <div class="col-12 mb-3">
@@ -17,43 +17,37 @@
     <div class="col-12">
         <div class="form-group mb-3">
             <label class="d-block">Thumbnail</label>
-            <img src="<?= base_url('assets/img/placeholder.jpg') ?>" class="rounded" width="200">
+            <img src="<?= $project->project_thumbnail == 'placeholder.jpg' ? base_url('assets/img/placeholder.jpg') : base_url('uploads/thumbnail/'.$project->project_thumbnail) ?>" class="rounded" width="200">
         </div> 
 
         <div class="form-group">
             <label for="project_name">Nama Proyek <span class="text-danger small">*</span></label>
-            <input type="text" id="project_name" name="project_name" class="form-control" autocomplete="off" value="" placeholder="Ketik nama proyek...">
+            <input type="text" id="project_name" name="project_name" class="form-control" autocomplete="off" placeholder="Ketik nama proyek..." value="<?= $project->project_name ?>">
             <div class="invalid-feedback"></div>
-        </div>
-        <!-- <div class="form-group">
-            <label for="ID_pm">Manajer Proyek (Penanggung jawab)</label>
-            <select name="ID_pm" class="custom-select formSelect">
-                <option value="">-- Pilih --</option>
-                <option value="">...</option>
-                <option value="">...</option>
-            </select>
-        </div> -->
-        <div class="form-group">
-            <label for="project_address">Alamat Proyek <span class="text-muted small">(Opsional)</span></label>
-            <input type="text" id="project_address" name="project_address" class="form-control" value="" autocomplete="off" placeholder="Ketik nama proyek...">
-            <div class="invalid-feedback"></div>
-        </div>
-        <div class="form-group">
-            <label for="project_description">Deskripsi Proyek <span class="text-muted small">(Opsional)</span></label>
-            <textarea name="project_description" id="project_description" class="form-control" rows="4" placeholder="Deskripsi proyek..."></textarea>
         </div>
 
         <div class="form-row">
             <div class="form-group col-6">
                 <label for="project_start">Mulai Pengerjaan <span class="text-danger small">*</span></label>
-                <input type="date" class="form-control" name="project_start" id="project_start" value="">
+                <input type="date" class="form-control" name="project_start" id="project_start" value="<?= $project->project_start ?>">
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group col-6">
                 <label for="project_deadline">Berakhir Pada <span class="text-danger small">*</span></label>
-                <input type="date" class="form-control" name="project_deadline" id="project_deadline" value="">
+                <input type="date" class="form-control" name="project_deadline" id="project_deadline" value="<?= $project->project_deadline ?>">
                 <div class="invalid-feedback"></div>
             </div>
+        </div>
+
+        <div class="form-group">
+            <label for="project_address">Alamat Proyek <span class="text-muted small">(Opsional)</span></label>
+            <input type="text" id="project_address" name="project_address" class="form-control" autocomplete="off" placeholder="Ketik nama proyek..." value="<?= $project->project_address ?>">
+            <div class="invalid-feedback"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="project_description">Deskripsi Proyek <span class="text-muted small">(Opsional)</span></label>
+            <textarea name="project_description" id="project_description" class="form-control" rows="4" placeholder="Deskripsi proyek..."><?= $project->project_description ?></textarea>
         </div>
     </div>
 </div>

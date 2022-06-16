@@ -85,7 +85,7 @@
                                         </td>
                                         <td>
                                             <?php 
-                                                if ($p->project_status == NULL) {
+                                                if ($p->project_status == 'none') {
                                                     echo '<span class="badge bg-inverse-light p-2"><span class="text-dark">Belum ada</span></span>';
                                                 } else if ($p->project_status == 'pending') {
                                                     echo '<span class="badge bg-inverse-danger p-2">Ditunda</span>';
