@@ -81,3 +81,5 @@ $route['direktur/chat'] = 'direktur/chat/index';
  * Allow only Project Manajer role access
  */ 
 $route['pm']                  = 'pm/dashboard/index';
+$route['pm/arsip']            = 'pm/arsip/index';
+$route['pm/arsip/detail']     = 'pm/arsip/detail';

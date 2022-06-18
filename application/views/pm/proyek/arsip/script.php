@@ -4,7 +4,33 @@
 	const modalDialog = $('#projectArchiveModal .modal-dialog');
 	const modalBody = $('#projectArchiveModal .modal-body');
 	const formModal = $('#form_project_archive');
+	const modalFooter = $('#projectArchiveModal .modal-footer');
 
+	// Tampil Detail Proyek Arsip
+	function viewDetailInfo(project_id, project_code_ID) {
+		title.text('Detail Proyek');
+		modalDialog.addClass('modal-xl');
+
+		$.ajax({
+			url: `<?= site_url('pm/arsip/detail_proyek_arsip') ?>`,
+			method: 'POST',
+			dataType: 'html',
+			cache: false,
+			data: {
+				project_id: project_id,
+				project_code: project_code_ID
+			},
+			beforeSend: function() {
+				modalBody.html(`Memuat data...`);
+			},
+			success: function(data) {
+				modalBody.html(data);
+			}
+		});
+		modal.modal('show');
+	}
+
+	// Hapus Archive (Mengembalikan status proyek menjadi ke daftar proyek)
 	function removeArchive(projectID) {
 		Swal.fire({
          icon: 'info',
@@ -19,7 +45,7 @@
       }).then((result) => {
       	if (result.isConfirmed) {
       		$.ajax({
-					url: `<?= site_url('pm/proyek/hapus_arsip') ?>`,
+					url: `<?= site_url('pm/arsip/hapus_arsip') ?>`,
 					method: 'POST',
 					dataType: 'json',
 					cache: false,
@@ -30,7 +56,8 @@
 				            icon: 'success',
 				            title: 'Berhasil',
 				            text: `${data.message}`,
-				            confirmButtonText: 'Oke, Sip!',
+				            showConfirmButton: false,
+				            timer: 2000
 				         }).then((result) => {
 				         	window.location.reload();
 				         });
@@ -51,10 +78,37 @@
       });
 	}
 
+	// SHOW DOCUMENTATION SUB-PROJECT
+	function showDocSubproject(project_id, subproject_id, subproject_name) {
+		title.html(`Dokumentasi Proyek : <span class="text-secondary small">${subproject_name}</span>`);
+		modalDialog.addClass('modal-lg');
+		modalFooter.addClass('d-none');
+
+		$.ajax({
+			url: `<?= site_url('pm/arsip/tampil_dokumentasi') ?>`,
+			method: 'POST',
+			dataType: 'html',
+			cache: false,
+			data: {
+				project_id: project_id,
+				subproject_id: subproject_id
+			},
+			beforeSend: function() {
+				modalBody.html(`Memuat data...`);
+			},
+			success: function(data) {
+				modalBody.html(data);
+			}
+		});
+		modal.modal('show');
+	}
+
 	modal.on('hidden.bs.modal', function() {
 		title.empty();
 		modalDialog.removeClass('modal-xl');
+		modalDialog.removeClass('modal-lg');
 		modalBody.empty();
 		formModal.removeAttr('action');
+		modalFooter.removeClass('d-none');
 	});
 </script>

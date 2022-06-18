@@ -82,7 +82,7 @@
       }).then((result) => {
       	if (result.isConfirmed) {
       		$.ajax({
-					url: `<?= site_url('pm/proyek/arsip_proyek') ?>`,
+					url: `<?= site_url('pm/arsip/arsip_proyek') ?>`,
 					method: 'POST',
 					dataType: 'json',
 					cache: false,
@@ -93,7 +93,8 @@
 				            icon: 'success',
 				            title: 'Berhasil',
 				            text: `${data.message}`,
-				            confirmButtonText: 'Oke, Sip!',
+				            showConfirmButton: false,
+				            timer: 2000,
 				         }).then((result) => {
 				         	window.location.reload();
 				         });

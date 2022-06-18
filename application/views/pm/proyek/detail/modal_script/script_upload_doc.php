@@ -39,7 +39,23 @@
 				btnUpload.addClass('btn-secondary');
 			},
 			success: function(data) {
-				console.log(data);
+				if (data.status == 'success') {
+					Swal.fire({
+		            icon: 'success',
+		            title: 'Berhasil',
+		            text: `${data.message}`,
+		            showConfirmButton: false,
+		            timer: 2000,
+		         });
+				} else {
+					Swal.fire({
+						icon: 'error',
+						title: 'Gagal',
+						text: `${data.message}`,
+						showConfirmButton: false,
+						timer: 2000,
+		        	});
+				}
 				modalUpGambar.modal('hide');
 			}
 		});

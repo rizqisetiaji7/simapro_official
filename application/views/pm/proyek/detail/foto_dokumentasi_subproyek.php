@@ -1,21 +1,31 @@
-<div class="row">
-	<div class="col-6 col-sm-6 col-md-4 col-lg-3 py-2 px-2">
-		<img src="<?= base_url('assets/img/placeholder.jpg') ?>" class="img-fluid rounded">
+<?php if ($docs->num_rows() > 0) { ?>
+	<div class="row data-img-subprojects">
+		<?php foreach($docs->result() as $doc) { ?>
+			<div class="col-12 col-lg-4 p-2">
+				<a href="<?= base_url('uploads/'.$doc->url) ?>" class="image-lists">
+					<img src="<?= base_url('uploads/'.$doc->url) ?>" class="w-100 h-100" alt="<?= 'Image: '.$doc->url ?>" data-lg-size="1600-2400">
+				</a>
+				<button class="btn btn-sm btn-danger btnDeletePhoto" data-toggle="tooltip" title="Hapus foto" onclick="delete_photo(<?= $doc->photo_id ?>, <?= $doc->proj_ID ?>, <?= "'".$doc->url."'" ?>)">
+					<i class="fas fa-times"></i>
+				</button>
+			</div>
+		<?php } ?>
 	</div>
-	<div class="col-6 col-sm-6 col-md-4 col-lg-3 py-2 px-2">
-		<img src="<?= base_url('assets/img/placeholder.jpg') ?>" class="img-fluid rounded">
+<?php } else { ?>
+	<div class="text-center py-5">
+		<img src="<?= base_url('assets/img/blank.png') ?>" width="120" class="mb-3">
+		<h3 class="mb-1">Dokumentasi belum tersedia.</h3>
+		<p class="small text-muted">Foto dokumentasi akan ditampilkan, sesuai bukti pengerjaan dilapangan.</p>
 	</div>
-	<div class="col-6 col-sm-6 col-md-4 col-lg-3 py-2 px-2">
-		<img src="<?= base_url('assets/img/placeholder.jpg') ?>" class="img-fluid rounded">
-	</div>
-	<div class="col-6 col-sm-6 col-md-4 col-lg-3 py-2 px-2">
-		<img src="<?= base_url('assets/img/placeholder.jpg') ?>" class="img-fluid rounded">
-	</div>
-</div>
+<?php } ?>
 
-<!-- Script berikut muncul ketika dokumentasi tidak ada -->
-<!-- <div class="text-center py-5">
-	<img src="<?= base_url('assets/img/blank.png') ?>" width="120" class="mb-3">
-	<h3 class="mb-1">Dokumentasi belum tersedia.</h3>
-	<p class="small text-muted">Foto dokumentasi akan ditampilkan, sesuai bukti pengerjaan dilapangan.</p>
-</div> -->
+<script>
+	// Light Gallery
+	lightGallery(document.querySelector('.data-img-subprojects'), {
+	   thumbnail: true,
+	   speed: 500,
+	   download: false,
+	   share: false,
+	   selector: '.image-lists'
+	});
+</script>

@@ -61,7 +61,8 @@ $autoload['packages'] = array();
 $autoload['libraries'] = [
 	'database',
 	'session',
-	'upload', 
+	'upload',
+	'image_lib', 
 	'form_validation', 
 	'theme', 
 	'datatables', 

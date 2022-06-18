@@ -12,6 +12,8 @@
         <link rel="stylesheet" href="<?= base_url('assets/libs/fontawesome-6.1.1/css/all.min.css') ?>">
         <link rel="stylesheet" href="<?= base_url('assets/libs/line-awesome-1.3.0/css/line-awesome.min.css') ?>">
         <link rel="stylesheet" href="<?= base_url('assets/css/dataTables.bootstrap4.min.css') ?>">
+            <!-- lightgallery -->
+       <link rel="stylesheet" href="<?= base_url('assets/plugins/lightGallery/dist/css/lightgallery-bundle.min.css')?>"/>
         <link rel="stylesheet" href="<?= user_login()->theme_mode == 1 ? base_url('assets/css/dark-style.css') : base_url('assets/css/style.css'); ?>" id="theme-style">
         <link rel="stylesheet" href="<?= base_url('assets/css/mycustom.css')?>">
 
@@ -26,6 +28,7 @@
         <script src="<?= base_url('assets/js/jquery.dataTables.min.js') ?>"></script>
         <script src="<?= base_url('assets/js/dataTables.bootstrap4.min.js') ?>"></script>
         <script src="<?= base_url('assets/plugins/sweetalert2/dist/sweetalert2.all.min.js') ?>"></script>
+        <script src="<?= base_url('assets/plugins/lightGallery/dist/lightgallery.min.js') ?>"></script>
         <script src="<?= base_url('assets/js/MY_Functions.js') ?>"></script>
     </head>
     <body>

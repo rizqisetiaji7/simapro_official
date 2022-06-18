@@ -71,16 +71,18 @@
 	}
 
 	// SHOW PHOTO DOCUMENTATION PROJECT
-	function showDocProject() {
-		title.html(`Dokumentasi Proyek: <span class="text-secondary small">Nama Proyek</span>`);
-		modalDialog.addClass('modal-lg');
+	function showDocProject(project_id, project_name) {
+		title.html(`Dokumentasi Proyek: <span class="text-secondary small">${project_name}</span>`);
+		modalDialog.addClass('modal-xl');
 		modalFooter.addClass('d-none');
 		$.ajax({
 			url: `<?= site_url('pm/proyek/tampil_foto_proyek') ?>`,
 			method: 'POST',
 			dataType: 'html',
 			cache: false,
-			// data: {},
+			data: {
+				project_id: project_id
+			},
 			beforeSend: function() {
 				modalBody.html('<p>Memuat konten...</p>');
 			},
@@ -89,20 +91,27 @@
 				modalBody.html(data);
 			}
 		});
-		modal.modal('show');
+		modal.modal({
+			backdrop: 'static',
+			show: true,
+		});
 	}
 
 	// SHOW PHOTO DOCUMENTATION SUB-PROJECT
-	function showDocSubproject() {
-		title.html(`Dokumentasi Proyek: <span class="text-secondary small">Nama Subproyek</span>`);
-		modalDialog.addClass('modal-lg');
+	function showDocSubproject(project_id, subproject_id, subproject_name) {
+		title.html(`Dokumentasi Proyek: <span class="text-secondary small">${subproject_name}</span>`);
+		modalDialog.addClass('modal-xl');
 		modalFooter.addClass('d-none');
+
 		$.ajax({
 			url: `<?= site_url('pm/proyek/tampil_foto_subproyek') ?>`,
 			method: 'POST',
 			dataType: 'html',
 			cache: false,
-			// data: {},
+			data: {
+				project_id: project_id,
+				subproject_id: subproject_id
+			},
 			beforeSend: function() {
 				modalBody.html('<p>Memuat konten...</p>');
 			},
@@ -111,7 +120,10 @@
 				modalBody.html(data);
 			}
 		});
-		modal.modal('show');
+		modal.modal({
+			backdrop: 'static',
+			show: true,
+		});
 	}
 
 	// ADD SUB-PROJECT
@@ -219,7 +231,6 @@
 			cancelButtonText: 'Batal'
      	}).then((result) => {
      		if (result.isConfirmed) {
-     			// alert(`Action to : <?= site_url('pm/manajemen_proyek/hapus') ?>`);
      			$.ajax({
 					url: `<?= site_url('pm/manajemen_proyek/hapus') ?>`,
 					method: 'POST',
@@ -258,24 +269,74 @@
      	});
 	}
 
-	function finishProject(projectId) {
+	function delete_photo(photo_id, project_id, photo_url) {
 		Swal.fire({
 			icon: 'warning',
 			html: `
-				<h4>Proyek telah selesai?</h4>
-				<p class="text-muted">Status proyek otomatis akan dinyatakan selesai.</p>
-				<p class="text-danger small">Pastikan periksa dokumentasi, Sub-proyek, maupun <br> list setiap tugas pekerjaan terlebih dahulu.</p>
+				<h3>Hapus Foto</h3>
+				<p class="text-secondary">Anda akan menghapus foto ini?</p>
 			`,
-			confirmButtonText: 'Proyek selesai',
-			confirmButtonColor: '#28a745',
+			confirmButtonText: 'Ya, Hapus',
 			showCancelButton: true,
 			cancelButtonText: 'Batal'
      	}).then((result) => {
      		if (result.isConfirmed) {
-     			alert(`Action to : <?= site_url('pm/manajemen_proyek/proyek_selesai') ?>`);
+     			$.ajax({
+					url: `<?= site_url('pm/manajemen_proyek/hapus_foto') ?>`,
+					method: 'POST',
+					dataType: 'json',
+					cache: false,
+					data: {
+						photo_id: photo_id,
+						photo_url: photo_url,
+						project_id: project_id
+					},
+					success: function(data) {
+						if (data.status == 'success') {
+							Swal.fire({
+								icon: 'success',
+								title: 'Berhasil',
+								text: `${data.message}`,
+								showConfirmButton: false,
+								timer: 2000,
+							}).then((result) => {
+								window.location.reload();
+							});		
+						} else if (data.status == 'failed') {
+							Swal.fire({
+								icon: 'error',
+								title: 'Gagal',
+								text: `${data.message}`,
+								showConfirmButton: false,
+								timer: 2000,
+							}).then((result) => {
+								window.location.reload();
+							});
+						}
+					}
+				});
      		}
      	});
 	}
+
+	// function finishProject(projectId) {
+	// 	Swal.fire({
+	// 		icon: 'warning',
+	// 		html: `
+	// 			<h4>Proyek telah selesai?</h4>
+	// 			<p class="text-muted">Status proyek otomatis akan dinyatakan selesai.</p>
+	// 			<p class="text-danger small">Pastikan periksa dokumentasi, Sub-proyek, maupun <br> list setiap tugas pekerjaan terlebih dahulu.</p>
+	// 		`,
+	// 		confirmButtonText: 'Proyek selesai',
+	// 		confirmButtonColor: '#28a745',
+	// 		showCancelButton: true,
+	// 		cancelButtonText: 'Batal'
+ //     	}).then((result) => {
+ //     		if (result.isConfirmed) {
+ //     			alert(`Action to : <?= site_url('pm/manajemen_proyek/proyek_selesai') ?>`);
+ //     		}
+ //     	});
+	// }
 
 	// Submit Data
 	formModal.on('submit', function(e) {
@@ -308,25 +369,25 @@
 				} else if (data.status == 'success') {
 					modal.modal('hide');
 					Swal.fire({
-		            icon: 'success',
-		            title: 'Berhasil',
-		            text: `${data.message}`,
-		            showConfirmButton: false,
-		            timer: 2000,
-		         }).then((result) => {
-		         	window.location.reload();
-		         });
+			            icon: 'success',
+			            title: 'Berhasil',
+			            text: `${data.message}`,
+			            showConfirmButton: false,
+			            timer: 2000,
+			         }).then((result) => {
+			         	window.location.reload();
+			         });
 				} else {
 					modal.modal('hide');
 					Swal.fire({
-		            icon: 'error',
-		            title: 'Gagal',
-		            text: `${data.message}`,
-		            showConfirmButton: false,
-		            timer: 2000,
-		         }).then((result) => {
-		         	window.location.reload();
-		         });
+			            icon: 'error',
+			            title: 'Gagal',
+			            text: `${data.message}`,
+			            showConfirmButton: false,
+			            timer: 2000,
+			        }).then((result) => {
+			         	window.location.reload();
+			        });
 				}
 			}
 		});
@@ -335,6 +396,7 @@
 	modal.on('hidden.bs.modal', function() {
 		title.empty();
 		modalDialog.removeClass('modal-lg');
+		modalDialog.removeClass('modal-xl');
 		modalBody.empty();
 		modalFooter.removeClass('d-none');
 		formModal.removeAttr('action');

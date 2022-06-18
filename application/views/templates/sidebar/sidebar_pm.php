@@ -16,7 +16,7 @@
                     <ul style="display: none;">
                         <li><a href="<?= site_url('pm/proyek') ?>">Daftar proyek</a></li>
                         <li><a href="<?= site_url('pm/proyek/riwayat') ?>">Riwayat</a></li>
-                        <li><a href="<?= site_url('pm/proyek/arsip') ?>">Arsip</a></li>
+                        <li><a href="<?= site_url('pm/arsip') ?>">Arsip</a></li>
                     </ul>
                 </li>
 

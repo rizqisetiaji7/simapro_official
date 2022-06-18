@@ -31,7 +31,7 @@
 
                 <button type="button" class="btn btn-sm mb-1 btn-purple text-white" onclick="uploadDocumentation('proyek', <?= $project['project_id'] ?>, null)" data-toggle="tooltip" title="Upload Foto Dokumentasi Proyek"><i class="fa fa-cloud-upload"></i></button>
 
-                <button type="button" class="btn btn-sm mb-1 btn-custom" onclick="showDocProject(<?= "'".$project['project_id']."'" ?>, <?= "'".$project['project_name']."'" ?>)" data-toggle="tooltip" title="Lihat Foto Dokumentasi">
+                <button type="button" class="btn btn-sm mb-1 btn-custom" onclick="showDocProject(<?= $project['project_id'] ?>, <?= "'".$project['project_name']."'" ?>)" data-toggle="tooltip" title="Lihat Foto Dokumentasi">
                     <i class="fas fa-camera"></i> <span class="d-none d-lg-inline-block ml-1">Lihat Foto</span>
                 </button>
             </div>
@@ -157,7 +157,7 @@
                             </div>
                             <div>
                                 <button type="button" class="btn btn-sm btn-uploadGambarProyek" onclick="uploadDocumentation('subproyek', <?= $project['project_id'] ?>, <?= $sub['subproject_id'] ?>)" data-toggle="tooltip" title="Klik untuk Upload"><i class="fa fa-cloud-upload"></i></button>
-                                <button type="button" class="btn btn-sm btn-custom" onclick="showDocSubproject(<?= $sub['subproject_id'] ?>, <?= $sub['ID_project'] ?>)" data-toggle="tooltip" title="Lihat Foto"><i class="fas fa-camera"></i></button>
+                                <button type="button" class="btn btn-sm btn-custom" onclick="showDocSubproject(<?= $project['project_id'] ?>, <?= $sub['subproject_id'] ?>, <?= "'".$sub['subproject_name']."'" ?>)" data-toggle="tooltip" title="Lihat Foto"><i class="fas fa-camera"></i></button>
                             </div>
                         </div>
 

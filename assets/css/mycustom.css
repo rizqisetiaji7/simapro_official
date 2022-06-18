@@ -244,3 +244,31 @@ input.custom-radio-input:checked + label.label-box i.check-icon {
 .circle-btn-msg.data_status_success.active i{
 	color: #fff;
 }
+
+.image-lists {
+	display: block;
+	position: relative; 
+	overflow: hidden; 
+	height: 248px;
+}
+
+.image-lists img {
+	object-fit: cover;
+}
+
+.btnDeletePhoto {
+	position: absolute;
+	top: 25px;
+	right: 25px;
+	z-index: 1;
+	width: 32px;
+	height: 32px;
+}
+
+.lg-backdrop {
+	z-index: 2000 !important;
+}
+
+.lg-outer {
+	z-index: 2020 !important;
+}

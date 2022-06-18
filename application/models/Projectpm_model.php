@@ -66,4 +66,26 @@ class Projectpm_model extends CI_Model {
 		$this->db->order_by('subproject_id DESC');
 		return $this->db->get();
 	}
+
+	public function detail_pmarchive($project_id, $project_code, $id_pm) {
+		$this->db->from($this->tb_project);
+		$this->db->join('tb_users', 'tb_users.user_id=tb_project.ID_pm', 'left');
+		$this->db->where([
+			'tb_project.project_id' 		=> $project_id,
+			'tb_project.project_code_ID' 	=> $project_code,
+			'tb_project.ID_pm'				=> $id_pm
+		]);
+		return $this->db->get();
+	}
+
+	public function get_documentation($project_id, $subproject_id=NULL) {
+		$this->db->select('tb_photo.photo_id, tb_photo.ID_project as proj_ID, tb_photo.ID_subproject as subproj_ID, tb_photo.photo_url as url, tb_photo.created as photo_created, tb_project.project_id');
+		$this->db->from('tb_photo');
+		$this->db->join('tb_project', 'tb_photo.ID_project=tb_project.project_id', 'left');
+		$this->db->where([
+			'tb_photo.ID_project' => $project_id, 
+			'tb_photo.ID_subproject' => $subproject_id
+		]);
+		return $this->db->get();
+	}
 }

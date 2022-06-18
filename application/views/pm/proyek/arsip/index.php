@@ -73,7 +73,7 @@
                                     </td>
                                     <td class="text-nowrap text-center">
                                         <button type="button" onclick="removeArchive(<?= "'".$arc->projectID."'" ?>)" class="btn btn-sm my-1 btn-info" data-toggle="tooltip" title="Kembalikan proyek"><i class="fa-solid fa-arrow-up-from-bracket"></i></button>
-                                        <a href="<?= site_url('pm/proyek/detail_proyek_arsip/'.$arc->company_id.'/'.$arc->projectID) ?>" class="btn btn-sm my-1 btn-primary text-nowrap" data-toggle="tooltip" title="Lihat Proyek">Detail</a>
+                                        <a href="<?= site_url('pm/arsip/detail/'.$arc->company_id.'/'.$arc->projectID) ?>" class="btn btn-sm my-1 btn-primary text-nowrap" data-toggle="tooltip" title="Lihat Proyek">Detail</a>
                                     </td>
                                 </tr>
                             <?php } ?>

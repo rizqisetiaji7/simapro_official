@@ -75,10 +75,10 @@
 <div class="kanban-board card mb-0">
     <div class="card-body">
         <!-- Subproyek -->
-        <?php if ($subproject->num_rows() > 0) { ?>
+        <?php if ($subproject) { ?>
             <!-- Subproyek Board -->
             <div class="kanban-cont">
-                <?php foreach ($subproject->result() as $sp) { ?>
+                <?php foreach ($subproject as $sp) { ?>
 
                     <div class="kanban-list <?= $sp->panel_color ?>">
 
@@ -108,7 +108,7 @@
                             </div>
                             <!-- ./ Subproyek Progress (Belum Berjalan) -->
 
-                            <button type="button" class="btn btn-light btn-block btn-sm mb-3" data-toggle="tooltip" title="Lihat Foto dokumentasi lapangan" onclick="tampilDocumentasiSubproyek(<?= $project->project_id ?>, <?= $sp->subproject_id ?>, <?= "'".$sp->subproject_name."'" ?>)"><i class="fa-solid fa-camera mr-1"></i> Dokumentasi</button>
+                            <button type="button" class="btn btn-light btn-block btn-sm mb-3" data-toggle="tooltip" title="Lihat Foto dokumentasi lapangan" onclick="showDocSubproject(<?= $project->project_id ?>, <?= $sp->subproject_id ?>, <?= "'".$sp->subproject_name."'" ?>)"><i class="fa-solid fa-camera mr-1"></i> Dokumentasi</button>
 
                             <!-- List Sub-Element "Proyek" -->
                             <?php if ($total_subelemen > 0) { ?>
@@ -194,6 +194,6 @@
 
 
 <!-- Script & Modal -->
-    <?php $this->view('direktur/proyek/arsip/modal') ?>
-    <?php $this->view('direktur/proyek/arsip/script') ?>
+    <?php $this->view('pm/proyek/arsip/modal') ?>
+    <?php $this->view('pm/proyek/arsip/script') ?>
 <!-- ./Script & Modal -->

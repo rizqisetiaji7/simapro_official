@@ -13,12 +13,37 @@ class Manajemen_proyek extends CI_Controller {
    private function _file_upload_config($filePath = './assets/img') {
       $config = [
          'upload_path'   => $filePath,
-         'allowed_types' => 'jpg|jpeg|png|svg',
-         'max_size'      => 4096, // 4MB
-         'encrypt_name'  => TRUE,
-         'remove_spaces' => TRUE
+         'allowed_types' => 'jpg|png',
+         'encrypt_name'  => TRUE
       ];
       return $config;
+   }
+
+   private function _resize_config($image_path = '') {
+      $size = getimagesize($image_path);
+      if ($size[0] > 1380 && $size[1] > 1380) {
+         $width = round(($size[0] * 18) / 100);
+         $height = round(($size[1] * 18) / 100);
+         $quality = '70%';
+      } else  {
+         $width = round(($size[0] * 50) / 100);
+         $height = round(($size[1] * 50) / 100);
+         $quality = '80%';
+      }
+
+      $config = [
+         'image_library'   => 'gd2',
+         'source_image'    => $image_path,
+         'create_thumb'    => FALSE,
+         'maintain_ratio'  => FALSE,
+         'quality'         => $quality,
+         'width'           => $width,
+         'height'          => $height,
+         'new_image'       => $image_path
+      ];
+      $this->image_lib->initialize($config);
+      $this->image_lib->resize();
+      return $this;
    }
 
    private function _rules() {
@@ -218,7 +243,13 @@ class Manajemen_proyek extends CI_Controller {
                if ($post['old_thumbnail'] != 'placeholder.jpg') {
                   unlink('./uploads/thumbnail/'.$post['old_thumbnail']);
                }
-               $data['project_thumbnail'] = $this->upload->data('file_name');
+
+               $photo = $this->upload->data();
+
+               // Kalkulasi ukuran foto
+               $this->_resize_config('./uploads/thumbnail/'.$photo['file_name']);
+
+               $data['project_thumbnail'] = $photo['file_name'];
                $this->bm->update($this->tb_project, $data, [
                   'project_code_ID' => $post['project_code_ID'],
                   'ID_pm'           => user_login()->user_id
@@ -479,21 +510,87 @@ class Manajemen_proyek extends CI_Controller {
 
    // UPLOAD DOKUMENTASI
    function upload_dokumentasi() {
+      $data = [];
+      $message = [];
       $post = $this->input->post(NULL, TRUE);
       $countPhoto = count($_FILES['project_photo']['name']);
+      $pathUpload = '';
+      if ($post['type_pro'] == 'proyek') {
+         $pathUpload = 'project_doc';
+      } else {
+         $pathUpload = 'subproject_doc';
+      }
 
-      // for ($i = 0; $i < $countPhoto; $i++) {
-         
-         
+      for ($i = 0; $i < $countPhoto; $i++) {
+         if (isset($_FILES['project_photo']['name'][$i])) {
+            $_FILES['photo']['name']      = $_FILES['project_photo']['name'][$i];
+            $_FILES['photo']['type']      = $_FILES['project_photo']['type'][$i];
+            $_FILES['photo']['tmp_name']  = $_FILES['project_photo']['tmp_name'][$i];
+            $_FILES['photo']['error']     = $_FILES['project_photo']['error'][$i];
+            $_FILES['photo']['size']      = $_FILES['project_photo']['size'][$i];
+            
+            $this->upload->initialize($this->_file_upload_config('./uploads/'.$pathUpload));
+            if (!$this->upload->do_upload('photo')) {
+               // Error
+               $message[$i] = [
+                  'status'    => 'failed',
+                  'message'   => 'Oops! Maaf gambar gagal diupload. Silahkan cek kembali koneksi atau file yang akan diupload!',
+                  'errors'    => ['error' => $this->upload->display_errors()]
+               ];
+            } else {
+               // Get upload data
+               $photo = $this->upload->data();
+               // Compress File Size
+               $this->_resize_config('./uploads/'.$pathUpload.'/'.$photo['file_name']);
 
-      // }
+               // Store the data into array variable
+               $data[] = [
+                  'ID_project'      => $post['proj_id'],
+                  'ID_subproject'   => $post['subproj_id'] == '' ? NULL : $post['subproj_id'],
+                  'photo_url'       => $pathUpload.'/'.$photo['file_name'],
+                  'created'         => date('Y-m-d H:i:s', now('Asia/Jakarta'))
+               ];
+            }
+         }
+      }
 
-      $message = [
-         'status'       => ['success', 'failed', 'validation_error'],
-         'data'         => $post,
-         'total_photos' => $countPhoto,
-         'photos'       => $_FILES['project_photo']
-      ];
+      // Save Photo to database
+      $this->bm->save('tb_photo', $data, TRUE);
+
+      if ($this->db->affected_rows() > 0) {
+         $message = [
+            'status'    => 'success',
+            'message'   => $countPhoto.' Gambar telah berhasil diupload'
+         ];
+      } else {
+         $message = [
+            'status'    => 'failed',
+            'message'   => 'Oops! Maaf gambar gagal diupload. Silahkan cek kembali koneksi atau file yang akan diupload!'
+         ];
+      }
+      $this->output->set_content_type('application/json')->set_output(json_encode($message));
+   }
+
+   function hapus_foto() {
+      $message = [];
+      $post = $this->input->post(NULL, TRUE);
+      $this->bm->delete('tb_photo', [
+         'photo_id'     => $post['photo_id'],
+         'ID_project'   => $post['project_id']
+      ]);
+      unlink('./uploads/'.$post['photo_url']);
+      if ($this->db->affected_rows() > 0) {
+         $message = [
+            'status'    => 'success',
+            'message'   => 'Gambar telah telah terhapus.'
+         ];
+      } else {
+         $message = [
+            'status'    => 'failed',
+            'message'   => 'Oops! Maaf gambar gagal dihapus.'
+         ];
+      }
+
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 }
