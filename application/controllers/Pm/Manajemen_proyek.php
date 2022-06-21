@@ -19,33 +19,6 @@ class Manajemen_proyek extends CI_Controller {
       return $config;
    }
 
-   private function _resize_config($image_path = '') {
-      $size = getimagesize($image_path);
-      if ($size[0] > 1380 && $size[1] > 1380) {
-         $width = round(($size[0] * 18) / 100);
-         $height = round(($size[1] * 18) / 100);
-         $quality = '70%';
-      } else  {
-         $width = round(($size[0] * 50) / 100);
-         $height = round(($size[1] * 50) / 100);
-         $quality = '80%';
-      }
-
-      $config = [
-         'image_library'   => 'gd2',
-         'source_image'    => $image_path,
-         'create_thumb'    => FALSE,
-         'maintain_ratio'  => FALSE,
-         'quality'         => $quality,
-         'width'           => $width,
-         'height'          => $height,
-         'new_image'       => $image_path
-      ];
-      $this->image_lib->initialize($config);
-      $this->image_lib->resize();
-      return $this;
-   }
-
    private function _rules() {
       $config = [
          [
@@ -173,7 +146,10 @@ class Manajemen_proyek extends CI_Controller {
 
          if (@$_FILES['thumbnail_image']['name'] != NULL) {
             if ($this->upload->do_upload('thumbnail_image')) {
-               $data['project_thumbnail'] = $this->upload->data('file_name');
+               $thumb = $this->upload->data();
+               // Resize Image
+               resize_image('./uploads/thumbnail/'.$thumb['file_name']);
+               $data['project_thumbnail'] = $thumb['file_name'];
                $this->bm->save('tb_project', $data);
                if ($this->db->affected_rows() > 0) {
                   $message = [
@@ -243,12 +219,9 @@ class Manajemen_proyek extends CI_Controller {
                if ($post['old_thumbnail'] != 'placeholder.jpg') {
                   unlink('./uploads/thumbnail/'.$post['old_thumbnail']);
                }
-
                $photo = $this->upload->data();
-
                // Kalkulasi ukuran foto
-               $this->_resize_config('./uploads/thumbnail/'.$photo['file_name']);
-
+               resize_image('./uploads/thumbnail/'.$photo['file_name']);
                $data['project_thumbnail'] = $photo['file_name'];
                $this->bm->update($this->tb_project, $data, [
                   'project_code_ID' => $post['project_code_ID'],
@@ -541,7 +514,7 @@ class Manajemen_proyek extends CI_Controller {
                // Get upload data
                $photo = $this->upload->data();
                // Compress File Size
-               $this->_resize_config('./uploads/'.$pathUpload.'/'.$photo['file_name']);
+               resize_image('./uploads/'.$pathUpload.'/'.$photo['file_name']);
 
                // Store the data into array variable
                $data[] = [
