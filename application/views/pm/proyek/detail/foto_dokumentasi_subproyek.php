@@ -1,7 +1,7 @@
 <?php if ($docs->num_rows() > 0) { ?>
 	<div class="row data-img-subprojects">
 		<?php foreach($docs->result() as $doc) { ?>
-			<div class="col-12 col-lg-4 p-2">
+			<div class="col-12 col-sm-6 col-lg-3 p-2">
 				<a href="<?= base_url('uploads/'.$doc->url) ?>" class="image-lists">
 					<img src="<?= base_url('uploads/'.$doc->url) ?>" class="w-100 h-100" alt="<?= 'Image: '.$doc->url ?>">
 				</a>
