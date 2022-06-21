@@ -1,8 +1,6 @@
 <!-- <div class="row">
     <div class="col-12">
-        <div class="card">
-            <?php var_dump($project) ?>
-        </div>
+        <?php var_dump($project) ?>
     </div>
 </div> -->
 
@@ -27,9 +25,13 @@
             <div>
                 <button type="button" class="btn btn-sm mb-1 btn-info" onclick="editProyek(<?= "'".$project['projectID']."'" ?>)" data-toggle="tooltip" title="Edit proyek"><i class="fa fa-pencil"></i></button>
 
+                <?php if ($project['project_status'] != 'review') { ?>
                 <button type="button" class="btn btn-sm mb-1 btn-danger" onclick="editProjectStatus(<?= "'".$project['projectID']."'" ?>)" data-toggle="tooltip" title="Edit status proyek"><i class="fas fa-edit"></i></button>
+                <?php } ?>
 
+                <?php if ($project['project_status'] != 'review') { ?>
                 <button type="button" class="btn btn-sm mb-1 btn-purple text-white" onclick="uploadDocumentation('proyek', <?= $project['project_id'] ?>, null)" data-toggle="tooltip" title="Upload Foto Dokumentasi Proyek"><i class="fa fa-cloud-upload"></i></button>
+                <?php } ?>
 
                 <button type="button" class="btn btn-sm mb-1 btn-custom" onclick="showDocProject(<?= $project['project_id'] ?>, <?= "'".$project['project_name']."'" ?>)" data-toggle="tooltip" title="Lihat Foto Dokumentasi">
                     <i class="fas fa-camera"></i> <span class="d-none d-lg-inline-block ml-1">Lihat Foto</span>
@@ -41,10 +43,25 @@
     <div class="col-12 col-sm-4 text-sm-right">
         <a href="<?= site_url('pm/chat') ?>" class="btn btn-primary mb-1 btn-sm" style="position: relative;" data-toggle="tooltip" title="Kirim Pesan"><i class="fa-solid fa-message"></i></a>
 
-        <button type="button" class="btn btn-info mb-1 btn-sm" data-toggle="tooltip" title="Buat Sub-Proyek" onclick="add_subProject(<?= $project['project_id'] ?>)"><i class="fas fa-plus"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Sub-proyek</span></button>
+
+        <?php if ($project['project_status'] == 'review') { ?>
+            <button type="button" class="btn btn-info mb-1 btn-sm" data-toggle="tooltip" title="Buat Sub-Proyek" disabled="disabled"><i class="fas fa-plus"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Sub-proyek</span></button>
+        <?php } else { ?>
+            <button type="button" class="btn btn-info mb-1 btn-sm" data-toggle="tooltip" title="Buat Sub-Proyek" onclick="add_subProject(<?= $project['project_id'] ?>)"><i class="fas fa-plus"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Sub-proyek</span></button>
+        <?php } ?>
 
         <!-- Button ini akan muncul jika progress mencapai 100% dan dokumentasi telah lengkap -->
-        <button type="button" class="btn btn-dark btn-sm mb-1" data-toggle="tooltip" title="Klik untuk ditinjau oleh Direktur" onclick="sendTinjau('')"><i class="fas fa-check"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Tinjau ke Direktur</span></button>
+        <?php if ($project['project_progress'] >= 100 && $docs->num_rows() > 0) { ?>
+            <?php if ($project['project_status'] == 'review') { ?>
+                <button type="button" class="btn btn-secondary btn-sm mb-1" data-toggle="tooltip" title="Klik untuk ditinjau oleh Direktur" disabled="disabled"><i class="fas fa-eye"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Sedang Diperiksa</span></button>
+            <?php } else if ($project['project_status'] == 'none' || $project['project_status'] == 'pending') { ?> 
+                <button type="button" class="btn btn-secondary btn-sm mb-1" data-toggle="tooltip" title="Klik untuk ditinjau oleh Direktur" disabled="disabled"><i class="fas fa-check"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Tinjau ke Direktur</span></button>
+            <?php } else if ($project['project_status'] == 'on_progress' || $project['project_status'] == 'revision') { ?>
+                <button type="button" class="btn btn-dark btn-sm mb-1" data-toggle="tooltip" title="Klik untuk ditinjau oleh Direktur" onclick="sendTinjau(<?= $project['project_id'] ?>)"><i class="fas fa-check"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Tinjau ke Direktur</span></button>
+            <?php } ?>
+        <?php } else { ?>
+            <button type="button" class="btn btn-secondary btn-sm mb-1" data-toggle="tooltip" title="Klik untuk ditinjau oleh Direktur" disabled="disabled"><i class="fas fa-check"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Tinjau ke Direktur</span></button>
+        <?php } ?>
     </div>
 
     <div class="col-12">
@@ -120,15 +137,18 @@
                         <span class="mr-2"><?= $sub['subproject_name'] ?></span>
                         <span class="badge"><?= $sub['priority_name'] ?></span>
                     </span>
+
+                    <?php if ($project['project_status'] == 'on_progress' || $project['project_status'] == 'revision') { ?>
                     <div class="kanban-header-right">
                         <div class="dropdown kanban-action">
                             <a href="" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a class="dropdown-item" href="javascript:void(0)" onclick="edit_subProject(<?= $project['project_id'] ?>,<?= $sub['subproject_id'] ?>)">Edit</a>
-                                <a class="dropdown-item" href="javascript:void(0)" onclick="delete_subElProject('subproject', <?= $sub['subproject_id'] ?>, <?= $project['project_id'] ?>)">Hapus</a>
+                                <a class="dropdown-item" href="javascript:void(0)" onclick="delete_subProject(<?= $sub['subproject_id'] ?>, <?= $project['project_id'] ?>)">Hapus</a>
                             </div>
                         </div>
                     </div>
+                    <?php } ?>
                 </div>
                 <!-- End Kanban Header -->
 
@@ -153,10 +173,18 @@
                         <div class="d-flex flex-row justify-content-between align-items-center mb-3 kanban-upload-area">
                             <div>
                                 <p class="text-dark mb-0">Unggah Gambar</p>
-                                <p class="text-xs text-secondary mb-0">Foto dokumentasi proyek</p>
+                                <?php if (getCountDocumentation($project['project_id'], $sub['subproject_id']) > 0) { ?>
+                                    <p class="text-xs mb-0 text-success">Jumlah Foto : <?= getCountDocumentation($project['project_id'], $sub['subproject_id']); ?></p>
+                                <?php } else { ?>
+                                    <p class="text-xs text-secondary mb-0">Belum ada foto</p>
+                                <?php } ?>
                             </div>
                             <div>
-                                <button type="button" class="btn btn-sm btn-uploadGambarProyek" onclick="uploadDocumentation('subproyek', <?= $project['project_id'] ?>, <?= $sub['subproject_id'] ?>)" data-toggle="tooltip" title="Klik untuk Upload"><i class="fa fa-cloud-upload"></i></button>
+                                <?php if ($project['project_status'] == 'pending' || $project['project_status'] == 'review') { ?>
+                                    <button type="button" class="btn btn-sm btn-uploadGambarProyek" disabled="disabled" data-toggle="tooltip" title="Klik untuk Upload"><i class="fa fa-cloud-upload"></i></button>
+                                <?php } else { ?>
+                                    <button type="button" class="btn btn-sm btn-uploadGambarProyek" onclick="uploadDocumentation('subproyek', <?= $project['project_id'] ?>, <?= $sub['subproject_id'] ?>)" data-toggle="tooltip" title="Klik untuk Upload"><i class="fa fa-cloud-upload"></i></button>
+                                <?php } ?>
                                 <button type="button" class="btn btn-sm btn-custom" onclick="showDocSubproject(<?= $project['project_id'] ?>, <?= $sub['subproject_id'] ?>, <?= "'".$sub['subproject_name']."'" ?>)" data-toggle="tooltip" title="Lihat Foto"><i class="fas fa-camera"></i></button>
                             </div>
                         </div>
@@ -166,15 +194,18 @@
                                 <div class="kanban-box ui-sortable-handle">
                                     <div class="task-board-header">
                                         <span class="status-title"><?= $se['project_task_name'] ?></span>
+
+                                        <?php if ($project['project_status'] == 'on_progress' || $project['project_status'] == 'revision') { ?>
                                         <div class="dropdown kanban-task-action">
                                             <a href="" data-toggle="dropdown">
                                                 <i class="fa fa-angle-down"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right">
                                                 <a class="dropdown-item" href="javascript:void(0)" onclick="edit_subElemenProject(<?= $se['project_task_id'] ?>, <?= $sub['subproject_id'] ?>, <?= $project['project_id'] ?>)">Edit</a>
-                                                <a class="dropdown-item" href="javascript:void(0)" onclick="delete_subElProject('sub_elemen', <?= $se['project_task_id'] ?>)">Hapus</a>
+                                                <a class="dropdown-item" href="javascript:void(0)" onclick="deleteSubelemen(<?= $se['project_task_id'] ?>, <?= $sub['subproject_id'] ?>, <?= $project['project_id'] ?>)">Hapus</a>
                                             </div>
                                         </div>
+                                        <?php } ?>
                                     </div>
                                     <div class="task-board-body">
                                         <div class="kanban-info">
@@ -222,10 +253,12 @@
                 </div>
                 <!-- End "Subproyek" Content -->
 
-                <!-- Button Add new Kanban "Subproyek" Task -->
-                <div class="add-new-task">
-                    <button type="button" class="btn btn-light btn-sm btn-block" onclick="add_subElemenProject(<?= $project['project_id'] ?>, <?= $sub['subproject_id'] ?>)" ><i class="fas fa-plus mr-2 small"></i>Buat List</button>
-                </div>
+                <?php if ($project['project_status'] == 'on_progress' || $project['project_status'] == 'revision') { ?>
+                    <!-- Button Add new Kanban "Subproyek" Task -->
+                    <div class="add-new-task">
+                        <button type="button" class="btn btn-light btn-sm btn-block" onclick="add_subElemenProject(<?= $project['project_id'] ?>, <?= $sub['subproject_id'] ?>)" ><i class="fas fa-plus mr-2 small"></i>Buat List</button>
+                    </div>
+                <?php } ?>
             </div>
             <!-- End "Subproyek" Board -->
             <?php } ?>

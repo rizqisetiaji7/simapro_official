@@ -28,3 +28,10 @@ function tampilSubelemen($subproject_id) {
 	];
 	return $data;
 }
+
+function getCountDocumentation($project_id, $subproject_id = NULL) {
+	$ci =& get_instance();
+	$ci->db->from('tb_photo');
+	$ci->db->where(['ID_project' => $project_id, 'ID_subproject' => $subproject_id]);
+	return $ci->db->count_all_results();
+}

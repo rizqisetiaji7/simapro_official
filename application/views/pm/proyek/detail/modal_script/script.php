@@ -220,29 +220,25 @@
 			}
 		});
 		modal.modal('show');
-	}
+	}	
 
-	// DELETE SUBPROYEK / SUB-ELEMENT PROJECT
-	function delete_subElProject(task_type, subid, project_id) {
-		let task_name = task_type == 'subproject' ? 'Sub-Proyek' : 'Sub-Elemen Proyek' ;
-		let textFill = task_type == 'subproject' ? 'Data Subproyek akan terhapus beserta Sub-elemennya' : 'Anda akan menghapus Sub-elemen Proyek.' ;
+	function delete_subProject(subproject_id, project_id) {
 		Swal.fire({
 			icon: 'warning',
-			title: `Hapus ${task_name}`,
-			text: textFill,
+			title: 'Hapus Sub-Proyek?',
+			text: 'Anda akan menghapus Sub-Proyek.',
 			confirmButtonText: 'Ya, Hapus',
 			showCancelButton: true,
 			cancelButtonText: 'Batal'
-     	}).then((result) => {
-     		if (result.isConfirmed) {
+     	}).then((res) => {
+     		if (res.isConfirmed) {
      			$.ajax({
-					url: `<?= site_url('pm/manajemen_proyek/hapus') ?>`,
+					url: `<?= site_url('pm/manajemen_proyek/hapus_subproyek') ?>`,
 					method: 'POST',
 					dataType: 'json',
 					cache: false,
 					data: {
-						task_type: task_type,
-						id_sub: subid,
+						subproject_id: subproject_id,
 						project_id: project_id
 					},
 					success: function(data) {
@@ -255,7 +251,55 @@
 								timer: 2000,
 							}).then((result) => {
 								window.location.reload();
-							});		
+							});
+						} else if (data.status == 'failed') {
+							Swal.fire({
+								icon: 'error',
+								title: 'Gagal',
+								text: `${data.message}`,
+								showConfirmButton: false,
+								timer: 2000,
+							}).then((result) => {
+								window.location.reload();
+							});
+						}
+					}
+				});
+     		}
+     	});
+	} 
+
+	function deleteSubelemen(subelemen_id, subproject_id, project_id) {
+		Swal.fire({
+			icon: 'warning',
+			title: 'Hapus Sub-Elemen Proyek?',
+			text: 'Anda akan menghapus Sub-elemen Proyek.',
+			confirmButtonText: 'Ya, Hapus',
+			showCancelButton: true,
+			cancelButtonText: 'Batal'
+     	}).then((res) => {
+     		if (res.isConfirmed) {
+     			$.ajax({
+					url: `<?= site_url('pm/manajemen_proyek/hapus_subelemen_proyek') ?>`,
+					method: 'POST',
+					dataType: 'json',
+					cache: false,
+					data: {
+						subelemen_id: subelemen_id,
+						subproject_id: subproject_id,
+						project_id: project_id
+					},
+					success: function(data) {
+						if (data.status == 'success') {
+							Swal.fire({
+								icon: 'success',
+								title: 'Berhasil',
+								text: `${data.message}`,
+								showConfirmButton: false,
+								timer: 2000,
+							}).then((result) => {
+								window.location.reload();
+							});
 						} else if (data.status == 'failed') {
 							Swal.fire({
 								icon: 'error',

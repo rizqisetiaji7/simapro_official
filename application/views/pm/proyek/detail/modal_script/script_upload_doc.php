@@ -45,7 +45,9 @@
 		            title: 'Berhasil',
 		            text: `${data.message}`,
 		            showConfirmButton: false,
-		            timer: 2000,
+		            timer: 2000
+		         }).then((result) => {
+						window.location.reload();
 		         });
 				} else {
 					Swal.fire({
@@ -53,7 +55,9 @@
 						title: 'Gagal',
 						text: `${data.message}`,
 						showConfirmButton: false,
-						timer: 2000,
+						timer: 2000
+		        	}).then((result) => {
+		        		window.location.reload();
 		        	});
 				}
 				modalUpGambar.modal('hide');

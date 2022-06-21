@@ -77,13 +77,15 @@ class Proyek extends CI_Controller {
    public function detail($comp_id, $project_code) {
       $project = $this->detail_proyek($comp_id, $project_code, user_login()->user_id);
       $subproject = $this->tampil_subproyek($project->project_id);
+      $docs  = $this->ppm->get_documentation($project->project_id, NULL);
       
       $data = [
          'app_name'  => APP_NAME,
          'author'    => APP_AUTHOR,
          'title'     => '(PM) Proyek Detail',
          'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
-         'page'      => 'proyek_detail'
+         'page'      => 'proyek_detail',
+         'docs'      => $docs
       ];
 
        $data['project'] = [
@@ -106,7 +108,6 @@ class Proyek extends CI_Controller {
          'comp_name'             => $project->comp_name,
          'subproject'            => $subproject
       ];
-
       $this->theme->view('templates/main', 'pm/proyek/detail/index', $data);
    }
 

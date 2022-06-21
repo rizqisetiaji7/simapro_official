@@ -90,7 +90,7 @@
                                             } else if ($pro->project_status == 'revision') {
                                                 echo '<span class="badge bg-inverse-warning p-2">Direvisi</span>';
                                             } else if ($pro->project_status == 'review') {
-                                                echo '<span class="badge bg-inverse-primary p-2">Diperiksa</span>';
+                                                echo '<span class="badge bg-inverse-purple p-2"><i class="fas fa-eye mr-1"></i> Sedang Diperiksa</span>';
                                             } else if ($pro->project_status == 'on_progress') {
                                                 echo '<span class="badge bg-inverse-info p-2">Berjalan</span>';
                                             }
@@ -120,7 +120,9 @@
                                         <?php if($pro->project_status == 'pending') { ?>
                                         <button type="button" onclick="archiveProject(<?= "'".$pro->projectID."'" ?>)" class="btn btn-sm my-1 btn-info" data-toggle="tooltip" title="Arsipkan"><i class="la la-archive"></i></button>
                                         <?php } ?>
+                                        <?php if ($pro->project_status != 'review') { ?>
                                         <button type="button" onclick="editProjectStatus(<?= "'".$pro->projectID."'" ?>)" class="btn btn-sm my-1 btn-danger" data-toggle="tooltip" title="Ubah status"><i class="fas fa-edit"></i></button>
+                                        <?php } ?>
                                         <a href="<?= site_url('pm/proyek/detail/'.$pro->company_id.'/'.$pro->projectID) ?>" class="btn btn-sm my-1 btn-primary text-nowrap" data-toggle="tooltip" title="Lihat Proyek">Detail</a>
                                     </td>
                                 </tr>
