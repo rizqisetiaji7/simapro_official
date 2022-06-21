@@ -249,7 +249,7 @@ input.custom-radio-input:checked + label.label-box i.check-icon {
 	display: block;
 	position: relative; 
 	overflow: hidden; 
-	height: 248px;
+	height: 220px;
 }
 
 .image-lists img {
@@ -271,4 +271,22 @@ input.custom-radio-input:checked + label.label-box i.check-icon {
 
 .lg-outer {
 	z-index: 2020 !important;
+}
+
+@media (min-width: 576px) {
+	.image-lists {
+		height: 164px;
+	}
+}
+
+@media (min-width: 992px) {
+	.image-lists {
+		height: 128px;
+	}
+}
+
+@media (min-width: 1200px) {
+	.image-lists {
+		height: 180px;
+	}
 }

@@ -1,12 +1,12 @@
 <?php if ($docs->num_rows() > 0) { ?>
 	<div class="row data-img-projects">
 		<?php foreach($docs->result() as $doc) { ?>
-			<div class="col-12 col-lg-4 p-2">
+			<div class="col-12 col-sm-6 col-lg-3 p-2">
 				<a href="<?= base_url('uploads/'.$doc->url) ?>" class="image-lists">
-					<img src="<?= base_url('uploads/'.$doc->url) ?>" class="w-100 h-100" alt="<?= 'Image: '.$doc->url ?>" data-lg-size="1600-2400">
+					<img src="<?= base_url('uploads/'.$doc->url) ?>" class="w-100 h-100" alt="<?= 'Image: '.$doc->url ?>">
 				</a>
-				<button class="btn btn-sm btn-danger btnDeletePhoto" data-toggle="tooltip" title="Hapus foto" onclick="delete_photo(<?= $doc->photo_id ?>, <?= $doc->proj_ID ?>, <?= "'".$doc->url."'" ?>)">
-					<i class="fas fa-times"></i>
+				<button class="btn btn-sm btn-danger btnDeletePhoto" data-toggle="tooltip" title="Hapus foto" onclick="delete_photo_project(<?= $doc->photo_id ?>, <?= $doc->proj_ID ?>, <?= "'".$doc->url."'" ?>, <?= "'".$proj_name."'" ?>)">
+					<i class="fas fa-trash"></i>
 				</button>
 			</div>
 		<?php } ?>
@@ -23,9 +23,12 @@
 	// Light Gallery
 	lightGallery(document.querySelector('.data-img-projects'), {
 	   thumbnail: true,
-	   speed: 500,
 	   download: false,
 	   share: false,
-	   selector: '.image-lists'
+	   selector: '.image-lists',
+	   plugins: [lgZoom],
+	   speed: 500,
+		showZoomInOutIcons: true,
+		actualSize: false
 	});
 </script>

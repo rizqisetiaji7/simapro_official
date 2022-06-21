@@ -173,12 +173,14 @@ class Proyek extends CI_Controller {
 
    function tampil_foto_proyek() {
       $post = $this->input->post(NULL, TRUE);
+      $data['proj_name'] = $this->input->post('proj_name');
       $data['docs'] = $this->ppm->get_documentation($post['project_id'], NULL);
       $this->load->view('pm/proyek/detail/foto_dokumentasi_proyek', $data);
    }
 
    function tampil_foto_subproyek() {
       $post = $this->input->post(NULL, TRUE);
+      $data['proj_name'] = $this->input->post('proj_name');
       $data['docs'] = $this->ppm->get_documentation($post['project_id'], $post['subproject_id']);
       $this->load->view('pm/proyek/detail/foto_dokumentasi_subproyek', $data);
    }

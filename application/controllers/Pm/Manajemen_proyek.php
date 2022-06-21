@@ -571,12 +571,36 @@ class Manajemen_proyek extends CI_Controller {
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
-   function hapus_foto() {
+   function hapus_foto_proyek() {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
       $this->bm->delete('tb_photo', [
          'photo_id'     => $post['photo_id'],
          'ID_project'   => $post['project_id']
+      ]);
+      unlink('./uploads/'.$post['photo_url']);
+      if ($this->db->affected_rows() > 0) {
+         $message = [
+            'status'    => 'success',
+            'message'   => 'Gambar telah telah terhapus.'
+         ];
+      } else {
+         $message = [
+            'status'    => 'failed',
+            'message'   => 'Oops! Maaf gambar gagal dihapus.'
+         ];
+      }
+
+      $this->output->set_content_type('application/json')->set_output(json_encode($message));
+   }
+
+   function hapus_foto_subproyek() {
+      $message = [];
+      $post = $this->input->post(NULL, TRUE);
+      $this->bm->delete('tb_photo', [
+         'photo_id'        => $post['photo_id'],
+         'ID_project'      => $post['project_id'],
+         'ID_subproject'   => $post['subproject_id']
       ]);
       unlink('./uploads/'.$post['photo_url']);
       if ($this->db->affected_rows() > 0) {

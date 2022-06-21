@@ -81,7 +81,8 @@
 			dataType: 'html',
 			cache: false,
 			data: {
-				project_id: project_id
+				project_id: project_id,
+				proj_name: project_name
 			},
 			beforeSend: function() {
 				modalBody.html('<p>Memuat konten...</p>');
@@ -110,7 +111,8 @@
 			cache: false,
 			data: {
 				project_id: project_id,
-				subproject_id: subproject_id
+				subproject_id: subproject_id,
+				proj_name: subproject_name
 			},
 			beforeSend: function() {
 				modalBody.html('<p>Memuat konten...</p>');
@@ -269,7 +271,7 @@
      	});
 	}
 
-	function delete_photo(photo_id, project_id, photo_url) {
+	function delete_photo_project(photo_id, project_id, photo_url, proj_name) {
 		Swal.fire({
 			icon: 'warning',
 			html: `
@@ -282,14 +284,15 @@
      	}).then((result) => {
      		if (result.isConfirmed) {
      			$.ajax({
-					url: `<?= site_url('pm/manajemen_proyek/hapus_foto') ?>`,
+					url: `<?= site_url('pm/manajemen_proyek/hapus_foto_proyek') ?>`,
 					method: 'POST',
 					dataType: 'json',
 					cache: false,
 					data: {
 						photo_id: photo_id,
 						photo_url: photo_url,
-						project_id: project_id
+						project_id: project_id,
+						proj_name: proj_name
 					},
 					success: function(data) {
 						if (data.status == 'success') {
@@ -300,7 +303,7 @@
 								showConfirmButton: false,
 								timer: 2000,
 							}).then((result) => {
-								window.location.reload();
+								showDocProject(project_id, proj_name);
 							});		
 						} else if (data.status == 'failed') {
 							Swal.fire({
@@ -310,7 +313,59 @@
 								showConfirmButton: false,
 								timer: 2000,
 							}).then((result) => {
-								window.location.reload();
+								showDocProject(project_id, proj_name);
+							});
+						}
+					}
+				});
+     		}
+     	});
+	}
+
+	function delete_photo_subproject(photo_id, project_id, subproject_id, photo_url, proj_name) {
+		Swal.fire({
+			icon: 'warning',
+			html: `
+				<h3>Hapus Foto</h3>
+				<p class="text-secondary">Anda akan menghapus foto ini?</p>
+			`,
+			confirmButtonText: 'Ya, Hapus',
+			showCancelButton: true,
+			cancelButtonText: 'Batal'
+     	}).then((result) => {
+     		if (result.isConfirmed) {
+     			$.ajax({
+					url: `<?= site_url('pm/manajemen_proyek/hapus_foto_subproyek') ?>`,
+					method: 'POST',
+					dataType: 'json',
+					cache: false,
+					data: {
+						photo_id: photo_id,
+						project_id: project_id,
+						subproject_id: subproject_id,
+						photo_url: photo_url,
+						proj_name: proj_name
+					},
+					success: function(data) {
+						if (data.status == 'success') {
+							Swal.fire({
+								icon: 'success',
+								title: 'Berhasil',
+								text: `${data.message}`,
+								showConfirmButton: false,
+								timer: 2000,
+							}).then((result) => {
+								showDocSubproject(project_id, subproject_id, proj_name);
+							});		
+						} else if (data.status == 'failed') {
+							Swal.fire({
+								icon: 'error',
+								title: 'Gagal',
+								text: `${data.message}`,
+								showConfirmButton: false,
+								timer: 2000,
+							}).then((result) => {
+								showDocSubproject(project_id, subproject_id, proj_name);
 							});
 						}
 					}
