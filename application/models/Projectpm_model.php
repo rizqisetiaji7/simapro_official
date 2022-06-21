@@ -89,4 +89,17 @@ class Projectpm_model extends CI_Model {
 		$this->db->order_by('photo_id DESC');
 		return $this->db->get();
 	}
+
+	public function countRows($table, $where) {
+		$this->db->from($table);
+		$this->db->where($where);
+		return $this->db->count_all_results();
+	}
+
+	public function sumTotalProgress($table, $column, $as, $where) {
+		$this->db->select("SUM(".$column.") as ". $as);
+		$this->db->from($table);
+		$this->db->where($where);
+		return $this->db->get();
+	}
 }

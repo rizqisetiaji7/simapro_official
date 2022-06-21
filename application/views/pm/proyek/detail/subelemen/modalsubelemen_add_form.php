@@ -1,4 +1,5 @@
 <input type="hidden" name="ID_subproject" value="<?= $subproject_id ?>">
+<input type="hidden" name="project_id" value="<?= $project_id ?>">
 <div class="form-row">
   <div class="col-12 mb-3">
     <label for="project_task_name">Nama Sub-Elemen Proyek <span class="text-danger small">*</span></label>

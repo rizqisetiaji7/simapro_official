@@ -174,7 +174,7 @@
 	}
 
 	// ADD SUB-ELEMENT / Task Lists
-	function add_subElemenProject(subproject_id) {
+	function add_subElemenProject(project_id, subproject_id) {
 		title.text('Tambah List');
 		formModal.attr('action', `<?= site_url('pm/manajemen_proyek/tambah_subelemen_proyek') ?>`);
 		$.ajax({
@@ -183,6 +183,7 @@
 			dataType: 'html',
 			cache: false,
 			data: {
+				project_id: project_id,
 				subproject_id: subproject_id
 			},
 			beforeSend: function() {
@@ -197,7 +198,7 @@
 	}
 
 	// EDIT SUB-ELEMENT / Task Lists
-	function edit_subElemenProject(task_id, subproject_id) {
+	function edit_subElemenProject(task_id, subproject_id, project_id) {
 		title.text('Edit List');
 		formModal.attr('action', `<?= site_url('pm/manajemen_proyek/edit_subelemen_proyek') ?>`);
 		$.ajax({
@@ -207,7 +208,8 @@
 			cache: false,
 			data: {
 				task_id: task_id,
-				subproject_id: subproject_id
+				subproject_id: subproject_id,
+				project_id: project_id
 			},
 			beforeSend: function() {
 				modalBody.html('<p>Memuat konten...</p>');

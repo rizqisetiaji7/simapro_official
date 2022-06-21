@@ -201,6 +201,7 @@ class Proyek extends CI_Controller {
 
    function form_tambah_subelemen_proyek() {
       $data['subproject_id']  = $this->input->post('subproject_id', TRUE);
+      $data['project_id']     = $this->input->post('project_id', TRUE);
       $data['priority']       = $this->bm->get('tb_priority', '*')->result();
       $this->load->view('pm/proyek/detail/subelemen/modalsubelemen_add_form', $data);
    }
@@ -208,6 +209,7 @@ class Proyek extends CI_Controller {
    function form_edit_subelemen_proyek() {
       $subelemen_id = $this->input->post('task_id', TRUE);
       $subproject_id = $this->input->post('subproject_id', TRUE);
+      $data['project_id']     = $this->input->post('project_id', TRUE);
       $data['subelemen'] = $this->bm->get('tb_project_task', '*', [
          'project_task_id' => $subelemen_id,
          'ID_subproject' => $subproject_id

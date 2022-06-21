@@ -1,6 +1,7 @@
 <input type="hidden" name="ID_subproject" value="<?= $subelemen->ID_subproject ?>">
 <input type="hidden" name="project_task_id" value="<?= $subelemen->project_task_id ?>">
 <input type="hidden" name="current_progress" value="<?= $subelemen->project_task_progress ?>">
+<input type="hidden" name="project_id" value="<?= $project_id ?>">
 
 <div class="form-row">
   <div class="col-12 mb-3">

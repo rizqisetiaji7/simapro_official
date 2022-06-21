@@ -7,7 +7,6 @@ class Manajemen_proyek extends CI_Controller {
       parent::__construct();
       is_not_login();
       is_not_pm();
-      $this->load->model('projectpm_model');
    }
 
    private function _file_upload_config($filePath = './assets/img') {
@@ -107,6 +106,18 @@ class Manajemen_proyek extends CI_Controller {
          ]
       ];
       return $config;
+   }
+
+   private function _update_progress_by_status($status, $current_progress) {
+      $result = '';
+      if ($status == 'none' || $status == 'pending') {
+         $result = $current_progress;
+      } else if ($status == 'onprogress') {
+         $result = 50;
+      } else if ($status == 'finish'){
+         $result = 100;
+      }
+      return $result;
    }
 
    // TAMBAH DATA MANAJEMEN PROYEK UTAMA
@@ -270,6 +281,7 @@ class Manajemen_proyek extends CI_Controller {
    function tambah_subproyek() {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
+      $project_id = $post['ID_project'];
 
       $this->form_validation->set_rules($this->_rule_subproyek());
 
@@ -284,21 +296,49 @@ class Manajemen_proyek extends CI_Controller {
          ];
       } else {
          $data = [
-            'ID_project'            => $post['ID_project'],
+            'ID_project'            => $project_id,
             'ID_priority'           => $post['priority_level'],
             'subproject_name'       => $post['subproject_name'],
             'subproject_deadline'   => $post['subproject_deadline'],
             'subproject_status'     => NULL,
             'subproject_progress'   => 0,
-            'panel_color'           => $post['panel_color']
+            'panel_color'           => $post['panel_color'],
+            'created'               => date('Y-m-d H:i:s', now('Asia/Jakarta'))
          ];
-         $this->bm->save('tb_subproject', $data);
+         
+         $add_subproject = $this->bm->save('tb_subproject', $data);
 
-         if ($this->db->affected_rows() > 0) {
-            $message = [
-               'status'    => 'success',
-               'message'   => 'Subproyek berhasil ditambahkan.'
-            ];
+         if ($add_subproject) {
+            
+            // Count Total Rows and Progress Subproject
+            $total_sp_rows = $this->ppm->countRows('tb_subproject', ['ID_project' => $project_id]);
+            $total_sp_progress = $this->ppm->sumTotalProgress('tb_subproject', 'subproject_progress', 'total_progress', [
+               'ID_project'   => $project_id
+            ])->row()->total_progress;
+
+            // Current Progress for Main Project
+            $proj_progress = $total_sp_progress != '' ? round(intval($total_sp_progress) / intval($total_sp_rows)) : 0;
+            $up_project = $this->bm->update('tb_project', [
+               'project_progress' => $proj_progress,
+               'updated'          => date('Y-m-d H:i:s', now('Asia/Jakarta'))
+            ], [
+               'project_id'   => $project_id
+            ]);
+
+            // Check Project Update
+            if ($up_project) {
+               
+               $message = [
+                  'status'    => 'success',
+                  'message'   => 'Subprojek telah berhasil disimpan.'
+               ];
+
+            } else {
+               $message = [
+                  'status'    => 'failed',
+                  'message'   => 'Oops! Subproyek gagal ditambahkan.'
+               ];
+            }
          } else {
             $message = [
                'status'    => 'failed',
@@ -355,6 +395,9 @@ class Manajemen_proyek extends CI_Controller {
    function tambah_subelemen_proyek() {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
+      $project_id = $post['project_id'];
+      $subproject_id = $post['ID_subproject'];
+
       $this->form_validation->set_rules($this->_rule_subelemen_proyek());
       if ($this->form_validation->run() == FALSE) {
          $message = [
@@ -365,22 +408,62 @@ class Manajemen_proyek extends CI_Controller {
                ['field' => 'task_priority_level', 'err_message' => form_error('task_priority_level', '<span>','</span>')]
             ]
          ];
-      } else {
-         $data = [
-            'ID_subproject'         => $post['ID_subproject'],
+      } else {         
+         $add_subelemen = $this->bm->save('tb_project_task', [
+            'ID_subproject'         => $subproject_id,
             'ID_priority'           => $post['task_priority_level'],
             'project_task_name'     => $post['project_task_name'],
             'project_task_deadline' => $post['project_task_deadline'],
             'project_task_status'   => 'none',
             'project_task_progress' => 0
-         ];
-         $this->bm->save('tb_project_task', $data);
+         ]);
 
-         if ($this->db->affected_rows() > 0) {
-            $message = [
-               'status'    => 'success',
-               'message'   => 'Sub-elemen proyek berhasil disimpan.'
-            ];
+         if ($add_subelemen) {
+            // Count Total Rows and Progress Subelemen
+            $total_se_rows = $this->ppm->countRows('tb_project_task', ['ID_subproject' => $subproject_id]);
+            $total_se_progress = $this->ppm->sumTotalProgress('tb_project_task', 'project_task_progress', 'total_progress', [
+                  'ID_subproject'   => $subproject_id
+               ])->row()->total_progress;
+
+            // Current Progress for Subproject
+            $sp_progress = $total_se_progress != '' ? round(intval($total_se_progress) / intval($total_se_rows)) : 0;
+            $up_subproject = $this->bm->update('tb_subproject', ['subproject_progress' => $sp_progress], [
+               'subproject_id'   => $subproject_id
+            ]);
+
+            if ($up_subproject) {
+
+               // Count Total Rows and Progress Subproject
+               $total_sp_rows = $this->ppm->countRows('tb_subproject', ['ID_project' => $project_id]);
+               $total_sp_progress = $this->ppm->sumTotalProgress('tb_subproject', 'subproject_progress', 'total_progress', [
+                  'ID_project'   => $project_id
+               ])->row()->total_progress;
+
+               // Current Progress for Main Project
+               $proj_progress = $total_sp_progress != '' ? round(intval($total_sp_progress) / intval($total_sp_rows)) : 0;
+
+               $up_project = $this->bm->update('tb_project', ['project_progress' => $proj_progress], [
+                  'project_id'   => $project_id
+               ]);
+
+               if ($up_project) {
+                  $message = [
+                     'status'    => 'success',
+                     'message'   => 'Sub-elemen proyek berhasil disimpan.'
+                  ];
+               } else {
+                  $message = [
+                     'status'    => 'failed',
+                     'message'   => 'Oops! Sub-elemen proyek gagal disimpan.'
+                  ];
+               }
+               
+            } else {
+               $message = [
+                  'status'    => 'failed',
+                  'message'   => 'Oops! Sub-elemen proyek gagal disimpan.'
+               ];
+            }
          } else {
             $message = [
                'status'    => 'failed',
@@ -395,6 +478,9 @@ class Manajemen_proyek extends CI_Controller {
    function edit_subelemen_proyek() {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
+      $project_id = $post['project_id'];
+      $subproject_id = $post['ID_subproject'];
+      $subelemen_id = $post['project_task_id'];
 
       $this->form_validation->set_rules($this->_rule_subelemen_proyek());
       if ($this->form_validation->run() == FALSE) {
@@ -407,34 +493,66 @@ class Manajemen_proyek extends CI_Controller {
             ]
          ];
       } else {
-         $progress = '';
-         if ($post['project_task_status'] == 'none' || $post['project_task_status'] == 'pending') {
-            $progress = $post['current_progress'];
-         } else if ($post['project_task_status'] == 'onprogress') {
-            $progress = 50;
-         } else if ($post['project_task_status'] == 'finish'){
-            $progress = 100;
-         }
-
-         $data = [
+         $progress = $this->_update_progress_by_status($post['project_task_status'], $post['current_progress']);
+         $up_subelemen = $this->bm->update('tb_project_task', [
             'ID_priority'           => $post['task_priority_level'],
             'project_task_name'     => $post['project_task_name'],
             'project_task_deadline' => $post['project_task_deadline'],
             'project_task_status'   => $post['project_task_status'],
             'project_task_progress' => $progress,
             'updated'               => date('Y-m-d H:i:s', now('Asia/Jakarta'))
-         ];
-
-         $this->bm->update('tb_project_task', $data, [
-            'project_task_id' => $post['project_task_id'], 
-            'ID_subproject' => $post['ID_subproject']
+         ], [
+            'project_task_id' => $subelemen_id, 
+            'ID_subproject' => $subproject_id
          ]);
 
-         if ($this->db->affected_rows() >= 0) {
-            $message = [
-               'status'    => 'success',
-               'message'   => 'Sub-elemen proyek berhasil diperbarui.'
-            ];
+         if ($up_subelemen) {
+            // Count Total Rows and Progress Subelemen
+            $total_se_rows = $this->ppm->countRows('tb_project_task', ['ID_subproject' => $subproject_id]);
+            $total_se_progress = $this->ppm->sumTotalProgress('tb_project_task', 'project_task_progress', 'total_progress', [
+                  'ID_subproject'   => $subproject_id
+               ])->row()->total_progress;
+
+            // Current Progress for Subproject
+            $sp_progress = round(intval($total_se_progress) / intval($total_se_rows));
+
+            $up_subproject = $this->bm->update('tb_subproject', ['subproject_progress' => $sp_progress], [
+               'subproject_id'   => $subproject_id
+            ]);
+
+            if ($up_subproject) {
+               // Count Total Rows and Progress Subproject
+               $total_sp_rows = $this->ppm->countRows('tb_subproject', ['ID_project' => $project_id]);
+               $total_sp_progress = $this->ppm->sumTotalProgress('tb_subproject', 'subproject_progress', 'total_progress', [
+                  'ID_project'   => $project_id
+               ])->row()->total_progress;
+
+               // Current Progress for Main Project
+               $proj_progress = round(intval($total_sp_progress) / intval($total_sp_rows));
+
+               $up_project = $this->bm->update('tb_project', ['project_progress' => $proj_progress], [
+                  'project_id'   => $project_id
+               ]);
+
+               if ($up_project) {
+                  $message = [
+                     'status'    => 'success',
+                     'message'   => 'Sub-elemen proyek berhasil diperbarui.'
+                  ];
+               } else {
+                  $message = [
+                     'status'    => 'failed',
+                     'message'   => 'Oops! Sub-elemen proyek gagal diperbarui.'
+                  ];
+               }
+
+            } else {
+               $message = [
+                  'status'    => 'failed',
+                  'message'   => 'Oops! Sub-elemen proyek gagal diperbarui.'
+               ];
+            }
+
          } else {
             $message = [
                'status'    => 'failed',
