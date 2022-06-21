@@ -130,3 +130,31 @@ function getIDCode($prefix = 'USR', $code = '', $digit = 5, $unique = TRUE) {
 
 	return $codeID;
 }
+
+function resize_image($path = '/') {
+	$ci =& get_instance();
+	$size = getimagesize($path);
+	if ($size[0] > 1380 && $size[1] > 1380) {
+		$width = round(($size[0] * 18) / 100);
+		$height = round(($size[1] * 18) / 100);
+		$quality = '70%';
+	} else  {
+		$width = round(($size[0] * 50) / 100);
+		$height = round(($size[1] * 50) / 100);
+		$quality = '80%';
+	}
+
+	$config = [
+		'image_library'	=> 'gd2',
+		'source_image'		=> $path,
+		'create_thumb'		=> FALSE,
+		'maintain_ratio'	=> FALSE,
+		'quality'			=> $quality,
+		'width'				=> $width,
+		'height'				=> $height,
+		'new_image'			=> $path
+	];
+	$ci->image_lib->initialize($config);
+	$ci->image_lib->resize();
+	return true;
+}

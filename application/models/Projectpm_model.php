@@ -86,6 +86,7 @@ class Projectpm_model extends CI_Model {
 			'tb_photo.ID_project' => $project_id, 
 			'tb_photo.ID_subproject' => $subproject_id
 		]);
+		$this->db->order_by('photo_id DESC');
 		return $this->db->get();
 	}
 }

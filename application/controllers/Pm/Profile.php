@@ -14,8 +14,7 @@ class Profile extends CI_Controller {
    private function _file_upload_config($filePath = './assets/img') {
       $config = [
          'upload_path'   => $filePath,
-         'allowed_types' => 'jpg|jpeg|png|svg',
-         'max_size'      => 4096, // 4MB
+         'allowed_types' => 'jpg|jpeg|png',
          'encrypt_name'  => TRUE,
          'remove_spaces' => TRUE
       ];
@@ -125,9 +124,12 @@ class Profile extends CI_Controller {
             if ($old_profile != $this->default_avatar) {
                unlink('./uploads/profile/'.$old_profile);
             }
+            $photo = $this->upload->data();
+            // Resize ukuran foto
+            resize_image('./uploads/profile/'.$photo['file_name']);
 
             $data = [
-               'user_profile' => $this->upload->data('file_name'),
+               'user_profile' => $photo['file_name'],
                'updated'      => date('Y-m-d H:i:s', now('Asia/Jakarta'))
             ];
 
