@@ -111,18 +111,6 @@ class Proyek extends CI_Controller {
       $this->theme->view('templates/main', 'pm/proyek/detail/index', $data);
    }
 
-   public function riwayat() {
-      $data = [
-         'app_name'  => APP_NAME,
-         'author'    => APP_AUTHOR,
-         'title'     => '(PM) Riwayat Proyek',
-         'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
-         'page'      => 'proyek_riwayat'
-      ];
-      $this->theme->view('templates/main', 'pm/proyek/riwayat/index', $data);
-   }
-
-
    // ============= CRUD ============= //
 
    function update_status_proyek() {
@@ -174,14 +162,16 @@ class Proyek extends CI_Controller {
 
    function tampil_foto_proyek() {
       $post = $this->input->post(NULL, TRUE);
-      $data['proj_name'] = $this->input->post('proj_name');
+      $data['proj_name'] = $post['proj_name'];
+      $data['project_status'] = $post['project_status'];
       $data['docs'] = $this->ppm->get_documentation($post['project_id'], NULL);
       $this->load->view('pm/proyek/detail/foto_dokumentasi_proyek', $data);
    }
 
    function tampil_foto_subproyek() {
       $post = $this->input->post(NULL, TRUE);
-      $data['proj_name'] = $this->input->post('proj_name');
+      $data['proj_name'] = $post['proj_name'];
+      $data['project_status'] = $post['project_status'];
       $data['docs'] = $this->ppm->get_documentation($post['project_id'], $post['subproject_id']);
       $this->load->view('pm/proyek/detail/foto_dokumentasi_subproyek', $data);
    }
@@ -218,4 +208,96 @@ class Proyek extends CI_Controller {
       $data['priority'] = $this->bm->get('tb_priority', '*')->result();
       $this->load->view('pm/proyek/detail/subelemen/modalsubelemen_edit_form', $data);
    }
+
+      /**
+    *
+    * Download method
+    * Mendownload laporan proyek yang sudah Selesai pengerjaannya
+    * 
+    */
+
+   function download_laporan() {
+      $query = '';
+      $bulan = '';
+      $post = $this->input->post(NULL, TRUE);
+      $ym_awal = $post['tahun_proyek'].'-'.$post['bulan_awal'];
+      $ym_akhir = $post['tahun_proyek'].'-'.$post['bulan_akhir'];
+
+      if ($post['bulan_awal'] == '' && $post['bulan_akhir'] == '') {
+         $bulan = '';
+         $query = $this->ppm->get_finished_project(user_company()->company_id, user_login()->user_id);
+      } else if ($post['bulan_awal'] == '' && $post['bulan_akhir'] != '') {
+         $bulan = '';
+         $query = $this->ppm->get_finished_project(user_company()->company_id, user_login()->user_id);
+      } else if ($post['bulan_awal'] != '' && $post['bulan_akhir'] == '') {
+         $bulan = '';
+         $query = $this->ppm->get_finished_project(user_company()->company_id, user_login()->user_id);
+      } else if ($post['bulan_awal'] != '' && $post['bulan_akhir'] != ''){
+         $ym_awal = $post['tahun_proyek'].'-'.$post['bulan_awal'];
+         $ym_akhir = $post['tahun_proyek'].'-'.$post['bulan_akhir'];
+         $bulan = $this->_getMonthID($post['bulan_awal']).' s/d '.$this->_getMonthID($post['bulan_akhir']).' '.$post['tahun_proyek'];
+         $query = $this->ppm->get_riwayat_filter($ym_awal, $ym_akhir, user_company()->company_id, user_login()->user_id);
+      }
+
+      if ($query->num_rows() > 0) {
+         // Print PDF
+         $data['month'] = $bulan;
+         $data['total_count'] = $query->num_rows();
+         $data['company'] = user_company()->comp_name;
+         $data['logo'] = user_company()->comp_logo;
+         $data['title'] = 'PT. Arya Bakti Saluyu';
+
+         $rows = [];
+         foreach($query->result() as $qr) {
+            $deadline = '';
+
+            if ($qr->project_deadline > $qr->project_current_deadline) {
+               $deadline = 'Lebih Awal';
+            } else if ($qr->project_deadline < $qr->project_current_deadline) {
+               $deadline = 'Terlambat';
+            } else if ($qr->project_deadline == $qr->project_current_deadline) {
+               $deadline = 'Tepat Waktu';
+            }
+            $rows[] = [
+               'proID'         => $qr->projectID,
+               'thumbnail'     => $qr->project_thumbnail,
+               'project_name'  => $qr->project_name,
+               'pm'            => $qr->user_id == null ? ' - ' : $qr->user_fullname,
+               'address'       => $qr->project_address,
+               'deadline'      => dateTimeIDN($qr->project_deadline),
+               'curr_deadline' => dateTimeIDN($qr->project_current_deadline),
+               'keterangan'    => $deadline
+            ];
+         }
+         $data['query'] = $rows;
+         $rand_id = $this->mylibs->_randomID();
+         $filename = 'LAPPROJPM-'.date('Ymdhis', time()).$rand_id;
+         $this->cipdf->print('laporan_proyek', $data, $filename, 'A4', 'landscape');
+      } else {
+         echo "<script>
+            alert('Oops! Data informasi yang ingin anda download tidak tersedia.');
+            window.location = `".site_url('pm/riwayat')."`;
+         </script>";
+      }
+   }
+
+   protected function _getMonthID($month_num) {
+      $months = [
+         '01'  => 'Januari',
+         '02'  => 'Februari',
+         '03'  => 'Maret',
+         '04'  => 'April',
+         '05'  => 'Mei',
+         '06'  => 'Juni',
+         '07'  => 'Juli',
+         '08'  => 'Agustus',
+         '09'  => 'September',
+         '10'  => 'Oktober',
+         '11'  => 'November',
+         '12'  => 'Desember'
+      ];
+      $m = $months[$month_num];
+      return $m;
+   }
+   // ==================================================================
 }

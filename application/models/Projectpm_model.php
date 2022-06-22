@@ -102,4 +102,36 @@ class Projectpm_model extends CI_Model {
 		$this->db->where($where);
 		return $this->db->get();
 	}
+
+	public function get_finished_project($comp_id, $pm_id, $limit=FALSE) {
+		$this->db->select($this->_columns());
+		$this->db->from($this->tb_project);
+		$this->db->join('tb_company', 'tb_company.company_id=tb_project.ID_company', 'left');
+		$this->db->join('tb_users', 'tb_users.user_id=tb_project.ID_pm', 'left');
+		$this->db->where([
+			'tb_project.ID_company' 		=> $comp_id,
+			'tb_project.ID_pm'				=> $pm_id,
+			'tb_project.project_status'	=> 'finish'
+		]);
+		if ($limit != FALSE) {
+			$this->db->limit($limit, 0);
+		}
+		$this->db->order_by('project_id DESC');
+		return $this->db->get();
+	}
+
+	public function get_riwayat_filter($bulan_awal, $bulan_akhir, $comp_id, $pm_id) {
+		$this->db->select($this->_columns());
+		$this->db->from($this->tb_project);
+		$this->db->join('tb_company', 'tb_company.company_id=tb_project.ID_company', 'left');
+		$this->db->join('tb_users', 'tb_users.user_id=tb_project.ID_pm', 'left');
+		$this->db->where([
+			'tb_project.ID_company' 		=> $comp_id,
+			'tb_project.ID_pm'				=> $pm_id,
+			'tb_project.project_status'	=> 'finish',
+			'tb_project.project_deadline_month >=' => $bulan_awal,
+			'tb_project.project_deadline_month <=' => $bulan_akhir
+		]);
+		return $this->db->get();
+	}
 }

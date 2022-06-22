@@ -11,7 +11,7 @@
     </div>
 </div>
 
-<form action="" method="POST" accept-charset="utf-8">
+<form action="<?= site_url('pm/proyek/download_laporan')?>" method="POST" accept-charset="utf-8">
     <div class="row">
         <div class="col-4 col-sm-6 col-md-3">
             <select id="first_month" name="bulan_awal" class="form-control mb-3">
@@ -81,89 +81,7 @@
                                 <th class="text-center">Opsi</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td class="text-nowrap">
-                                    <div class="d-flex align-items-center">
-                                        <img src="<?= base_url('assets/img/profiles/avatar-02.jpg') ?>" class="rounded-lg" width="50" alt="">
-                                        <div class="ml-3">
-                                            <h5 class="mb-0">Proyek Irigasi Sungai</h5>
-                                            <p class="mb-0 text-xs text-muted">Kab. Ciamis</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="text-nowrap">
-                                    <div class="d-flex align-items-center">
-                                        <img src="<?= base_url('assets/img/profiles/avatar-02.jpg') ?>" class="rounded-lg" width="40" alt="">
-                                        <div class="ml-3">
-                                            <h5 class="mb-0">Rizqi PM</h5>
-                                            <p class="mb-0 text-xs text-secondary">PT. Aryabakti Saluyu</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="text-nowrap">
-                                    <span class="badge bg-inverse-success p-2">Selesai</span>
-                                </td>
-                                <td class="text-nowrap">
-                                    <span class="text-muted small">12 Februari 2022</span>
-                                </td>
-                                <td class="text-nowrap">
-                                    <span class="text-muted small">20 Februari 2022</span>
-                                </td>
-                                <td class="text-nowrap">
-                                    <!-- <p class="text-xs mb-1">Completed Projects <strong>(8/12)</strong></p> -->
-                                    <div class="progress progress-lg">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
-                                    </div>
-                                </td>
-                                <td class="text-nowrap text-center">
-                                    <!-- <button type="button" class="btn btn-sm my-1 btn-info" data-toggle="tooltip" title="Download laporan"><i class="la la-download"></i></button> -->
-                                    <a href="<?= site_url('direktur/proyek/detail_proyek') ?>" class="btn btn-sm my-1 btn-primary text-nowrap" data-toggle="tooltip" title="Lihat Proyek">Detail</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-nowrap">
-                                    <div class="d-flex align-items-center">
-                                        <img src="<?= base_url('assets/img/profiles/avatar-02.jpg') ?>" class="rounded-lg" width="50" alt="">
-                                        <div class="ml-3">
-                                            <h5 class="mb-0">Pembangunan Mall</h5>
-                                            <p class="mb-0 text-xs text-muted">Kab. Ciamis</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="text-nowrap">
-                                    <div class="d-flex align-items-center">
-                                        <img src="<?= base_url('assets/img/profiles/avatar-02.jpg') ?>" class="rounded-lg" width="40" alt="">
-                                        <div class="ml-3">
-                                            <h5 class="mb-0">Rizqi PM</h5>
-                                            <p class="mb-0 text-xs text-secondary">PT. Aryabakti Saluyu</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="text-nowrap">
-                                    <span class="badge bg-inverse-success p-2">Selesai</span>
-                                </td>
-                                <td class="text-nowrap">
-                                    <span class="text-muted small">15 November 2020</span>
-                                </td>
-                                <td class="text-nowrap">
-                                    <span class="text-muted small">8 November 2020</span>
-                                </td>
-                                <td class="text-nowrap">
-                                    <!-- <p class="text-xs mb-1">Completed Projects <strong>(8/12)</strong></p> -->
-                                    <div class="progress progress-lg">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
-                                    </div>
-                                </td>
-                                <td class="text-nowrap text-center">
-                                    <!-- <button type="button" class="btn btn-sm my-1 btn-info" data-toggle="tooltip" title="Download laporan"><i class="la la-download"></i></button> -->
-                                    <a href="<?= site_url('direktur/proyek/detail_proyek') ?>" class="btn btn-sm my-1 btn-primary text-nowrap" data-toggle="tooltip" title="Lihat Proyek">Detail</a>
-                                </td>
-                            </tr>
-                            <!-- <tr>
-                                <td colspan="7" class="text-center">Riwayat Proyek Kosong.</td>
-                            </tr> -->
-                        </tbody>
+                        <tbody id="listRiwayatProyek"></tbody>
                     </table>
                 </div>
             </div>
@@ -171,14 +89,5 @@
     </div>
 </div>
 
-<script>
-    // Year Dropdown Lists
-    let start = 2000;
-    let end = new Date().getFullYear() + 50;
-    let currDate = new Date().getFullYear();
-    let options = "";
-    for(let year = start ; year <= end; year++){
-      options += `<option value="${year}" ${year == currDate ? 'selected' : ''}>${year}</option>`;
-    }
-    $('#selectYear').append(options);
-</script>
+<?php $this->view('pm/proyek/riwayat/modal') ?>
+<?php $this->view('pm/proyek/riwayat/script') ?>

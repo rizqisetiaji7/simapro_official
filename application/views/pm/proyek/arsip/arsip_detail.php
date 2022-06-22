@@ -100,10 +100,9 @@
                                 <div class="pro-progress-bar">
                                     <h5>Progres</h5>
                                     <div class="progress">
-                                        <!-- <div class="progress-bar bg-success" role="progressbar" <?= 'style="width: '.subproject_progress($sp->subproject_id, $total_subelemen).'%;"' ?>></div> -->
-                                        <div class="progress-bar bg-success" role="progressbar" style="width:0%;"></div>
+                                        <div class="progress-bar bg-danger" role="progressbar" <?= 'style="width: '.$sp->subproject_progress.'%;"' ?>></div>
                                     </div>
-                                    <span>0%</span>
+                                    <span><?= $sp->subproject_progress.'%' ?></span>
                                 </div>
                             </div>
                             <!-- ./ Subproyek Progress (Belum Berjalan) -->

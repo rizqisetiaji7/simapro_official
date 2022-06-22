@@ -71,7 +71,7 @@
 	}
 
 	// SHOW PHOTO DOCUMENTATION PROJECT
-	function showDocProject(project_id, project_name) {
+	function showDocProject(project_id, project_name, project_status = '') {
 		title.html(`Dokumentasi Proyek: <span class="text-secondary small">${project_name}</span>`);
 		modalDialog.addClass('modal-xl');
 		modalFooter.addClass('d-none');
@@ -82,7 +82,8 @@
 			cache: false,
 			data: {
 				project_id: project_id,
-				proj_name: project_name
+				proj_name: project_name,
+				project_status: project_status
 			},
 			beforeSend: function() {
 				modalBody.html('<p>Memuat konten...</p>');
@@ -99,7 +100,7 @@
 	}
 
 	// SHOW PHOTO DOCUMENTATION SUB-PROJECT
-	function showDocSubproject(project_id, subproject_id, subproject_name) {
+	function showDocSubproject(project_id, subproject_id, subproject_name, project_status='') {
 		title.html(`Dokumentasi Proyek: <span class="text-secondary small">${subproject_name}</span>`);
 		modalDialog.addClass('modal-xl');
 		modalFooter.addClass('d-none');
@@ -112,7 +113,8 @@
 			data: {
 				project_id: project_id,
 				subproject_id: subproject_id,
-				proj_name: subproject_name
+				proj_name: subproject_name,
+				project_status: project_status
 			},
 			beforeSend: function() {
 				modalBody.html('<p>Memuat konten...</p>');
@@ -419,25 +421,59 @@
      		}
      	});
 	}
-
-	// function finishProject(projectId) {
-	// 	Swal.fire({
-	// 		icon: 'warning',
-	// 		html: `
-	// 			<h4>Proyek telah selesai?</h4>
-	// 			<p class="text-muted">Status proyek otomatis akan dinyatakan selesai.</p>
-	// 			<p class="text-danger small">Pastikan periksa dokumentasi, Sub-proyek, maupun <br> list setiap tugas pekerjaan terlebih dahulu.</p>
-	// 		`,
-	// 		confirmButtonText: 'Proyek selesai',
-	// 		confirmButtonColor: '#28a745',
-	// 		showCancelButton: true,
-	// 		cancelButtonText: 'Batal'
- //     	}).then((result) => {
- //     		if (result.isConfirmed) {
- //     			alert(`Action to : <?= site_url('pm/manajemen_proyek/proyek_selesai') ?>`);
- //     		}
- //     	});
-	// }
+	
+	function sendReview(project_id, ID_pm, ID_company) {
+		Swal.fire({
+			icon: 'warning',
+			html: `
+				<h4>Tinjau proyek?</h4>
+				<p class="text-muted">Proyek otomatis akan segera ditinjau oleh direktur.</p>
+				<p class="text-danger small">Pastikan periksa dokumentasi, Sub-proyek, maupun <br> list setiap tugas pekerjaan terlebih dahulu.</p>
+			`,
+			confirmButtonText: 'Ya, Tinjau sekarang!',
+			confirmButtonColor: '#28a745',
+			showCancelButton: true,
+			cancelButtonText: 'Batal'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$.ajax({
+					url: `<?= site_url('pm/manajemen_proyek/tinjau_proyek') ?>`,
+					dataType: 'json',
+					method: 'POST',
+					cache: false,
+					data: {
+						project_id: project_id,
+						ID_pm: ID_pm,
+						ID_company: ID_company
+					},
+					success: function(data) {
+						console.log(data);
+						if (data.status == 'success') {
+							Swal.fire({
+								icon: 'success',
+								title: 'Berhasil',
+								text: `${data.message}`,
+								showConfirmButton: false,
+								timer: 2000,
+							}).then((result) => {
+								window.location.reload();
+							});	
+						} else if (data.status == 'failed'){
+							Swal.fire({
+								icon: 'error',
+								title: 'Gagal',
+								text: `${data.message}`,
+								showConfirmButton: false,
+								timer: 2000,
+							}).then((result) => {
+								window.location.reload();
+							});
+						}
+					}
+				});
+			}
+		});
+	}
 
 	// Submit Data
 	formModal.on('submit', function(e) {

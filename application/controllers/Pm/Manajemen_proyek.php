@@ -785,6 +785,33 @@ class Manajemen_proyek extends CI_Controller {
             'message'   => 'Oops! Maaf gambar gagal dihapus.'
          ];
       }
+      $this->output->set_content_type('application/json')->set_output(json_encode($message));
+   }
+
+   function tinjau_proyek() {
+      $message = [];
+      $post = $this->input->post(NULL, TRUE);
+
+      $this->bm->update('tb_project', [
+         'project_status'  => 'review',
+         'updated'         => date('Y-m-d H:i:s', now('Asia/Jakarta')) 
+      ], [
+         'project_id'   => $post['project_id'],
+         'ID_pm'        => $post['ID_pm'],
+         'ID_company'   => $post['ID_company']
+      ]);
+
+      if ($this->db->affected_rows() > 0) {
+         $message = [
+            'status'    => 'success',
+            'message'   => 'Proyek sedang ditinjau oleh direktur.'
+         ];
+      } else {
+         $message = [
+            'status'    => 'failed',
+            'message'   => 'Oops! maaf terjadi kesalahan, silahkan periksa koneksi/jaringan anda, lalu coba lagi.'
+         ];
+      }
 
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }

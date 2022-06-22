@@ -88,7 +88,7 @@
                                             } else if ($pro->project_status == 'finish') {
                                                 echo '<span class="badge bg-inverse-success p-2">Selesai</span>';
                                             } else if ($pro->project_status == 'revision') {
-                                                echo '<span class="badge bg-inverse-warning p-2">Direvisi</span>';
+                                                echo '<span class="badge bg-inverse-warning p-2"><i class="fas fa-pencil mr-1"></i> Revisi</span>';
                                             } else if ($pro->project_status == 'review') {
                                                 echo '<span class="badge bg-inverse-purple p-2"><i class="fas fa-eye mr-1"></i> Sedang Diperiksa</span>';
                                             } else if ($pro->project_status == 'on_progress') {

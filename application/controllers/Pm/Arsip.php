@@ -5,7 +5,6 @@ class Arsip extends CI_Controller {
       parent::__construct();
       is_not_login();
       is_not_pm();
-      $this->load->model('project_model');
    }
 
    protected function tampil_arsip($limit) {

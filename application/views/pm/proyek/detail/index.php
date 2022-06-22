@@ -23,7 +23,10 @@
             </div>
 
             <div>
+
+                <?php if ($project['project_status'] != 'review') { ?>
                 <button type="button" class="btn btn-sm mb-1 btn-info" onclick="editProyek(<?= "'".$project['projectID']."'" ?>)" data-toggle="tooltip" title="Edit proyek"><i class="fa fa-pencil"></i></button>
+                <?php } ?>
 
                 <?php if ($project['project_status'] != 'review') { ?>
                 <button type="button" class="btn btn-sm mb-1 btn-danger" onclick="editProjectStatus(<?= "'".$project['projectID']."'" ?>)" data-toggle="tooltip" title="Edit status proyek"><i class="fas fa-edit"></i></button>
@@ -33,7 +36,7 @@
                 <button type="button" class="btn btn-sm mb-1 btn-purple text-white" onclick="uploadDocumentation('proyek', <?= $project['project_id'] ?>, null)" data-toggle="tooltip" title="Upload Foto Dokumentasi Proyek"><i class="fa fa-cloud-upload"></i></button>
                 <?php } ?>
 
-                <button type="button" class="btn btn-sm mb-1 btn-custom" onclick="showDocProject(<?= $project['project_id'] ?>, <?= "'".$project['project_name']."'" ?>)" data-toggle="tooltip" title="Lihat Foto Dokumentasi">
+                <button type="button" class="btn btn-sm mb-1 btn-custom" onclick="showDocProject(<?= $project['project_id'] ?>, <?= "'".$project['project_name']."'" ?>, <?= "'".$project['project_status']."'" ?>)" data-toggle="tooltip" title="Lihat Foto Dokumentasi">
                     <i class="fas fa-camera"></i> <span class="d-none d-lg-inline-block ml-1">Lihat Foto</span>
                 </button>
             </div>
@@ -57,7 +60,7 @@
             <?php } else if ($project['project_status'] == 'none' || $project['project_status'] == 'pending') { ?> 
                 <button type="button" class="btn btn-secondary btn-sm mb-1" data-toggle="tooltip" title="Klik untuk ditinjau oleh Direktur" disabled="disabled"><i class="fas fa-check"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Tinjau ke Direktur</span></button>
             <?php } else if ($project['project_status'] == 'on_progress' || $project['project_status'] == 'revision') { ?>
-                <button type="button" class="btn btn-dark btn-sm mb-1" data-toggle="tooltip" title="Klik untuk ditinjau oleh Direktur" onclick="sendTinjau(<?= $project['project_id'] ?>)"><i class="fas fa-check"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Tinjau ke Direktur</span></button>
+                <button type="button" class="btn btn-dark btn-sm mb-1" data-toggle="tooltip" title="Klik untuk ditinjau oleh Direktur" onclick="sendReview(<?= $project['project_id'] ?>, <?= $project['ID_pm'] ?>, <?= $project['ID_company'] ?>)"><i class="fas fa-check"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Tinjau ke Direktur</span></button>
             <?php } ?>
         <?php } else { ?>
             <button type="button" class="btn btn-secondary btn-sm mb-1" data-toggle="tooltip" title="Klik untuk ditinjau oleh Direktur" disabled="disabled"><i class="fas fa-check"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Tinjau ke Direktur</span></button>
@@ -185,7 +188,7 @@
                                 <?php } else { ?>
                                     <button type="button" class="btn btn-sm btn-uploadGambarProyek" onclick="uploadDocumentation('subproyek', <?= $project['project_id'] ?>, <?= $sub['subproject_id'] ?>)" data-toggle="tooltip" title="Klik untuk Upload"><i class="fa fa-cloud-upload"></i></button>
                                 <?php } ?>
-                                <button type="button" class="btn btn-sm btn-custom" onclick="showDocSubproject(<?= $project['project_id'] ?>, <?= $sub['subproject_id'] ?>, <?= "'".$sub['subproject_name']."'" ?>)" data-toggle="tooltip" title="Lihat Foto"><i class="fas fa-camera"></i></button>
+                                <button type="button" class="btn btn-sm btn-custom" onclick="showDocSubproject(<?= $project['project_id'] ?>, <?= $sub['subproject_id'] ?>, <?= "'".$sub['subproject_name']."'" ?>, <?= "'".$project['project_status']."'" ?>)" data-toggle="tooltip" title="Lihat Foto"><i class="fas fa-camera"></i></button>
                             </div>
                         </div>
 
