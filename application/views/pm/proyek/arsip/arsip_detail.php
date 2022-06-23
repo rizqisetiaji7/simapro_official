@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="col-12 col-sm-6 text-sm-right">
-        <button type="button" class="btn btn-secondary py-2 px-4 ml-1" onclick="viewDetailInfo(<?= $project->project_id ?>, <?= "'".$project->projectID."'" ?>)">Detail Proyek</button>
+        <button type="button" class="btn btn-dark btn-sm mb-1" onclick="viewDetailInfo(<?= $project->project_id ?>, <?= "'".$project->projectID."'" ?>)">Detail Proyek</button>
     </div>
 
     <!-- Info Date Deadline -->

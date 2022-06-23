@@ -7,6 +7,14 @@ class Riwayat extends CI_Controller {
       is_not_pm();
 	}
 
+   protected function tampil_subproyek($project_id) {
+      return $this->ppm->get_subprojectpm($project_id)->result_array();
+   }
+
+   protected function detail_proyek($comp_id, $project_code, $pm_id) {
+      return $this->ppm->get_projectpm_detail($comp_id, $project_code, $pm_id)->row();
+   }
+
 	public function index() {
       $data = [
          'app_name'  => APP_NAME,
@@ -39,5 +47,42 @@ class Riwayat extends CI_Controller {
       }
       $data['filtered'] = $query;
       $this->load->view('pm/proyek/riwayat/filtered_data', $data);
+   }
+
+   public function detail($comp_id, $project_code) {
+      $project = $this->detail_proyek($comp_id, $project_code, user_login()->user_id);
+      $subproject = $this->tampil_subproyek($project->project_id);
+      $docs  = $this->ppm->get_documentation($project->project_id, NULL);
+      
+      $data = [
+         'app_name'  => APP_NAME,
+         'author'    => APP_AUTHOR,
+         'title'     => '(PM) Proyek Detail',
+         'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
+         'page'      => 'proyek_detail',
+         'docs'      => $docs
+      ];
+
+       $data['project'] = [
+         'project_id'            => $project->project_id,
+         'ID_pm'                 => $project->user_id,
+         'ID_company'            => $project->company_id,
+         'projectID'             => $project->projectID,
+         'project_name'          => $project->project_name,
+         'project_thumbnail'     => $project->project_thumbnail,
+         'project_description'   => $project->project_description,
+         'project_start'         => $project->project_start,
+         'project_deadline'      => $project->project_deadline,
+         'project_status'        => $project->project_status,
+         'project_progress'      => $project->project_progress,
+         'project_address'       => $project->project_address,
+         'project_archive'       => $project->project_archive,
+         'user_role'             => $project->user_role,
+         'user_fullname'         => $project->user_fullname,
+         'user_profile'          => $project->user_profile,
+         'comp_name'             => $project->comp_name,
+         'subproject'            => $subproject
+      ];
+      $this->theme->view('templates/main', 'pm/proyek/riwayat/detail', $data);
    }
 }
