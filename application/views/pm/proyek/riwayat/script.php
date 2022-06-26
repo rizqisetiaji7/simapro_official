@@ -55,12 +55,95 @@
       });
     });
 
-    modal.on('hidden.bs.modal', function() {
+
+    // Detail Project Page
+   function detailProject(project_id, project_code) {
+      title.text('Detail Proyek');
+      modalDialog.addClass('modal-xl');
+      modalFooter.addClass('d-none');
+      $.ajax({
+         url: `<?= site_url('pm/riwayat/info_detail_proyek') ?>`,
+         method: 'POST',
+         dataType: 'html',
+         cache: false,
+         data: {
+            project_id: project_id,
+            project_code: project_code
+         },
+         beforeSend: function() {
+            modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
+         },
+         success: function(data) {
+            modalBody.empty();
+            modalBody.html(data);
+         }
+      });
+      modal.modal({
+         show: true,
+         backdrop: 'static'
+      });
+   } 
+
+   function detail_subProject(project_id, subproject_id) {
+      title.text('Detail Sub-Proyek');
+      modalFooter.addClass('d-none');
+      $.ajax({
+         url: `<?= site_url('pm/riwayat/info_detail_subproyek') ?>`,
+         method: 'POST',
+         dataType: 'html',
+         cache: false,
+         data: {
+            project_id: project_id,
+            subproject_id: subproject_id
+         },
+         beforeSend: function() {
+            modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
+         },
+         success: function(data) {
+            modalBody.empty();
+            modalBody.html(data);
+         }
+      });
+      modal.modal({
+         show: true,
+         backdrop: 'static'
+      });
+   }
+
+   function showPhotos(project_id, subproject_id, subproject_name) {
+      title.html(`Dokumentasi Proyek: <span class="text-secondary small">${subproject_name}</span>`);
+      modalDialog.addClass('modal-lg');
+      modalFooter.addClass('d-none');
+      $.ajax({
+         url: `<?= site_url('pm/riwayat/tampil_foto') ?>`,
+         method: 'POST',
+         dataType: 'html',
+         cache: false,
+         data: {
+            project_id: project_id,
+            subproject_id: subproject_id
+         },
+         beforeSend: function() {
+            modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
+         },
+         success: function(data) {
+            modalBody.empty();
+            modalBody.html(data);
+         }
+      });
+      modal.modal({
+         show: true,
+         backdrop: 'static'
+      });
+   }
+
+   modal.on('hidden.bs.modal', function() {
       title.empty();
       modalDialog.removeClass('modal-lg');
+      modalDialog.removeClass('modal-xl');
       modalBody.empty();
       modalFooter.removeClass('d-none');
       formModal.removeAttr('action');
       btnSubmit.text('Simpan');
-    });
+   });
 </script>

@@ -100,7 +100,7 @@ class Arsip extends CI_Controller {
       $project_id = $this->input->post('project_id', TRUE);
       $project_code_ID = $this->input->post('project_code', TRUE);
       $data['docs'] = $this->ppm->get_documentation($project_id, NULL);
-      $data['project'] = $this->ppm->detail_pmarchive($project_id, $project_code_ID, user_login()->user_id)->row();
+      $data['project'] = $this->ppm->detail_pm_project($project_id, $project_code_ID, user_login()->user_id)->row();
       $this->load->view('pm/proyek/arsip/info_detail_proyek', $data);
    }
 

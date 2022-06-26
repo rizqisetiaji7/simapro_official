@@ -39,7 +39,7 @@
 			cache: false,
 			data: {project_code_ID: project_code},
 			beforeSend: function() {
-				modalBody.html('<p>Memuat konten...</p>');
+				modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
 			},
 			success: function(data) {
 				modalBody.empty();
@@ -60,7 +60,7 @@
 			cache: false,
 			data: { project_code: project_code },
 			beforeSend: function() {
-				modalBody.html(`<p class="text-secondary">Memuat konten...</p>`);
+				modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
 			},
 			success: function(data) {
 				modalBody.empty();
@@ -86,7 +86,7 @@
 				project_status: project_status
 			},
 			beforeSend: function() {
-				modalBody.html('<p>Memuat konten...</p>');
+				modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
 			},
 			success: function(data) {
 				modalBody.empty();
@@ -117,7 +117,7 @@
 				project_status: project_status
 			},
 			beforeSend: function() {
-				modalBody.html('<p>Memuat konten...</p>');
+				modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
 			},
 			success: function(data) {
 				modalBody.empty();

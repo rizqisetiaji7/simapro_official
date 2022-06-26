@@ -27,7 +27,7 @@
                 	<i class="fa fa-pencil"></i> <span class="d-none d-lg-inline-block ml-1">Revisi</span>
                 </button>
                 
-                <button type="button" class="btn btn-sm mb-1 btn-custom" onclick="showDocProject(<?= $project['project_id'] ?>, <?= "'".$project['project_name']."'" ?>, <?= "'".$project['project_status']."'" ?>)" data-toggle="tooltip" title="Lihat Foto Dokumentasi">
+                <button type="button" class="btn btn-sm mb-1 btn-custom" onclick="showPhotos(<?= $project['project_id'] ?>, '',<?= "'".$project['project_name']."'" ?>)" data-toggle="tooltip" title="Lihat Foto Dokumentasi">
                     <i class="fas fa-camera"></i> <span class="d-none d-lg-inline-block ml-1">Lihat Foto</span>
                 </button>
             </div>
@@ -36,7 +36,7 @@
 
     <div class="col-12 col-sm-4 text-sm-right">
         <a href="<?= site_url('pm/chat') ?>" class="btn btn-primary mb-1 btn-sm" style="position: relative;" data-toggle="tooltip" title="Kirim Pesan"><i class="fa-solid fa-message"></i></a>
-        <button type="button" class="btn btn-dark mb-1 btn-sm" data-toggle="tooltip" title="Buat Sub-Proyek" onclick="add_subProject(<?= $project['project_id'] ?>)"><i class="fas fa-plus"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Detail Proyek</span></button>
+        <button type="button" class="btn btn-dark mb-1 btn-sm" data-toggle="tooltip" title="Buat Sub-Proyek" onclick="detailProject(<?= $project['project_id'] ?>, <?= "'".$project['projectID']."'" ?>)"><i class="fas fa-plus"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Detail Proyek</span></button>
     </div>
 
     <div class="col-12">
@@ -122,7 +122,7 @@
                                 <?php } ?>
                             </div>
                             <div>
-                            	<button type="button" class="btn btn-sm btn-custom" onclick="showDocSubproject(<?= $project['project_id'] ?>, <?= $sub['subproject_id'] ?>, <?= "'".$sub['subproject_name']."'" ?>, <?= "'".$project['project_status']."'" ?>)" data-toggle="tooltip" title="Lihat Foto"><i class="fas fa-camera mr-1"></i> Foto</button>
+                            	<button type="button" class="btn btn-sm btn-custom" onclick="showPhotos(<?= $project['project_id'] ?>, <?= $sub['subproject_id'] ?>, <?= "'".$sub['subproject_name']."'" ?>)" data-toggle="tooltip" title="Lihat Foto"><i class="fas fa-camera mr-1"></i> Foto</button>
                             </div>
                         </div>
 

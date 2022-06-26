@@ -7,8 +7,8 @@ class Riwayat extends CI_Controller {
       is_not_pm();
 	}
 
-   protected function tampil_subproyek($project_id) {
-      return $this->ppm->get_subprojectpm($project_id)->result_array();
+   protected function tampil_subproyek($project_id, $subproject_id=NULL) {
+      return $this->ppm->get_subprojectpm($project_id, $subproject_id);
    }
 
    protected function detail_proyek($comp_id, $project_code, $pm_id) {
@@ -51,7 +51,7 @@ class Riwayat extends CI_Controller {
 
    public function detail($comp_id, $project_code) {
       $project = $this->detail_proyek($comp_id, $project_code, user_login()->user_id);
-      $subproject = $this->tampil_subproyek($project->project_id);
+      $subproject = $this->tampil_subproyek($project->project_id)->result_array();
       $docs  = $this->ppm->get_documentation($project->project_id, NULL);
       
       $data = [
@@ -84,5 +84,28 @@ class Riwayat extends CI_Controller {
          'subproject'            => $subproject
       ];
       $this->theme->view('templates/main', 'pm/proyek/riwayat/detail', $data);
+   }
+
+   public function info_detail_proyek() {
+      $project_id = $this->input->post('project_id', TRUE);
+      $project_code_ID = $this->input->post('project_code', TRUE);
+      $data['docs'] = $this->ppm->get_documentation($project_id, NULL);
+      $data['project'] = $this->ppm->detail_pm_project($project_id, $project_code_ID, user_login()->user_id)->row();
+      $this->load->view('pm/proyek/riwayat/info_detail_proyek', $data);
+   }
+
+   public function info_detail_subproyek() {
+      $project_id = $this->input->post('project_id', TRUE);
+      $subproject_id = $this->input->post('subproject_id', TRUE);
+      $data['subproject'] = $this->tampil_subproyek($project_id, $subproject_id)->row();
+      $this->load->view('pm/proyek/riwayat/info_detail_subproyek', $data);
+   }
+
+   public function tampil_foto() {
+      $post = $this->input->post(NULL, TRUE);
+      $project_id = $post['project_id'];
+      $subproject_id = $post['subproject_id'] == '' ? NULL : $post['subproject_id'];
+      $data['docs'] = $this->ppm->get_documentation($project_id, $subproject_id);
+      $this->load->view('pm/proyek/riwayat/foto_dokumentasi', $data);
    }
 }
