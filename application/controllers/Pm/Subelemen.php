@@ -7,7 +7,7 @@ class Subelemen extends CI_Controller {
       is_not_pm();
    }
 
-   private function _update_progress_by_status($status, $current_progress) {
+   private function _update_progress($status, $current_progress) {
       $result = '';
       if ($status == 'none' || $status == 'pending') {
          $result = $current_progress;
@@ -19,7 +19,7 @@ class Subelemen extends CI_Controller {
       return $result;
    }
 
-   private function _rule_subelemen_proyek() {
+   private function _rule_subelemen() {
       $config = [
          [
             'field'  => 'project_task_name',
@@ -75,7 +75,7 @@ class Subelemen extends CI_Controller {
       $project_id = $post['project_id'];
       $subproject_id = $post['ID_subproject'];
 
-      $this->form_validation->set_rules($this->_rule_subelemen_proyek());
+      $this->form_validation->set_rules($this->_rule_subelemen());
       if ($this->form_validation->run() == FALSE) {
          $message = [
             'status'    => 'validation_error',
@@ -159,7 +159,7 @@ class Subelemen extends CI_Controller {
       $subproject_id = $post['ID_subproject'];
       $subelemen_id = $post['project_task_id'];
 
-      $this->form_validation->set_rules($this->_rule_subelemen_proyek());
+      $this->form_validation->set_rules($this->_rule_subelemen());
       if ($this->form_validation->run() == FALSE) {
          $message = [
             'status'    => 'validation_error',
@@ -170,7 +170,7 @@ class Subelemen extends CI_Controller {
             ]
          ];
       } else {
-         $progress = $this->_update_progress_by_status($post['project_task_status'], $post['current_progress']);
+         $progress = $this->_update_progress($post['project_task_status'], $post['current_progress']);
          $up_subelemen = $this->bm->update('tb_project_task', [
             'ID_priority'           => $post['task_priority_level'],
             'project_task_name'     => $post['project_task_name'],

@@ -14,7 +14,7 @@ class Profile extends CI_Controller {
    private function _file_upload_config($filePath = './assets/img') {
       $config = [
          'upload_path'   => $filePath,
-         'allowed_types' => 'jpg|jpeg|png|svg',
+         'allowed_types' => 'jpg|jpeg|png',
          'max_size'      => 4096, // 4MB
          'encrypt_name'  => TRUE,
          'remove_spaces' => TRUE

@@ -15,8 +15,7 @@ class Perusahaan extends CI_Controller {
    private function _file_upload_config($filePath = './assets/img') {
       $config = [
          'upload_path'   => $filePath,
-         'allowed_types' => 'jpg|jpeg|png|svg',
-         'max_size'      => 4096, // 4MB
+         'allowed_types' => 'jpg|jpeg|png',
          'encrypt_name'  => TRUE,
          'remove_spaces' => TRUE
       ];
@@ -65,14 +64,17 @@ class Perusahaan extends CI_Controller {
       return $config;
    }
 
+   private function _tampil_data() {
+      return $this->company_model->get_company(user_login()->user_id)->row();
+   }
+
    public function index() {
-      $getMainComp = $this->company_model->get_company(user_login()->user_id)->row();
       $data = [
          'app_name'        => APP_NAME,
          'author'          => APP_AUTHOR,
          'title'           => 'Perusahaan',
          'desc'            => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
-         'main_comp'       => $getMainComp,
+         'main_comp'       => $this->_tampil_data(),
          'page'            => 'perusahaan'
       ];
       $this->theme->view('templates/main', 'direktur/perusahaan/index', $data);
@@ -130,13 +132,13 @@ class Perusahaan extends CI_Controller {
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
-   function upload_form_logo() {
+   public function upload_form_logo() {
       $company_code = $this->input->post('company_code', TRUE);
       $data['company'] = $this->bm->get($this->table, '*', ['comp_code' => $company_code])->row();
       $this->load->view('direktur/profile/upload_logo_form', $data);
    }
 
-   function upload_logo_company() {
+   public function upload_logo_company() {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
 
@@ -147,9 +149,10 @@ class Perusahaan extends CI_Controller {
             if ($post['old_logo'] != 'default-placeholder320x320.png') {
                unlink('./uploads/company/'.$post['old_logo']);
             }
-
+            $photo = $this->upload->data();
+            resize_image('./uploads/company/'.$photo['file_name']);
             $data = [
-               'comp_logo' => $this->upload->data('file_name'),
+               'comp_logo' => $photo['file_name'],
                'updated'   => date('Y-m-d H:i:s', now('Asia/Jakarta'))
             ];
 

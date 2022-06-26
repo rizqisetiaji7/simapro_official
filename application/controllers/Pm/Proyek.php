@@ -48,6 +48,25 @@ class Proyek extends CI_Controller {
       return $config;
    }
 
+   protected function _getMonthID($month_num) {
+      $months = [
+         '01'  => 'Januari',
+         '02'  => 'Februari',
+         '03'  => 'Maret',
+         '04'  => 'April',
+         '05'  => 'Mei',
+         '06'  => 'Juni',
+         '07'  => 'Juli',
+         '08'  => 'Agustus',
+         '09'  => 'September',
+         '10'  => 'Oktober',
+         '11'  => 'November',
+         '12'  => 'Desember'
+      ];
+      $m = $months[$month_num];
+      return $m;
+   }
+
    protected function tampil_proyek($limit) {
       $comp_id = user_company()->company_id;
       $pm_id = user_company()->user_id;
@@ -385,25 +404,6 @@ class Proyek extends CI_Controller {
             window.location = `".site_url('pm/riwayat')."`;
          </script>";
       }
-   }
-
-   protected function _getMonthID($month_num) {
-      $months = [
-         '01'  => 'Januari',
-         '02'  => 'Februari',
-         '03'  => 'Maret',
-         '04'  => 'April',
-         '05'  => 'Mei',
-         '06'  => 'Juni',
-         '07'  => 'Juli',
-         '08'  => 'Agustus',
-         '09'  => 'September',
-         '10'  => 'Oktober',
-         '11'  => 'November',
-         '12'  => 'Desember'
-      ];
-      $m = $months[$month_num];
-      return $m;
    }
    // ==================================================================
 

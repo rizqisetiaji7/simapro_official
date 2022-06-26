@@ -22,30 +22,6 @@ class Profile extends CI_Controller {
       return $config;
    }
 
-   private function _rules_password() {
-      $config = [
-         [
-            'field'  => 'new_password',
-            'label'  => 'Password baru',
-            'rules'  => 'trim|required|min_length[6]',
-            'errors' => [
-               'required'    => '{field} tidak boleh kosong.',
-               'min_length'  => '{field} minimal terdiri dari 6 karakter.'
-            ]
-         ],
-         [
-            'field'  => 'confirm_password',
-            'label'  => 'Konfirmasi Password',
-            'rules'  => 'trim|required|matches[new_password]',
-            'errors' => [
-               'required' => '{field} tidak boleh kosong.',
-               'matches'  => '{field} tidak valid, silahkan isi dengan benar.'
-            ]
-         ]
-      ];
-      return $config;
-   }
-
    private function _rules() {
       $config = [
          [
@@ -77,6 +53,30 @@ class Profile extends CI_Controller {
          ]
       ];
 
+      return $config;
+   }
+
+   private function _rules_password() {
+      $config = [
+         [
+            'field'  => 'new_password',
+            'label'  => 'Password baru',
+            'rules'  => 'trim|required|min_length[6]',
+            'errors' => [
+               'required'    => '{field} tidak boleh kosong.',
+               'min_length'  => '{field} minimal terdiri dari 6 karakter.'
+            ]
+         ],
+         [
+            'field'  => 'confirm_password',
+            'label'  => 'Konfirmasi Password',
+            'rules'  => 'trim|required|matches[new_password]',
+            'errors' => [
+               'required' => '{field} tidak boleh kosong.',
+               'matches'  => '{field} tidak valid, silahkan isi dengan benar.'
+            ]
+         ]
+      ];
       return $config;
    }
 
