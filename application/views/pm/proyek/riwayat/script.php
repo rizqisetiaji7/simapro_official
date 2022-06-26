@@ -151,7 +151,7 @@
       }).then((res) => {
          if (res.isConfirmed) {
             $.ajax({
-               url: `<?= site_url('pm/manajemen_proyek/revisi_proyek') ?>`,
+               url: `<?= site_url('pm/proyek/revisi_proyek') ?>`,
                dataType: 'json',
                method: 'POST',
                cache: false,

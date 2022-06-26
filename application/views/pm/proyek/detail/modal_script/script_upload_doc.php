@@ -6,7 +6,7 @@
 	
 	// Upload Sub Proyek
 	function uploadDocumentation(type_pro = 'proyek', project_id, subproject_id = null) {
-		formUpload.attr('action', `<?= site_url('pm/manajemen_proyek/upload_dokumentasi') ?>`);
+		formUpload.attr('action', `<?= site_url('pm/foto/upload_foto') ?>`);
 		if (type_pro == 'proyek') {
 			$('#project_type_pro').attr('value', 'proyek');
 		} else if (type_pro == 'subproyek') {

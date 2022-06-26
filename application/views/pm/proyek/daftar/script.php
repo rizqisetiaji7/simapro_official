@@ -32,7 +32,7 @@
 	// ADD NEW PROJECT
 	function addNewProject() {
 		title.text('Tambah Proyek Baru');
-		formModal.attr('action', `<?= site_url('pm/manajemen_proyek/tambah_proyek') ?>`);
+		formModal.attr('action', `<?= site_url('pm/proyek/tambah_proyek') ?>`);
 		$.ajax({
 			url: `<?= site_url('pm/proyek/form_tambah_proyek') ?>`,
 			dataType: 'html',

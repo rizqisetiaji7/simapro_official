@@ -7,7 +7,10 @@
 				</a>
 
 				<?php if ($project_status != 'review') { ?>
-					<button class="btn btn-sm btn-danger btnDeletePhoto" data-toggle="tooltip" title="Hapus foto" onclick="delete_photo_project(<?= $doc->photo_id ?>, <?= $doc->proj_ID ?>, <?= "'".$doc->url."'" ?>, <?= "'".$proj_name."'" ?>)">
+					<?php 
+						$subproject_id = $doc->subproj_ID == null ? 0 : $doc->subproj_ID;
+					?>
+					<button class="btn btn-sm btn-danger btnDeletePhoto" data-toggle="tooltip" title="Hapus foto" onclick="delete_photo(<?= $doc->photo_id ?>, <?= $doc->proj_ID ?>, <?= $subproject_id ?>, <?= "'".$doc->url."'" ?>, <?= "'".$proj_name."'" ?>, <?= "'".$proj_type."'" ?>, <?= "'".$project_status."'" ?>)">
 						<i class="fas fa-trash"></i>
 					</button>
 				<?php } ?>
