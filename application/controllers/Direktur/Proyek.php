@@ -293,9 +293,7 @@ class Proyek extends CI_Controller {
 
    function detail_proyek($company_id, $project_code) {
       $project = $this->project_model->get_project_detail($company_id, $project_code)->row();
-      $subproject = $this->project_model->get_subproject([
-         'ID_project' => $project->project_id
-      ]);
+      $subproject = $this->project_model->get_subproject($project->project_id);
       $docs = $this->project_model->get_documentation_project($project->project_id);
 
       $data = [
