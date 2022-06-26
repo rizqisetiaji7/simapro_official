@@ -63,7 +63,7 @@ class Riwayat extends CI_Controller {
          'docs'      => $docs
       ];
 
-       $data['project'] = [
+      $data['project'] = [
          'project_id'            => $project->project_id,
          'ID_pm'                 => $project->user_id,
          'ID_company'            => $project->company_id,

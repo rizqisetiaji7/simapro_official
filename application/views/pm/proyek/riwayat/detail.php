@@ -1,9 +1,3 @@
-<!-- <div class="row">
-	<div class="col-12">
-		<?php var_dump($project) ?>	
-	</div>
-</div> -->
-
 <div class="row">
     <div class="col-12 col-sm-8">
         <div class="d-flex flex-row align-items-start justify-content-between justify-content-sm-start">

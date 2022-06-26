@@ -45,7 +45,7 @@
       }).then((result) => {
       	if (result.isConfirmed) {
       		$.ajax({
-					url: `<?= site_url('direktur/proyek/hapus_arsip') ?>`,
+					url: `<?= site_url('direktur/arsip/hapus_arsip') ?>`,
 					method: 'POST',
 					dataType: 'json',
 					cache: false,

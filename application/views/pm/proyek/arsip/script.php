@@ -21,14 +21,42 @@
 				project_code: project_code_ID
 			},
 			beforeSend: function() {
-				modalBody.html(`Memuat data...`);
+				modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
 			},
 			success: function(data) {
+				modalBody.empty();
 				modalBody.html(data);
 			}
 		});
 		modal.modal('show');
 	}
+
+	// Tampil Detail Sub-Proyek
+	function detail_subProject(project_id, subproject_id) {
+      title.text('Detail Sub-Proyek');
+      modalFooter.addClass('d-none');
+      $.ajax({
+         url: `<?= site_url('pm/arsip/info_detail_subproyek') ?>`,
+         method: 'POST',
+         dataType: 'html',
+         cache: false,
+         data: {
+            project_id: project_id,
+            subproject_id: subproject_id
+         },
+         beforeSend: function() {
+            modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
+         },
+         success: function(data) {
+            modalBody.empty();
+            modalBody.html(data);
+         }
+      });
+      modal.modal({
+         show: true,
+         backdrop: 'static'
+      });
+   }
 
 	// Hapus Archive (Mengembalikan status proyek menjadi ke daftar proyek)
 	function removeArchive(projectID) {
@@ -45,35 +73,35 @@
       }).then((result) => {
       	if (result.isConfirmed) {
       		$.ajax({
-					url: `<?= site_url('pm/arsip/hapus_arsip') ?>`,
-					method: 'POST',
-					dataType: 'json',
-					cache: false,
-					data: { project_ID: projectID },
-					success: function(data) {
-						if (data.status == 'success') {
-							Swal.fire({
-				            icon: 'success',
-				            title: 'Berhasil',
-				            text: `${data.message}`,
-				            showConfirmButton: false,
-				            timer: 2000
-				         }).then((result) => {
-				         	window.location.reload();
-				         });
-						} else if (data.status == 'failed') {
-							Swal.fire({
-				            icon: 'error',
-				            title: 'Gagal',
-				            text: `${data.message}`,
-				            showConfirmButton: false,
-				            timer: 2000,
-				         }).then((result) => {
-				         	window.location.reload();
-				         });
-						}
+				url: `<?= site_url('pm/arsip/hapus_arsip') ?>`,
+				method: 'POST',
+				dataType: 'json',
+				cache: false,
+				data: { project_ID: projectID },
+				success: function(data) {
+					if (data.status == 'success') {
+						Swal.fire({
+			            icon: 'success',
+			            title: 'Berhasil',
+			            text: `${data.message}`,
+			            showConfirmButton: false,
+			            timer: 2000
+			         }).then((result) => {
+			         	window.location.reload();
+			         });
+					} else if (data.status == 'failed') {
+						Swal.fire({
+			            icon: 'error',
+			            title: 'Gagal',
+			            text: `${data.message}`,
+			            showConfirmButton: false,
+			            timer: 2000,
+			         }).then((result) => {
+			         	window.location.reload();
+			         });
 					}
-				});
+				}
+			});
       	}
       });
 	}

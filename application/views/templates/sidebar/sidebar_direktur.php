@@ -16,7 +16,7 @@
                     <ul style="display: none;">
                         <li><a href="<?= site_url('direktur/proyek') ?>">Daftar proyek</a></li>
                         <li><a href="<?= site_url('direktur/proyek/riwayat') ?>">Riwayat</a></li>
-                        <li><a href="<?= site_url('direktur/proyek/arsip') ?>">Arsip</a></li>
+                        <li><a href="<?= site_url('direktur/arsip') ?>">Arsip</a></li>
                     </ul>
                 </li>
 

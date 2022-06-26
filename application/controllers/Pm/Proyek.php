@@ -48,25 +48,6 @@ class Proyek extends CI_Controller {
       return $config;
    }
 
-   protected function _getMonthID($month_num) {
-      $months = [
-         '01'  => 'Januari',
-         '02'  => 'Februari',
-         '03'  => 'Maret',
-         '04'  => 'April',
-         '05'  => 'Mei',
-         '06'  => 'Juni',
-         '07'  => 'Juli',
-         '08'  => 'Agustus',
-         '09'  => 'September',
-         '10'  => 'Oktober',
-         '11'  => 'November',
-         '12'  => 'Desember'
-      ];
-      $m = $months[$month_num];
-      return $m;
-   }
-
    protected function tampil_proyek($limit) {
       $comp_id = user_company()->company_id;
       $pm_id = user_company()->user_id;
@@ -360,7 +341,7 @@ class Proyek extends CI_Controller {
       } else if ($post['bulan_awal'] != '' && $post['bulan_akhir'] != ''){
          $ym_awal = $post['tahun_proyek'].'-'.$post['bulan_awal'];
          $ym_akhir = $post['tahun_proyek'].'-'.$post['bulan_akhir'];
-         $bulan = $this->_getMonthID($post['bulan_awal']).' s/d '.$this->_getMonthID($post['bulan_akhir']).' '.$post['tahun_proyek'];
+         $bulan = getMonthID($post['bulan_awal']).' s/d '.getMonthID($post['bulan_akhir']).' '.$post['tahun_proyek'];
          $query = $this->ppm->get_riwayat_filter($ym_awal, $ym_akhir, user_company()->company_id, user_login()->user_id);
       }
 

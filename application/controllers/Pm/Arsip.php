@@ -13,8 +13,8 @@ class Arsip extends CI_Controller {
       return $this->ppm->get_pm_project_archive($comp_id, $pm_id, $limit)->result();
    }
 
-   protected function tampil_subproyek($project_id) {
-      return $this->ppm->get_subprojectpm($project_id)->result();
+   protected function tampil_subproyek($project_id, $subproject_id = NULL) {
+      return $this->ppm->get_subprojectpm($project_id, $subproject_id);
    }
 
    protected function detail_proyek($comp_id, $project_code, $pm_id) {
@@ -36,16 +36,36 @@ class Arsip extends CI_Controller {
    public function detail($company_id, $project_code_ID) {
       // Get Archived Project
       $project = $this->detail_proyek($company_id, $project_code_ID, user_login()->user_id);
-      $subproject = $this->tampil_subproyek( $project->project_id);
+      $subproject = $this->tampil_subproyek($project->project_id)->result_array();
+      $docs = $this->ppm->get_documentation($project->project_id, NULL);
 
       $data = [
          'app_name'     => APP_NAME,
          'author'       => APP_AUTHOR,
          'title'        => '(Direktur) Detail Arsip',
          'desc'         => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
-         'project'      => $project,
-         'subproject'   => $subproject,
          'page'         => 'detail_arsip_proyek'
+      ];
+
+      $data['project'] = [
+         'project_id'            => $project->project_id,
+         'ID_pm'                 => $project->user_id,
+         'ID_company'            => $project->company_id,
+         'projectID'             => $project->projectID,
+         'project_name'          => $project->project_name,
+         'project_thumbnail'     => $project->project_thumbnail,
+         'project_description'   => $project->project_description,
+         'project_start'         => $project->project_start,
+         'project_deadline'      => $project->project_deadline,
+         'project_status'        => $project->project_status,
+         'project_progress'      => $project->project_progress,
+         'project_address'       => $project->project_address,
+         'project_archive'       => $project->project_archive,
+         'user_role'             => $project->user_role,
+         'user_fullname'         => $project->user_fullname,
+         'user_profile'          => $project->user_profile,
+         'comp_name'             => $project->comp_name,
+         'subproject'            => $subproject
       ];
       $this->theme->view('templates/main', 'pm/proyek/arsip/arsip_detail', $data);
    }
@@ -108,5 +128,12 @@ class Arsip extends CI_Controller {
       $post = $this->input->post(NULL, TRUE);
       $data['docs'] = $this->ppm->get_documentation($post['project_id'], $post['subproject_id']);
       $this->load->view('pm/proyek/arsip/foto_subproyek', $data);
+   }
+
+   function info_detail_subproyek() {
+      $project_id = $this->input->post('project_id', TRUE);
+      $subproject_id = $this->input->post('subproject_id', TRUE);
+      $data['subproject'] = $this->tampil_subproyek($project_id, $subproject_id)->row();
+      $this->load->view('pm/proyek/arsip/info_detail_subproyek', $data);
    }
 }

@@ -111,6 +111,25 @@ function dateTimeIDN($datetime, $setDay = FALSE, $setTime = FALSE) {
 	return $output;
 }
 
+function getMonthID($month_num) {
+	$months = [
+		'01'  => 'Januari',
+		'02'  => 'Februari',
+		'03'  => 'Maret',
+		'04'  => 'April',
+		'05'  => 'Mei',
+		'06'  => 'Juni',
+		'07'  => 'Juli',
+		'08'  => 'Agustus',
+		'09'  => 'September',
+		'10'  => 'Oktober',
+		'11'  => 'November',
+		'12'  => 'Desember'
+	];
+	$m = $months[$month_num];
+	return $m;
+}
+
 function numberIDN($number=0, $prefix=FALSE, $pref_id = 'Rp') {
 	if ($prefix == FALSE) {
 		$format = number_format($number,0,',','.');

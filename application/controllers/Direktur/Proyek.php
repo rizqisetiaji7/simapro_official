@@ -243,7 +243,7 @@ class Proyek extends CI_Controller {
       } else if ($post['bulan_awal'] != '' && $post['bulan_akhir'] != ''){
          $ym_awal = $post['tahun_proyek'].'-'.$post['bulan_awal'];
          $ym_akhir = $post['tahun_proyek'].'-'.$post['bulan_akhir'];
-         $bulan = $this->_getMonthID($post['bulan_awal']).' s/d '.$this->_getMonthID($post['bulan_akhir']).' '.$post['tahun_proyek'];
+         $bulan = getMonthID($post['bulan_awal']).' s/d '.getMonthID($post['bulan_akhir']).' '.$post['tahun_proyek'];
          $query = $this->project_model->get_riwayat_filter($ym_awal, $ym_akhir, user_company()->company_id);
       }
 
@@ -289,84 +289,10 @@ class Proyek extends CI_Controller {
       }
    }
 
-   protected function _getMonthID($month_num) {
-      $months = [
-         '01'  => 'Januari',
-         '02'  => 'Februari',
-         '03'  => 'Maret',
-         '04'  => 'April',
-         '05'  => 'Mei',
-         '06'  => 'Juni',
-         '07'  => 'Juli',
-         '08'  => 'Agustus',
-         '09'  => 'September',
-         '10'  => 'Oktober',
-         '11'  => 'November',
-         '12'  => 'Desember'
-      ];
-      $m = $months[$month_num];
-      return $m;
-   }
-
    // ==================================================================
 
-   function arsip_proyek() {
-      $archived = $this->project_model->get_project_archive(user_company()->company_id)->result();
-      $data = [
-         'app_name'  => APP_NAME,
-         'author'    => APP_AUTHOR,
-         'title'     => '(Direktur) Arsip Proyek',
-         'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
-         'archived'  => $archived,
-         'page'      => 'arsip_proyek'
-      ];
-      $this->theme->view('templates/main', 'direktur/proyek/arsip/index', $data);
-   }
-
-   function arsip_process() {
-      $message = [];
-      $code_id = urldecode(base64_decode($this->input->post('project_code', TRUE)));
-      $this->bm->update($this->tb_project, ['project_archive' => 1], ['project_code_ID' => $code_id]);
-      if ($this->db->affected_rows() > 0) {
-         $message = [
-            'status'    => 'success',
-            'message'   => 'Proyek telah berhasil diarsipkan.'
-         ];
-      } else {
-         $message = [
-            'status'    => 'failed',
-            'message'   => 'Oops! Proyek gagal disimpan sebagai arsip'
-         ];
-      }
-      $this->output->set_content_type('application/json')->set_output(json_encode($message));
-   }
-
-   function hapus_arsip() {
-      $message = [];
-      $project_ID = $this->input->post('project_ID', TRUE);
-      $this->bm->update($this->tb_project, [
-         'project_archive' => '0', 
-         'project_status' => 'on_progress'
-      ], [
-         'project_code_ID' => $project_ID
-      ]);
-
-      if ($this->db->affected_rows() > 0) {
-         $message = [
-            'status'    => 'success',
-            'message'   => 'Proyek telah berhasil dikembalikan ke daftar proyek.'
-         ];
-      } else {
-         $message = [
-            'status'    => 'failed',
-            'message'   => 'Oops! Proses gagal, silahkan coba lagi!'
-         ];
-      }
-      $this->output->set_content_type('application/json')->set_output(json_encode($message));
-   }
-
-   function detail_proyek($company_id, $project_code_ID) {
-      $project = $this->project_model->get_project_detail($company_id, $project_code_ID)->row();
+   function detail_proyek($company_id, $project_code) {
+      $project = $this->project_model->get_project_detail($company_id, $project_code)->row();
       $subproject = $this->project_model->get_subproject([
          'ID_project' => $project->project_id
       ]);

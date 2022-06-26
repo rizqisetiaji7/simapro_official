@@ -59,13 +59,17 @@ class Project_model extends CI_Model {
 		return $this->db->get();
 	}
 
-	public function detail_archive($project_id, $project_code) {
+	public function detail_archive($project_id, $project_code, $limit=FALSE) {
 		$this->db->from($this->tb_project);
 		$this->db->join($this->tb_users, 'tb_users.user_id=tb_project.ID_pm', 'left');
 		$this->db->where([
 			'tb_project.project_id' 		=> $project_id,
 			'tb_project.project_code_ID' 	=> $project_code,
 		]);
+		if ($limit != FALSE) {
+			$this->db->limit($limit, 0);
+		}
+		$this->db->order_by('project_id DESC');
 		return $this->db->get();
 	}
 
