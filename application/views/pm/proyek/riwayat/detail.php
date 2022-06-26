@@ -23,7 +23,7 @@
             </div>
 
             <div>
-                <button type="button" class="btn btn-sm mb-1 btn-success" onclick="revisiProyek(<?= "'".$project['projectID']."'" ?>)" data-toggle="tooltip" title="Revisi ulang proyek ni">
+                <button type="button" class="btn btn-sm mb-1 btn-success" onclick="revisiProyek(<?= "'".$project['project_id']."'" ?>)" data-toggle="tooltip" title="Revisi ulang proyek ni">
                 	<i class="fa fa-pencil"></i> <span class="d-none d-lg-inline-block ml-1">Revisi</span>
                 </button>
                 

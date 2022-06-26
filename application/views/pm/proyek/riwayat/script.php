@@ -137,6 +137,56 @@
       });
    }
 
+   function revisiProyek(project_id) {
+      Swal.fire({
+         icon: 'warning',
+         html: `
+            <h4>Revisi proyek?</h4>
+            <p class="text-muted">Anda akan melakukan revisi terhadap proyek ini.</p>
+         `,
+         confirmButtonText: 'Ya, Revisi Sekarang!',
+         confirmButtonColor: '#28a745',
+         showCancelButton: true,
+         cancelButtonText: 'Batal'
+      }).then((res) => {
+         if (res.isConfirmed) {
+            $.ajax({
+               url: `<?= site_url('pm/manajemen_proyek/revisi_proyek') ?>`,
+               dataType: 'json',
+               method: 'POST',
+               cache: false,
+               data: {
+                  project_id: project_id
+               },
+               success: function(data) {
+                  console.log(data);
+                  if (data.status == 'success') {
+                     Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: `${data.message}`,
+                        showConfirmButton: false,
+                        timer: 2000,
+                     }).then((result) => {
+                        window.location.href = data.redirect;
+                     });   
+                  } else if (data.status == 'failed'){
+                     Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: `${data.message}`,
+                        showConfirmButton: false,
+                        timer: 2000,
+                     }).then((result) => {
+                        window.location.reload();
+                     });
+                  }
+               }
+            });
+         }
+      });
+   }
+
    modal.on('hidden.bs.modal', function() {
       title.empty();
       modalDialog.removeClass('modal-lg');

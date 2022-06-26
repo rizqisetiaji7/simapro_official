@@ -70,6 +70,7 @@ $route['save_password'] = 'forgot_password/reset_process';
  */
 $route['direktur'] = 'direktur/dashboard/index';
 $route['direktur/proyek/daftar_proyek'] = 'direktur/proyek/index';
+$route['direktur/proyek/riwayat'] = 'direktur/proyek/riwayat_proyek';
 $route['direktur/proyek/arsip'] = 'direktur/proyek/arsip_proyek';
 $route['direktur/chat'] = 'direktur/chat/index';
 

@@ -812,7 +812,29 @@ class Manajemen_proyek extends CI_Controller {
             'message'   => 'Oops! maaf terjadi kesalahan, silahkan periksa koneksi/jaringan anda, lalu coba lagi.'
          ];
       }
+      $this->output->set_content_type('application/json')->set_output(json_encode($message));
+   }
 
+   function revisi_proyek() {
+      $message = [];
+      $project_id = $this->input->post('project_id', TRUE);
+      $this->bm->update('tb_project', [
+         'project_status'  => 'revision',
+         'updated'         => date('Y-m-d H:i:s', now('Asia/Jakarta'))
+      ], ['project_id'   => $project_id]);
+
+      if ($this->db->affected_rows() > 0) {
+         $message = [
+            'status'    => 'success',
+            'message'   => 'Proyek sedang direvisi kembali.',
+            'redirect'  => site_url('pm/riwayat')
+         ];
+      } else {
+         $message = [
+            'status'    => 'failed',
+            'message'   => 'Oops! maaf terjadi kesalahan, silahkan periksa koneksi/jaringan anda, lalu coba lagi.'
+         ];
+      }
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 }
