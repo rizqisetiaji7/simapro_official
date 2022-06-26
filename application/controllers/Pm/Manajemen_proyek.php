@@ -12,7 +12,7 @@ class Manajemen_proyek extends CI_Controller {
    private function _file_upload_config($filePath = './assets/img') {
       $config = [
          'upload_path'   => $filePath,
-         'allowed_types' => 'jpg|png',
+         'allowed_types' => 'jpg|jpeg|png',
          'encrypt_name'  => TRUE
       ];
       return $config;
@@ -688,7 +688,7 @@ class Manajemen_proyek extends CI_Controller {
       $pathUpload = '';
       if ($post['type_pro'] == 'proyek') {
          $pathUpload = 'project_doc';
-      } else {
+      } else if ($post['type_pro'] == 'subproyek'){
          $pathUpload = 'subproject_doc';
       }
 

@@ -71,17 +71,18 @@
 	}
 
 	// SHOW PHOTO DOCUMENTATION PROJECT
-	function showDocProject(project_id, project_name, project_status = '') {
+	function showPhoto(project_id, subproject_id='', project_name, project_status='') {
 		title.html(`Dokumentasi Proyek: <span class="text-secondary small">${project_name}</span>`);
 		modalDialog.addClass('modal-xl');
 		modalFooter.addClass('d-none');
 		$.ajax({
-			url: `<?= site_url('pm/proyek/tampil_foto_proyek') ?>`,
+			url: `<?= site_url('pm/proyek/tampil_foto') ?>`,
 			method: 'POST',
 			dataType: 'html',
 			cache: false,
 			data: {
 				project_id: project_id,
+				subproject_id: subproject_id,
 				proj_name: project_name,
 				project_status: project_status
 			},

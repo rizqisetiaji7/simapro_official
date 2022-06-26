@@ -149,20 +149,14 @@ class Proyek extends CI_Controller {
       $this->load->view('pm/proyek/detail/form_edit_status_proyek');
    }
 
-   function tampil_foto_proyek() {
+   function tampil_foto() {
       $post = $this->input->post(NULL, TRUE);
+      $project_id = $post['project_id'];
+      $subproject_id = $post['subproject_id'] == '' ? NULL : $post['subproject_id'];
       $data['proj_name'] = $post['proj_name'];
       $data['project_status'] = $post['project_status'];
-      $data['docs'] = $this->ppm->get_documentation($post['project_id'], NULL);
-      $this->load->view('pm/proyek/detail/foto_dokumentasi_proyek', $data);
-   }
-
-   function tampil_foto_subproyek() {
-      $post = $this->input->post(NULL, TRUE);
-      $data['proj_name'] = $post['proj_name'];
-      $data['project_status'] = $post['project_status'];
-      $data['docs'] = $this->ppm->get_documentation($post['project_id'], $post['subproject_id']);
-      $this->load->view('pm/proyek/detail/foto_dokumentasi_subproyek', $data);
+      $data['docs'] = $this->ppm->get_documentation($project_id, $subproject_id);
+      $this->load->view('pm/proyek/detail/foto_dokumentasi', $data);
    }
 
    function tampil_form_tambah_subproyek() {
