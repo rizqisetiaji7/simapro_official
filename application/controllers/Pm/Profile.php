@@ -90,7 +90,7 @@ class Profile extends CI_Controller {
       $this->theme->view('templates/main', 'pm/profile/index', $data);
    }
 
-   public function edit() {
+   public function edit_profile() {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
       $this->form_validation->set_rules($this->_rules());

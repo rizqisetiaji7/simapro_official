@@ -43,7 +43,7 @@
 
 								<div class="divider mt-3 mb-3"></div>
 
-								<form id="editProfileData" action="<?= site_url('pm/profile/edit') ?>" method="POST">
+								<form id="editProfileData" action="<?= site_url('pm/profile/edit_profile') ?>" method="POST">
 									<div class="form-row">
 										<input type="hidden" name="user_unique_id" value="<?= urlencode(base64_encode(user_login()->user_unique_id)) ?>">
 										<input type="hidden" name="user_role" value="<?= urlencode(base64_encode(user_login()->user_role)) ?>">
