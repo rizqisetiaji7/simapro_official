@@ -1,15 +1,3 @@
-<!-- <div class="row">
-	<div class="col-12">
-		<div class="card">
-			
-			<div class="card-body">
-				<?php var_dump($company) ?>
-			</div>
-
-		</div>
-	</div>
-</div> -->
-
 <div class="row">
 	<div class="col-12 col-sm-11 m-auto">
 		<div class="card tab-box mb-0">
@@ -55,7 +43,7 @@
 
 								<div class="divider mt-3 mb-3"></div>
 
-								<form id="editProfileData" action="<?= site_url('pm/profile/edit_data') ?>" method="POST">
+								<form id="editProfileData" action="<?= site_url('pm/profile/edit') ?>" method="POST">
 									<div class="form-row">
 										<input type="hidden" name="user_unique_id" value="<?= urlencode(base64_encode(user_login()->user_unique_id)) ?>">
 										<input type="hidden" name="user_role" value="<?= urlencode(base64_encode(user_login()->user_role)) ?>">

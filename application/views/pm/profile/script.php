@@ -17,21 +17,25 @@
 	function uploadProfile(unique_id, user_role) {
 		modalHeader.addClass('d-none');
 		modalFooter.addClass('d-none');
-		formModal.attr('action', 'update_profile');
+		formModal.attr('action', 'update_foto');
 
 		$.ajax({
-			url: `<?= site_url('pm/profile/show_upload_profile_form') ?>`,
+			url: `<?= site_url('pm/profile/form_upload_foto') ?>`,
 			method: 'POST',
 			dataType: 'html',
 			data: {
 				unique_id: unique_id,
 				user_role: user_role
 			},
+			beforeSend: function () {
+				modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
+			},
 			success: function(data) {
+				modalBody.empty();
 				modalBody.html(data);
-				modal.modal('show');
 			}
 		});
+		modal.modal('show');
 	}
 
 	// Choose file from computer
@@ -50,7 +54,7 @@
       }).then((result) => {
       	if (result.isConfirmed) {
       		$.ajax({
-					url: `<?= site_url('pm/profile/remove_profile') ?>`,
+					url: `<?= site_url('pm/profile/hapus_foto_profile') ?>`,
 					method: 'POST',
 					dataType: 'json',
 					cache: false,

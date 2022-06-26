@@ -8,7 +8,6 @@ class Profile extends CI_Controller {
       parent::__construct();
       is_not_login();
       is_not_pm();
-      $this->load->model('company_model');
    }
 
    private function _file_upload_config($filePath = './assets/img') {
@@ -86,104 +85,12 @@ class Profile extends CI_Controller {
          'author'    => APP_AUTHOR,
          'title'     => 'Profile Projek Manajer',
          'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
-         'company'   => $this->company_model->get_company(user_login()->user_id)->row(),
          'page'      => 'profile_pm'
       ];
       $this->theme->view('templates/main', 'pm/profile/index', $data);
    }
 
-   function show_upload_profile_form() {
-      $unique_id = base64_decode(urldecode($this->input->post('unique_id', TRUE)));
-      $user_role = base64_decode(urldecode($this->input->post('user_role', TRUE)));     
-
-      $data['user'] = $this->bm->get($this->tb_users, 'user_profile, user_unique_id, user_role', [
-         'user_unique_id' => $unique_id,
-         'user_role'      => $user_role
-      ])->row();
-
-      $this->load->view('pm/profile/upload_profile_form', $data);
-   }
-
-   function update_profile() {
-      $message = [];
-      $unique_id = urldecode(base64_decode($this->input->post('unique_id', TRUE)));
-      $user_role = urldecode(base64_decode($this->input->post('user_role', TRUE)));
-      $old_profile = $this->input->post('old_profile', TRUE);
-
-      $message = [
-         'unique_id'    => $unique_id,
-         'user_role'    => $user_role,
-         'old_profile'  => $old_profile
-      ];
-      
-      $this->upload->initialize($this->_file_upload_config('./uploads/profile'));
-
-      // Update profile picture
-      if (@$_FILES['profile_image']['name'] != NULL) {
-         if ($this->upload->do_upload('profile_image')) {
-            if ($old_profile != $this->default_avatar) {
-               unlink('./uploads/profile/'.$old_profile);
-            }
-            $photo = $this->upload->data();
-            // Resize ukuran foto
-            resize_image('./uploads/profile/'.$photo['file_name']);
-
-            $data = [
-               'user_profile' => $photo['file_name'],
-               'updated'      => date('Y-m-d H:i:s', now('Asia/Jakarta'))
-            ];
-
-            $this->bm->update($this->tb_users, $data, [
-               'user_unique_id'  => $unique_id,
-               'user_role'       => $user_role
-            ]);
-
-            if ($this->db->affected_rows() >= 0) {
-               $message = [
-                  'status'    => 'success',
-                  'message'   => 'Foto profile telah berhasil dipebarui.'
-               ];
-            } else {
-               $message = [
-                  'status'    => 'failed',
-                  'message'   => 'Oops! Foto profile gagal dipebarui.'
-               ];
-            }
-         }
-      }
-      $this->output->set_content_type('application/json')->set_output(json_encode($message));
-   }
-
-   function remove_profile() {
-      $message = [];
-      $unique_id = urldecode(base64_decode($this->input->post('unique_id', TRUE)));
-      $user_profile = urldecode(base64_decode($this->input->post('user_profile', TRUE)));
-
-      unlink('./uploads/profile/'.$user_profile);
-
-      $this->bm->update($this->tb_users, [
-         'user_profile' => $this->default_avatar,
-         'updated'      => date('Y-m-d H:i:s', now('Asia/Jakarta'))
-      ], [
-         'user_unique_id' => $unique_id
-      ]);
-
-      if ($this->db->affected_rows() > 0) {
-         $message = [
-            'status'    => 'success',
-            'message'   => 'Foto profile telah berhasil dihapus.'
-         ];
-      } else {
-         $message = [
-            'status'    => 'failed',
-            'message'   => 'Oops! Foto profile gagal dihapus.'
-         ];
-      }
-
-      $this->output->set_content_type('application/json')->set_output(json_encode($message));
-   }
-
-   function edit_data() {
+   public function edit() {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
       $this->form_validation->set_rules($this->_rules());
@@ -230,7 +137,7 @@ class Profile extends CI_Controller {
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
-   function edit_password() {
+   public function edit_password() {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
 
@@ -264,6 +171,96 @@ class Profile extends CI_Controller {
             ];
          }
       }
+      $this->output->set_content_type('application/json')->set_output(json_encode($message));
+   }
+
+   public function form_upload_foto() {
+      $unique_id = base64_decode(urldecode($this->input->post('unique_id', TRUE)));
+      $user_role = base64_decode(urldecode($this->input->post('user_role', TRUE)));     
+
+      $data['user'] = $this->bm->get($this->tb_users, 'user_profile, user_unique_id, user_role', [
+         'user_unique_id' => $unique_id,
+         'user_role'      => $user_role
+      ])->row();
+
+      $this->load->view('pm/profile/upload_profile_form', $data);
+   }
+
+   public function update_foto() {
+      $message = [];
+      $unique_id = urldecode(base64_decode($this->input->post('unique_id', TRUE)));
+      $user_role = urldecode(base64_decode($this->input->post('user_role', TRUE)));
+      $old_profile = $this->input->post('old_profile', TRUE);
+
+      $message = [
+         'unique_id'    => $unique_id,
+         'user_role'    => $user_role,
+         'old_profile'  => $old_profile
+      ];
+      
+      $this->upload->initialize($this->_file_upload_config('./uploads/profile'));
+
+      // Update profile picture
+      if (@$_FILES['profile_image']['name'] != NULL) {
+         if ($this->upload->do_upload('profile_image')) {
+            if ($old_profile != $this->default_avatar) {
+               unlink('./uploads/profile/'.$old_profile);
+            }
+            $photo = $this->upload->data();
+            // Resize ukuran foto
+            resize_image('./uploads/profile/'.$photo['file_name']);
+            $data = [
+               'user_profile' => $photo['file_name'],
+               'updated'      => date('Y-m-d H:i:s', now('Asia/Jakarta'))
+            ];
+
+            $this->bm->update($this->tb_users, $data, [
+               'user_unique_id'  => $unique_id,
+               'user_role'       => $user_role
+            ]);
+
+            if ($this->db->affected_rows() >= 0) {
+               $message = [
+                  'status'    => 'success',
+                  'message'   => 'Foto profile telah berhasil dipebarui.'
+               ];
+            } else {
+               $message = [
+                  'status'    => 'failed',
+                  'message'   => 'Oops! Foto profile gagal dipebarui.'
+               ];
+            }
+         }
+      }
+      $this->output->set_content_type('application/json')->set_output(json_encode($message));
+   }
+
+   public function hapus_foto_profile() {
+      $message = [];
+      $unique_id = urldecode(base64_decode($this->input->post('unique_id', TRUE)));
+      $user_profile = urldecode(base64_decode($this->input->post('user_profile', TRUE)));
+
+      unlink('./uploads/profile/'.$user_profile);
+
+      $this->bm->update($this->tb_users, [
+         'user_profile' => $this->default_avatar,
+         'updated'      => date('Y-m-d H:i:s', now('Asia/Jakarta'))
+      ], [
+         'user_unique_id' => $unique_id
+      ]);
+
+      if ($this->db->affected_rows() > 0) {
+         $message = [
+            'status'    => 'success',
+            'message'   => 'Foto profile telah berhasil dihapus.'
+         ];
+      } else {
+         $message = [
+            'status'    => 'failed',
+            'message'   => 'Oops! Foto profile gagal dihapus.'
+         ];
+      }
+
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 }
