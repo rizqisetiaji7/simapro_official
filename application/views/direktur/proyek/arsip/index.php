@@ -11,16 +11,6 @@
     </div>
 </div>
 
-<!-- <div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <?php var_dump($archived) ?>
-            </div>
-        </div>
-    </div>
-</div> -->
-
 <?php if ($archived) { ?>
 <div class="row">
     <div class="col-12 d-flex">
@@ -73,7 +63,7 @@
                                 </td>
                                 <td class="text-nowrap text-center">
                                     <button type="button" onclick="removeArchive(<?= "'".$arc->projectID."'" ?>)" class="btn btn-sm my-1 btn-info" data-toggle="tooltip" title="Kembalikan proyek"><i class="fa-solid fa-arrow-up-from-bracket"></i></button>
-                                    <a href="<?= site_url('direktur/proyek/detail_arsip/'.$arc->company_id.'/'.$arc->projectID) ?>" class="btn btn-sm my-1 btn-primary text-nowrap" data-toggle="tooltip" title="Lihat Proyek">Detail</a>
+                                    <a href="<?= site_url('direktur/arsip/detail/'.$arc->company_id.'/'.$arc->projectID) ?>" class="btn btn-sm my-1 btn-primary text-nowrap" data-toggle="tooltip" title="Lihat Proyek">Detail</a>
                                 </td>
                             </tr>
                             <?php } ?>

@@ -12,7 +12,7 @@
 		modalDialog.addClass('modal-xl');
 
 		$.ajax({
-			url: `<?= site_url('direktur/proyek/detail_proyek_arsip') ?>`,
+			url: `<?= site_url('direktur/arsip/detail_proyek_arsip') ?>`,
 			method: 'POST',
 			dataType: 'html',
 			cache: false,
@@ -45,36 +45,86 @@
       }).then((result) => {
       	if (result.isConfirmed) {
       		$.ajax({
-					url: `<?= site_url('direktur/arsip/hapus_arsip') ?>`,
-					method: 'POST',
-					dataType: 'json',
-					cache: false,
-					data: { project_ID: projectID },
-					success: function(data) {
-						if (data.status == 'success') {
-							Swal.fire({
-				            icon: 'success',
-				            title: 'Berhasil',
-				            text: `${data.message}`,
-				            confirmButtonText: 'Oke, Sip!',
-				         }).then((result) => {
-				         	window.location.reload();
-				         });
-						} else if (data.status == 'failed') {
-							Swal.fire({
-				            icon: 'error',
-				            title: 'Gagal',
-				            text: `${data.message}`,
-				            showConfirmButton: false,
-				            timer: 2000,
-				         }).then((result) => {
-				         	window.location.reload();
-				         });
-						}
+				url: `<?= site_url('direktur/arsip/hapus_arsip') ?>`,
+				method: 'POST',
+				dataType: 'json',
+				cache: false,
+				data: { project_ID: projectID },
+				success: function(data) {
+					if (data.status == 'success') {
+						Swal.fire({
+			            icon: 'success',
+			            title: 'Berhasil',
+			            text: `${data.message}`,
+			            confirmButtonText: 'Oke, Sip!',
+			         }).then((result) => {
+			         	window.location.reload();
+			         });
+					} else if (data.status == 'failed') {
+						Swal.fire({
+			            icon: 'error',
+			            title: 'Gagal',
+			            text: `${data.message}`,
+			            showConfirmButton: false,
+			            timer: 2000,
+			         }).then((result) => {
+			         	window.location.reload();
+			         });
 					}
-				});
+				}
+			});
       	}
       });
+	}
+
+	// Tampil Detail Sub-Proyek
+	function detail_subProject(project_id, subproject_id) {
+      title.text('Detail Sub-Proyek');
+      $.ajax({
+         url: `<?= site_url('direktur/arsip/info_detail_subproyek') ?>`,
+         method: 'POST',
+         dataType: 'html',
+         cache: false,
+         data: {
+            project_id: project_id,
+            subproject_id: subproject_id
+         },
+         beforeSend: function() {
+            modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
+         },
+         success: function(data) {
+            modalBody.empty();
+            modalBody.html(data);
+         }
+      });
+      modal.modal({
+         show: true,
+         backdrop: 'static'
+      });
+   }
+
+	// SHOW DOCUMENTATION SUB-PROJECT
+	function showDocSubproject(project_id, subproject_id, subproject_name) {
+		title.html(`Dokumentasi Proyek : <span class="text-secondary small">${subproject_name}</span>`);
+		modalDialog.addClass('modal-lg');
+		$.ajax({
+			url: `<?= site_url('direktur/arsip/tampil_dokumentasi') ?>`,
+			method: 'POST',
+			dataType: 'html',
+			cache: false,
+			data: {
+				project_id: project_id,
+				subproject_id: subproject_id
+			},
+			beforeSend: function() {
+				modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
+			},
+			success: function(data) {
+				modalBody.empty();
+				modalBody.html(data);
+			}
+		});
+		modal.modal('show');
 	}
 
 	modal.on('hidden.bs.modal', function() {

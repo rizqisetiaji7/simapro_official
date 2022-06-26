@@ -51,16 +51,13 @@ class Riwayat extends CI_Controller {
 
    public function detail($comp_id, $project_code) {
       $project = $this->detail_proyek($comp_id, $project_code, user_login()->user_id);
-      $subproject = $this->tampil_subproyek($project->project_id)->result_array();
-      $docs  = $this->ppm->get_documentation($project->project_id, NULL);
-      
+      $subproject = $this->tampil_subproyek($project->project_id)->result_array();      
       $data = [
          'app_name'  => APP_NAME,
          'author'    => APP_AUTHOR,
          'title'     => '(PM) Proyek Detail',
          'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
-         'page'      => 'proyek_detail',
-         'docs'      => $docs
+         'page'      => 'proyek_detail'
       ];
 
       $data['project'] = [

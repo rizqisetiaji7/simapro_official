@@ -86,10 +86,13 @@ class Project_model extends CI_Model {
 		return $this->db->get();
 	}
 
-	public function get_subproject($project_id) {
+	public function get_subproject($project_id, $subproject_id=NULL) {
 		$this->db->from($this->tb_subproject);
 		$this->db->join('tb_priority', 'tb_subproject.ID_priority=tb_priority.priority_id');
-		$this->db->where($project_id);
+		$this->db->where('ID_project', $project_id);
+		if ($subproject_id != NULL) {
+			$this->db->where('subproject_id', $subproject_id);
+		}
 		$this->db->order_by('subproject_id DESC');
 		return $this->db->get();
 	}
@@ -114,6 +117,18 @@ class Project_model extends CI_Model {
 		$this->db->from('tb_photo');
 		$this->db->join('tb_project', 'tb_photo.ID_project=tb_project.project_id', 'left');
 		$this->db->where(['tb_photo.ID_project' => $project_id, 'tb_photo.ID_subproject' => $subproject_id]);
+		return $this->db->get();
+	}
+
+	public function get_documentation($project_id, $subproject_id=NULL) {
+		$this->db->select('tb_photo.photo_id, tb_photo.ID_project as proj_ID, tb_photo.ID_subproject as subproj_ID, tb_photo.photo_url as url, tb_photo.created as photo_created, tb_project.project_id');
+		$this->db->from('tb_photo');
+		$this->db->join('tb_project', 'tb_photo.ID_project=tb_project.project_id', 'left');
+		$this->db->where([
+			'tb_photo.ID_project' => $project_id, 
+			'tb_photo.ID_subproject' => $subproject_id
+		]);
+		$this->db->order_by('photo_id DESC');
 		return $this->db->get();
 	}
 

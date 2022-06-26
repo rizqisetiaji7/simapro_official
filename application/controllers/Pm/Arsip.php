@@ -34,11 +34,8 @@ class Arsip extends CI_Controller {
    }
 
    public function detail($company_id, $project_code_ID) {
-      // Get Archived Project
       $project = $this->detail_proyek($company_id, $project_code_ID, user_login()->user_id);
       $subproject = $this->tampil_subproyek($project->project_id)->result_array();
-      $docs = $this->ppm->get_documentation($project->project_id, NULL);
-
       $data = [
          'app_name'     => APP_NAME,
          'author'       => APP_AUTHOR,
