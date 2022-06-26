@@ -122,5 +122,5 @@
 </div>
 <?php } ?>
 
-<?php $this->view('direktur/proyek/daftar_proyek/modal') ?>
-<?php $this->view('direktur/proyek/daftar_proyek/script') ?>
+<?php $this->view('direktur/proyek/daftar/modal') ?>
+<?php $this->view('direktur/proyek/daftar/script') ?>

@@ -14,7 +14,7 @@
                         <i class="la la-rocket"></i> <span> Proyek</span> <span class="menu-arrow"></span>
                     </a>
                     <ul style="display: none;">
-                        <li><a href="<?= site_url('direktur/proyek/daftar_proyek') ?>">Daftar proyek</a></li>
+                        <li><a href="<?= site_url('direktur/proyek') ?>">Daftar proyek</a></li>
                         <li><a href="<?= site_url('direktur/proyek/riwayat') ?>">Riwayat</a></li>
                         <li><a href="<?= site_url('direktur/proyek/arsip') ?>">Arsip</a></li>
                     </ul>

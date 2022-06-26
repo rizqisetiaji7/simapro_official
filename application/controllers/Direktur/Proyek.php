@@ -13,8 +13,7 @@ class Proyek extends CI_Controller {
    private function _file_upload_config($filePath = './assets/img') {
       $config = [
          'upload_path'   => $filePath,
-         'allowed_types' => 'jpg|jpeg|png|svg',
-         'max_size'      => 4096, // 4MB
+         'allowed_types' => 'jpg|jpeg|png',
          'encrypt_name'  => TRUE,
          'remove_spaces' => TRUE
       ];
@@ -51,17 +50,20 @@ class Proyek extends CI_Controller {
       return $config;
    }
 
+   private function _get_all_projects() {
+      return $this->project_model->get_all_user_project(user_company()->company_id)->result();
+   }
+
    public function index() {
-      $projects = $this->project_model->get_all_user_project(user_login()->ID_company)->result();
       $data = [
          'app_name'  => APP_NAME,
          'author'    => APP_AUTHOR,
          'title'     => '(Direktur) Daftar Proyek',
          'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
-         'projects'  => $projects,
+         'projects'  => $this->_get_all_projects(),
          'page'      => 'daftar_proyek'
       ];
-      $this->theme->view('templates/main', 'direktur/proyek/daftar_proyek/index', $data);
+      $this->theme->view('templates/main', 'direktur/proyek/daftar/index', $data);
    }
 
    function form_edit_status() {
@@ -74,7 +76,7 @@ class Proyek extends CI_Controller {
          'docs'            => $docs
       ];
 
-      $this->load->view('direktur/proyek/daftar_proyek/form_edit_status', $data);
+      $this->load->view('direktur/proyek/daftar/form_edit_status', $data);
    }
 
    function edit_status_process() {
@@ -100,7 +102,7 @@ class Proyek extends CI_Controller {
    function form_tambah() {
       $data['project_code_ID'] = urlencode(base64_encode(getIDCode('PROY', user_company()->comp_prefix)));
       $data['project_man'] = $this->bm->get('tb_users', 'user_id, user_fullname', ['ID_company' => user_company()->company_id, 'user_role' => 'pm'])->result();
-      $this->load->view('direktur/proyek/daftar_proyek/form_tambah_proyek', $data);
+      $this->load->view('direktur/proyek/daftar/form_tambah_proyek', $data);
    }
 
    // CRUD List Proyek
@@ -141,9 +143,10 @@ class Proyek extends CI_Controller {
          // Upload File Thumbnail Image
          if (@$_FILES['profile_image']['name'] != NULL) {
             if ($this->upload->do_upload('profile_image')) {
-               $data['project_thumbnail'] = $this->upload->data('file_name');
+               $thumbnail = $this->upload->data();
+               resize_image('./uploads/thumbnail/'.$thumbnail['file_name']);
+               $data['project_thumbnail'] = $thumbnail['file_name'];
                $this->bm->save($this->tb_project, $data);
-
                if ($this->db->affected_rows() > 0) {
                   $message = [
                      'status'    => 'success',
