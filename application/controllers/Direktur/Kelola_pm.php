@@ -13,16 +13,14 @@ class Kelola_pm extends CI_Controller {
    private function _file_upload_config($filePath = './assets/img') {
       $config = [
          'upload_path'   => $filePath,
-         'allowed_types' => 'jpg|jpeg|png|svg',
-         'max_size'      => 4096, // 4MB
+         'allowed_types' => 'jpg|jpeg|png',
          'encrypt_name'  => TRUE,
          'remove_spaces' => TRUE
       ];
-
       return $config;
    }
 
-   private function _user_rules() {
+   private function _set_user_rules() {
       $config = [
          [
             'field'  => 'user_fullname',
@@ -73,7 +71,7 @@ class Kelola_pm extends CI_Controller {
       return $config;
    }
 
-   private function _edit_rules() {
+   private function _set_edit_rules() {
       $config = [
          [
             'field'  => 'user_fullname',
@@ -106,7 +104,7 @@ class Kelola_pm extends CI_Controller {
       return $config;
    }
 
-   private function _password_rules() {
+   private function _set_password_rules() {
       $config = [
          [
             'field'  => 'user_password',
@@ -130,11 +128,17 @@ class Kelola_pm extends CI_Controller {
       return $config;
    }
 
-   function show_form_add() {
+   public function tampil_pm() {
+      $pm = $this->bm->get($this->table_users, '*', ['ID_company' => user_company()->company_id, 'user_role' => 'pm'])->result();
+      $data['projek_manajer'] = $pm;
+      $this->load->view('direktur/perusahaan/data_proyek_manajer', $data);
+   }
+
+   public function form_tambah() {
       $this->load->view('direktur/perusahaan/form_add_pm');
    }
 
-   function show_form_edit() {
+   public function form_edit() {
       $user_unique_id = $this->input->post('user_unique_id', TRUE);
       $user_role = $this->input->post('user_role', TRUE);
       $data['user'] = $this->bm->get($this->table_users, '*', [
@@ -144,22 +148,16 @@ class Kelola_pm extends CI_Controller {
       $this->load->view('direktur/perusahaan/form_edit_pm', $data);
    }
 
-   function show_form_password() {
+   public function form_password() {
       $data['unique_id'] = $this->input->post('unique_id', TRUE);
       $data['user_role'] = $this->input->post('user_role', TRUE);
       $this->load->view('direktur/perusahaan/form_password_pm', $data);
    }
 
-   function tampil_pm() {
-      $pm = $this->bm->get($this->table_users, '*', ['ID_company' => user_company()->company_id, 'user_role' => 'pm'])->result();
-      $data['projek_manajer'] = $pm;
-      $this->load->view('direktur/perusahaan/data_proyek_manajer', $data);
-   }
-
-   function tambah() {
+   public function tambah() {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
-      $this->form_validation->set_rules($this->_user_rules());
+      $this->form_validation->set_rules($this->_set_user_rules());
 
       if ($this->form_validation->run() == FALSE) {
          $message = [
@@ -190,7 +188,9 @@ class Kelola_pm extends CI_Controller {
          $this->upload->initialize($this->_file_upload_config('./uploads/profile'));
          if (@$_FILES['profile_image']['name'] != NULL) {
             if ($this->upload->do_upload('profile_image')) {
-               $data['user_profile'] = $this->upload->data('file_name');
+               $photo = $this->upload->data();
+               resize_image('./uploads/profile/'.$photo['file_name']);
+               $data['user_profile'] = $photo['file_name'];
                $this->bm->save($this->table_users, $data);
                if ($this->db->affected_rows() > 0) {
                   $message = [
@@ -232,7 +232,7 @@ class Kelola_pm extends CI_Controller {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
 
-      $this->form_validation->set_rules($this->_edit_rules());
+      $this->form_validation->set_rules($this->_set_edit_rules());
       if ($this->form_validation->run() == FALSE) {
          $message = [
             'status' => 'validation_error',
@@ -258,8 +258,9 @@ class Kelola_pm extends CI_Controller {
                if ($post['old_profile'] != $this->default_avatar) {
                   unlink('./uploads/profile/'.$post['old_profile']);
                }
-
-               $data['user_profile'] = $this->upload->data('file_name');
+               $photo = $this->upload->data();
+               resize_image('./uploads/profile/'.$photo['file_name']);
+               $data['user_profile'] = $photo['file_name'];
                $this->bm->update($this->table_users, $data, [
                   'user_unique_id'  => $post['user_unique_id'],
                   'user_role'       => $post['user_role']
@@ -305,11 +306,38 @@ class Kelola_pm extends CI_Controller {
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
-   function ubah_password () {
+   public function hapus() {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
 
-      $this->form_validation->set_rules($this->_password_rules());
+      if ($post['user_profile'] != 'default-avatar.jpg') {
+         unlink('./uploads/profile/'.$post['user_profile']);
+      }
+
+      $this->bm->delete($this->table_users, [
+         'user_unique_id' => $post['unique_id'], 
+         'user_role' => $post['user_role']
+      ]);
+
+      if ($this->db->affected_rows() > 0) {
+         $message = [
+            'status'    => 'success',
+            'message'   => 'Proyek Manajer telah berhasil terhapus.'
+         ];
+      } else {
+         $message = [
+            'status'    => 'failed',
+            'message'   => 'Oops! Maaf Proyek Manajer gagal dihapus.'
+         ];
+      }
+      $this->output->set_content_type('application/json')->set_output(json_encode($message));
+   }
+
+   public function ubah_password() {
+      $message = [];
+      $post = $this->input->post(NULL, TRUE);
+
+      $this->form_validation->set_rules($this->_set_password_rules());
       if ($this->form_validation->run() == FALSE) {
          $message = [
             'status' => 'validation_error',
@@ -338,33 +366,6 @@ class Kelola_pm extends CI_Controller {
                'message'   => 'Oops! Maaf Password Proyek Manajer gagal diperbarui.'
             ];
          }
-      }
-      $this->output->set_content_type('application/json')->set_output(json_encode($message));
-   }
-
-   function hapus() {
-      $message = [];
-      $post = $this->input->post(NULL, TRUE);
-
-      if ($post['user_profile'] != 'default-avatar.jpg') {
-         unlink('./uploads/profile/'.$post['user_profile']);
-      }
-
-      $this->bm->delete($this->table_users, [
-         'user_unique_id' => $post['unique_id'], 
-         'user_role' => $post['user_role']
-      ]);
-
-      if ($this->db->affected_rows() > 0) {
-         $message = [
-            'status'    => 'success',
-            'message'   => 'Proyek Manajer telah berhasil terhapus.'
-         ];
-      } else {
-         $message = [
-            'status'    => 'failed',
-            'message'   => 'Oops! Maaf Proyek Manajer gagal dihapus.'
-         ];
       }
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }

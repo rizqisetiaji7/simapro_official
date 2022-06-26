@@ -28,7 +28,7 @@
     });
 
     // Tampil Data Proyek Manajer
-    function tampilProyekManajer() {
+    function showProjectManager() {
         $.ajax({
             url: `<?=site_url('direktur/kelola_pm/tampil_pm') ?>`,
             method: 'POST',
@@ -40,20 +40,27 @@
         });
     }
 
-    // Jalankan fungsi tampilProyekManajer()
-    tampilProyekManajer()
+    // Jalankan fungsi showProjectManager()
+    showProjectManager();
     
     function addProjectManager() {
         title.text('Tambah Proyek Manajer');
         formModal.attr('action', `<?= site_url('direktur/kelola_pm/tambah') ?>`);
         $.ajax({
-            url: `<?= site_url('direktur/kelola_pm/show_form_add') ?>`,
+            url: `<?= site_url('direktur/kelola_pm/form_tambah') ?>`,
             dataType: 'html',
             cache: false,
+            beforeSend: function() {
+                modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
+            },
             success: function(data) {
+                modalBody.empty();
                 modalBody.html(data);
-                modal.modal('show');
             }
+        });
+        modal.modal({
+            show: true,
+            backdrop: 'static'
         });
     }
 
@@ -61,7 +68,7 @@
         title.text('Edit Proyek Manajer');
         formModal.attr('action', `<?= site_url('direktur/kelola_pm/edit') ?>`);
         $.ajax({
-            url: `<?= site_url('direktur/kelola_pm/show_form_edit') ?>`,
+            url: `<?= site_url('direktur/kelola_pm/form_edit') ?>`,
             dataType: 'html',
             method: 'POST',
             cache: false,
@@ -69,10 +76,17 @@
                 user_unique_id: user_unique_id, 
                 user_role: user_role
             },
+            beforeSend: function() {
+                modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
+            },
             success: function(data) {
+                modalBody.empty();
                 modalBody.html(data);
-                modal.modal('show');
             }
+        });
+        modal.modal({
+            show: true,
+            backdrop: 'static'
         });
     }
 
@@ -104,9 +118,10 @@
                             icon: 'success',
                             title: 'Berhasil',
                             text: `${data.message}`,
-                            confirmButtonText: 'Oke, Sip!',
+                            showConfirmButton: false,
+                            timer: 2000
                          }).then((result) => {
-                            window.location.reload();
+                            showProjectManager();
                          });
                         } else if (data.status == 'failed') {
                             Swal.fire({
@@ -114,9 +129,9 @@
                             title: 'Gagal',
                             text: `${data.message}`,
                             showConfirmButton: false,
-                            timer: 2000,
+                            timer: 2000
                          }).then((result) => {
-                            window.location.reload();
+                            showProjectManager();
                          });
                         }
                     }
@@ -129,7 +144,7 @@
         title.text('Ubah Password');
         formModal.attr('action', `<?= site_url('direktur/kelola_pm/ubah_password') ?>`);
         $.ajax({
-            url: `<?= site_url('direktur/kelola_pm/show_form_password') ?>`,
+            url: `<?= site_url('direktur/kelola_pm/form_password') ?>`,
             dataType: 'html',
             method: 'POST',
             cache: false,
@@ -137,10 +152,17 @@
                 unique_id: unique_id, 
                 user_role: user_role
             },
+            beforeSend: function() {
+                modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
+            },
             success: function(data) {
+                modalBody.empty();
                 modalBody.html(data);
-                modal.modal('show');
             }
+        });
+        modal.modal({
+            show: true,
+            backdrop: 'static'
         });
     }
 
@@ -174,28 +196,24 @@
                 } else if (data.status == 'success') {
                     modal.modal('hide');
                     Swal.fire({
-                      icon: 'success',
-                      title: 'Berhasil',
-                      text: `${data.message}`
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: `${data.message}`,
+                        showConfirmButton: false,
+                        timer: 2000
                     }).then((result) => {
-                      if (result.isConfirmed) {
-                        window.location.reload();
-                      } else {
-                        window.location.reload();
-                      }
+                        showProjectManager();
                     });
                 } else {
                     modal.modal('hide');
                     Swal.fire({
-                      icon: 'error',
-                      title: 'Gagal',
-                      text: `${data.message}`
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: `${data.message}`,
+                        showConfirmButton: false,
+                        timer: 2000
                     }).then((result) => {
-                      if (result.isConfirmed) {
-                        window.location.reload();
-                      } else {
-                        window.location.reload();
-                      }
+                        showProjectManager();
                     });
                 }
             }
