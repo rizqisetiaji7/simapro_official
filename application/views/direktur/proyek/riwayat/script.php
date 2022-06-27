@@ -80,7 +80,111 @@
          show: true,
          backdrop: 'static'
       });
-   } 
+   }
+
+   // Detail Sub_project
+   function detail_subProject(project_id, subproject_id) {
+      title.text('Detail Sub-Proyek');
+      modalFooter.addClass('d-none');
+      $.ajax({
+         url: `<?= site_url('direktur/riwayat/info_detail_subproyek') ?>`,
+         method: 'POST',
+         dataType: 'html',
+         cache: false,
+         data: {
+            project_id: project_id,
+            subproject_id: subproject_id
+         },
+         beforeSend: function() {
+            modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
+         },
+         success: function(data) {
+            modalBody.empty();
+            modalBody.html(data);
+         }
+      });
+      modal.modal({
+         show: true,
+         backdrop: 'static'
+      });
+   }
+
+   // Show Photos
+   function showPhotos(project_id, subproject_id, subproject_name) {
+      title.html(`Dokumentasi Proyek: <span class="text-secondary small">${subproject_name}</span>`);
+      modalDialog.addClass('modal-lg');
+      modalFooter.addClass('d-none');
+      $.ajax({
+         url: `<?= site_url('direktur/riwayat/tampil_foto') ?>`,
+         method: 'POST',
+         dataType: 'html',
+         cache: false,
+         data: {
+            project_id: project_id,
+            subproject_id: subproject_id
+         },
+         beforeSend: function() {
+            modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
+         },
+         success: function(data) {
+            modalBody.empty();
+            modalBody.html(data);
+         }
+      });
+      modal.modal({
+         show: true,
+         backdrop: 'static'
+      });
+   }
+
+   function revisiProyek(project_id) {
+      Swal.fire({
+         icon: 'warning',
+         html: `
+            <h4>Revisi proyek?</h4>
+            <p class="text-muted">Anda akan melakukan revisi terhadap proyek ini.</p>
+         `,
+         confirmButtonText: 'Ya, Revisi Sekarang!',
+         confirmButtonColor: '#28a745',
+         showCancelButton: true,
+         cancelButtonText: 'Batal'
+      }).then((res) => {
+         if (res.isConfirmed) {
+            $.ajax({
+               url: `<?= site_url('direktur/proyek/revisi_proyek') ?>`,
+               dataType: 'json',
+               method: 'POST',
+               cache: false,
+               data: {
+                  project_id: project_id
+               },
+               success: function(data) {
+                  if (data.status == 'success') {
+                     Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: `${data.message}`,
+                        showConfirmButton: false,
+                        timer: 2000,
+                     }).then((result) => {
+                        window.location.href = data.redirect;
+                     });   
+                  } else if (data.status == 'failed'){
+                     Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: `${data.message}`,
+                        showConfirmButton: false,
+                        timer: 2000,
+                     }).then((result) => {
+                        window.location.reload();
+                     });
+                  }
+               }
+            });
+         }
+      });
+   }
 
 	modal.on('hidden.bs.modal', function() {
 		title.empty();

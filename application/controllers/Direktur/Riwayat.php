@@ -94,4 +94,19 @@ class Riwayat extends CI_Controller {
       $data['project'] = $this->project_model->get_project_detail(user_company()->company_id, $project_code_ID)->row();
       $this->load->view('direktur/proyek/riwayat/info_detail_proyek', $data);
    }
+
+   public function info_detail_subproyek() {
+      $project_id = $this->input->post('project_id', TRUE);
+      $subproject_id = $this->input->post('subproject_id', TRUE);
+      $data['subproject'] = $this->_tampil_subproyek($project_id, $subproject_id)->row();
+      $this->load->view('direktur/proyek/riwayat/info_detail_subproyek', $data);
+   }
+
+   public function tampil_foto() {
+      $post = $this->input->post(NULL, TRUE);
+      $project_id = $post['project_id'];
+      $subproject_id = $post['subproject_id'] == '' ? NULL : $post['subproject_id'];
+      $data['docs'] = $this->project_model->get_documentation($project_id, $subproject_id);
+      $this->load->view('direktur/proyek/riwayat/foto_dokumentasi', $data);
+   }
 }

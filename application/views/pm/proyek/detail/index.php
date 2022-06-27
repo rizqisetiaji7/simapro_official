@@ -1,9 +1,3 @@
-<!-- <div class="row">
-    <div class="col-12">
-        <?php var_dump($project) ?>
-    </div>
-</div> -->
-
 <div class="row">
     <div class="col-12 col-sm-8">
         <div class="d-flex flex-row align-items-start justify-content-between justify-content-sm-start">
@@ -167,8 +161,7 @@
                         </div>
                     </div>
                     
-                    <?php 
-                    $subelemen_task = tampilSubelemen($sub['subproject_id']); ?>
+                    <?php $subelemen_task = tampilSubelemen($sub['subproject_id']); ?>
                     <!-- Task Sub-Element "Proyek" -->
                     <?php if ($subelemen_task['total_tasks'] > 0) { ?>
 
@@ -217,6 +210,7 @@
                                             </div>
                                             <span><?= $se['project_task_progress'].'%' ?></span>
                                         </div>
+
                                         <div class="kanban-footer mb-3">
                                             <span class="task-info-cont">
                                                 <span class="task-date"><i class="fa-solid fa-clock"></i> <?= datetimeIDN($se['project_task_deadline']) ?></span>

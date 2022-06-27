@@ -50,8 +50,16 @@ class Proyek extends CI_Controller {
       return $config;
    }
 
-   private function _get_all_projects() {
-      return $this->project_model->get_all_user_project(user_company()->company_id)->result();
+   protected function _tampil_proyek($limit=1) {
+      return $this->project_model->get_all_user_project(user_company()->company_id, $limit)->result();
+   }
+
+   protected function _data_detail_proyek($company_id, $project_code) {
+      return $this->project_model->get_project_detail($company_id, $project_code)->row();
+   }
+
+   protected function _tampil_subproyek($project_id) {
+      return $this->project_model->get_subproject($project_id)->result_array();
    }
 
    public function index() {
@@ -60,11 +68,52 @@ class Proyek extends CI_Controller {
          'author'    => APP_AUTHOR,
          'title'     => '(Direktur) Daftar Proyek',
          'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
-         'projects'  => $this->_get_all_projects(),
+         'projects'  => $this->_tampil_proyek(25),
          'page'      => 'daftar_proyek'
       ];
       $this->theme->view('templates/main', 'direktur/proyek/daftar/index', $data);
    }
+
+   // Detail Proyek
+   public function detail($company_id, $project_code) {
+      $project = $this->_data_detail_proyek($company_id, $project_code);
+      $subproject = $this->_tampil_subproyek($project->project_id);
+      $docs = $this->project_model->get_documentation($project->project_id, NULL);
+
+      $data = [
+         'app_name'     => APP_NAME,
+         'author'       => APP_AUTHOR,
+         'title'        => '(Direktur) Detail Proyek',
+         'desc'         => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
+         'page'         => 'detail_proyek',
+         'docs'         => $docs
+      ];
+
+      $data['project'] = [
+         'project_id'            => $project->project_id,
+         'ID_pm'                 => $project->user_id,
+         'ID_company'            => $project->company_id,
+         'projectID'             => $project->projectID,
+         'project_name'          => $project->project_name,
+         'project_thumbnail'     => $project->project_thumbnail,
+         'project_description'   => $project->project_description,
+         'project_start'         => $project->project_start,
+         'project_deadline'      => $project->project_deadline,
+         'project_status'        => $project->project_status,
+         'project_progress'      => $project->project_progress,
+         'project_address'       => $project->project_address,
+         'project_archive'       => $project->project_archive,
+         'user_id'               => $project->user_id,
+         'user_role'             => $project->user_role,
+         'user_fullname'         => $project->user_fullname,
+         'user_profile'          => $project->user_profile,
+         'comp_name'             => $project->comp_name,
+         'subproject'            => $subproject
+      ];
+
+      $this->theme->view('templates/main', 'direktur/proyek/detail/index', $data);
+   }
+
 
    function form_edit_status() {
       $id = $this->input->post('project_code', TRUE);
@@ -259,25 +308,6 @@ class Proyek extends CI_Controller {
 
    // ==================================================================
 
-   // Detail Proyek
-   function detail($company_id, $project_code) {
-      $project = $this->project_model->get_project_detail($company_id, $project_code)->row();
-      $subproject = $this->project_model->get_subproject($project->project_id);
-      $docs = $this->project_model->get_documentation_project($project->project_id);
-
-      $data = [
-         'app_name'     => APP_NAME,
-         'author'       => APP_AUTHOR,
-         'title'        => '(Direktur) Detail Proyek',
-         'desc'         => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
-         'project'      => $project,
-         'subproject'   => $subproject,
-         'docs'         => $docs,
-         'page'         => 'detail_proyek'
-      ];
-      $this->theme->view('templates/main', 'direktur/proyek/detail/index', $data);
-   }
-
    function form_edit_proyek() {
       $code_ID = $this->input->post('project_code_ID', TRUE);
       $project = $this->project_model->get_project_detail(user_company()->company_id, $code_ID)->row();
@@ -360,6 +390,29 @@ class Proyek extends CI_Controller {
                ];
             }
          }
+      }
+      $this->output->set_content_type('application/json')->set_output(json_encode($message));
+   }
+
+   function revisi_proyek() {
+      $message = [];
+      $project_id = $this->input->post('project_id', TRUE);
+      $this->bm->update($this->tb_project, [
+         'project_status'  => 'revision',
+         'updated'         => date('Y-m-d H:i:s', now('Asia/Jakarta'))
+      ], ['project_id'   => $project_id]);
+
+      if ($this->db->affected_rows() > 0) {
+         $message = [
+            'status'    => 'success',
+            'message'   => 'Proyek sedang direvisi kembali.',
+            'redirect'  => site_url('direktur/riwayat')
+         ];
+      } else {
+         $message = [
+            'status'    => 'failed',
+            'message'   => 'Oops! maaf terjadi kesalahan, silahkan periksa koneksi/jaringan anda, lalu coba lagi.'
+         ];
       }
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }

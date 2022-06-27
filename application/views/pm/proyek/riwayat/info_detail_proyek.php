@@ -65,5 +65,3 @@
 <?php } else { ?>
 <p class="text-secondary small">Data Proyek manajer tidak terdaftar.</p>
 <?php } ?>
-
-<div class="divider mt-3 mb-3"></div>

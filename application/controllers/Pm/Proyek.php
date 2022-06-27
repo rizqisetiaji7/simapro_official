@@ -68,7 +68,7 @@ class Proyek extends CI_Controller {
          'author'    => APP_AUTHOR,
          'title'     => '(PM) Daftar proyek',
          'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
-         'projects'  => $this->tampil_proyek(20),
+         'projects'  => $this->tampil_proyek(25),
          'page'      => 'proyek'
       ];
       $this->theme->view('templates/main', 'pm/proyek/daftar/index', $data);

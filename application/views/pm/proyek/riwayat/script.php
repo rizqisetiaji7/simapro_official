@@ -159,7 +159,6 @@
                   project_id: project_id
                },
                success: function(data) {
-                  console.log(data);
                   if (data.status == 'success') {
                      Swal.fire({
                         icon: 'success',

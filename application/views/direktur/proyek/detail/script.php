@@ -74,7 +74,9 @@
     // CRUD Sub Proyek
 	function add_subProject(project_id) {
 		title.text('Tambah Sub-Proyek');
-		formModal.attr('action', `<?= site_url('direktur/subproyek/tambah') ?>`);
+		// formModal.attr('action', `<?= site_url('direktur/subproyek/tambah') ?>`);
+		formModal.attr('action', `<?= site_url('direktur/manajemen_proyek/tambah_subproyek') ?>`)
+
 		$.ajax({
 			url: `<?= site_url('direktur/subproyek/form_tambah_subproyek') ?>`,
 			method: 'POST',
