@@ -9,7 +9,7 @@
 		</tr>
 		<tr>
 			<th style="width: 180px;">Nomor Kode Proyek</th>
-			<td><strong>#<?= $project->project_code_ID ?></strong></td>
+			<td><strong>#<?= $project->projectID ?></strong></td>
 		</tr>
 		<tr>
 			<th style="width: 180px;">Nama Proyek</th>
@@ -65,5 +65,3 @@
 <?php } else { ?>
 <p class="text-secondary small">Data Proyek manajer tidak terdaftar.</p>
 <?php } ?>
-
-<div class="divider mt-3 mb-3"></div>

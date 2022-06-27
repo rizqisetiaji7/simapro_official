@@ -90,5 +90,5 @@
     </div>
 </div>
 
-<?php $this->view('direktur/proyek/riwayat_proyek/modal') ?>
-<?php $this->view('direktur/proyek/riwayat_proyek/script') ?>
+<?php $this->view('direktur/proyek/riwayat/modal') ?>
+<?php $this->view('direktur/proyek/riwayat/script') ?>

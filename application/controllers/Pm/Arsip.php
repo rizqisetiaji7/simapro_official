@@ -27,7 +27,7 @@ class Arsip extends CI_Controller {
          'author'    => APP_AUTHOR,
          'title'     => '(PM) Arsip Proyek',
          'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
-         'archived'  => $this->tampil_arsip(20),
+         'archived'  => $this->tampil_arsip(50),
          'page'      => 'proyek_arsip'
       ];
       $this->theme->view('templates/main', 'pm/proyek/arsip/index', $data);

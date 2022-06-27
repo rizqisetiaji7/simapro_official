@@ -26,7 +26,7 @@
         <div class="d-flex align-items-center mt-3">
             <div class="mr-4 ml-0">
                 <i class="fa-solid fa-map-pin mr-2"></i>
-                <span class="badge bg-inverse-success px-2 py-1"><i class="fas fa-check mr-1"></i>Selesai</span>
+                <span class="badge bg-inverse-danger px-2 py-1"><i class="fas fa-check mr-1"></i><?= $project['project_status'] ?></span>
             </div>
             <div class="mr-3 small">
                 <i class="fa-solid fa-clock mr-2"></i><span class="text-secondary">Dimulai: <strong class="text-dark"><?= datetimeIDN($project['project_start']) ?></strong></span>

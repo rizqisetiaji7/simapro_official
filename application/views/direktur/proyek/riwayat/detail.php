@@ -1,4 +1,3 @@
-<!-- ARSIP DIREKTUR NEW -->
 <div class="row">
     <div class="col-12 col-sm-8">
         <div class="d-flex flex-row align-items-start justify-content-between justify-content-sm-start">
@@ -16,18 +15,29 @@
                     </p>
                 </div>
             </div>
+
+            <div>
+                <button type="button" class="btn btn-sm mb-1 btn-success" onclick="revisiProyek(<?= "'".$project['project_id']."'" ?>)" data-toggle="tooltip" title="Revisi ulang proyek ni">
+                	<i class="fa fa-pencil"></i> <span class="d-none d-lg-inline-block ml-1">Revisi</span>
+                </button>
+                
+                <button type="button" class="btn btn-sm mb-1 btn-custom" onclick="showPhotos(<?= $project['project_id'] ?>, '',<?= "'".$project['project_name']."'" ?>)" data-toggle="tooltip" title="Lihat Foto Dokumentasi">
+                    <i class="fas fa-camera"></i> <span class="d-none d-lg-inline-block ml-1">Lihat Foto</span>
+                </button>
+            </div>
         </div>
     </div>
 
     <div class="col-12 col-sm-4 text-sm-right">
-        <button type="button" class="btn btn-dark mb-1 btn-sm" data-toggle="tooltip" title="Buat Sub-Proyek" onclick="viewDetailInfo(<?= $project['project_id'] ?>, <?= "'".$project['projectID']."'" ?>)"><i class="fas fa-plus"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Detail Proyek</span></button>
+        <a href="<?= site_url('pm/chat') ?>" class="btn btn-primary mb-1 btn-sm" style="position: relative;" data-toggle="tooltip" title="Kirim Pesan"><i class="fa-solid fa-message"></i></a>
+        <button type="button" class="btn btn-dark mb-1 btn-sm" data-toggle="tooltip" title="Buat Sub-Proyek" onclick="detailProject(<?= $project['project_id'] ?>, <?= "'".$project['projectID']."'" ?>)"><i class="fas fa-plus"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Detail Proyek</span></button>
     </div>
 
     <div class="col-12">
         <div class="d-flex align-items-center mt-3">
             <div class="mr-4 ml-0">
                 <i class="fa-solid fa-map-pin mr-2"></i>
-                <span class="badge bg-inverse-danger px-2 py-1"><i class="fas fa-check mr-1"></i><?= $project['project_status'] ?></span>
+                <span class="badge bg-inverse-success px-2 py-1"><i class="fas fa-check mr-1"></i><?= $project['project_status'] == 'finish' ? 'Selesai' : '-' ?></span>
             </div>
             <div class="mr-3 small">
                 <i class="fa-solid fa-clock mr-2"></i><span class="text-secondary">Dimulai: <strong class="text-dark"><?= datetimeIDN($project['project_start']) ?></strong></span>
@@ -96,7 +106,19 @@
                     <!-- Task Sub-Element "Proyek" -->
                     <?php if ($subelemen_task['total_tasks'] > 0) { ?>
                         <!-- Photo Documentation Section -->
-                        <button type="button" class="btn btn-light btn-block btn-sm mb-3" data-toggle="tooltip" title="Lihat Foto dokumentasi lapangan" onclick="showDocSubproject(<?= $project['project_id'] ?>, <?= $sub['subproject_id'] ?>, <?= "'".$sub['subproject_name']."'" ?>)"><i class="fa-solid fa-camera mr-1"></i> Dokumentasi</button>
+                        <div class="d-flex flex-row justify-content-between align-items-center mb-3 kanban-upload-area">
+                            <div>
+                                <p class="text-dark mb-0">Dokumentasi</p>
+                                <?php if (getCountDocumentation($project['project_id'], $sub['subproject_id']) > 0) { ?>
+                                    <p class="text-xs mb-0 text-success">Jumlah Foto : <?= getCountDocumentation($project['project_id'], $sub['subproject_id']); ?></p>
+                                <?php } else { ?>
+                                    <p class="text-xs text-secondary mb-0">Belum ada foto</p>
+                                <?php } ?>
+                            </div>
+                            <div>
+                            	<button type="button" class="btn btn-sm btn-custom" onclick="showPhotos(<?= $project['project_id'] ?>, <?= $sub['subproject_id'] ?>, <?= "'".$sub['subproject_name']."'" ?>)" data-toggle="tooltip" title="Lihat Foto"><i class="fas fa-camera mr-1"></i> Foto</button>
+                            </div>
+                        </div>
 
                         <?php foreach($subelemen_task['subelemen'] as $se) { ?>
                             <div class="card panel">
@@ -156,14 +178,10 @@
             <div class="text-center py-5">
                 <img src="<?= base_url('assets/img/blank.png') ?>" width="120" class="mb-3">
                 <h3 class="mb-1">Sub-Proyek tidak tersedia.</h3>
-                <p class="small text-muted">Proyek telah diarsipkan.</p>
             </div>
         <?php } ?>
     </div>
 </div>
 
-
-<!-- Script & Modal -->
-    <?php $this->view('direktur/proyek/arsip/modal') ?>
-    <?php $this->view('direktur/proyek/arsip/script') ?>
-<!-- ./Script & Modal -->
+<?php $this->view('direktur/proyek/riwayat/modal'); ?>
+<?php $this->view('direktur/proyek/riwayat/script'); ?>

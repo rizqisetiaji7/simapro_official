@@ -26,12 +26,12 @@ class Riwayat extends CI_Controller {
       $this->theme->view('templates/main', 'pm/proyek/riwayat/index', $data);
    }
 
-	function tampil_riwayat_proyek() {
+	public function tampil_riwayat_proyek() {
       $data['projects'] = $this->ppm->get_finished_project(user_company()->company_id, user_login()->user_id, 10);
       $this->load->view('pm/proyek/riwayat/list_proyek', $data);
    }
 
-   function filter_data() {
+   public function filter_data() {
       $post = $this->input->post(NULL, TRUE);
       $query = '';
       if ($post['bulan_awal'] == '' && $post['bulan_akhir'] == '') {
@@ -57,7 +57,7 @@ class Riwayat extends CI_Controller {
          'author'    => APP_AUTHOR,
          'title'     => '(PM) Proyek Detail',
          'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
-         'page'      => 'proyek_detail'
+         'page'      => 'riwayat_detail'
       ];
 
       $data['project'] = [
@@ -86,7 +86,6 @@ class Riwayat extends CI_Controller {
    public function info_detail_proyek() {
       $project_id = $this->input->post('project_id', TRUE);
       $project_code_ID = $this->input->post('project_code', TRUE);
-      $data['docs'] = $this->ppm->get_documentation($project_id, NULL);
       $data['project'] = $this->ppm->detail_pm_project($project_id, $project_code_ID, user_login()->user_id)->row();
       $this->load->view('pm/proyek/riwayat/info_detail_proyek', $data);
    }

@@ -82,7 +82,9 @@ class Proyek extends CI_Controller {
    function edit_status_process() {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
-      $this->bm->update($this->tb_project, ['project_status' => $post['project_status']],[
+      $this->bm->update($this->tb_project, [
+         'project_status' => $post['project_status']
+      ],[
          'project_code_ID' => $post['project_code_ID']
       ]);
       if ($this->db->affected_rows() >= 0) {
@@ -181,40 +183,6 @@ class Proyek extends CI_Controller {
          }  
       }
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
-   }
-
-   public function riwayat_proyek() {
-      $data = [
-         'app_name'  => APP_NAME,
-         'author'    => APP_AUTHOR,
-         'title'     => '(Direktur) Riwayat Proyek',
-         'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
-         'page'      => 'riwayat_proyek'
-      ];
-      $this->theme->view('templates/main', 'direktur/proyek/riwayat_proyek/index', $data);
-   }
-
-   function show_riwayat_proyek() {
-      $data['projects'] = $this->project_model->get_finished_project(user_company()->company_id, 10);
-      $this->load->view('direktur/proyek/riwayat_proyek/list_proyek', $data);
-   }
-
-   function filterData() {
-      $post = $this->input->post(NULL, TRUE);
-      $query = '';
-      if ($post['bulan_awal'] == '' && $post['bulan_akhir'] == '') {
-         $query = $this->project_model->get_finished_project(user_company()->company_id);
-      } else if ($post['bulan_awal'] == '' && $post['bulan_akhir'] != '') {
-         $query = $this->project_model->get_finished_project(user_company()->company_id);
-      } else if ($post['bulan_awal'] != '' && $post['bulan_akhir'] == '') {
-         $query = $this->project_model->get_finished_project(user_company()->company_id);
-      } else if ($post['bulan_awal'] != '' && $post['bulan_akhir'] != ''){
-         $ym_awal = $post['tahun'].'-'.$post['bulan_awal'];
-         $ym_akhir = $post['tahun'].'-'.$post['bulan_akhir'];
-         $query = $this->project_model->get_riwayat_filter($ym_awal, $ym_akhir, user_company()->company_id);
-      }
-      $data['filtered'] = $query;
-      $this->load->view('direktur/proyek/riwayat_proyek/filtered_data', $data);
    }
 
    /**

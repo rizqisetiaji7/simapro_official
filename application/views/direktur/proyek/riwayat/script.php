@@ -9,7 +9,7 @@
 
 	function showRiwayatList() {
 		$.ajax({
-			url: `<?= site_url('direktur/proyek/show_riwayat_proyek') ?>`,
+			url: `<?= site_url('direktur/riwayat/tampil_riwayat_proyek') ?>`,
 			method: 'POST',
 			dataType: 'html',
 			cache: false,
@@ -38,7 +38,7 @@
 		let dataYear = $('#selectYear').val();
 
 		$.ajax({
-			url: `<?= site_url('direktur/proyek/filterData') ?>`,
+			url: `<?= site_url('direktur/riwayat/filter_data') ?>`,
 			method: 'POST',
 			dataType: 'html',
 			cache: false,
@@ -54,9 +54,33 @@
 		});
 	});
 
-	// $('#formFilterRiwayat').on('submit', function(e) {
-
-	// });
+	 // Detail Project
+   function detailProject(project_id, project_code) {
+      title.text('Detail Proyek');
+      modalDialog.addClass('modal-xl');
+      modalFooter.addClass('d-none');
+      $.ajax({
+         url: `<?= site_url('direktur/riwayat/info_detail_proyek') ?>`,
+         method: 'POST',
+         dataType: 'html',
+         cache: false,
+         data: {
+            project_id: project_id,
+            project_code: project_code
+         },
+         beforeSend: function() {
+            modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
+         },
+         success: function(data) {
+            modalBody.empty();
+            modalBody.html(data);
+         }
+      });
+      modal.modal({
+         show: true,
+         backdrop: 'static'
+      });
+   } 
 
 	modal.on('hidden.bs.modal', function() {
 		title.empty();

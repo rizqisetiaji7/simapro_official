@@ -70,7 +70,7 @@ $route['save_password'] = 'forgot_password/reset_process';
  */
 $route['direktur'] = 'direktur/dashboard/index';
 $route['direktur/proyek'] = 'direktur/proyek/index';
-$route['direktur/proyek/riwayat'] = 'direktur/proyek/riwayat_proyek';
+$route['direktur/riwayat'] = 'direktur/riwayat/index';
 $route['direktur/arsip'] = 'direktur/arsip/index';
 $route['direktur/chat'] = 'direktur/chat/index';
 
@@ -83,5 +83,4 @@ $route['direktur/chat'] = 'direktur/chat/index';
 $route['pm']                  = 'pm/dashboard/index';
 $route['pm/arsip']            = 'pm/arsip/index';
 $route['pm/arsip/detail']     = 'pm/arsip/detail';
-
 $route['pm/riwayat']          = 'pm/riwayat/index';
