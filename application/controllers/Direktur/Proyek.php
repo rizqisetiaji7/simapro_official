@@ -291,7 +291,8 @@ class Proyek extends CI_Controller {
 
    // ==================================================================
 
-   function detail_proyek($company_id, $project_code) {
+   // Detail Proyek
+   function detail($company_id, $project_code) {
       $project = $this->project_model->get_project_detail($company_id, $project_code)->row();
       $subproject = $this->project_model->get_subproject($project->project_id);
       $docs = $this->project_model->get_documentation_project($project->project_id);
@@ -306,7 +307,7 @@ class Proyek extends CI_Controller {
          'docs'         => $docs,
          'page'         => 'detail_proyek'
       ];
-      $this->theme->view('templates/main', 'direktur/proyek/detail_proyek/index', $data);
+      $this->theme->view('templates/main', 'direktur/proyek/detail/index', $data);
    }
 
    function form_edit_proyek() {
@@ -322,7 +323,7 @@ class Proyek extends CI_Controller {
          'project_manajer' => $project_manajer
       ];
 
-      $this->load->view('direktur/proyek/detail_proyek/form_edit_proyek', $data);
+      $this->load->view('direktur/proyek/detail/form_edit_proyek', $data);
    }
 
    function edit_detail_proyek() {

@@ -33,10 +33,17 @@
     		data: {
     			project_code_ID: proyekID
     		},
+    		beforeSend: function() {
+    			modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
+    		},
     		success: function(data) {
+    			modalBody.empty();
     			modalBody.html(data);
-    			modal.modal('show');
     		}
+    	});
+    	modal.modal({
+    		show: true,
+    		backdrop: 'static'
     	});
     }
 
@@ -50,11 +57,18 @@
 			dataType: 'html',
 			cache: false,
 			data: { project_code: project_code },
+			beforeSend: function() {
+    			modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
+    		},
 			success: function(data) {
+				modalBody.empty();
 				modalBody.html(data);
-				modal.modal('show');
 			}
 		});
+		modal.modal({
+    		show: true,
+    		backdrop: 'static'
+    	});
 	}
 
     // CRUD Sub Proyek

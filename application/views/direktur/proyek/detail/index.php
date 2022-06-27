@@ -3,20 +3,6 @@
         <div class="card">
             <div class="card-body">
                 <?php 
-                    $data['subproject'] = $subproject->result();
-                    $data['total_rows'] = $subproject->num_rows();
-                    var_dump($data);
-                ?>
-            </div>
-        </div>
-    </div>    
-</div> -->
-
-<!-- <div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <?php 
                     var_dump($project);
                 ?>
             </div>
@@ -275,5 +261,5 @@
     </div>
 </div>
 
-<?php $this->view('direktur/proyek/detail_proyek/modal'); ?>
-<?php $this->view('direktur/proyek/detail_proyek/script'); ?>
+<?php $this->view('direktur/proyek/detail/modal'); ?>
+<?php $this->view('direktur/proyek/detail/script'); ?>

@@ -100,7 +100,7 @@
                                     <button type="button" onclick="archiveProject(<?= "'".$pro->projectID."'" ?>)" class="btn btn-sm my-1 btn-info" data-toggle="tooltip" title="Arsipkan"><i class="la la-archive"></i></button>
                                     <?php } ?>
                                     <button type="button" onclick="editProjectStatus(<?= "'".$pro->projectID."'" ?>)" class="btn btn-sm my-1 btn-danger" data-toggle="tooltip" title="Ubah status"><i class="fas fa-edit"></i></button>
-                                    <a href="<?= site_url('direktur/proyek/detail_proyek/'.$pro->company_id.'/'.$pro->projectID) ?>" class="btn btn-sm my-1 btn-primary text-nowrap" data-toggle="tooltip" title="Lihat Proyek">Detail</a>
+                                    <a href="<?= site_url('direktur/proyek/detail/'.$pro->company_id.'/'.$pro->projectID) ?>" class="btn btn-sm my-1 btn-primary text-nowrap" data-toggle="tooltip" title="Lihat Proyek">Detail</a>
                                 </td>
                             </tr>
                             <?php } ?>

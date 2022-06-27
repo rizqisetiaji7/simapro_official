@@ -1,6 +1,8 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Subelemen extends CI_Controller {
+   private $tb_subelemen = 'tb_project_task';
+
    public function __construct() {
       parent::__construct();
       is_not_login();
@@ -60,7 +62,7 @@ class Subelemen extends CI_Controller {
       $subelemen_id = $this->input->post('task_id', TRUE);
       $subproject_id = $this->input->post('subproject_id', TRUE);
       $data['project_id']     = $this->input->post('project_id', TRUE);
-      $data['subelemen'] = $this->bm->get('tb_project_task', '*', [
+      $data['subelemen'] = $this->bm->get($this->tb_subelemen, '*', [
          'project_task_id' => $subelemen_id,
          'ID_subproject' => $subproject_id
       ])->row();
@@ -86,7 +88,7 @@ class Subelemen extends CI_Controller {
             ]
          ];
       } else {         
-         $add_subelemen = $this->bm->save('tb_project_task', [
+         $add_subelemen = $this->bm->save($this->tb_subelemen, [
             'ID_subproject'         => $subproject_id,
             'ID_priority'           => $post['task_priority_level'],
             'project_task_name'     => $post['project_task_name'],
@@ -97,8 +99,8 @@ class Subelemen extends CI_Controller {
 
          if ($add_subelemen) {
             // Count Total Rows and Progress Subelemen
-            $total_se_rows = $this->ppm->countRows('tb_project_task', ['ID_subproject' => $subproject_id]);
-            $total_se_progress = $this->ppm->sumTotalProgress('tb_project_task', 'project_task_progress', 'total_progress', [
+            $total_se_rows = $this->ppm->countRows($this->tb_subelemen, ['ID_subproject' => $subproject_id]);
+            $total_se_progress = $this->ppm->sumTotalProgress($this->tb_subelemen, 'project_task_progress', 'total_progress', [
                   'ID_subproject'   => $subproject_id
                ])->row()->total_progress;
 
@@ -171,7 +173,7 @@ class Subelemen extends CI_Controller {
          ];
       } else {
          $progress = $this->_update_progress($post['project_task_status'], $post['current_progress']);
-         $up_subelemen = $this->bm->update('tb_project_task', [
+         $up_subelemen = $this->bm->update($this->tb_subelemen, [
             'ID_priority'           => $post['task_priority_level'],
             'project_task_name'     => $post['project_task_name'],
             'project_task_deadline' => $post['project_task_deadline'],
@@ -185,8 +187,8 @@ class Subelemen extends CI_Controller {
 
          if ($up_subelemen) {
             // Count Total Rows and Progress Subelemen
-            $total_se_rows = $this->ppm->countRows('tb_project_task', ['ID_subproject' => $subproject_id]);
-            $total_se_progress = $this->ppm->sumTotalProgress('tb_project_task', 'project_task_progress', 'total_progress', [
+            $total_se_rows = $this->ppm->countRows($this->tb_subelemen, ['ID_subproject' => $subproject_id]);
+            $total_se_progress = $this->ppm->sumTotalProgress($this->tb_subelemen, 'project_task_progress', 'total_progress', [
                   'ID_subproject'   => $subproject_id
                ])->row()->total_progress;
 
@@ -248,14 +250,14 @@ class Subelemen extends CI_Controller {
       $subproject_id = $post['subproject_id'];
       $subelemen_id = $post['subelemen_id'];
 
-      $del_subelemen = $this->bm->delete('tb_project_task',[
+      $del_subelemen = $this->bm->delete($this->tb_subelemen,[
          'project_task_id' => $subelemen_id
       ]);
 
       if ($del_subelemen) {
          // Count Total Rows and Progress Subelemen
-         $total_se_rows = $this->ppm->countRows('tb_project_task', ['ID_subproject' => $subproject_id]);
-         $total_se_progress = $this->ppm->sumTotalProgress('tb_project_task', 'project_task_progress', 'total_progress', [
+         $total_se_rows = $this->ppm->countRows($this->tb_subelemen, ['ID_subproject' => $subproject_id]);
+         $total_se_progress = $this->ppm->sumTotalProgress($this->tb_subelemen, 'project_task_progress', 'total_progress', [
                'ID_subproject'   => $subproject_id
             ])->row()->total_progress;
 

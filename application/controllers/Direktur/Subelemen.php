@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Subproyek extends CI_Controller {
-   private $tb_subproject = 'tb_subproject';
+class Subelemen extends CI_Controller {
+   private $tb_subelemen = 'tb_project_task';
 
    public function __construct() {
       parent::__construct();
@@ -10,16 +10,16 @@ class Subproyek extends CI_Controller {
       $this->load->model('project_model');
    }
 
-   public function form_tambah_subproyek() {
-      
+   function form_tambah_subelemen() {
+
    }
 
-   public function form_edit_subproyek() {
-      
+   function form_edit_subelemen() {
+
    }
 
    function tambah() {
-      
+
    }
 
    function edit() {

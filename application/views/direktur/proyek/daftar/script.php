@@ -37,11 +37,42 @@
 			url: `<?= site_url('direktur/proyek/form_tambah') ?>`,
 			dataType: 'html',
 			cache: false,
+			beforeSend: function() {
+    			modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
+    		},
 			success: function(data) {
+				modalBody.empty();
 				modalBody.html(data);
-				modal.modal('show');
 			}
 		});
+		modal.modal({
+    		show: true,
+    		backdrop: 'static'
+    	});
+	}
+
+	function editProjectStatus(project_code) {
+		title.text('Ubah Status Proyek');
+		formModal.attr('action', `<?= site_url('direktur/proyek/edit_status_process') ?>`);
+		$.ajax({
+			url: `<?= site_url('direktur/proyek/form_edit_status') ?>`,
+			method: 'POST',
+			dataType: 'html',
+			cache: false,
+			data: { project_code: project_code },
+			beforeSend: function() {
+    			modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
+    		},
+			success: function(data) {
+				modalBody.empty();
+				modalBody.html(data);
+			}
+		});
+
+		modal.modal({
+    		show: true,
+    		backdrop: 'static'
+    	});
 	}
 
 	// Arsipkan Proyek
@@ -68,7 +99,8 @@
 				            icon: 'success',
 				            title: 'Berhasil',
 				            text: `${data.message}`,
-				            confirmButtonText: 'Oke, Sip!',
+				            showConfirmButton: false,
+				            timer: 2000
 				         }).then((result) => {
 				         	window.location.reload();
 				         });
@@ -78,7 +110,7 @@
 				            title: 'Gagal',
 				            text: `${data.message}`,
 				            showConfirmButton: false,
-				            timer: 2000,
+				            timer: 2000
 				         }).then((result) => {
 				         	window.location.reload();
 				         });
@@ -87,22 +119,6 @@
 				});
       	}
       });
-	}
-
-	function editProjectStatus(project_code) {
-		title.text('Ubah Status Proyek');
-		formModal.attr('action', `<?= site_url('direktur/proyek/edit_status_process') ?>`);
-		$.ajax({
-			url: `<?= site_url('direktur/proyek/form_edit_status') ?>`,
-			method: 'POST',
-			dataType: 'html',
-			cache: false,
-			data: { project_code: project_code },
-			success: function(data) {
-				modalBody.html(data);
-				modal.modal('show');
-			}
-		});
 	}
 
 	formModal.on('submit', function(e) {
@@ -139,7 +155,7 @@
 		            title: 'Berhasil',
 		            text: `${data.message}`,
 		            showConfirmButton: false,
-		            timer: 2000,
+		            timer: 2000
 		         }).then((result) => {
 		         	window.location.reload();
 		         });
@@ -150,7 +166,7 @@
 		            title: 'Gagal',
 		            text: `${data.message}`,
 		            showConfirmButton: false,
-		            timer: 2000,
+		            timer: 2000
 		         }).then((result) => {
 		         	window.location.reload();
 		         });
