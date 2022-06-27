@@ -32,7 +32,7 @@
 	// Add Project
 	function addNewProject() {
 		title.text('Tambah Proyek Baru');
-		formModal.attr('action', `<?= site_url('direktur/proyek/tambah_proyek') ?>`);
+		formModal.attr('action', `<?= site_url('direktur/proyek/tambah') ?>`);
 		$.ajax({
 			url: `<?= site_url('direktur/proyek/form_tambah') ?>`,
 			dataType: 'html',
@@ -53,7 +53,7 @@
 
 	function editProjectStatus(project_code) {
 		title.text('Ubah Status Proyek');
-		formModal.attr('action', `<?= site_url('direktur/proyek/edit_status_process') ?>`);
+		formModal.attr('action', `<?= site_url('direktur/proyek/edit_status') ?>`);
 		$.ajax({
 			url: `<?= site_url('direktur/proyek/form_edit_status') ?>`,
 			method: 'POST',

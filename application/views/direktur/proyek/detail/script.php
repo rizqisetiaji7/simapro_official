@@ -17,6 +17,14 @@
         $(this).next().html('');
     });
 
+    $(document).on('change', '#inputProfile', function() {
+		if (this.files && this.files[0]) {
+			// Get and display filename
+			$('#profileFileName').removeClass('d-none');
+			$('#profileFileName').addClass('mb-3').html(`<p class="mb-0 small text-muted">Gambar: <strong class="text-dark">${this.files[0].name}</strong></p>`);
+		}
+	});
+
     // Choose file from computer
 	chooseFile('#chooseFileImage', '#inputProfile');
 
@@ -26,7 +34,7 @@
     	formModal.attr('action', `<?= site_url('direktur/proyek/edit_detail_proyek') ?>`);
 
     	$.ajax({
-    		url: `<?= site_url('direktur/proyek/form_edit_proyek') ?>`,
+    		url: `<?= site_url('direktur/proyek/edit') ?>`,
     		method: 'POST',
     		dataType: 'html',
     		cache: false,
@@ -74,17 +82,13 @@
     // CRUD Sub Proyek
 	function add_subProject(project_id) {
 		title.text('Tambah Sub-Proyek');
-		// formModal.attr('action', `<?= site_url('direktur/subproyek/tambah') ?>`);
-		formModal.attr('action', `<?= site_url('direktur/manajemen_proyek/tambah_subproyek') ?>`)
-
+		formModal.attr('action', `<?= site_url('direktur/subproyek/tambah') ?>`);
 		$.ajax({
 			url: `<?= site_url('direktur/subproyek/form_tambah_subproyek') ?>`,
 			method: 'POST',
 			dataType: 'html',
 			cache: false,
-			data: {
-				project_id: project_id
-			},
+			data: {project_id: project_id},
 			beforeSend: function() {
 				modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
 			},
@@ -123,6 +127,53 @@
 			show: true,
 			backdrop: 'static'
 		});
+	}
+
+	function delete_subProject(subproject_id, project_id) {
+		Swal.fire({
+			icon: 'warning',
+			title: 'Hapus Sub-Proyek?',
+			text: 'Anda akan menghapus Sub-Proyek.',
+			confirmButtonText: 'Ya, Hapus',
+			showCancelButton: true,
+			cancelButtonText: 'Batal'
+     	}).then((res) => {
+     		if (res.isConfirmed) {
+     			$.ajax({
+					url: `<?= site_url('direktur/subproyek/hapus') ?>`,
+					method: 'POST',
+					dataType: 'json',
+					cache: false,
+					data: {
+						subproject_id: subproject_id,
+						project_id: project_id
+					},
+					success: function(data) {
+						if (data.status == 'success') {
+							Swal.fire({
+								icon: 'success',
+								title: 'Berhasil',
+								text: `${data.message}`,
+								showConfirmButton: false,
+								timer: 2000,
+							}).then((result) => {
+								window.location.reload();
+							});
+						} else if (data.status == 'failed') {
+							Swal.fire({
+								icon: 'error',
+								title: 'Gagal',
+								text: `${data.message}`,
+								showConfirmButton: false,
+								timer: 2000,
+							}).then((result) => {
+								window.location.reload();
+							});
+						}
+					}
+				});
+     		}
+     	});
 	}
 
 	// CRUD Sub-Elemen Proyek
@@ -178,26 +229,24 @@
 		});
 	}
 
-	function hapus_subElProject(task_type, id_sub = '', project_id = '') {
-		let task_name = task_type == 'subproject' ? 'Sub-Proyek' : 'Sub-Elemen Proyek' ;
-		let textFill = task_type == 'subproject' ? 'Data Subproyek akan terhapus beserta Sub-elemennya' : 'Anda akan menghapus Sub-elemen Proyek.' ;
+	function deleteSubelemen(subelemen_id, subproject_id, project_id) {
 		Swal.fire({
 			icon: 'warning',
-			title: `Hapus ${task_name}`,
-			text: textFill,
+			title: 'Hapus Sub-Elemen Proyek?',
+			text: 'Anda akan menghapus Sub-elemen Proyek.',
 			confirmButtonText: 'Ya, Hapus',
 			showCancelButton: true,
 			cancelButtonText: 'Batal'
-     	}).then((result) => {
-	      	if (result.isConfirmed) {
-	   			$.ajax({
-					url: `<?= site_url('direktur/manajemen_proyek/hapus') ?>`,
+     	}).then((res) => {
+     		if (res.isConfirmed) {
+     			$.ajax({
+					url: `<?= site_url('direktur/subelemen/hapus') ?>`,
 					method: 'POST',
 					dataType: 'json',
 					cache: false,
 					data: {
-						task_type: task_type,
-						id_sub: id_sub,
+						subelemen_id: subelemen_id,
+						subproject_id: subproject_id,
 						project_id: project_id
 					},
 					success: function(data) {
@@ -210,7 +259,7 @@
 								timer: 2000,
 							}).then((result) => {
 								window.location.reload();
-							});		
+							});
 						} else if (data.status == 'failed') {
 							Swal.fire({
 								icon: 'error',
@@ -224,8 +273,36 @@
 						}
 					}
 				});
-	      	}
-      });
+     		}
+     	});
+	}
+
+	// SHOW PHOTO DOCUMENTATION PROJECT / SUB-PROJECT
+	function showPhoto(project_id, subproject_id='', project_name='') {
+		title.html(`Dokumentasi Proyek: <span class="text-secondary small">${project_name}</span>`);
+		modalDialog.addClass('modal-xl');
+		modalFooter.addClass('d-none');
+		$.ajax({
+			url: `<?= site_url('direktur/foto/tampil_foto') ?>`,
+			method: 'POST',
+			dataType: 'html',
+			cache: false,
+			data: {
+				project_id: project_id,
+				subproject_id: subproject_id
+			},
+			beforeSend: function() {
+				modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
+			},
+			success: function(data) {
+				modalBody.empty();
+				modalBody.html(data);
+			}
+		});
+		modal.modal({
+			backdrop: 'static',
+			show: true,
+		});
 	}
 
 	function finishProject(project_id) {
@@ -243,7 +320,7 @@
      	}).then((result) => {
      		if (result.isConfirmed) {
      			$.ajax({
-				url: `<?= site_url('direktur/manajemen_proyek/status_proyek_selesai') ?>`,
+				url: `<?= site_url('direktur/proyek/proyek_selesai') ?>`,
 				method: 'POST',
 				dataType: 'json',
 				cache: false,
@@ -259,7 +336,7 @@
 							showConfirmButton: false,
 							timer: 2000,
 						}).then((result) => {
-							window.location = `<?= site_url('direktur/proyek/daftar_proyek') ?>`;
+							window.location = data.redirect;
 						});		
 					} else if (data.status == 'failed') {
 						Swal.fire({
@@ -269,7 +346,7 @@
 							showConfirmButton: false,
 							timer: 2000,
 						}).then((result) => {
-							window.location = `<?= site_url('direktur/proyek/daftar_proyek') ?>`;
+							window.location.reload();
 						});
 					}
 				}
@@ -277,60 +354,6 @@
      		}
      	});
 	}
-
-	// Tampil Dokumentasi Proyek
-	function tampilDocumentasiProyek(project_id, project_title) {
-		title.html(`Dokumentasi Proyek : <span class="text-secondary small">${project_title}</span>`);
-		modalDialog.addClass('modal-lg');
-		modalFooter.addClass('d-none');
-		$.ajax({
-			url: `<?= site_url('direktur/manajemen_proyek/tampil_dokumentasi_proyek') ?>`,
-			dataType: 'html',
-			method: 'POST',
-			cache: false,
-			beforeSend: function() {
-				modalBody.html('Memuat gambar...');
-			},
-			data: {
-				project_id: project_id
-			},
-			success: function(data) {
-				modalBody.html(data);
-			}
-		});
-		modal.modal('show');
-	}
-
-	function tampilDocumentasiSubproyek(project_id, subproject_id, project_title) {
-		title.html(`Dokumentasi Proyek : <span class="text-secondary small">${project_title}</span>`);
-		modalDialog.addClass('modal-lg');
-		modalFooter.addClass('d-none');
-		$.ajax({
-			url: `<?= site_url('direktur/manajemen_proyek/tampil_dokumentasi_subproyek') ?>`,
-			dataType: 'html',
-			method: 'POST',
-			cache: false,
-			beforeSend: function() {
-				modalBody.html('Memuat gambar...');
-			},
-			data: {
-				project_id: project_id,
-				subproject_id: subproject_id
-			},
-			success: function(data) {
-				modalBody.html(data);
-			}
-		});
-		modal.modal('show');
-	}
-
-	$(document).on('change', '#inputProfile', function() {
-		if (this.files && this.files[0]) {
-			// Get and display filename
-			$('#profileFileName').removeClass('d-none');
-			$('#profileFileName').addClass('mb-3').html(`<p class="mb-0 small text-muted">Gambar: <strong class="text-dark">${this.files[0].name}</strong></p>`);
-		}
-	});
 
 	formModal.on('submit', function(e) {
 		e.preventDefault();
@@ -389,6 +412,7 @@
 	modal.on('hidden.bs.modal', function() {
 		title.empty();
 		modalDialog.removeClass('modal-lg');
+		modalDialog.removeClass('modal-xl');
 		modalBody.empty();
 		modalFooter.removeClass('d-none');
 		formModal.removeAttr('action');

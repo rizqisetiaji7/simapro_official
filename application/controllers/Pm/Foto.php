@@ -80,7 +80,7 @@ class Foto extends CI_Controller {
    function tampil_foto() {
       $post = $this->input->post(NULL, TRUE);
       $project_id = $post['project_id'];
-      $subproject_id = $post['subproject_id'] == '' ? NULL : $post['subproject_id'];
+      $subproject_id = $post['subproject_id'] == 0 ? NULL : $post['subproject_id'];
       $data['proj_name'] = $post['proj_name'];
       $data['project_status'] = $post['project_status'];
       $data['proj_type'] = $post['proj_type'];

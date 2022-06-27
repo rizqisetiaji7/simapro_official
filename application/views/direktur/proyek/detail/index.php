@@ -24,7 +24,7 @@
                     <i class="fa fa-pencil"></i>
                 </button>
                 <button type="button" class="btn btn-sm mb-1 mr-1 btn-danger" onclick="editProjectStatus(<?= "'".$project['projectID']."'" ?>)" data-toggle="tooltip" title="Edit status proyek"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-sm mb-1 btn-purple" onclick="tampilDocumentasiProyek(<?= "'".$project['project_id']."'" ?>, <?= "'".$project['project_name']."'" ?>)" data-toggle="tooltip" title="Lihat Foto Dokumentasi">
+                <button type="button" class="btn btn-sm mb-1 btn-purple" onclick="showPhoto(<?= "'".$project['project_id']."'" ?>, 0, <?= "'".$project['project_name']."'" ?>)" data-toggle="tooltip" title="Lihat Foto Dokumentasi">
                     <i class="fa-solid fa-camera"></i> <span class="d-none d-lg-inline-block ml-1">Foto Dokumentasi</span>
                 </button>
             </div>
@@ -33,7 +33,7 @@
     </div>
     
     <div class="col-12 col-sm-4 text-sm-right">
-        <a href="<?= site_url('direktur/chat') ?>" class="btn btn-primary mb-1 btn-sm" style="position: relative;" data-toggle="tooltip" title="Kirim Pesan"><i class="fa-solid fa-message"></i></a>
+        <a href="<?= site_url('chat') ?>" class="btn btn-primary mb-1 btn-sm" style="position: relative;" data-toggle="tooltip" title="Kirim Pesan"><i class="fa-solid fa-message"></i></a>
 
         <button type="button" class="btn btn-info mb-1 btn-sm" data-toggle="tooltip" title="Buat Sub-Proyek" onclick="add_subProject(<?= $project['project_id'] ?>)"><i class="fas fa-plus"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Sub-proyek</span></button>
         <?php if ($project['project_progress'] >= 100 && $docs->num_rows() > 0) { ?>

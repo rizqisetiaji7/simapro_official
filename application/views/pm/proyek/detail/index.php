@@ -1,3 +1,6 @@
+<?php if ($project['project_status'] == 'finish') {
+    redirect('pm/proyek');
+} else { ?>
 <div class="row">
     <div class="col-12 col-sm-8">
         <div class="d-flex flex-row align-items-start justify-content-between justify-content-sm-start">
@@ -30,7 +33,7 @@
                 <button type="button" class="btn btn-sm mb-1 btn-purple text-white" onclick="uploadDocumentation('proyek', <?= $project['project_id'] ?>, null)" data-toggle="tooltip" title="Upload Foto Dokumentasi Proyek"><i class="fa fa-cloud-upload"></i></button>
                 <?php } ?>
 
-                <button type="button" class="btn btn-sm mb-1 btn-custom" onclick="showPhoto(<?= $project['project_id'] ?>, '', <?= "'".$project['project_name']."'" ?>, <?= "'".$project['project_status']."'" ?>, <?= "'".'proyek'."'" ?>)" data-toggle="tooltip" title="Lihat Foto Dokumentasi">
+                <button type="button" class="btn btn-sm mb-1 btn-custom" onclick="showPhoto(<?= $project['project_id'] ?>, 0, <?= "'".$project['project_name']."'" ?>, <?= "'".$project['project_status']."'" ?>, <?= "'".'proyek'."'" ?>)" data-toggle="tooltip" title="Lihat Foto Dokumentasi">
                     <i class="fas fa-camera"></i> <span class="d-none d-lg-inline-block ml-1">Lihat Foto</span>
                 </button>
             </div>
@@ -38,7 +41,7 @@
     </div>
 
     <div class="col-12 col-sm-4 text-sm-right">
-        <a href="<?= site_url('pm/chat') ?>" class="btn btn-primary mb-1 btn-sm" style="position: relative;" data-toggle="tooltip" title="Kirim Pesan"><i class="fa-solid fa-message"></i></a>
+        <a href="<?= site_url('chat') ?>" class="btn btn-primary mb-1 btn-sm" style="position: relative;" data-toggle="tooltip" title="Kirim Pesan"><i class="fa-solid fa-message"></i></a>
 
 
         <?php if ($project['project_status'] == 'review') { ?>
@@ -119,7 +122,6 @@
     </div>
 </div>
 <!-- ./ Progress Bar Main Proyek -->
-
 
 <div class="kanban-board card mb-0">
     <div class="card-body">
@@ -270,8 +272,8 @@
     </div>
 </div>
 
-
 <?php $this->view('pm/proyek/detail/modal_script/modal'); ?>
 <?php $this->view('pm/proyek/detail/modal_script/script'); ?>
 <?php $this->view('pm/proyek/detail/modal_script/modal_upload'); ?>
 <?php $this->view('pm/proyek/detail/modal_script/script_upload_doc'); ?>
+<?php } ?>

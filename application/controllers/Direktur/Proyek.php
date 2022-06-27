@@ -114,50 +114,29 @@ class Proyek extends CI_Controller {
       $this->theme->view('templates/main', 'direktur/proyek/detail/index', $data);
    }
 
-
-   function form_edit_status() {
-      $id = $this->input->post('project_code', TRUE);
-      $project_status = $this->bm->get($this->tb_project, 'project_id, ID_pm, ID_company, project_code_ID, project_progress, project_status', ['project_code_ID' => $id])->row();
-      $docs = $this->project_model->get_documentation_project($project_status->project_id);
-
-      $data = [
-         'project_status'  => $project_status,
-         'docs'            => $docs
-      ];
-
-      $this->load->view('direktur/proyek/daftar/form_edit_status', $data);
-   }
-
-   function edit_status_process() {
-      $message = [];
-      $post = $this->input->post(NULL, TRUE);
-      $this->bm->update($this->tb_project, [
-         'project_status' => $post['project_status']
-      ],[
-         'project_code_ID' => $post['project_code_ID']
-      ]);
-      if ($this->db->affected_rows() >= 0) {
-         $message = [
-            'status'    => 'success',
-            'message'   => 'Status berhasil diperbarui.'
-         ];
-      } else {
-         $message = [
-            'status'    => 'failed',
-            'message'   => 'Oops! Status gagal diperbarui.'
-         ];
-      }
-      $this->output->set_content_type('application/json')->set_output(json_encode($message));
-   }
-
-   function form_tambah() {
+   public function form_tambah() {
       $data['project_code_ID'] = urlencode(base64_encode(getIDCode('PROY', user_company()->comp_prefix)));
       $data['project_man'] = $this->bm->get('tb_users', 'user_id, user_fullname', ['ID_company' => user_company()->company_id, 'user_role' => 'pm'])->result();
-      $this->load->view('direktur/proyek/daftar/form_tambah_proyek', $data);
+      $this->load->view('direktur/proyek/daftar/form_tambah', $data);
    }
 
-   // CRUD List Proyek
-   function tambah_proyek() {
+   public function form_edit() {
+      $code_ID = $this->input->post('project_code_ID', TRUE);
+      $project = $this->project_model->get_project_detail(user_company()->company_id, $code_ID)->row();
+      $project_manajer = $this->bm->get('tb_users', '*', [
+         'ID_company' => $project->company_id, 
+         'user_role' => 'pm'
+      ])->result();
+
+      $data = [
+         'project'         => $project,
+         'project_manajer' => $project_manajer
+      ];
+
+      $this->load->view('direktur/proyek/detail/form_edit_proyek', $data);
+   }
+
+   function tambah() {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
 
@@ -234,97 +213,7 @@ class Proyek extends CI_Controller {
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
-   /**
-    *
-    * Download method
-    * Mendownload laporan proyek yang sudah Selesai pengerjaannya
-    * 
-    */
-
-   function download_laporan() {
-      $query = '';
-      $bulan = '';
-      $post = $this->input->post(NULL, TRUE);
-      $ym_awal = $post['tahun_proyek'].'-'.$post['bulan_awal'];
-      $ym_akhir = $post['tahun_proyek'].'-'.$post['bulan_akhir'];
-
-      if ($post['bulan_awal'] == '' && $post['bulan_akhir'] == '') {
-         $bulan = '';
-         $query = $this->project_model->get_finished_project(user_company()->company_id);
-      } else if ($post['bulan_awal'] == '' && $post['bulan_akhir'] != '') {
-         $bulan = '';
-         $query = $this->project_model->get_finished_project(user_company()->company_id);
-      } else if ($post['bulan_awal'] != '' && $post['bulan_akhir'] == '') {
-         $bulan = '';
-         $query = $this->project_model->get_finished_project(user_company()->company_id);
-      } else if ($post['bulan_awal'] != '' && $post['bulan_akhir'] != ''){
-         $ym_awal = $post['tahun_proyek'].'-'.$post['bulan_awal'];
-         $ym_akhir = $post['tahun_proyek'].'-'.$post['bulan_akhir'];
-         $bulan = getMonthID($post['bulan_awal']).' s/d '.getMonthID($post['bulan_akhir']).' '.$post['tahun_proyek'];
-         $query = $this->project_model->get_riwayat_filter($ym_awal, $ym_akhir, user_company()->company_id);
-      }
-
-      if ($query->num_rows() > 0) {
-         // Print PDF
-         $data['month'] = $bulan;
-         $data['total_count'] = $query->num_rows();
-         $data['company'] = user_company()->comp_name;
-         $data['logo'] = user_company()->comp_logo;
-         $data['title'] = 'PT. Arya Bakti Saluyu';
-
-         $rows = [];
-         foreach($query->result() as $qr) {
-            $deadline = '';
-
-            if ($qr->project_deadline > $qr->project_current_deadline) {
-               $deadline = 'Lebih Awal';
-            } else if ($qr->project_deadline < $qr->project_current_deadline) {
-               $deadline = 'Terlambat';
-            } else if ($qr->project_deadline == $qr->project_current_deadline) {
-               $deadline = 'Tepat Waktu';
-            }
-            $rows[] = [
-               'proID'         => $qr->projectID,
-               'thumbnail'     => $qr->project_thumbnail,
-               'project_name'  => $qr->project_name,
-               'pm'            => $qr->user_id == null ? ' - ' : $qr->user_fullname,
-               'address'       => $qr->project_address,
-               'deadline'      => dateTimeIDN($qr->project_deadline),
-               'curr_deadline' => dateTimeIDN($qr->project_current_deadline),
-               'keterangan'    => $deadline
-            ];
-         }
-         $data['query'] = $rows;
-         $rand_id = $this->mylibs->_randomID();
-         $filename = 'LAPPROJ-'.date('Ymdhis', time()).$rand_id;
-         $this->cipdf->print('laporan_proyek', $data, $filename, 'A4', 'landscape');
-      } else {
-         echo "<script>
-            alert('Oops! Data informasi yang ingin anda download tidak tersedia.');
-            window.location = `".site_url('direktur/proyek/riwayat')."`;
-         </script>";
-      }
-   }
-
-   // ==================================================================
-
-   function form_edit_proyek() {
-      $code_ID = $this->input->post('project_code_ID', TRUE);
-      $project = $this->project_model->get_project_detail(user_company()->company_id, $code_ID)->row();
-      $project_manajer = $this->bm->get('tb_users', '*', [
-         'ID_company' => $project->company_id, 
-         'user_role' => 'pm'
-      ])->result();
-
-      $data = [
-         'project'         => $project,
-         'project_manajer' => $project_manajer
-      ];
-
-      $this->load->view('direktur/proyek/detail/form_edit_proyek', $data);
-   }
-
-   function edit_detail_proyek() {
+   function edit() {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
 
@@ -394,6 +283,112 @@ class Proyek extends CI_Controller {
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
+   function form_edit_status() {
+      $id = $this->input->post('project_code', TRUE);
+      $project_status = $this->bm->get($this->tb_project, 'project_id, ID_pm, ID_company, project_code_ID, project_progress, project_status', ['project_code_ID' => $id])->row();
+      $docs = $this->project_model->get_documentation_project($project_status->project_id);
+
+      $data = [
+         'project_status'  => $project_status,
+         'docs'            => $docs
+      ];
+      $this->load->view('direktur/proyek/daftar/form_edit_status', $data);
+   }
+
+   function edit_status() {
+      $message = [];
+      $post = $this->input->post(NULL, TRUE);
+      $this->bm->update($this->tb_project, [
+         'project_status' => $post['project_status']
+      ],[
+         'project_code_ID' => $post['project_code_ID']
+      ]);
+      if ($this->db->affected_rows() >= 0) {
+         $message = [
+            'status'    => 'success',
+            'message'   => 'Status berhasil diperbarui.'
+         ];
+      } else {
+         $message = [
+            'status'    => 'failed',
+            'message'   => 'Oops! Status gagal diperbarui.'
+         ];
+      }
+      $this->output->set_content_type('application/json')->set_output(json_encode($message));
+   }
+
+   /**
+    *
+    * Download method
+    * Mendownload laporan proyek yang sudah Selesai pengerjaannya
+    * 
+    */
+   function download_laporan() {
+      $query = '';
+      $bulan = '';
+      $post = $this->input->post(NULL, TRUE);
+      $ym_awal = $post['tahun_proyek'].'-'.$post['bulan_awal'];
+      $ym_akhir = $post['tahun_proyek'].'-'.$post['bulan_akhir'];
+
+      if ($post['bulan_awal'] == '' && $post['bulan_akhir'] == '') {
+         $bulan = '';
+         $query = $this->project_model->get_finished_project(user_company()->company_id);
+      } else if ($post['bulan_awal'] == '' && $post['bulan_akhir'] != '') {
+         $bulan = '';
+         $query = $this->project_model->get_finished_project(user_company()->company_id);
+      } else if ($post['bulan_awal'] != '' && $post['bulan_akhir'] == '') {
+         $bulan = '';
+         $query = $this->project_model->get_finished_project(user_company()->company_id);
+      } else if ($post['bulan_awal'] != '' && $post['bulan_akhir'] != ''){
+         $ym_awal = $post['tahun_proyek'].'-'.$post['bulan_awal'];
+         $ym_akhir = $post['tahun_proyek'].'-'.$post['bulan_akhir'];
+         $bulan = getMonthID($post['bulan_awal']).' s/d '.getMonthID($post['bulan_akhir']).' '.$post['tahun_proyek'];
+         $query = $this->project_model->get_riwayat_filter($ym_awal, $ym_akhir, user_company()->company_id);
+      }
+
+      if ($query->num_rows() > 0) {
+         // Print PDF
+         $data['month'] = $bulan;
+         $data['total_count'] = $query->num_rows();
+         $data['company'] = user_company()->comp_name;
+         $data['logo'] = user_company()->comp_logo;
+         $data['title'] = 'PT. Arya Bakti Saluyu';
+
+         $rows = [];
+         foreach($query->result() as $qr) {
+            $deadline = '';
+
+            if ($qr->project_deadline > $qr->project_current_deadline) {
+               $deadline = 'Lebih Awal';
+            } else if ($qr->project_deadline < $qr->project_current_deadline) {
+               $deadline = 'Terlambat';
+            } else if ($qr->project_deadline == $qr->project_current_deadline) {
+               $deadline = 'Tepat Waktu';
+            }
+            $rows[] = [
+               'proID'         => $qr->projectID,
+               'thumbnail'     => $qr->project_thumbnail,
+               'project_name'  => $qr->project_name,
+               'pm'            => $qr->user_id == null ? ' - ' : $qr->user_fullname,
+               'address'       => $qr->project_address,
+               'deadline'      => dateTimeIDN($qr->project_deadline),
+               'curr_deadline' => dateTimeIDN($qr->project_current_deadline),
+               'keterangan'    => $deadline
+            ];
+         }
+         $data['query'] = $rows;
+         $rand_id = $this->mylibs->_randomID();
+         $filename = 'LAPPROJ-'.date('Ymdhis', time()).$rand_id;
+         $this->cipdf->print('laporan_proyek', $data, $filename, 'A4', 'landscape');
+      } else {
+         echo "<script>
+            alert('Oops! Data informasi yang ingin anda download tidak tersedia.');
+            window.location = `".site_url('direktur/proyek/riwayat')."`;
+         </script>";
+      }
+   }
+   // ==================================================================
+
    function revisi_proyek() {
       $message = [];
       $project_id = $this->input->post('project_id', TRUE);
@@ -412,6 +407,34 @@ class Proyek extends CI_Controller {
          $message = [
             'status'    => 'failed',
             'message'   => 'Oops! maaf terjadi kesalahan, silahkan periksa koneksi/jaringan anda, lalu coba lagi.'
+         ];
+      }
+      $this->output->set_content_type('application/json')->set_output(json_encode($message));
+   }
+
+   function proyek_selesai() {
+      $message = [];
+      $project_id = $this->input->post('project_id', TRUE);
+
+      $this->bm->update('tb_project', [
+         'project_current_deadline' => date('Y-m-d', now('Asia/Jakarta')),
+         'project_deadline_month'   => date('Y-m', now('Asia/Jakarta')),
+         'project_status'           => 'finish',
+         'updated'                  => date('Y-m-d H:i:s', now('Asia/Jakarta'))
+      ], [
+         'project_id'   => $project_id
+      ]);
+
+      if ($this->db->affected_rows() > 0) {
+         $message = [
+            'status'    => 'success',
+            'message'   => 'Proyek yang telah anda kerjakan telah selesai.',
+            'redirect'  => site_url('direktur/proyek')
+         ];
+      } else {
+         $message = [
+            'status'    => 'failed',
+            'message'   => 'Oop! Terjadi kesalahan, coba lagi beberapa saat.'
          ];
       }
       $this->output->set_content_type('application/json')->set_output(json_encode($message));

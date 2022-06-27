@@ -38,15 +38,15 @@
         <div class="main-wrapper">
             <?php $this->view('templates/header'); ?>
             <?php 
-                if ($this->uri->segment(1) == 'direktur') {
+                if (user_login()->user_role == 'direktur') {
                     $this->view('templates/sidebar/sidebar_direktur');
-                } else if ($this->uri->segment(1) == 'pm') {
+                } else if (user_login()->user_role == 'pm') {
                     $this->view('templates/sidebar/sidebar_pm');
                 } 
             ?>
             
             <div class="page-wrapper">
-                <?php if ($this->uri->segment(2) == 'chat') { ?>
+                <?php if ($this->uri->segment(1) == 'chat') { ?>
                     <?= $page_content; ?>
                 <?php } else { ?>
                     <div class="content container-fluid">

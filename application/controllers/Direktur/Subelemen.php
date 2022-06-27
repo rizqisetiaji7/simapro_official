@@ -182,6 +182,65 @@ class Subelemen extends CI_Controller {
    }
 
    function hapus() {
-      
+      $message = [];
+      $post = $this->input->post(NULL, TRUE);
+      $project_id = $post['project_id'];
+      $subproject_id = $post['subproject_id'];
+      $subelemen_id = $post['subelemen_id'];
+
+      $del_subelemen = $this->bm->delete($this->tb_subelemen, [
+         'project_task_id' => $subelemen_id
+      ]);
+
+      if ($del_subelemen) {
+         // Count Total Rows and Progress Subelemen
+         $total_se_rows = $this->ppm->countRows($this->tb_subelemen, ['ID_subproject' => $subproject_id]);
+         $total_se_progress = $this->ppm->sumTotalProgress($this->tb_subelemen, 'project_task_progress', 'total_progress', [
+               'ID_subproject'   => $subproject_id
+            ])->row()->total_progress;
+
+         // Current Progress for Subproject
+         $sp_progress = $total_se_progress != '' ? round(intval($total_se_progress) / intval($total_se_rows)) : 0;
+         $up_subproject = $this->bm->update('tb_subproject', ['subproject_progress' => $sp_progress], [
+            'subproject_id'   => $subproject_id
+         ]);
+
+         if ($up_subproject) {
+            // Count Total Rows and Progress Subproject
+            $total_sp_rows = $this->ppm->countRows('tb_subproject', ['ID_project' => $project_id]);
+            $total_sp_progress = $this->ppm->sumTotalProgress('tb_subproject', 'subproject_progress', 'total_progress', [
+               'ID_project'   => $project_id
+            ])->row()->total_progress;
+
+            // Current Progress for Main Project
+            $proj_progress = $total_sp_progress != '' ? round(intval($total_sp_progress) / intval($total_sp_rows)) : 0;
+            $up_project = $this->bm->update('tb_project', ['project_progress' => $proj_progress], [
+               'project_id'   => $project_id
+            ]);
+
+            if ($up_project) {
+               $message = [
+                  'status'    => 'success',
+                  'message'   => 'Data Sub-elemen / list proyek telah berhasil Dihapus.'
+               ];
+            } else {
+               $message = [
+                  'status'    => 'failed',
+                  'message'   => 'Oops! Sub-elemen / list proyek gagal dihapus.'
+               ];
+            }
+         } else {
+            $message = [
+               'status'    => 'failed',
+               'message'   => 'Oops! Sub-elemen / list proyek gagal dihapus.'
+            ];
+         }
+      } else {
+         $message = [
+            'status'    => 'failed',
+            'message'   => 'Oops! Sub-elemen / list proyek gagal dihapus.'
+         ];
+      }
+      $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 }

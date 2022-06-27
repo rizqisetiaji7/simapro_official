@@ -9,6 +9,10 @@ class Foto extends CI_Controller {
    }
 
    function tampil_foto() {
-
+      $post = $this->input->post(NULL, TRUE);
+      $project_id = $post['project_id'];
+      $subproject_id = $post['subproject_id'] == 0 ? NULL : $post['subproject_id'];
+      $data['docs'] = $this->project_model->get_documentation($project_id, $subproject_id);
+      $this->load->view('direktur/proyek/detail/foto_dokumentasi', $data);
    }
 }

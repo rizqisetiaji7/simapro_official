@@ -7,7 +7,6 @@
 			<option <?= $project_status->project_status == 'on_progress' ? 'selected' : NULL ?> value="on_progress">Berjalan</option>
 			<option <?= $project_status->project_status == 'revision' ? 'selected' : NULL ?> value="revision">Revisi</option>
 			<option <?= $project_status->project_status == 'pending' ? 'selected' : NULL ?> value="pending">Ditunda</option>
-			<option <?= $project_status->project_status == 'review' ? 'selected' : NULL ?> value="review">Diperiksa</option>
 		</select>
 	</div>
 </div>

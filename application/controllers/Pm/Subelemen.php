@@ -263,13 +263,11 @@ class Subelemen extends CI_Controller {
 
          // Current Progress for Subproject
          $sp_progress = $total_se_progress != '' ? round(intval($total_se_progress) / intval($total_se_rows)) : 0;
-
          $up_subproject = $this->bm->update('tb_subproject', ['subproject_progress' => $sp_progress], [
             'subproject_id'   => $subproject_id
          ]);
 
          if ($up_subproject) {
-            
             // Count Total Rows and Progress Subproject
             $total_sp_rows = $this->ppm->countRows('tb_subproject', ['ID_project' => $project_id]);
             $total_sp_progress = $this->ppm->sumTotalProgress('tb_subproject', 'subproject_progress', 'total_progress', [
@@ -278,7 +276,6 @@ class Subelemen extends CI_Controller {
 
             // Current Progress for Main Project
             $proj_progress = $total_sp_progress != '' ? round(intval($total_sp_progress) / intval($total_sp_rows)) : 0;
-
             $up_project = $this->bm->update('tb_project', ['project_progress' => $proj_progress], [
                'project_id'   => $project_id
             ]);
@@ -294,14 +291,12 @@ class Subelemen extends CI_Controller {
                   'message'   => 'Oops! Sub-elemen / list proyek gagal dihapus.'
                ];
             }
-
          } else {
             $message = [
                'status'    => 'failed',
                'message'   => 'Oops! Sub-elemen / list proyek gagal dihapus.'
             ];
          }
-
       } else {
          $message = [
             'status'    => 'failed',

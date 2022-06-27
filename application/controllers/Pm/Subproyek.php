@@ -83,7 +83,6 @@ class Subproyek extends CI_Controller {
          $add_subproject = $this->bm->save('tb_subproject', $data);
 
          if ($add_subproject) {
-            
             // Count Total Rows and Progress Subproject
             $total_sp_rows = $this->ppm->countRows('tb_subproject', ['ID_project' => $project_id]);
             $total_sp_progress = $this->ppm->sumTotalProgress('tb_subproject', 'subproject_progress', 'total_progress', [
@@ -101,12 +100,10 @@ class Subproyek extends CI_Controller {
 
             // Check Project Update
             if ($up_project) {
-               
                $message = [
                   'status'    => 'success',
                   'message'   => 'Subprojek telah berhasil disimpan.'
                ];
-
             } else {
                $message = [
                   'status'    => 'failed',
@@ -173,9 +170,7 @@ class Subproyek extends CI_Controller {
       $subproject_id = $post['subproject_id'];
 
       $del_subproject = $this->bm->delete('tb_subproject',['subproject_id' => $subproject_id]);
-
       if ($del_subproject) {
-         
          // Count Total Rows and Progress Subproject
          $total_sp_rows = $this->ppm->countRows('tb_subproject', ['ID_project' => $project_id]);
          $total_sp_progress = $this->ppm->sumTotalProgress('tb_subproject', 'subproject_progress', 'total_progress', [
@@ -184,7 +179,6 @@ class Subproyek extends CI_Controller {
 
          // Current Progress for Main Project
          $proj_progress = $total_sp_progress != '' ? round(intval($total_sp_progress) / intval($total_sp_rows)) : 0;
-
          $up_project = $this->bm->update('tb_project', ['project_progress' => $proj_progress], [
             'project_id'   => $project_id
          ]);
@@ -200,7 +194,6 @@ class Subproyek extends CI_Controller {
                'message'   => 'Oops! Maaf Sub-Proyek gagal di hapus!'
             ];
          }
-
       } else {
          $message = [
             'status'    => 'failed',
