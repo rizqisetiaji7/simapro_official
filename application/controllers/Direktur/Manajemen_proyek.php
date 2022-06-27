@@ -68,12 +68,6 @@ class Manajemen_proyek extends CI_Controller {
       return $config;
    }
 
-   function form_tambah_subproyek() {
-      $data['project_id']  = $this->input->post('project_id');
-      $data['data_priority']    = $this->bm->get('tb_priority', '*')->result();
-      $this->load->view('direktur/proyek/detail_proyek/subproyek/modal_add_form', $data);
-   }
-
    function tambah_subproyek() {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
@@ -114,14 +108,6 @@ class Manajemen_proyek extends CI_Controller {
          }
       }
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
-   }
-
-   function form_edit_subproyek() {
-      $project_id = $this->input->post('project_id', TRUE);
-      $subproject_id = $this->input->post('subproject_id', TRUE);
-      $data['data_priority']    = $this->bm->get('tb_priority', '*')->result();
-      $data['subproject'] = $this->bm->get('tb_subproject', '*', ['subproject_id' => $subproject_id, 'ID_project' => $project_id])->row();
-      $this->load->view('direktur/proyek/detail_proyek/subproyek/modal_edit_form', $data);
    }
 
    function edit_subproyek() {
@@ -170,7 +156,7 @@ class Manajemen_proyek extends CI_Controller {
    function form_tambah_subelemen_proyek() {
       $data['subproject_id']  = $this->input->post('subproject_id', TRUE);
       $data['priority']       = $this->bm->get('tb_priority', '*')->result();
-      $this->load->view('direktur/proyek/detail_proyek/subelemen_proyek/modalsubelemen_add_form', $data);
+      $this->load->view('direktur/proyek/detail/subelemen_proyek/modalsubelemen_add_form', $data);
    }
 
    function tambah_subelemen_proyek() {
@@ -220,7 +206,7 @@ class Manajemen_proyek extends CI_Controller {
          'ID_subproject' => $subproject_id
       ])->row();
       $data['priority'] = $this->bm->get('tb_priority', '*')->result();
-      $this->load->view('direktur/proyek/detail_proyek/subelemen_proyek/modalsubelemen_edit_form', $data);
+      $this->load->view('direktur/proyek/detail/subelemen_proyek/modalsubelemen_edit_form', $data);
    }
 
    function edit_subelemen_proyek() {
@@ -325,7 +311,7 @@ class Manajemen_proyek extends CI_Controller {
    function tampil_dokumentasi_proyek() {
       $project_id = $this->input->post('project_id');
       $data['docs'] =$this->project_model->get_documentation_project($project_id);
-      $this->load->view('direktur/proyek/detail_proyek/foto_dokumentasi_proyek', $data);
+      $this->load->view('direktur/proyek/detail/foto_dokumentasi_proyek', $data);
    }
 
    // Dokumentasi Foto Proyek Utama
@@ -333,7 +319,7 @@ class Manajemen_proyek extends CI_Controller {
       $project_id = $this->input->post('project_id');
       $subproject_id = $this->input->post('subproject_id');
       $data['docs'] =$this->project_model->get_documentation_subproject($project_id, $subproject_id);
-      $this->load->view('direktur/proyek/detail_proyek/foto_dokumentasi_subproyek', $data);
+      $this->load->view('direktur/proyek/detail/foto_dokumentasi_subproyek', $data);
    }
 
    // Status Proyek Telah Selesai

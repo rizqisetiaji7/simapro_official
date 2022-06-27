@@ -74,27 +74,34 @@
     // CRUD Sub Proyek
 	function add_subProject(project_id) {
 		title.text('Tambah Sub-Proyek');
-		formModal.attr('action', `<?= site_url('direktur/manajemen_proyek/tambah_subproyek') ?>`);
+		formModal.attr('action', `<?= site_url('direktur/subproyek/tambah') ?>`);
 		$.ajax({
-			url: `<?= site_url('direktur/manajemen_proyek/form_tambah_subproyek') ?>`,
+			url: `<?= site_url('direktur/subproyek/form_tambah_subproyek') ?>`,
 			method: 'POST',
 			dataType: 'html',
 			cache: false,
 			data: {
 				project_id: project_id
 			},
+			beforeSend: function() {
+				modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
+			},
 			success: function(data) {
+				modalBody.empty();
 				modalBody.html(data);
-				modal.modal('show');
 			}
+		});
+		modal.modal({
+			show: true,
+			backdrop: 'static'
 		});
 	}
 
 	function edit_subProject(project_id, subproject_id) {
 		title.text('Edit Sub-Proyek');
-		formModal.attr('action', `<?= site_url('direktur/manajemen_proyek/edit_subproyek') ?>`);
+		formModal.attr('action', `<?= site_url('direktur/subproyek/edit') ?>`);
 		$.ajax({
-			url: `<?= site_url('direktur/manajemen_proyek/form_edit_subproyek') ?>`,
+			url: `<?= site_url('direktur/subproyek/form_edit_subproyek') ?>`,
 			method: 'POST',
 			dataType: 'html',
 			cache: false,
@@ -102,10 +109,17 @@
 				project_id: project_id,
 				subproject_id: subproject_id
 			},
+			beforeSend: function() {
+				modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
+			},
 			success: function(data) {
+				modalBody.empty();
 				modalBody.html(data);
-				modal.modal('show');
 			}
+		});
+		modal.modal({
+			show: true,
+			backdrop: 'static'
 		});
 	}
 
@@ -119,10 +133,17 @@
 			method: 'POST',
 			cache: false,
 			data: {subproject_id: subproject_id},
+			beforeSend: function() {
+				modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
+			},
 			success: function(data) {
+				modalBody.empty()
 				modalBody.html(data);
-				modal.modal('show');
 			}
+		});
+		modal.modal({
+			show: true,
+			backdrop: 'static'
 		});
 	}
 
@@ -138,10 +159,17 @@
 				subelemen_id: se_task_id,
 				subproject_id: subproject_id
 			},
+			beforeSend: function() {
+				modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
+			},
 			success: function(data) {
+				modalBody.empty();
 				modalBody.html(data);
-				modal.modal('show');
 			}
+		});
+		modal.modal({
+			show: true,
+			backdrop: 'static'
 		});
 	}
 
