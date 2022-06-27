@@ -135,7 +135,7 @@
                         <span class="badge"><?= $sub['priority_name'] ?></span>
                     </span>
 
-                    <?php if ($project['project_status'] == 'on_progress' || $project['project_status'] == 'revision') { ?>
+                    <?php if ($project['project_status'] == 'none' || $project['project_status'] == 'on_progress' || $project['project_status'] == 'revision') { ?>
                     <div class="kanban-header-right">
                         <div class="dropdown kanban-action">
                             <a href="" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
@@ -191,7 +191,7 @@
                                     <div class="task-board-header">
                                         <span class="status-title"><?= $se['project_task_name'] ?></span>
 
-                                        <?php if ($project['project_status'] == 'on_progress' || $project['project_status'] == 'revision') { ?>
+                                        <?php if ($project['project_status'] == 'none' || $project['project_status'] == 'on_progress' || $project['project_status'] == 'revision') { ?>
                                         <div class="dropdown kanban-task-action">
                                             <a href="" data-toggle="dropdown">
                                                 <i class="fa fa-angle-down"></i>
@@ -250,7 +250,7 @@
                 </div>
                 <!-- End "Subproyek" Content -->
 
-                <?php if ($project['project_status'] == 'on_progress' || $project['project_status'] == 'revision') { ?>
+                <?php if ($project['project_status'] == 'none' || $project['project_status'] == 'on_progress' || $project['project_status'] == 'revision') { ?>
                     <!-- Button Add new Kanban "Subproyek" Task -->
                     <div class="add-new-task">
                         <button type="button" class="btn btn-light btn-sm btn-block" onclick="add_subElemenProject(<?= $project['project_id'] ?>, <?= $sub['subproject_id'] ?>)" ><i class="fas fa-plus mr-2 small"></i>Buat List</button>

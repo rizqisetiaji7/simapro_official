@@ -100,7 +100,7 @@
     </div>
 </div>
 
-<div class="row">
+<!-- <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
@@ -108,7 +108,7 @@
             </div>
         </div>
     </div>    
-</div>
+</div> -->
 
 <div class="kanban-board card mb-0">
     <div class="card-body">
@@ -128,7 +128,7 @@
                                 <a href="" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a class="dropdown-item" href="javascript:void(0)" onclick="edit_subProject(<?= $project['project_id'] ?>, <?= $sub['subproject_id'] ?>)">Edit</a>
-                                    <a class="dropdown-item" href="javascript:void(0)" onclick="hapus_subElProject('subproject', <?= $sub['subproject_id'] ?>, <?= $project['project_id'] ?>)" >Hapus</a>
+                                    <a class="dropdown-item" href="javascript:void(0)" onclick="delete_subProject(<?= $sub['subproject_id'] ?>, <?= $project['project_id'] ?>)" >Hapus</a>
                                 </div>
                             </div>
                         </div>
@@ -162,7 +162,7 @@
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right">
                                                     <a class="dropdown-item" href="javascript:void(0)" onclick="edit_subElemenProject(<?= $se['project_task_id'] ?>, <?= $sub['subproject_id'] ?>)">Edit</a>
-                                                    <a class="dropdown-item" href="javascript:void(0)" onclick="hapus_subElProject('sub_elemen', <?= $se['project_task_id'] ?>)">Hapus</a>
+                                                    <a class="dropdown-item" href="javascript:void(0)" onclick="deleteSubelemen(<?= $se['project_task_id'] ?>, <?= $sub['subproject_id'] ?>, <?= $project['project_id'] ?>)">Hapus</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -215,7 +215,7 @@
 
                     <!-- Button Add new Kanban "Subproyek" Task -->
                     <div class="add-new-task">
-                        <button type="button" onclick="add_subElemenProject(<?= $sub['subproject_id'] ?>)" class="btn btn-light btn-sm btn-block"><i class="fas fa-plus mr-2 small"></i>Buat List</button>
+                        <button type="button" onclick="add_subElemenProject(<?= $project['project_id'] ?>, <?= $sub['subproject_id'] ?>)" class="btn btn-light btn-sm btn-block"><i class="fas fa-plus mr-2 small"></i>Buat List</button>
                     </div>
                 </div>
                 <!-- End "Subproyek" Board -->
