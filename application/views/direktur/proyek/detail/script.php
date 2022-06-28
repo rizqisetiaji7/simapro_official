@@ -31,10 +31,10 @@
     // Edit Proyek
     function editProyek(proyekID) {
     	title.text('Edit Detail Proyek');
-    	formModal.attr('action', `<?= site_url('direktur/proyek/edit_detail_proyek') ?>`);
+    	formModal.attr('action', `<?= site_url('direktur/proyek/edit') ?>`);
 
     	$.ajax({
-    		url: `<?= site_url('direktur/proyek/edit') ?>`,
+    		url: `<?= site_url('direktur/proyek/form_edit') ?>`,
     		method: 'POST',
     		dataType: 'html',
     		cache: false,
@@ -58,7 +58,7 @@
     // Edit Status Proyek
     function editProjectStatus(project_code) {
 		title.text('Ubah Status Proyek');
-		formModal.attr('action', `<?= site_url('direktur/proyek/edit_status_process') ?>`);
+		formModal.attr('action', `<?= site_url('direktur/proyek/edit_status') ?>`);
 		$.ajax({
 			url: `<?= site_url('direktur/proyek/form_edit_status') ?>`,
 			method: 'POST',
