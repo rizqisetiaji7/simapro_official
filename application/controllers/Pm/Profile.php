@@ -8,6 +8,7 @@ class Profile extends CI_Controller {
       parent::__construct();
       is_not_login();
       is_not_pm();
+      unset_chat_session();
    }
 
    private function _file_upload_config($filePath = './assets/img') {

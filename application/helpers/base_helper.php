@@ -51,6 +51,29 @@ function is_not_pm() {
 	}
 }
 
+function is_not_chat() {
+	$ci =& get_instance();
+	$user_role = user_login()->user_role;
+
+	if ($user_role == 'direktur') {
+		if (!$ci->session->userdata('from_user') || !$ci->session->userdata('to_user') || !$ci->session->userdata('project_id')) {
+			redirect(site_url('direktur'));
+		}
+	} else {
+		if (!$ci->session->userdata('from_user') || !$ci->session->userdata('to_user') || !$ci->session->userdata('project_id')) {
+			redirect(site_url('pm'));
+		}
+	}
+}
+
+function unset_chat_session() {
+	$ci =& get_instance();
+	if ($ci->session->userdata('from_user') || $ci->session->userdata('to_user') || $ci->session->userdata('project_id')) {
+		$ci->session->unset_userdata(['from_user', 'to_user', 'project_id']);	
+	}
+	return false;
+}
+
 function slugify($str=NULL) {
 	if ($str != NULL) {
 		$str = preg_replace("/\s+/", '-', $str);

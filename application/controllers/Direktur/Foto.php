@@ -5,6 +5,7 @@ class Foto extends CI_Controller {
       parent::__construct();
       is_not_login();
       is_not_direktur();
+      unset_chat_session();
       $this->load->model('project_model');
    }
 

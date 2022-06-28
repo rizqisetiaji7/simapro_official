@@ -5,6 +5,7 @@ class Arsip extends CI_Controller {
       parent::__construct();
       is_not_login();
       is_not_pm();
+      unset_chat_session();
    }
 
    protected function tampil_arsip($limit) {

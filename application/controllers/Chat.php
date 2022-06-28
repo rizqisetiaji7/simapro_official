@@ -42,6 +42,7 @@ class Chat extends CI_Controller {
    }
 
    public function index() {
+      is_not_chat();
       $from_user = $this->session->userdata('from_user');
       $to_user = $this->session->userdata('to_user');
       $project_id = $this->session->userdata('project_id');
