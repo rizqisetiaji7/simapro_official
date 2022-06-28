@@ -20,7 +20,7 @@
     </div>
 
     <div class="col-12 col-sm-4 text-sm-right">
-        <button type="button" class="btn btn-dark mb-1 btn-sm" data-toggle="tooltip" title="Buat Sub-Proyek" onclick="viewDetailInfo(<?= $project['project_id'] ?>, <?= "'".$project['projectID']."'" ?>)"><i class="fas fa-plus"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Detail Proyek</span></button>
+        <button type="button" class="btn btn-dark mb-1 btn-sm" data-toggle="tooltip" title="Detail Proyek" onclick="viewDetailInfo(<?= $project['project_id'] ?>, <?= "'".$project['projectID']."'" ?>)"><i class="fas fa-plus"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Detail Proyek</span></button>
     </div>
 
     <div class="col-12">
