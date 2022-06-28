@@ -33,7 +33,8 @@
     </div>
     
     <div class="col-12 col-sm-4 text-sm-right">
-        <a href="<?= site_url('chat') ?>" class="btn btn-primary mb-1 btn-sm" style="position: relative;" data-toggle="tooltip" title="Kirim Pesan"><i class="fa-solid fa-message"></i></a>
+        <?php $pm_id = $project['user_id'] != NULL ? $project['user_id'] : 0 ?>
+        <button type="button" onclick="set_data_chat(<?= user_login()->user_id ?>, <?= $pm_id ?>, <?= $project['project_id'] ?>)" class="btn btn-primary mb-1 btn-sm" data-toggle="tooltip" title="Kirim pesan"><i class="fa-solid fa-message"></i></button>
 
         <button type="button" class="btn btn-info mb-1 btn-sm" data-toggle="tooltip" title="Buat Sub-Proyek" onclick="add_subProject(<?= $project['project_id'] ?>)"><i class="fas fa-plus"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Sub-proyek</span></button>
         <?php if ($project['project_progress'] >= 100 && $docs->num_rows() > 0) { ?>

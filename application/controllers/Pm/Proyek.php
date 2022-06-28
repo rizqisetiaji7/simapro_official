@@ -62,6 +62,10 @@ class Proyek extends CI_Controller {
       return $this->ppm->get_projectpm_detail($comp_id, $project_code, $pm_id)->row();
    }
 
+   protected function _direktur($company_id='') {
+      return $this->bm->get('tb_users', '*', ['ID_company' => $company_id, 'user_role' => 'direktur'])->row();
+   }
+
    public function index() {
       $data = [
          'app_name'  => APP_NAME,
@@ -75,9 +79,10 @@ class Proyek extends CI_Controller {
    }
 
    public function detail($comp_id, $project_code) {
-      $project = $this->data_detail_proyek($comp_id, $project_code, user_login()->user_id);
+      $project    = $this->data_detail_proyek($comp_id, $project_code, user_login()->user_id);
       $subproject = $this->tampil_subproyek($project->project_id);
-      $docs  = $this->ppm->get_documentation($project->project_id, NULL);
+      $docs       = $this->ppm->get_documentation($project->project_id, NULL);
+      $direktur   = $this->_direktur(user_company()->company_id);
       
       $data = [
          'app_name'  => APP_NAME,
@@ -85,6 +90,7 @@ class Proyek extends CI_Controller {
          'title'     => '(PM) Proyek Detail',
          'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
          'page'      => 'proyek_detail',
+         'direktur'  => $direktur,
          'docs'      => $docs
       ];
 

@@ -156,5 +156,6 @@ $autoload['language'] = array();
 */
 $autoload['model'] = [
 	'base_model'		=> 'bm',
-	'projectpm_model' 	=> 'ppm'
+	'projectpm_model' 	=> 'ppm',
+	'chat_model'		=> 'chat'
 ];

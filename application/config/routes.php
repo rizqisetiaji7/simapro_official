@@ -68,12 +68,10 @@ $route['save_password'] = 'forgot_password/reset_process';
  * DIRECTOR ROUTES
  * Allow only director role access
  */
-$route['direktur'] = 'direktur/dashboard/index';
-$route['direktur/proyek'] = 'direktur/proyek/index';
-$route['direktur/riwayat'] = 'direktur/riwayat/index';
-$route['direktur/arsip'] = 'direktur/arsip/index';
-$route['direktur/chat'] = 'direktur/chat/index';
-
+$route['direktur']          = 'direktur/dashboard/index';
+$route['direktur/proyek']   = 'direktur/proyek/index';
+$route['direktur/riwayat']  = 'direktur/riwayat/index';
+$route['direktur/arsip']    = 'direktur/arsip/index';
 
 
 /**
@@ -84,3 +82,11 @@ $route['pm']                  = 'pm/dashboard/index';
 $route['pm/arsip']            = 'pm/arsip/index';
 $route['pm/arsip/detail']     = 'pm/arsip/detail';
 $route['pm/riwayat']          = 'pm/riwayat/index';
+
+
+/**
+ * PROJECT MANAGER ROUTES
+ * Allow Project Manajer & Director role access
+ */ 
+$route['chat']      = 'chat/set_chat_data';
+$route['chatbox']   = 'chat/index';

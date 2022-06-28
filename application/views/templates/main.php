@@ -46,7 +46,7 @@
             ?>
             
             <div class="page-wrapper">
-                <?php if ($this->uri->segment(1) == 'chat') { ?>
+                <?php if ($this->uri->segment(1) == 'chatbox') { ?>
                     <?= $page_content; ?>
                 <?php } else { ?>
                     <div class="content container-fluid">

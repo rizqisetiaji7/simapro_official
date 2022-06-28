@@ -355,6 +355,33 @@
      	});
 	}
 
+	function set_data_chat(from_user, to_user, project_id) {
+		$.ajax({
+			url: `<?= site_url('chat') ?>`,
+			method: 'POST',
+			dataType: 'json',
+			cache: false,
+			data: {
+				from_user: from_user,
+				to_user: to_user,
+				project_id: project_id
+			},
+			success: function(data) {
+				if (data.status == 'failed') {
+					Swal.fire({
+						icon: 'error',
+						title: 'Pesan Gagal',
+						text: `${data.message}`,
+						showConfirmButton: false,
+						timer: 2000
+					});
+				} else if (data.status == 'success') {
+					window.location = data.redirect;
+				}
+			}
+		});
+	}
+
 	formModal.on('submit', function(e) {
 		e.preventDefault();
 		$.ajax({
