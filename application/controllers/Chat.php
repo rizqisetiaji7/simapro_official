@@ -50,7 +50,7 @@ class Chat extends CI_Controller {
       $data = [
          'app_name'  => APP_NAME,
          'author'    => APP_AUTHOR,
-         'title'     => 'Kirim pesan',
+         'title'     => user_login()->user_role == 'direktur' ? '(Direktur) Kirim pesan' : '(PM) Kirim pesan',
          'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
          'sender'    => $this->_get_user(['user_id' => $from_user]),
          'receiver'  => $this->_get_user(['user_id' => $to_user]),
@@ -60,7 +60,7 @@ class Chat extends CI_Controller {
             'to_user'      => $to_user,
             'project_id'   => $project_id
          ]),
-         'data_usr'  => [
+         'data_msg'  => [
             'from_user'    => $from_user,
             'to_user'      => $to_user,
             'project_id'   => $project_id

@@ -15,14 +15,14 @@
                      </div>
                      <div class="user-info float-left">
                         <span><?= $receiver['user_fullname'] ?></span> <i class="typing-text text-muted">(<?= $receiver['user_role'] == 'pm' ? 'Proyek Manajer' : 'Direktur' ?>)</i>
-                        <small class="text-muted d-block">Pada: <strong class="text-dark"><?= $project['project_name'] ?></strong></small>
+                        <small class="text-muted d-block">Pada: <strong class="text-primary"><?= $project['project_name'] ?></strong></small>
                      </div>
                   </div>
                </div>
             </div>
             <div class="chat-contents">
                <div class="chat-content-wrap">
-                  <div class="chat-wrap-inner">
+                  <div class="chat-wrap-inner" id="chatInner" style="scroll-behavior: smooth;">
                      <div class="chat-box">
                         <div class="chats">
 
@@ -35,14 +35,16 @@
                               </div>
                            </div>-->
 
-                           <!-- <div class="chat chat-left">
+                           <div class="chat chat-left">
                               <div class="chat-body">
-                                 <div class="chat-content">
-                                       <p><?php var_dump($data_usr) ?></p>
+                                 <div class="chat-bubble">
+                                    <div class="chat-content">
+                                       <p><?php var_dump($data_msg) ?></p>
                                        <span class="chat-time">23:30 am</span>
-                                    </div>
+                                    </div>   
+                                 </div>
                               </div>
-                           </div> -->
+                           </div>
 
                           <!-- <div class="chat chat-left">
                               <div class="chat-body">
@@ -84,109 +86,71 @@
                                     </div>
                                  </div>
                               <?php } else { ?>
-                                 <p>Oke</p>
+                                 <?php if ($sender['user_id'] == $msg['ID_sender'] && $sender['user_role'] == 'direktur') { ?>           
+                                    <div class="chat-body">
+                                       <div class="chat-bubble">
+                                          <div class="chat-content d-flex align-items-start">
+                                             <img src="<?= base_url('assets/img/bookmark.png') ?>" width="38">
+                                             <div class="ml-3">
+                                                <h5 class="text-info">Penugasan Proyek</h5>
+                                                <p class="mb-0"><?= $msg['chat_message'] ?></p>
+                                                <span class="chat-time"><?= datetimeIDN($msg['chat_created'], FALSE, TRUE) ?></span>
+                                                <div class="pt-2">
+                                                   <?php if ($msg['chat_status'] == NULL) { ?>
+                                                      <span class="badge bg-inverse-light py-2 px-2"><span class="text-secondary">Belum dikerjakan</span></span>
+                                                   <?php } else if ($msg['chat_status'] == 'ok') { ?>
+                                                      <span class="badge bg-inverse-success py-2 px-2"><i class="fas fa-check mr-1"></i> Selesai</span>
+                                                   <?php } else { ?>
+                                                      <span class="badge bg-inverse-danger py-2 px-2"><i class="fas fa-times mr-1"></i> Pending</span>
+                                                   <?php } ?>
+                                                </div>
+                                             </div>
+                                          </div>
+
+                                          <div class="chat-action-btns">
+                                             <ul>
+                                                <li>
+                                                   <a href="javascript:void(0)" onclick="editMessage()" class="edit-msg" data-toggle="tooltip" title="Edit pesan">
+                                                      <i class="fa fa-pencil"></i>
+                                                   </a>
+                                                </li>
+                                             </ul>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 <?php } else { ?>
+                                    <div class="chat-body">
+                                       <div class="chat-bubble">
+                                          <div class="chat-content d-flex align-items-start">
+                                             <img src="<?= base_url('assets/img/bookmark.png') ?>" width="38">
+                                             <div class="ml-3">
+                                                <h5 class="text-info">Penugasan Proyek <span class="text-success"></h5>
+                                                <p class="mb-0"><?= $msg['chat_message'] ?></p>
+                                                <span class="chat-time"><?= datetimeIDN($msg['chat_created'], FALSE, TRUE) ?></span>
+                                                <!-- Status check -->
+                                                <div class="d-flex align-items-center my-3">
+                                                   <div class="d-flex align-items-center mr-4">
+                                                      <button class="circle-btn-msg data_status_success mr-2" data-status="success" data-msg_id="">
+                                                         <i class="fas fa-check"></i>
+                                                      </button>
+                                                      <span>Selesai</span>
+                                                   </div>
+                                                   <div class="d-flex align-items-center">
+                                                      <button class="circle-btn-msg data_status_pending active mr-2" data-status="pending" data-msg_id="">
+                                                         <i class="fas fa-times"></i>
+                                                      </button>
+                                                      <span>Pending</span>
+                                                   </div>
+                                                </div>
+                                                <!-- ./ Status check -->
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 <?php } ?>
                               <?php } ?>
                            </div>
                            <?php } ?>
-
-                           <!-- <div class="chat chat-right">
-                              <div class="chat-body">
-                                 <div class="chat-bubble">
-                                    <div class="chat-content">
-                                       <p>Halo, apakah bersedia untuk memperbaiki proyek?</p>
-                                       <span class="chat-time">23:30 am</span>
-                                    </div>
-                                    <div class="chat-action-btns">
-                                       <ul>
-                                          <li>
-                                             <a href="#" class="edit-msg" data-toggle="tooltip" title="Edit pesan">
-                                                <i class="fa fa-pencil"></i>
-                                             </a>
-                                          </li>
-                                          <li>
-                                             <a href="#" class="del-msg" data-toggle="tooltip" title="Hapus pesan">
-                                                <i class="fa fa-trash"></i>
-                                             </a>
-                                          </li>
-                                       </ul>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-
-                           <div class="chat-line">
-                              <span class="chat-date">10 Juni, 2022</span>
-                           </div> -->
-
-                           <!-- <div class="chat chat-left">
-                              <div class="chat-avatar">
-                                 <a href="profile.html" class="avatar">
-                                    <img alt="" src="<?= base_url('assets/img/default-avatar.jpg') ?>">
-                                 </a>
-                              </div>
-                              <div class="chat-body">
-                                 <div class="chat-bubble">
-                                    <div class="chat-content">
-                                       <p>Baik pak, saya selalu siap</p>
-                                       <span class="chat-time">8:35 am</span>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div> -->
-
-                           <!-- <div class="chat chat-right">
-                              <div class="chat-body">
-                                 <div class="chat-bubble">
-                                    <div class="chat-content">
-                                       <p>Baiklah, silahkan periksa kembali bagian</p>
-                                       <p>subproyek dan cek kembali foto dokumentasinya.</p>
-                                       <span class="chat-time">8:40 am</span>
-                                    </div>
-                                    <div class="chat-action-btns">
-                                       <ul>
-                                          <li>
-                                             <a href="javascript:void(0)" onclick="editMessage()" class="edit-msg" data-toggle="tooltip" title="Edit pesan">
-                                                <i class="fa fa-pencil"></i>
-                                             </a>
-                                          </li>
-                                          <li>
-                                             <a href="#" class="del-msg" data-toggle="tooltip" title="Hapus pesan">
-                                                <i class="fa fa-trash"></i>
-                                             </a>
-                                          </li>
-                                       </ul>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div> -->
-
-                           <!-- <div class="chat chat-right">
-                              <div class="chat-body">
-                                 <div class="chat-bubble">
-                                    <div class="chat-content d-flex align-items-start">
-                                       <img src="<?= base_url('assets/img/bookmark.png') ?>" width="38">
-                                       <div class="ml-3">
-                                          <h5 class="text-info">Penugasan Proyek <span class="text-success"></h5>
-                                          <p class="mb-0">Baiklah, silahkan periksa kembali bagian</p>
-                                          <p class="mb-0">Subproyek dan cek kembali foto dokumentasinya.</p>
-                                          <span class="chat-time">9:00 am</span>
-                                          <div class="text-success medium"><i class="fas fa-check"></i> Selesai</div>   
-                                          <span class="badge bg-inverse-danger p-2"><i class="fas fa-times mr-1"></i> Pending</span>
-                                       </div>
-                                    </div>
-
-                                    <div class="chat-action-btns">
-                                       <ul>
-                                          <li>
-                                             <a href="javascript:void(0)" onclick="editMessage()" class="edit-msg" data-toggle="tooltip" title="Edit pesan">
-                                                <i class="fa fa-pencil"></i>
-                                             </a>
-                                          </li>
-                                       </ul>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div> -->
                         </div>
                      </div>
                   </div>
@@ -196,10 +160,13 @@
                <div class="message-bar">
                   <div class="message-inner">
                      <div class="message-area">
-                        <form class="input-group">
-                           <textarea class="form-control" placeholder="Tulis pesan..."></textarea>
+                        <form id="sendMessageForm" class="input-group">
+                           <input type="hidden" name="ID_project" value="<?= $project['project_id'] ?>">
+                           <input type="hidden" name="ID_sender" value="<?= $data_msg['from_user'] ?>">
+                           <input type="hidden" name="ID_receiver" value="<?= $data_msg['to_user'] ?>">
+                           <textarea class="form-control" name="chat_message" placeholder="Tulis pesan..."></textarea>
                            <span class="input-group-append">
-                              <button class="btn btn-custom" type="submit"><i class="fa fa-paper-plane"></i></button>
+                              <button type="submit" class="btn btn-custom"><i class="fa fa-paper-plane"></i></button>
                            </span>
                         </form>
                      </div>
@@ -212,6 +179,19 @@
    </div>
    <!-- /Chat Main Wrapper -->
 </div>
+
+<script>
+   function scrollDown() {
+      const chatInner = $('#chatInner');
+      chatInner.animate({
+         scrollTop: chatInner.get(0).scrollHeight
+      }, 200);
+   }
+
+   $(window).on('load', function() {
+      scrollDown();
+   });
+</script>
 
 <?php $this->view('chat/task_modal'); ?>
 <?php $this->view('chat/script'); ?>
