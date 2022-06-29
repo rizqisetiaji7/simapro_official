@@ -69,4 +69,18 @@ class Chat extends CI_Controller {
       ];
       $this->theme->view('templates/main', 'chat/index', $data);
    }
+
+   function kirim_pesan() {
+      $message = [
+         'status'    => 'success',
+         'message'   => [
+            'project_id'   => $this->input->post('ID_project', TRUE),
+            'from_user'    => $this->input->post('ID_sender', TRUE),
+            'to_user'      => $this->input->post('ID_receiver', TRUE),
+            'chat_body'    => $this->input->post('chat_message', TRUE)
+         ]
+      ];
+
+      $this->output->set_content_type('application/json')->set_output(json_encode($message));
+   }
 }

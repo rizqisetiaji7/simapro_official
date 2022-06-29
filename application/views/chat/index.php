@@ -86,7 +86,7 @@
                                     </div>
                                  </div>
                               <?php } else { ?>
-                                 <?php if ($sender['user_id'] == $msg['ID_sender'] && $sender['user_role'] == 'direktur') { ?>           
+                                 <?php if ($sender['user_id'] == $msg['ID_sender'] && $sender['user_role'] == 'direktur') { ?>
                                     <div class="chat-body">
                                        <div class="chat-bubble">
                                           <div class="chat-content d-flex align-items-start">
@@ -106,7 +106,6 @@
                                                 </div>
                                              </div>
                                           </div>
-
                                           <div class="chat-action-btns">
                                              <ul>
                                                 <li>
@@ -160,7 +159,7 @@
                <div class="message-bar">
                   <div class="message-inner">
                      <div class="message-area">
-                        <form id="sendMessageForm" class="input-group">
+                        <form id="sendMessageForm" action="<?= site_url('chat/kirim_pesan') ?>" class="input-group">
                            <input type="hidden" name="ID_project" value="<?= $project['project_id'] ?>">
                            <input type="hidden" name="ID_sender" value="<?= $data_msg['from_user'] ?>">
                            <input type="hidden" name="ID_receiver" value="<?= $data_msg['to_user'] ?>">
@@ -179,19 +178,6 @@
    </div>
    <!-- /Chat Main Wrapper -->
 </div>
-
-<script>
-   function scrollDown() {
-      const chatInner = $('#chatInner');
-      chatInner.animate({
-         scrollTop: chatInner.get(0).scrollHeight
-      }, 200);
-   }
-
-   $(window).on('load', function() {
-      scrollDown();
-   });
-</script>
 
 <?php $this->view('chat/task_modal'); ?>
 <?php $this->view('chat/script'); ?>
