@@ -38,7 +38,7 @@
                            <input type="hidden" name="ID_project" value="<?= $project['project_id'] ?>">
                            <input type="hidden" name="ID_sender" value="<?= $data_msg['from_user'] ?>">
                            <input type="hidden" name="ID_receiver" value="<?= $data_msg['to_user'] ?>">
-                           <textarea class="form-control" name="chat_message" placeholder="Tulis pesan..."></textarea>
+                           <textarea class="form-control" name="chat_message" id="chatBox" placeholder="Tulis pesan..."></textarea>
                            <span class="input-group-append">
                               <button type="submit" class="btn btn-custom"><i class="fa fa-paper-plane"></i></button>
                            </span>

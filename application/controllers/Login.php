@@ -41,7 +41,6 @@ class Login extends CI_Controller {
       return $config;
    }
 
-
    public function index() {
       is_login();
       $data = [
@@ -57,11 +56,9 @@ class Login extends CI_Controller {
 
    function login_process() {
       is_login();
-
       $post = $this->input->post(NULL, TRUE);
       // Set Rules
       $this->form_validation->set_rules($this->_login_rules());
-      
       if ($this->form_validation->run() == false) {
          $validation_message = [
             'status'    => 'validation_error',

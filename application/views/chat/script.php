@@ -21,15 +21,18 @@
          dataType: 'html',
          cache: false,
          success: function(data) {
-            $('#listMessages').html(data)
+            $('#listMessages').html(data);
+         },
+         complete: function() {
+            scrollDown();
          }
       });
    }
 
-   $(window).on('load', function() {
+   let intValID = setInterval(function() {
       loadMessages();
-      scrollDown();
-   });
+      clearInterval(intValID);
+   }, 200);
 
    // Send Message
    sendMessage.on('submit', function(e) {
@@ -43,14 +46,29 @@
          success: function(data) {
             if (data.status == 'failed') {
                Swal.fire({
-                  icon: 'error',
-                  title: 'Kirim pesan gagal!',
-                  html: `${data.message}`,
-                  showConfirmButton: false,
-                  timer: 2000
+                  html: `
+                     <div class="pt-4 pb-2 text-center">
+                        <img src="${data.icon}" class="mb-4" width="80" alt="">
+                        ${data.header}
+                        <p class="mb-0 text-secondary small">${data.message}</p>
+                     </div>
+                  `,
+                  confirmButtonText: 'Tutup'
+               });
+            } else if (data.status == 'error_message') {
+               Swal.fire({
+                  html: `
+                     <div class="pt-4 pb-2 text-center">
+                        <img src="${data.icon}" class="mb-4" width="80" alt="">
+                        ${data.header}
+                        <p class="mb-0 text-secondary small">${data.message}</p>
+                     </div>
+                  `,
+                  confirmButtonText: 'Tutup'
                });
             } else {
-               console.log(data);
+               loadMessages();
+               $('#chatBox').val('');
             }
          }
       });

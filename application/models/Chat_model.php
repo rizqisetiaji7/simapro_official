@@ -4,7 +4,7 @@ class Chat_model extends CI_Model {
 	private $tb_chat = 'tb_livechat';
 
 	public function get_message($data=NULL) {
-		$query = "SELECT * FROM tb_livechat WHERE (ID_project=".$data['project_id']." AND ID_sender=".$data['from_user']." AND ID_receiver=".$data['to_user'].") OR (ID_project=".$data['project_id']." AND ID_sender=".$data['to_user']." AND ID_receiver=".$data['from_user'].") LIMIT 25";
+		$query = "SELECT * FROM tb_livechat WHERE (ID_project=".$data['project_id']." AND ID_sender=".$data['from_user']." AND ID_receiver=".$data['to_user'].") OR (ID_project=".$data['project_id']." AND ID_sender=".$data['to_user']." AND ID_receiver=".$data['from_user'].")";
 		return $this->db->query($query);
 	}
 

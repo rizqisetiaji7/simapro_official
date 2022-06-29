@@ -2434,7 +2434,7 @@ table.dataTable thead > tr > td.sorting {
     display: block;
     float: right;
     margin: 0;
-    max-width: 60%;
+    max-width: 55%;
     padding: 8px 15px;
     position: relative;
 }

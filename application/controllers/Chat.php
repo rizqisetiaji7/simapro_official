@@ -1,6 +1,8 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Chat extends CI_Controller {
+   private $tb_chat = 'tb_livechat';
+
 	public function __construct() {
       parent::__construct();
       is_not_login();
@@ -60,7 +62,6 @@ class Chat extends CI_Controller {
             'project_id'   => $project_id
          ]
       ];
-
       $this->load->view('chat/daftar_pesan', $data);
    }
 
@@ -91,23 +92,40 @@ class Chat extends CI_Controller {
    function kirim_pesan() {
       $message = [];
       $this->form_validation->set_rules('chat_message', 'Pesan', 'required', [
-         'required'  => '{field} tidak boleh kosong!'
+         'required'  => 'Oops! Pesan kosong.'
       ]);
       if (!$this->form_validation->run()) {
          $message = [
             'status'    => 'failed',
-            'message'   =>  form_error('chat_message', '<p class="mb-3">','</p>')
+            'header'    => form_error('chat_message', '<h3 class="mb-2">','</h3>'),
+            'message'   => 'Anda tidak diperkenankan mengirim pesan kosong.',
+            'icon'      => base_url('assets/img/no-message.png')
          ];
       } else {
-         $message = [
-            'status'    => 'success',
-            'response'  => [
-               'ID_project'   => $this->input->post('ID_project', TRUE),
-               'ID_sender'    => $this->input->post('ID_sender', TRUE),
-               'ID_receiver'  => $this->input->post('ID_receiver', TRUE),
-               'chat_message' => $this->input->post('chat_message', TRUE)
-            ]
+         $data = [
+            'ID_project'   => $this->input->post('ID_project', TRUE),
+            'ID_sender'    => $this->input->post('ID_sender', TRUE),
+            'ID_receiver'  => $this->input->post('ID_receiver', TRUE),
+            'chat_message' => $this->input->post('chat_message', TRUE),
+            'chat_type'    => 'text',
+            'chat_status'  => NULL,
+            'chat_created' => date('Y-m-d H:i:s', now('Asia/Jakarta'))
          ];
+         $this->bm->save($this->tb_chat, $data);
+
+         if ($this->db->affected_rows() > 0) {
+            $message = [
+               'status'   => 'success',
+               'message'  => 'Pesan Terkirim'
+            ];  
+         } else {
+            $message = [
+               'status'   => 'error_message',
+               'header'   => '<h3 class="mb-2">Oops! Terjadi Masalah!</h3>',
+               'message'  => 'Pesan tidak terkirim, silahkan periksa koneksi internet anda, lalu coba lagi.',
+               'icon'     => base_url('assets/img/chat-warning.png')
+            ];
+         }
       }
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
