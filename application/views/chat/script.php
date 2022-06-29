@@ -11,25 +11,47 @@
       }, 200);
    }
 
-   $(window).on('load', function() {
-      scrollDown();
-   });
-
    function editMessage() {
       modal.modal('show');
    }
+
+   function loadMessages() {
+      $.ajax({
+         url: `<?= site_url('chat/tampil_pesan') ?>`,
+         dataType: 'html',
+         cache: false,
+         success: function(data) {
+            $('#listMessages').html(data)
+         }
+      });
+   }
+
+   $(window).on('load', function() {
+      loadMessages();
+      scrollDown();
+   });
 
    // Send Message
    sendMessage.on('submit', function(e) {
       e.preventDefault();
       $.ajax({
          url: $(this).attr('action'),
-         method: 'POST',
+         method: $(this).attr('method'),
          dataType: 'json',
          cache: false,
-         data: new FormData(this),
+         data: $(this).serialize(),
          success: function(data) {
-            console.log(data);
+            if (data.status == 'failed') {
+               Swal.fire({
+                  icon: 'error',
+                  title: 'Kirim pesan gagal!',
+                  html: `${data.message}`,
+                  showConfirmButton: false,
+                  timer: 2000
+               });
+            } else {
+               console.log(data);
+            }
          }
       });
    });

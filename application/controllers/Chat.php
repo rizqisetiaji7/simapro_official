@@ -41,6 +41,29 @@ class Chat extends CI_Controller {
       return $this->chat->get_project($data)->row_array();
    }
 
+   public function tampil_pesan() {
+      $from_user = $this->session->userdata('from_user');
+      $to_user = $this->session->userdata('to_user');
+      $project_id = $this->session->userdata('project_id');
+      $data = [
+         'sender'    => $this->_get_user(['user_id' => $from_user]),
+         'receiver'  => $this->_get_user(['user_id' => $to_user]),
+         'project'   => $this->_get_project($project_id),
+         'messages'  => $this->_get_message([
+            'from_user'    => $from_user,
+            'to_user'      => $to_user,
+            'project_id'   => $project_id
+         ]),
+         'data_msg'  => [
+            'from_user'    => $from_user,
+            'to_user'      => $to_user,
+            'project_id'   => $project_id
+         ]
+      ];
+
+      $this->load->view('chat/daftar_pesan', $data);
+   }
+
    public function index() {
       is_not_chat();
       $from_user = $this->session->userdata('from_user');
@@ -55,11 +78,6 @@ class Chat extends CI_Controller {
          'sender'    => $this->_get_user(['user_id' => $from_user]),
          'receiver'  => $this->_get_user(['user_id' => $to_user]),
          'project'   => $this->_get_project($project_id),
-         'messages'  => $this->_get_message([
-            'from_user'    => $from_user,
-            'to_user'      => $to_user,
-            'project_id'   => $project_id
-         ]),
          'data_msg'  => [
             'from_user'    => $from_user,
             'to_user'      => $to_user,
@@ -71,16 +89,26 @@ class Chat extends CI_Controller {
    }
 
    function kirim_pesan() {
-      $message = [
-         'status'    => 'success',
-         'message'   => [
-            'project_id'   => $this->input->post('ID_project', TRUE),
-            'from_user'    => $this->input->post('ID_sender', TRUE),
-            'to_user'      => $this->input->post('ID_receiver', TRUE),
-            'chat_body'    => $this->input->post('chat_message', TRUE)
-         ]
-      ];
-
+      $message = [];
+      $this->form_validation->set_rules('chat_message', 'Pesan', 'required', [
+         'required'  => '{field} tidak boleh kosong!'
+      ]);
+      if (!$this->form_validation->run()) {
+         $message = [
+            'status'    => 'failed',
+            'message'   =>  form_error('chat_message', '<p class="mb-3">','</p>')
+         ];
+      } else {
+         $message = [
+            'status'    => 'success',
+            'response'  => [
+               'ID_project'   => $this->input->post('ID_project', TRUE),
+               'ID_sender'    => $this->input->post('ID_sender', TRUE),
+               'ID_receiver'  => $this->input->post('ID_receiver', TRUE),
+               'chat_message' => $this->input->post('chat_message', TRUE)
+            ]
+         ];
+      }
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 }
