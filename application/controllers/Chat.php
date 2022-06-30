@@ -2,10 +2,26 @@
 
 class Chat extends CI_Controller {
    private $tb_chat = 'tb_livechat';
+   private $app_id;
+   private $key;
+   private $secret;
+   private $cluster;
 
 	public function __construct() {
       parent::__construct();
       is_not_login();
+      $this->app_id  = '1431182';
+      $this->key     = '051a295c0e08e48dd009';
+      $this->secret  = '25bc07e769d52ee898bd';
+      $this->cluster = 'ap1';
+   }
+
+   protected function _get_pusher($message) {
+      $pusher = new Pusher\Pusher($this->key, $this->secret, $this->app_id, [
+         'cluster' => $this->cluster,
+         'useTLS' => true
+      ]);
+      return $pusher->trigger('simapro-chat','listen',$message);
    }
 
    function set_chat_data() {
@@ -127,6 +143,6 @@ class Chat extends CI_Controller {
             ];
          }
       }
-      $this->output->set_content_type('application/json')->set_output(json_encode($message));
+      $this->_get_pusher($message);
    }
 }

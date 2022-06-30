@@ -7,7 +7,7 @@
       </div>
    </div>-->
 
-   <div class="chat chat-left">
+   <!-- <div class="chat chat-left">
       <div class="chat-body">
          <div class="chat-bubble">
             <div class="chat-content">
@@ -16,7 +16,7 @@
             </div>   
          </div>
       </div>
-   </div>
+   </div> -->
 
 <!-- <div class="chat chat-left">
       <div class="chat-body">

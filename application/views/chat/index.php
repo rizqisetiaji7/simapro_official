@@ -34,7 +34,7 @@
                <div class="message-bar">
                   <div class="message-inner">
                      <div class="message-area">
-                        <form id="sendMessageForm" action="<?= site_url('chat/kirim_pesan') ?>" method="POST" class="input-group">
+                        <form id="sendMessageForm" action="<?= site_url('chat/kirim_pesan') ?>" method="POST" class="input-group" enctype="multipart/form-data">
                            <input type="hidden" name="ID_project" value="<?= $project['project_id'] ?>">
                            <input type="hidden" name="ID_sender" value="<?= $data_msg['from_user'] ?>">
                            <input type="hidden" name="ID_receiver" value="<?= $data_msg['to_user'] ?>">

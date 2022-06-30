@@ -32,6 +32,7 @@
         <script src="<?= base_url('assets/plugins/lightGallery/dist/lightgallery.min.js') ?>"></script>
         <script src="<?= base_url('assets/plugins/lightGallery/dist/plugins/zoom/lg-zoom.min.js') ?>"></script>
         <script src="<?= base_url('assets/js/MY_Functions.js') ?>"></script>
+        <script src="https://js.pusher.com/7.1/pusher.min.js"></script>
     </head>
     <body>
         <!-- Main Wrapper -->
