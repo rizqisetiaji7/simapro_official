@@ -22,7 +22,7 @@ class Forgot_password extends CI_Controller {
       $this->theme->view('templates/auth_template', 'forgot_password/index', $data);
    }
 
-   function send() {
+   public function send() {
       // Email form validation
       $config = [
          [
@@ -147,7 +147,7 @@ class Forgot_password extends CI_Controller {
       }
    }
 
-   function show_change_password_form($email = '') {
+   public function show_change_password_form($email = '') {
       is_login();
 
       // Email is required for validation, if session not exists, this statement will be redirect to login page
@@ -181,7 +181,7 @@ class Forgot_password extends CI_Controller {
       }      
    }
 
-   function reset_process() {
+   public function reset_process() {
       $post = $this->input->post(NULL, TRUE);
       $config = [
          [
@@ -241,7 +241,7 @@ class Forgot_password extends CI_Controller {
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
-   function error_display($error_message = []) {
+   public function error_display($error_message = []) {
       is_login();
       $data = [
          'app_name'  => APP_NAME,

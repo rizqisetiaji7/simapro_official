@@ -34,7 +34,7 @@ class Project_model extends CI_Model {
 		$this->db->join($this->tb_company, $this->tb_company.'.company_id='.$this->tb_project.'.ID_company', 'left');
 		$this->db->join($this->tb_users, $this->tb_users.'.user_id='.$this->tb_project.'.ID_pm', 'left');
 		$this->db->where([
-			'tb_project.ID_company' 		=> $comp_id,
+			'tb_project.ID_company' 	=> $comp_id,
 			'tb_project.project_status'	=> 'finish'
 		]);
 		if ($limit != FALSE) {
@@ -101,22 +101,6 @@ class Project_model extends CI_Model {
 		$this->db->from($this->$tb_project_task);
 		$this->db->join('tb_priority', 'tb_project_task.ID_priority=tb_priority.priority_id');
 		$this->db->where($subproject_id);
-		return $this->db->get();
-	}
-
-	public function get_documentation_project($project_id) {
-		$this->db->select('tb_photo.photo_id, tb_photo.ID_project as proj_ID, tb_photo.photo_url as url, tb_photo.created as photo_created, tb_project.project_id');
-		$this->db->from('tb_photo');
-		$this->db->join('tb_project', 'tb_photo.ID_project=tb_project.project_id', 'left');
-		$this->db->where(['tb_photo.ID_project' => $project_id, 'tb_photo.ID_subproject' => NULL]);
-		return $this->db->get();
-	}
-
-	public function get_documentation_subproject($project_id, $subproject_id) {
-		$this->db->select('tb_photo.photo_id, tb_photo.ID_project as proj_ID, tb_photo.photo_url as url, tb_photo.created as photo_created, tb_project.project_id');
-		$this->db->from('tb_photo');
-		$this->db->join('tb_project', 'tb_photo.ID_project=tb_project.project_id', 'left');
-		$this->db->where(['tb_photo.ID_project' => $project_id, 'tb_photo.ID_subproject' => $subproject_id]);
 		return $this->db->get();
 	}
 

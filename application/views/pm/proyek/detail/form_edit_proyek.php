@@ -9,7 +9,6 @@
                 <p class="text-secondary mb-0 mr-2">Unggah thumbnail atau foto. <strong class="text-primary" style="cursor: pointer;" id="chooseFileImage">Pilih file</strong></p>
                 <p class="text-muted small">Ukuran file maksimal <strong class="text-dark">4MB</strong>.</p>
             </div>
-
             <div id="profileFileName" class="text-center py-2 px-3 d-none" style="border-radius: 4px; position: relative; overflow: hidden; background: #f0f0f0;"></div>
         </div>
     </div>
@@ -19,13 +18,11 @@
             <label class="d-block">Thumbnail</label>
             <img src="<?= $project->project_thumbnail == 'placeholder.jpg' ? base_url('assets/img/placeholder.jpg') : base_url('uploads/thumbnail/'.$project->project_thumbnail) ?>" class="rounded" width="200">
         </div> 
-
         <div class="form-group">
             <label for="project_name">Nama Proyek <span class="text-danger small">*</span></label>
             <input type="text" id="project_name" name="project_name" class="form-control" autocomplete="off" placeholder="Ketik nama proyek..." value="<?= $project->project_name ?>">
             <div class="invalid-feedback"></div>
         </div>
-
         <div class="form-row">
             <div class="form-group col-6">
                 <label for="project_start">Mulai Pengerjaan <span class="text-danger small">*</span></label>
@@ -38,13 +35,11 @@
                 <div class="invalid-feedback"></div>
             </div>
         </div>
-
         <div class="form-group">
             <label for="project_address">Alamat Proyek <span class="text-muted small">(Opsional)</span></label>
             <input type="text" id="project_address" name="project_address" class="form-control" autocomplete="off" placeholder="Ketik nama proyek..." value="<?= $project->project_address ?>">
             <div class="invalid-feedback"></div>
         </div>
-        
         <div class="form-group">
             <label for="project_description">Deskripsi Proyek <span class="text-muted small">(Opsional)</span></label>
             <textarea name="project_description" id="project_description" class="form-control" rows="4" placeholder="Deskripsi proyek..."><?= $project->project_description ?></textarea>

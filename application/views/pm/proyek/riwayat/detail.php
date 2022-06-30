@@ -4,7 +4,6 @@
             <div class="mr-5">
                 <h4 class="mb-0"><?= $project['project_name'] ?></h4>
                 <p class="text-secondary small mb-2"><?= $project['project_address'] ?></p>
-
                 <span class="d-inline-block text-primary mb-1 small">Penanggung Jawab</span>
                 <div class="d-flex align-items-center mb-3">
                     <div class="profile-pic mr-2" style="width: 40px !important; height: 40px !important;">
@@ -15,24 +14,20 @@
                     </p>
                 </div>
             </div>
-
             <div>
                 <button type="button" class="btn btn-sm mb-1 btn-success" onclick="revisiProyek(<?= "'".$project['project_id']."'" ?>)" data-toggle="tooltip" title="Revisi ulang proyek ni">
                 	<i class="fa fa-pencil"></i> <span class="d-none d-lg-inline-block ml-1">Revisi</span>
                 </button>
-                
                 <button type="button" class="btn btn-sm mb-1 btn-custom" onclick="showPhotos(<?= $project['project_id'] ?>, '',<?= "'".$project['project_name']."'" ?>)" data-toggle="tooltip" title="Lihat Foto Dokumentasi">
                     <i class="fas fa-camera"></i> <span class="d-none d-lg-inline-block ml-1">Lihat Foto</span>
                 </button>
             </div>
         </div>
     </div>
-
     <div class="col-12 col-sm-4 text-sm-right">
         <a href="<?= site_url('pm/chat') ?>" class="btn btn-primary mb-1 btn-sm" style="position: relative;" data-toggle="tooltip" title="Kirim Pesan"><i class="fa-solid fa-message"></i></a>
         <button type="button" class="btn btn-dark mb-1 btn-sm" data-toggle="tooltip" title="Detail Proyek" onclick="detailProject(<?= $project['project_id'] ?>, <?= "'".$project['projectID']."'" ?>)"><i class="fas fa-plus"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Detail Proyek</span></button>
     </div>
-
     <div class="col-12">
         <div class="d-flex align-items-center mt-3">
             <div class="mr-4 ml-0">
@@ -48,7 +43,6 @@
         </div>
     </div>
 </div>
-
 <!-- Progress Bar Main Proyek -->
 <div class="row my-4">
     <div class="col-12">
@@ -64,7 +58,6 @@
     </div>
 </div>
 <!-- ./ Progress Bar Main Proyek -->
-
 <div class="kanban-board card mb-0">
     <div class="card-body">
         <?php if ($project['subproject']) { ?>
@@ -78,7 +71,6 @@
                         <span class="mr-2"><?= $sub['subproject_name'] ?></span>
                         <span class="badge"><?= $sub['priority_name'] ?></span>
                     </span>
-
                     <div class="kanban-header-right">
                         <div class="dropdown kanban-action">
                             <a href="" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>

@@ -1,15 +1,3 @@
-<!-- <div class="row">
-	<div class="col-12">
-		<div class="card">
-			
-			<div class="card-body">
-				<?php var_dump($company) ?>
-			</div>
-
-		</div>
-	</div>
-</div> -->
-
 <div class="row">
 	<div class="col-12 col-sm-11 m-auto">
 		<div class="card tab-box mb-0">

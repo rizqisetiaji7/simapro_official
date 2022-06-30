@@ -21,7 +21,7 @@ class Base_model extends CI_Model {
             $this->db->join($j['table'], $j['cond'], $j['type']);
          }
       }
-
+      
       if (!is_null($where)) {
          $this->db->where($where);
       }

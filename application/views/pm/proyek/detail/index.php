@@ -7,7 +7,6 @@
             <div class="mr-5">
                 <h4 class="mb-0"><?= $project['project_name'] ?></h4>
                 <p class="text-secondary small mb-2"><?= $project['project_address'] ?></p>
-
                 <span class="d-inline-block text-primary mb-1 small">Penanggung Jawab</span>
                 <div class="d-flex align-items-center mb-3">
                     <div class="profile-pic mr-2" style="width: 40px !important; height: 40px !important;">
@@ -18,21 +17,16 @@
                     </p>
                 </div>
             </div>
-
             <div>
-
                 <?php if ($project['project_status'] != 'review') { ?>
                 <button type="button" class="btn btn-sm mb-1 btn-info" onclick="editProyek(<?= "'".$project['projectID']."'" ?>)" data-toggle="tooltip" title="Edit proyek"><i class="fa fa-pencil"></i></button>
                 <?php } ?>
-
                 <?php if ($project['project_status'] != 'review') { ?>
                 <button type="button" class="btn btn-sm mb-1 btn-danger" onclick="editProjectStatus(<?= "'".$project['projectID']."'" ?>)" data-toggle="tooltip" title="Edit status proyek"><i class="fas fa-edit"></i></button>
                 <?php } ?>
-
                 <?php if ($project['project_status'] != 'review') { ?>
                 <button type="button" class="btn btn-sm mb-1 btn-purple text-white" onclick="uploadDocumentation('proyek', <?= $project['project_id'] ?>, null)" data-toggle="tooltip" title="Upload Foto Dokumentasi Proyek"><i class="fa fa-cloud-upload"></i></button>
                 <?php } ?>
-
                 <button type="button" class="btn btn-sm mb-1 btn-custom" onclick="showPhoto(<?= $project['project_id'] ?>, 0, <?= "'".$project['project_name']."'" ?>, <?= "'".$project['project_status']."'" ?>, <?= "'".'proyek'."'" ?>)" data-toggle="tooltip" title="Lihat Foto Dokumentasi">
                     <i class="fas fa-camera"></i> <span class="d-none d-lg-inline-block ml-1">Lihat Foto</span>
                 </button>
@@ -43,7 +37,6 @@
     <div class="col-12 col-sm-4 text-sm-right">
         <?php $dir_id = $direktur->user_id != NULL ? $direktur->user_id : 0 ?>
         <button type="button" onclick="set_data_chat(<?= user_login()->user_id ?>, <?= $dir_id ?>, <?= $project['project_id'] ?>)" class="btn btn-primary mb-1 btn-sm" data-toggle="tooltip" title="Kirim pesan"><i class="fa-solid fa-message"></i></button>
-
         <?php if ($project['project_status'] == 'review') { ?>
             <button type="button" class="btn btn-info mb-1 btn-sm" data-toggle="tooltip" title="Buat Sub-Proyek" disabled="disabled"><i class="fas fa-plus"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Sub-proyek</span></button>
         <?php } else { ?>
@@ -86,10 +79,16 @@
                 <i class="fa-solid fa-map-pin mr-2"></i><?= $status_badge ?> 
             </div>
             <div class="mr-3 small">
-                <i class="fa-solid fa-clock mr-2"></i><span class="text-secondary">Dimulai: <strong class="text-dark"><?= datetimeIDN($project['project_start']) ?></strong></span>
+                <i class="fa-solid fa-clock mr-2"></i>
+                <span class="text-secondary">
+                    Dimulai: <strong class="text-dark"><?= datetimeIDN($project['project_start']) ?></strong>
+                </span>
             </div>
             <div class="mr-2 small">
-                <i class="fa-solid fa-clock mr-2"></i><span class="text-secondary">Selesai: <strong class="text-dark"><?= datetimeIDN($project['project_deadline']) ?></strong></span>
+                <i class="fa-solid fa-clock mr-2"></i>
+                <span class="text-secondary">
+                    Selesai: <strong class="text-dark"><?= datetimeIDN($project['project_deadline']) ?></strong>
+                </span>
             </div>
         </div>
     </div>

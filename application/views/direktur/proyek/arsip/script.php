@@ -4,7 +4,6 @@
 	const modalDialog = $('#projectArchiveModal .modal-dialog');
 	const modalBody = $('#projectArchiveModal .modal-body');
 	const formModal = $('#form_project_archive');
-	// const btnSubmit = $('#btnSubmit-project');
 
 	// Tampil Detail Proyek Arsip
 	function viewDetailInfo(project_id, project_code_ID) {

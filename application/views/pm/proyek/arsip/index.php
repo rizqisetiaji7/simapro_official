@@ -11,16 +11,6 @@
     </div>
 </div>
 
-<!-- <div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <?php var_dump($archived) ?>
-            </div>
-        </div>
-    </div>
-</div> -->
-
 <?php if ($archived) { ?>
 <div class="row">
     <div class="col-12 d-flex">

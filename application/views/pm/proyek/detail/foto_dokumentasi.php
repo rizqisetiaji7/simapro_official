@@ -5,11 +5,8 @@
 				<a href="<?= base_url('uploads/'.$doc->url) ?>" class="image-lists">
 					<img src="<?= base_url('uploads/'.$doc->url) ?>" class="w-100 h-100" alt="<?= 'Image: '.$doc->url ?>">
 				</a>
-
 				<?php if ($project_status != 'review') { ?>
-					<?php 
-						$subproject_id = $doc->subproj_ID == null ? 0 : $doc->subproj_ID;
-					?>
+					<?php $subproject_id = $doc->subproj_ID == null ? 0 : $doc->subproj_ID; ?>
 					<button class="btn btn-sm btn-danger btnDeletePhoto" data-toggle="tooltip" title="Hapus foto" onclick="delete_photo(<?= $doc->photo_id ?>, <?= $doc->proj_ID ?>, <?= $subproject_id ?>, <?= "'".$doc->url."'" ?>, <?= "'".$proj_name."'" ?>, <?= "'".$proj_type."'" ?>, <?= "'".$project_status."'" ?>)">
 						<i class="fas fa-trash"></i>
 					</button>

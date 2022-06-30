@@ -17,7 +17,6 @@
     }
     $('#selectYear').append(options);
 
-
     function showRiwayatList() {
       $.ajax({
         url: `<?= site_url('pm/riwayat/tampil_riwayat_proyek') ?>`,

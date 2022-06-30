@@ -1,22 +1,3 @@
-<!-- <div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <?php 
-
-                    $str = 'PROYM100921';
-                    $enc = $this->str_secure->encryptid($str);
-                    $dec = $this->str_secure->decryptid($enc);
-
-                    echo "Encrypted: $enc <br/>";
-                    echo "Decrypted: $dec <br/>";
-                ?>
-            </div>
-        </div>
-    </div>
-</div>   -->
-
-
 <!-- Content Starts -->
 <div class="row mb-4">
     <div class="col-12 col-sm-6">

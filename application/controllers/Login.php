@@ -17,6 +17,11 @@ class Login extends CI_Controller {
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
+   private function _login_status($user_id, $status = 'off') {
+      $this->bm->update($this->table, ['login_status' => $status], ['user_id' => $user_id]);
+      return false;
+   }
+
    private function _login_rules() {
       $config = [
          [
@@ -54,7 +59,7 @@ class Login extends CI_Controller {
       $this->theme->view('templates/auth_template', 'login', $data);
    }
 
-   function login_process() {
+   public function login_process() {
       is_login();
       $post = $this->input->post(NULL, TRUE);
       // Set Rules
@@ -94,14 +99,9 @@ class Login extends CI_Controller {
       }
    }
 
-   function logout() {
+   public function logout() {
       $this->_login_status($this->session->userdata('user_id'), 'off');
       $this->session->unset_userdata(['user_id', 'login_status']);
       redirect('login');
-   }
-
-   private function _login_status($user_id, $status = 'off') {
-      $this->bm->update($this->table, ['login_status' => $status], ['user_id' => $user_id]);
-      return false;
    }
 }
