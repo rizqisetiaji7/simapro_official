@@ -88,5 +88,5 @@ $route['pm/riwayat']          = 'pm/riwayat/index';
  * PROJECT MANAGER ROUTES
  * Allow Project Manajer & Director role access
  */ 
-$route['chat']      = 'chat/set_chat_data';
-$route['chatbox']   = 'chat/index';
+$route['chat']          = 'chat/set_chat_data';
+$route['chatbox']       = 'chat/index';

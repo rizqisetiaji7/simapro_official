@@ -287,7 +287,7 @@ class Proyek extends CI_Controller {
    function form_edit_status() {
       $id = $this->input->post('project_code', TRUE);
       $project_status = $this->bm->get($this->tb_project, 'project_id, ID_pm, ID_company, project_code_ID, project_progress, project_status', ['project_code_ID' => $id])->row();
-      $docs = $this->project_model->get_documentation_project($project_status->project_id);
+      $docs = $this->project_model->get_documentation($project_status->project_id);
 
       $data = [
          'project_status'  => $project_status,

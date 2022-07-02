@@ -1,8 +1,11 @@
 <!-- Modal -->
 <div class="modal fade" id="chatModal" tabindex="-1" role="dialog" aria-labelledby="chatModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-        <form class="modal-content" id="form_modal_chat" action="" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+        <form class="modal-content" id="formLiveChat" method="POST" enctype="multipart/form-data">
             <div class="modal-body">
+                <input type="hidden" id="IDProject" name="ID_project">
+                <input type="hidden" id="IDSender" name="ID_sender">
+                <input type="hidden" id="IDReceiver" name="ID_receiver">
                 <div class="row">
                     <div class="col-12 py-3 px-4">
                         <div class="d-flex align-items-start mb-4">
@@ -14,7 +17,7 @@
                         </div>
                         <div class="mb-4">
                             <h5>Edit Pesan:</h5>
-                            <textarea class="form-control" rows="4" placeholder="Tulis pesan"></textarea>
+                            <textarea class="form-control" name="chat_message" id="chatMessageData" rows="4" placeholder="Tulis pesan" required></textarea>
                         </div>
                         <div class="d-flex align-items-center justify-content-end">
                             <button type="button" class="btn btn-light btn-sm mr-2" data-dismiss="modal">Batal</button>

@@ -167,13 +167,13 @@ div.profile-pic > img {
 }
 
 /* Custom Radio Button */
-div.input-radio {
+.input-radio {
 	display: flex;
 	flex-wrap: wrap;
 	flex-direction: row;
 }
 
-div.input-radio label.label-box {
+.input-radio label.label-box {
 	position: relative;
 	width: 28px;
 	height: 28px;
@@ -184,11 +184,11 @@ div.input-radio label.label-box {
 	transition: all .3s ease;
 }
 
-div.input-radio label.label-box:last-child {
+.input-radio label.label-box:last-child {
 	margin-right: 0;
 }
 
-div.input-radio label.label-box i.check-icon {
+.input-radio label.label-box i.check-icon {
 	display: none;
 	font-size: 12px;
 	position: absolute;
@@ -197,7 +197,7 @@ div.input-radio label.label-box i.check-icon {
 	transform: translate(-50%, -50%);
 }
 
-div.input-radio label.label-box:hover,
+.input-radio label.label-box:hover,
 input.custom-radio-input:checked + label.label-box {
 	opacity: 1;
 }

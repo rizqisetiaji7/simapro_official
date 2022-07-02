@@ -43,7 +43,17 @@
         <?php if ($project['project_progress'] >= 100 && $docs->num_rows() > 0) { ?>
             <?php if ($project['project_status'] == 'review') { ?>
                 <button type="button" class="btn btn-success mb-1 btn-sm" data-toggle="tooltip" title="Klik proyek dinyatakan selesai" onclick="finishProject(<?= $project['project_id'] ?>)"><i class="fas fa-check"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Proyek Selesai</span></button>
-            <?php }?>
+            <?php } else if ($project['project_status'] == 'revision') { ?>
+                <button class="btn btn-secondary mb-1 btn-sm" disabled="disabled"><i class="fas fa-pencil"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Sedang direvisi</span></button>
+            <?php } ?>
+        <?php } else { ?>
+            <?php if ($project['project_status'] == 'on_progress') { ?>
+                <button class="btn btn-outline-secondary mb-1 btn-sm" disabled="disabled"><span class="d-inline-block d-md-none d-lg-inline-block ml-1">Sedang dikerjakan</span></button>
+            <?php } else if ($project['project_status'] == 'revision') { ?>
+                <button class="btn btn-secondary mb-1 btn-sm" disabled="disabled"><i class="fas fa-pencil"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Sedang direvisi</span></button>
+            <?php } else if ($project['project_status'] == 'review') { ?>
+                <button class="btn btn-secondary mb-1 btn-sm" disabled="disabled"><i class="fas fa-eye"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Diperiksa</span></button>
+            <?php } ?>
         <?php } ?>
     </div>
 

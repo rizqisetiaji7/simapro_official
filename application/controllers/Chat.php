@@ -145,4 +145,74 @@ class Chat extends CI_Controller {
       }
       $this->_get_pusher($message);
    }
+
+   public function buat_task() {
+      $message = [];
+      $post = $this->input->post(NULL, TRUE);
+      $this->bm->save($this->tb_chat, [
+         'ID_project'   => $post['ID_project'],
+         'ID_sender'    => $post['ID_sender'],
+         'ID_receiver'  => $post['ID_receiver'],
+         'chat_message' => $post['chat_message'],
+         'chat_type'    => 'task',
+         'chat_status'  => NULL,
+         'chat_created' => date('Y-m-d H:i:s', now('Asia/Jakarta'))
+      ]);
+
+      if ($this->db->affected_rows() > 0) {
+         $message = [
+            'status'   => 'success',
+            'message'  => 'Task disimpan'
+         ];  
+      } else {
+         $message = [
+            'status'   => 'error_message',
+            'header'   => '<h3 class="mb-2">Oops! Terjadi Masalah!</h3>',
+            'message'  => 'Pesan tidak terkirim, silahkan periksa koneksi internet anda, lalu coba lagi.',
+            'icon'     => base_url('assets/img/chat-warning.png')
+         ];
+      }
+      $this->_get_pusher($message);
+   }
+
+   public function update_status_task() {
+      $message = [];
+      $chat_id = $this->input->post('chat_id', TRUE);
+      $chat_status = $this->input->post('chat_status', TRUE);
+      $this->bm->update($this->tb_chat, ['chat_status' => $chat_status], ['chat_id' => $chat_id]);
+      if ($this->db->affected_rows() > 0) {
+         $message = [
+            'status'   => 'success',
+            'message'  => 'Task diperbarui.'
+         ];  
+      } else {
+         $message = [
+            'status'   => 'error_message',
+            'header'   => '<h3 class="mb-2">Oops! Terjadi Masalah!</h3>',
+            'message'  => 'Pesan tidak terkirim, silahkan periksa koneksi internet anda, lalu coba lagi.',
+            'icon'     => base_url('assets/img/chat-warning.png')
+         ];
+      }
+      $this->_get_pusher($message);
+   }
+
+   public function hapus_task() {
+      $message = [];
+      $id = $this->input->post('chat_id', TRUE);
+      $this->bm->delete($this->tb_chat, ['chat_id' => $id]);
+      if ($this->db->affected_rows() > 0) {
+         $message = [
+            'status'   => 'success',
+            'message'  => 'Task terhapus'
+         ];  
+      } else {
+         $message = [
+            'status'   => 'error_message',
+            'header'   => '<h3 class="mb-2">Oops! Terjadi Masalah!</h3>',
+            'message'  => 'Pesan tidak terkirim, silahkan periksa koneksi internet anda, lalu coba lagi.',
+            'icon'     => base_url('assets/img/chat-warning.png')
+         ];
+      }
+      $this->_get_pusher($message);
+   }
 }
