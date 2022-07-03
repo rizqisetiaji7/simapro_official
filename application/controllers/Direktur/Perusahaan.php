@@ -1,8 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Perusahaan extends CI_Controller {
-   private $table = 'tb_company';
-   private $table_users = 'tb_users';
+   private $table_company = 'tb_company';
    private $placeholder = 'default-placeholder320x320.png';
 
    public function __construct() {
@@ -65,7 +64,7 @@ class Perusahaan extends CI_Controller {
       return $config;
    }
 
-   private function _tampil_data() {
+   public function _tampil_data() {
       return $this->company_model->get_company(user_login()->user_id)->row();
    }
 
@@ -116,7 +115,7 @@ class Perusahaan extends CI_Controller {
             'comp_desc'    => $post['comp_desc'],
             'updated'      => date('Y-m-d H:i:s', now('Asia/Jakarta'))
          ];
-         $this->bm->update($this->table, $data, ['company_id' => $post['company_id']]);
+         $this->bm->update($this->table_company, $data, ['company_id' => $post['company_id']]);
 
          if ($this->db->affected_rows() >= 0) {
             $message = [
@@ -135,7 +134,7 @@ class Perusahaan extends CI_Controller {
 
    public function upload_form_logo() {
       $company_code = $this->input->post('company_code', TRUE);
-      $data['company'] = $this->bm->get($this->table, '*', ['comp_code' => $company_code])->row();
+      $data['company'] = $this->bm->get($this->table_company, '*', ['comp_code' => $company_code])->row();
       $this->load->view('direktur/profile/upload_logo_form', $data);
    }
 
@@ -157,7 +156,7 @@ class Perusahaan extends CI_Controller {
                'updated'   => date('Y-m-d H:i:s', now('Asia/Jakarta'))
             ];
 
-            $this->bm->update($this->table, $data, ['comp_code' => $post['comp_code']]);
+            $this->bm->update($this->table_company, $data, ['comp_code' => $post['comp_code']]);
             if ($this->db->affected_rows() >= 0) {
                $message = [
                   'status'    => 'success',

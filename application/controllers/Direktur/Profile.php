@@ -81,7 +81,7 @@ class Profile extends CI_Controller {
       return $config;
    }
 
-   function tampil_profile($tb, $field, $data) {
+   public function tampil_profile($tb, $field, $data) {
       return $this->bm->get($tb, $field, $data)->row();
    }
 
@@ -97,7 +97,7 @@ class Profile extends CI_Controller {
       $this->theme->view('templates/main', 'direktur/profile/index', $data);
    }
 
-   function show_upload_profile_form() { 
+   public function show_upload_profile_form() { 
       $unique_id = base64_decode(urldecode($this->input->post('unique_id', TRUE)));
       $user_role = base64_decode(urldecode($this->input->post('user_role', TRUE)));     
 
@@ -109,7 +109,7 @@ class Profile extends CI_Controller {
       $this->load->view('direktur/profile/upload_profile_form', $data);
    }
 
-   function upload_foto_profile() {
+   public function upload_foto_profile() {
       $message = [];
       $unique_id = urldecode(base64_decode($this->input->post('unique_id', TRUE)));
       $user_role = urldecode(base64_decode($this->input->post('user_role', TRUE)));
@@ -157,7 +157,7 @@ class Profile extends CI_Controller {
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
-   function hapus_foto_profile() {
+   public function hapus_foto_profile() {
       $message = [];
       $unique_id = urldecode(base64_decode($this->input->post('unique_id', TRUE)));
       $user_profile = urldecode(base64_decode($this->input->post('user_profile', TRUE)));
@@ -186,7 +186,7 @@ class Profile extends CI_Controller {
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
-   function edit_direktur() {
+   public function edit_direktur() {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
       $this->form_validation->set_rules($this->_rules());
@@ -233,7 +233,7 @@ class Profile extends CI_Controller {
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
-   function ganti_password() {
+   public function ganti_password() {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
 

@@ -51,15 +51,15 @@ class Proyek extends CI_Controller {
       return $config;
    }
 
-   protected function _tampil_proyek($limit=1) {
+   public function _tampil_proyek($limit=1) {
       return $this->project_model->get_all_user_project(user_company()->company_id, $limit)->result();
    }
 
-   protected function _data_detail_proyek($company_id, $project_code) {
+   public function _data_detail_proyek($company_id, $project_code) {
       return $this->project_model->get_project_detail($company_id, $project_code)->row();
    }
 
-   protected function _tampil_subproyek($project_id) {
+   public function _tampil_subproyek($project_id) {
       return $this->project_model->get_subproject($project_id)->result_array();
    }
 
@@ -137,7 +137,7 @@ class Proyek extends CI_Controller {
       $this->load->view('direktur/proyek/detail/form_edit_proyek', $data);
    }
 
-   function tambah() {
+   public function tambah() {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
 
@@ -214,7 +214,7 @@ class Proyek extends CI_Controller {
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
-   function edit() {
+   public function edit() {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
 
@@ -284,7 +284,7 @@ class Proyek extends CI_Controller {
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
-   function form_edit_status() {
+   public function form_edit_status() {
       $id = $this->input->post('project_code', TRUE);
       $project_status = $this->bm->get($this->tb_project, 'project_id, ID_pm, ID_company, project_code_ID, project_progress, project_status', ['project_code_ID' => $id])->row();
       $docs = $this->project_model->get_documentation($project_status->project_id);
@@ -296,7 +296,7 @@ class Proyek extends CI_Controller {
       $this->load->view('direktur/proyek/daftar/form_edit_status', $data);
    }
 
-   function edit_status() {
+   public function edit_status() {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
       $this->bm->update($this->tb_project, [
@@ -324,7 +324,7 @@ class Proyek extends CI_Controller {
     * Mendownload laporan proyek yang sudah Selesai pengerjaannya
     * 
     */
-   function download_laporan() {
+   public function download_laporan() {
       $query = '';
       $bulan = '';
       $post = $this->input->post(NULL, TRUE);
@@ -390,7 +390,7 @@ class Proyek extends CI_Controller {
    }
    // ==================================================================
 
-   function revisi_proyek() {
+   public function revisi_proyek() {
       $message = [];
       $project_id = $this->input->post('project_id', TRUE);
       $this->bm->update($this->tb_project, [
@@ -413,7 +413,7 @@ class Proyek extends CI_Controller {
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
-   function proyek_selesai() {
+   public function proyek_selesai() {
       $message = [];
       $project_id = $this->input->post('project_id', TRUE);
 

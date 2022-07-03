@@ -11,11 +11,11 @@ class Riwayat extends CI_Controller {
       $this->load->model('project_model');
    }
 
-   protected function _detail_proyek($company_id, $project_code) {
+   public function _detail_proyek($company_id, $project_code) {
       return $this->project_model->get_project_detail($company_id, $project_code)->row();
    }
 
-   protected function _tampil_subproyek($project_id, $subproject_id=NULL) {
+   public function _tampil_subproyek($project_id, $subproject_id=NULL) {
       return $this->project_model->get_subproject($project_id, $subproject_id);
    }
 

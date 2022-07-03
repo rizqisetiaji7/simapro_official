@@ -11,16 +11,16 @@ class Arsip extends CI_Controller {
       $this->load->model('project_model');
    }
 
-   protected function _tampil_arsip($limit) {
+   public function _tampil_arsip($limit) {
       $company_id = user_company()->company_id;
       return $this->project_model->get_project_archive($company_id, $limit)->result();
    }
 
-   protected function _detail_proyek($company_id, $project_code) {
+   public function _detail_proyek($company_id, $project_code) {
       return $this->project_model->get_project_detail($company_id, $project_code, TRUE)->row();
    }
 
-   protected function _tampil_subproyek($project_id, $subproject_id=NULL) {
+   public function _tampil_subproyek($project_id, $subproject_id=NULL) {
       return $this->project_model->get_subproject($project_id, $subproject_id);
    }
 
@@ -81,7 +81,7 @@ class Arsip extends CI_Controller {
       $this->load->view('direktur/proyek/arsip/info_detail_proyek', $data);
    }
 
-   function arsip_proyek() {
+   public function arsip_proyek() {
       $message = [];
       $code_id = $this->input->post('project_code', TRUE);
       $this->bm->update($this->tb_project, ['project_archive' => 1], ['project_code_ID' => $code_id]);
@@ -99,7 +99,7 @@ class Arsip extends CI_Controller {
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
-   function hapus_arsip() {
+   public function hapus_arsip() {
       $message = [];
       $project_ID = $this->input->post('project_ID', TRUE);
       $this->bm->update($this->tb_project, [
@@ -123,13 +123,13 @@ class Arsip extends CI_Controller {
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
-   function tampil_dokumentasi() {
+   public function tampil_dokumentasi() {
       $post = $this->input->post(NULL, TRUE);
       $data['docs'] = $this->project_model->get_documentation($post['project_id'], $post['subproject_id']);
       $this->load->view('direktur/proyek/arsip/foto_subproyek', $data);
    }
 
-   function info_detail_subproyek() {
+   public function info_detail_subproyek() {
       $project_id = $this->input->post('project_id', TRUE);
       $subproject_id = $this->input->post('subproject_id', TRUE);
       $data['subproject'] = $this->_tampil_subproyek($project_id, $subproject_id)->row();

@@ -49,21 +49,21 @@ class Proyek extends CI_Controller {
       return $config;
    }
 
-   protected function tampil_proyek($limit) {
+   public function tampil_proyek($limit) {
       $comp_id = user_company()->company_id;
       $pm_id = user_company()->user_id;
       return $this->ppm->get_pm_projects($comp_id, $pm_id, $limit)->result();
    }
 
-   protected function tampil_subproyek($project_id) {
+   public function tampil_subproyek($project_id) {
       return $this->ppm->get_subprojectpm($project_id)->result_array();
    }
 
-   protected function data_detail_proyek($comp_id, $project_code, $pm_id) {
+   public function data_detail_proyek($comp_id, $project_code, $pm_id) {
       return $this->ppm->get_projectpm_detail($comp_id, $project_code, $pm_id)->row();
    }
 
-   protected function _direktur($company_id='') {
+   public function _direktur($company_id='') {
       return $this->bm->get('tb_users', '*', ['ID_company' => $company_id, 'user_role' => 'direktur'])->row();
    }
 

@@ -2,9 +2,13 @@
 
 class Forgot_password extends CI_Controller {
 	private $table = 'tb_users';
+   private $token;
+   private $token_expiry;
 
 	public function __construct() {
 		parent::__construct();
+      $this->token = randomID(48);
+      $this->token_expiry = now('Asia/Jakarta') + (60*10); // Expired in 10 minutes
 	}
 
 	public function index() {
@@ -48,8 +52,8 @@ class Forgot_password extends CI_Controller {
          ];
       } else {
          $email = $this->input->post('email', TRUE);
-         $token = randomID(48);
-         $token_expiry = now('Asia/Jakarta') + (60*10); // Expired in 10 minutes
+         $token = $this->token;
+         $token_expiry = $this->token_expiry; // Expired in 10 minutes
          $user = $this->bm->get($this->table, '*', ['user_email' => $email])->row();
 
          // Check if the email is registered or not

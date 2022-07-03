@@ -8,17 +8,17 @@ class Arsip extends CI_Controller {
       unset_chat_session();
    }
 
-   protected function tampil_arsip($limit) {
+   public function tampil_arsip($limit) {
       $comp_id = user_company()->company_id;
       $pm_id = user_company()->user_id;
       return $this->ppm->get_pm_project_archive($comp_id, $pm_id, $limit)->result();
    }
 
-   protected function tampil_subproyek($project_id, $subproject_id = NULL) {
+   public function tampil_subproyek($project_id, $subproject_id = NULL) {
       return $this->ppm->get_subprojectpm($project_id, $subproject_id);
    }
 
-   protected function detail_proyek($comp_id, $project_code, $pm_id) {
+   public function detail_proyek($comp_id, $project_code, $pm_id) {
       return $this->ppm->get_projectpm_detail($comp_id, $project_code, $pm_id)->row();
    }
 
