@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Forgot_password extends CI_Controller {
-	private $table = 'tb_users';
+	private $tb_users = 'tb_users';
    private $token;
    private $token_expiry;
 
@@ -54,11 +54,11 @@ class Forgot_password extends CI_Controller {
          $email = $this->input->post('email', TRUE);
          $token = $this->token;
          $token_expiry = $this->token_expiry; // Expired in 10 minutes
-         $user = $this->bm->get($this->table, '*', ['user_email' => $email])->row();
+         $user = $this->bm->get($this->tb_users, '*', ['user_email' => $email])->row();
 
          // Check if the email is registered or not
          if ($user) {
-            $this->bm->update($this->table, [
+            $this->bm->update($this->tb_users, [
                'token'        => $token,
                'token_expiry' => $token_expiry
             ], ['user_email' => $email]);
@@ -78,7 +78,7 @@ class Forgot_password extends CI_Controller {
                   'message'   => 'Segera cek inbox/spam untuk melakukan pergantian password. <br/> Link pembaruan hanya berlaku selama 10 menit.'
                ];
             } else {
-               $this->bm->update($this->table, ['token' => NULL, 'token_expiry' => NULL], ['user_email' => $email]);
+               $this->bm->update($this->tb_users, ['token' => NULL, 'token_expiry' => NULL], ['user_email' => $email]);
                $message = [
                   'status'       => 'failed',
                   'error_info'   => $send['error_info'],
@@ -111,7 +111,7 @@ class Forgot_password extends CI_Controller {
          $this->error_display($error_message);
       } else {
          //
-         $user = $this->bm->get($this->table, '*', ['token' => $token])->row();
+         $user = $this->bm->get($this->tb_users, '*', ['token' => $token])->row();
          // Check if user token is exists
          if ($user) {
             $time_now = intval(now('Asia/Jakarta')); // Current Time in timestamp
@@ -123,7 +123,7 @@ class Forgot_password extends CI_Controller {
                $this->show_change_password_form($user->user_email);  
             } else {
                // Reset token and token expiry to NULL value
-               $this->bm->update($this->table, ['token' => NULL, 'token_expiry' => NULL], ['user_email' => $user->user_email]);
+               $this->bm->update($this->tb_users, ['token' => NULL, 'token_expiry' => NULL], ['user_email' => $user->user_email]);
                
                // Remove the session and display error
                $this->session->unset_userdata('email_reset');
@@ -221,7 +221,7 @@ class Forgot_password extends CI_Controller {
       } else {
          $email = base64_decode($post['key_ID']);
          $password = password_hash($post['new_password'], PASSWORD_DEFAULT);
-         $query = $this->bm->update($this->table, ['user_password' => $password, 'token' => NULL, 'token_expiry' => NULL], ['user_email' => $email]);
+         $query = $this->bm->update($this->tb_users, ['user_password' => $password, 'token' => NULL, 'token_expiry' => NULL], ['user_email' => $email]);
 
          $this->session->unset_userdata('email_reset');
 

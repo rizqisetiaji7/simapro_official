@@ -1,10 +1,18 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login extends CI_Controller {
-	private $table = 'tb_users';
+	private $tb_users = 'tb_users';
+   private $email;
+   private $password;
 
 	public function __construct() {
       parent::__construct();
+   }
+
+   private function _set_data($data) {
+      $this->email = $data['email'];
+      $this->password = $data['password'];
+      return;
    }
 
    private function _set_response($status = '', $field = [], $data = [], $message = '') {
@@ -18,8 +26,8 @@ class Login extends CI_Controller {
    }
 
    private function _login_status($user_id, $status = 'off') {
-      $this->bm->update($this->table, ['login_status' => $status], ['user_id' => $user_id]);
-      return false;
+      $this->bm->update($this->tb_users, ['login_status' => $status], ['user_id' => $user_id]);
+      return;
    }
 
    private function _login_rules() {
@@ -42,7 +50,6 @@ class Login extends CI_Controller {
             ],
          ]
       ];
-
       return $config;
    }
 
@@ -62,6 +69,7 @@ class Login extends CI_Controller {
    public function login_process() {
       is_login();
       $post = $this->input->post(NULL, TRUE);
+      $this->_set_data($post);
       // Set Rules
       $this->form_validation->set_rules($this->_login_rules());
       if ($this->form_validation->run() == false) {
@@ -74,12 +82,10 @@ class Login extends CI_Controller {
          ];
          $this->output->set_content_type('application/json')->set_output(json_encode($validation_message));
       } else {
-         $where['user_email'] = $post['email'];
-         $query = $this->bm->get($this->table, '*', $where);
-
+         $query = $this->bm->get($this->tb_users, '*',['user_email' => $this->email]);
          if ($query->num_rows() > 0) {
             $user = $query->row();
-            if (password_verify($post['password'], $user->user_password)) {
+            if (password_verify($this->password, $user->user_password)) {
                $redirect_url = '';
 
                if ($user->user_role == 'direktur') {
