@@ -384,7 +384,7 @@ class Proyek extends CI_Controller {
       } else {
          echo "<script>
             alert('Oops! Data informasi yang ingin anda download tidak tersedia.');
-            window.location = `".site_url('direktur/proyek/riwayat')."`;
+            window.location = `".site_url('direktur/riwayat')."`;
          </script>";
       }
    }

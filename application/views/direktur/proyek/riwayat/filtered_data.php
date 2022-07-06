@@ -39,7 +39,7 @@
 		      </div>
 		  </td>
 		  <td class="text-nowrap text-center">
-		      <a href="<?= site_url('direktur/proyek/detail_proyek/'.$ft->company_id.'/'.$ft->projectID) ?>" class="btn btn-sm my-1 btn-primary text-nowrap" data-toggle="tooltip" title="Lihat Proyek">Detail</a>
+		      <a href="<?= site_url('direktur/riwayat/detail/'.$ft->company_id.'/'.$ft->projectID) ?>" class="btn btn-sm my-1 btn-primary text-nowrap" data-toggle="tooltip" title="Lihat Proyek">Detail</a>
 		  </td>
 		</tr>
 	<?php } ?>
