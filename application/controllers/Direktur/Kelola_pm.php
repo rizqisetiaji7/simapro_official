@@ -306,33 +306,59 @@ class Kelola_pm extends CI_Controller {
       }
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
-
-   public function hapus() {
+   
+   public function disable_akun() {
       $message = [];
       $post = $this->input->post(NULL, TRUE);
 
-      if ($post['user_profile'] != 'default-avatar.jpg') {
-         unlink('./uploads/profile/'.$post['user_profile']);
-      }
-
-      $this->bm->delete($this->table_users, [
-         'user_unique_id' => $post['unique_id'], 
-         'user_role' => $post['user_role']
+      $this->bm->update($this->table_users, [
+         'account_status'  => 'disable',
+         'updated'         => date('Y-m-d H:i:s', now('Asia/Jakarta'))
+      ], [
+         'user_id' => $post['user_id'], 
+         'user_unique_id' => $post['unique_id']
       ]);
 
       if ($this->db->affected_rows() > 0) {
          $message = [
             'status'    => 'success',
-            'message'   => 'Proyek Manajer telah berhasil terhapus.'
+            'message'   => 'Akun proyek manajer berhasil di Non-Aktifkan!.'
          ];
       } else {
          $message = [
             'status'    => 'failed',
-            'message'   => 'Oops! Maaf Proyek Manajer gagal dihapus.'
+            'message'   => 'Oops! Maaf akun proyek manajer gagal di Non-Aktifkan!.'
          ];
       }
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
+
+   public function enable_akun() {
+      $message = [];
+      $post = $this->input->post(NULL, TRUE);
+
+      $this->bm->update($this->table_users, [
+         'account_status'  => 'enable',
+         'updated'         => date('Y-m-d H:i:s', now('Asia/Jakarta'))
+      ], [
+         'user_id' => $post['user_id'], 
+         'user_unique_id' => $post['unique_id']
+      ]);
+
+      if ($this->db->affected_rows() > 0) {
+         $message = [
+            'status'    => 'success',
+            'message'   => 'Akun proyek manajer berhasil di Aktifkan!.'
+         ];
+      } else {
+         $message = [
+            'status'    => 'failed',
+            'message'   => 'Oops! Maaf akun proyek manajer gagal di Aktifkan!.'
+         ];
+      }
+      $this->output->set_content_type('application/json')->set_output(json_encode($message));
+   }
+   
 
    public function ubah_password() {
       $message = [];

@@ -95,6 +95,19 @@
                     }
                 } else if (response.status == 'success') {
                     window.location = response.data.redirect;
+                } else if (response.status == 'account_disable') {
+                    Swal.fire({
+                        icon: 'warning',
+                        html: `
+                            <div class="text-center">
+                                <h3>Akun anda telah di Nonaktikan!</h3>
+                                <p class="mb-2 small text-secondary">${response.message}</p>
+                            </div>
+                        `,
+                        showCancelButton: false,
+                        confirmButtonText: 'Tutup',
+                        confirmButtonColor: '#3085d6'
+                    });
                 } else {
                     swAlert(response.data.form, response.message);
                 }

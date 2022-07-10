@@ -58,32 +58,40 @@ class Forgot_password extends CI_Controller {
 
          // Check if the email is registered or not
          if ($user) {
-            $this->bm->update($this->tb_users, [
-               'token'        => $token,
-               'token_expiry' => $token_expiry
-            ], ['user_email' => $email]);
-
-            $dataBody = [
-               'email_subject'   => 'Reset Password',
-               'email_body'      => '<p>Klik link berikut ini untuk melakukan reset password.</p> <a href="'.site_url('change_password?token='.$token).'">Klik Disini</a>'
-            ];
-
-            // Send Link to Email
-            $send = $this->mylibs->_sendEmail($email, $user->user_fullname, $token, $dataBody);
-            if ($send['status'] == TRUE) {
+            if ($user->account_status == 'disable') {
                $message = [
-                  'status'    => 'success',
-                  'title'     => 'Email berhasil terkirim',
-                  'redirect'  => site_url('login'),
-                  'message'   => 'Segera cek inbox/spam untuk melakukan pergantian password. <br/> Link pembaruan hanya berlaku selama 10 menit.'
+                  'status'    => 'account_disable',
+                  'message'   => 'Silahkan hubungi admin untuk melakukan pemulihan akun.',
+                  'redirect'  => site_url('login')
                ];
             } else {
-               $this->bm->update($this->tb_users, ['token' => NULL, 'token_expiry' => NULL], ['user_email' => $email]);
-               $message = [
-                  'status'       => 'failed',
-                  'error_info'   => $send['error_info'],
-                  'message'      => 'Pastikan koneksi internet atau akun email anda benar.'
+               $this->bm->update($this->tb_users, [
+                  'token'        => $token,
+                  'token_expiry' => $token_expiry
+               ], ['user_email' => $email]);
+
+               $dataBody = [
+                  'email_subject'   => 'Reset Password',
+                  'email_body'      => '<p>Klik link berikut ini untuk melakukan reset password.</p> <a href="'.site_url('change_password?token='.$token).'">Klik Disini</a>'
                ];
+
+               // Send Link to Email
+               $send = $this->mylibs->_sendEmail($email, $user->user_fullname, $token, $dataBody);
+               if ($send['status'] == TRUE) {
+                  $message = [
+                     'status'    => 'success',
+                     'title'     => 'Email berhasil terkirim',
+                     'redirect'  => site_url('login'),
+                     'message'   => 'Segera cek inbox/spam untuk melakukan pergantian password. <br/> Link pembaruan hanya berlaku selama 10 menit.'
+                  ];
+               } else {
+                  $this->bm->update($this->tb_users, ['token' => NULL, 'token_expiry' => NULL], ['user_email' => $email]);
+                  $message = [
+                     'status'       => 'failed',
+                     'error_info'   => $send['error_info'],
+                     'message'      => 'Pastikan koneksi internet atau akun email anda benar.'
+                  ];
+               }
             }
          } else {
             $message = [

@@ -90,27 +90,27 @@
         });
     }
 
-    function deleteProjectManajer(unique_id, user_role, user_profile) {
+    function disable_account(user_id, unique_id) {
         Swal.fire({
             icon: 'warning',
             html: `
-                <h4>Anda Yakin akan menghapus Proyek Manajer?</h4>
-                <p class="text-muted mb-0 small">Hal ini mungkin akan berpengaruh pada informasi proyek.</p>  
+                <h4>Nonaktifkan Proyek Manajer?</h4>
+                <p class="text-muted mb-1 small">Anda akan Nonaktifkan akun proyek manajer.</p>
+                <p class="text-danger small mb-0">Hal ini mungkin akan berpengaruh pada proyek yang sedang berjalan.</p>  
             `,
-            confirmButtonText: 'Ya, Hapus',
+            confirmButtonText: 'Nonaktikan',
             showCancelButton: true,
             cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: `<?= site_url('direktur/kelola_pm/hapus') ?>`,
+                    url: `<?= site_url('direktur/kelola_pm/disable_akun') ?>`,
                     method: 'POST',
                     dataType: 'json',
                     cache: false,
                     data: { 
+                        user_id: user_id,
                         unique_id: unique_id,
-                        user_role: user_role,
-                        user_profile: user_profile
                     },
                     success: function(data) {
                         if (data.status == 'success') {
@@ -136,6 +136,42 @@
                         }
                     }
                 });
+            }
+        });
+    }
+
+    function enable_account(user_id, unique_id) {
+        $.ajax({
+            url: `<?= site_url('direktur/kelola_pm/enable_akun') ?>`,
+            method: 'POST',
+            dataType: 'json',
+            cache: false,
+            data: { 
+                user_id: user_id,
+                unique_id: unique_id,
+            }, 
+            success: function(data) {
+                if (data.status == 'success') {
+                    Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: `${data.message}`,
+                    showConfirmButton: false,
+                    timer: 2000
+                 }).then((result) => {
+                    showProjectManager();
+                 });
+                } else if (data.status == 'failed') {
+                    Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: `${data.message}`,
+                    showConfirmButton: false,
+                    timer: 2000
+                 }).then((result) => {
+                    showProjectManager();
+                 });
+                }
             }
         });
     }

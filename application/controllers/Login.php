@@ -86,16 +86,19 @@ class Login extends CI_Controller {
          if ($query->num_rows() > 0) {
             $user = $query->row();
             if (password_verify($this->password, $user->user_password)) {
-               $redirect_url = '';
-
-               if ($user->user_role == 'direktur') {
-                  $redirect_url = site_url('direktur');
+               if ($user->account_status == 'disable') {
+                  $this->_set_response('account_disable', [], [], 'Silahkan hubungi admin untuk melakukan pemulihan akun.');
                } else {
-                  $redirect_url = site_url('pm');
+                  $redirect_url = '';
+                  if ($user->user_role == 'direktur') {
+                     $redirect_url = site_url('direktur');
+                  } else {
+                     $redirect_url = site_url('pm');
+                  }
+                  $this->session->set_userdata(['user_id' => $user->user_id, 'login_status' => 'on']);
+                  $this->_login_status($user->user_id, 'on');
+                  $this->_set_response('success', ['email','password'], ['redirect' => $redirect_url], 'Selamat Anda telah berhasil login.');
                }
-               $this->session->set_userdata(['user_id' => $user->user_id, 'login_status' => 'on']);
-               $this->_login_status($user->user_id, 'on');
-               $this->_set_response('success', ['email','password'], ['redirect' => $redirect_url], 'Selamat Anda telah berhasil login.');
             } else {
                $this->_set_response('failed', 'password', ['form' => 'Password'], 'Silahkan isi password dengan benar.');
             }

@@ -12,8 +12,17 @@
     <?php if ($projek_manajer) { ?>
         <?php foreach($projek_manajer as $pm) { ?>
             <div class="col-12 col-sm-6 col-md-4">
-                <div class="card">
-                    <div class="card-body">
+                <div class="card" <?= $pm->account_status == 'disable' ? 'style="border: 2px solid rgb(244, 67, 54, 50%); position: relative;"' : NULL ?>>
+
+                    <?php if ($pm->account_status == 'disable') { ?>
+                    <div class="bg-danger small text-white" style="
+                        position: absolute; 
+                        padding: 5px 15px;
+                        border-radius: 0 0 10px 0;
+                    ">Akun Nonaktif</div>
+                    <?php } ?>
+
+                    <div class="card-body" <?= $pm->account_status == 'disable' ? 'style="opacity: .5;"' : NULL ?>>
                         <div class="d-flex flex-column justify-content-center text-center mb-4">
                             <div class="mandor-profile my-3 mx-auto">
                                 <img src="<?= $pm->user_profile == 'default-avatar.jpg' ? base_url('assets/img/'.'default-avatar.jpg') : base_url('uploads/profile/'.$pm->user_profile) ?>">
@@ -39,20 +48,26 @@
 
                     <div class="card-footer">
                         <div class="row align-items-center">
-                            <div class="col-10 pr-0">
-                                <button type="button" onclick="editProjectManager(<?= "'".$pm->user_unique_id."'" ?>, <?= "'".$pm->user_role."'" ?>)" class="btn btn-custom btn-sm btn-block">Edit Profile</button>
-                            </div>
-                            <div class="col-2 text-center">
-                                <div class="dropdown dropdown-action">
-                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" onclick="changePasswordPM(<?= "'".$pm->user_unique_id."'" ?>, <?= "'".$pm->user_role."'" ?>)" href="javascript:void(0)">Ganti password</a>
-                                        <a class="dropdown-item text-danger" onclick="deleteProjectManajer(<?= "'".$pm->user_unique_id."'" ?>, <?= "'".$pm->user_role."'" ?>, <?= "'".$pm->user_profile."'" ?>)" href="javascript:void(0)">Hapus</a>
+                            <?php if ($pm->account_status == 'disable') { ?>
+                                <div class="col-12">
+                                    <button type="button" onclick="enable_account(<?= $pm->user_id ?>, <?= "'".$pm->user_unique_id."'" ?>)" class="btn btn-light btn-sm btn-block">Aktifkan akun</button>
+                                </div>
+                            <?php } else { ?>
+                                <div class="col-10 pr-0">
+                                    <button type="button" onclick="editProjectManager(<?= "'".$pm->user_unique_id."'" ?>, <?= "'".$pm->user_role."'" ?>)" class="btn btn-custom btn-sm btn-block">Edit Profile</button>
+                                </div>
+                                <div class="col-2 text-center">
+                                    <div class="dropdown dropdown-action">
+                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a class="dropdown-item" onclick="changePasswordPM(<?= "'".$pm->user_unique_id."'" ?>, <?= "'".$pm->user_role."'" ?>)" href="javascript:void(0)">Ganti password</a>
+                                            <a class="dropdown-item text-danger" onclick="disable_account(<?= $pm->user_id ?>, <?= "'".$pm->user_unique_id."'" ?>)" href="javascript:void(0)">Nonaktifkan</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
