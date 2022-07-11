@@ -122,52 +122,52 @@
 	}
 
 	// DELETE SUB-PROJECT
-	function delete_subProject(subproject_id, project_id) {
-		Swal.fire({
-			icon: 'warning',
-			title: 'Hapus Sub-Proyek?',
-			text: 'Anda akan menghapus Sub-Proyek.',
-			confirmButtonText: 'Ya, Hapus',
-			showCancelButton: true,
-			cancelButtonText: 'Batal'
-     	}).then((res) => {
-     		if (res.isConfirmed) {
-     			$.ajax({
-					url: `<?= site_url('pm/subproyek/hapus') ?>`,
-					method: 'POST',
-					dataType: 'json',
-					cache: false,
-					data: {
-						subproject_id: subproject_id,
-						project_id: project_id
-					},
-					success: function(data) {
-						if (data.status == 'success') {
-							Swal.fire({
-								icon: 'success',
-								title: 'Berhasil',
-								text: `${data.message}`,
-								showConfirmButton: false,
-								timer: 2000,
-							}).then((result) => {
-								window.location.reload();
-							});
-						} else if (data.status == 'failed') {
-							Swal.fire({
-								icon: 'error',
-								title: 'Gagal',
-								text: `${data.message}`,
-								showConfirmButton: false,
-								timer: 2000,
-							}).then((result) => {
-								window.location.reload();
-							});
-						}
-					}
-				});
-     		}
-     	});
-	}
+	// function delete_subProject(subproject_id, project_id) {
+	// 	Swal.fire({
+	// 		icon: 'warning',
+	// 		title: 'Hapus Sub-Proyek?',
+	// 		text: 'Anda akan menghapus Sub-Proyek.',
+	// 		confirmButtonText: 'Ya, Hapus',
+	// 		showCancelButton: true,
+	// 		cancelButtonText: 'Batal'
+ //     	}).then((res) => {
+ //     		if (res.isConfirmed) {
+ //     			$.ajax({
+	// 				url: `<?= site_url('pm/subproyek/hapus') ?>`,
+	// 				method: 'POST',
+	// 				dataType: 'json',
+	// 				cache: false,
+	// 				data: {
+	// 					subproject_id: subproject_id,
+	// 					project_id: project_id
+	// 				},
+	// 				success: function(data) {
+	// 					if (data.status == 'success') {
+	// 						Swal.fire({
+	// 							icon: 'success',
+	// 							title: 'Berhasil',
+	// 							text: `${data.message}`,
+	// 							showConfirmButton: false,
+	// 							timer: 2000,
+	// 						}).then((result) => {
+	// 							window.location.reload();
+	// 						});
+	// 					} else if (data.status == 'failed') {
+	// 						Swal.fire({
+	// 							icon: 'error',
+	// 							title: 'Gagal',
+	// 							text: `${data.message}`,
+	// 							showConfirmButton: false,
+	// 							timer: 2000,
+	// 						}).then((result) => {
+	// 							window.location.reload();
+	// 						});
+	// 					}
+	// 				}
+	// 			});
+ //     		}
+ //     	});
+	// }
 
 	// ADD SUB-ELEMENT / Task Lists
 	function add_subElemenProject(project_id, subproject_id) {
@@ -224,53 +224,53 @@
 		});
 	}
 
-	function deleteSubelemen(subelemen_id, subproject_id, project_id) {
-		Swal.fire({
-			icon: 'warning',
-			title: 'Hapus Sub-Elemen Proyek?',
-			text: 'Anda akan menghapus Sub-elemen Proyek.',
-			confirmButtonText: 'Ya, Hapus',
-			showCancelButton: true,
-			cancelButtonText: 'Batal'
-     	}).then((res) => {
-     		if (res.isConfirmed) {
-     			$.ajax({
-					url: `<?= site_url('pm/subelemen/hapus') ?>`,
-					method: 'POST',
-					dataType: 'json',
-					cache: false,
-					data: {
-						subelemen_id: subelemen_id,
-						subproject_id: subproject_id,
-						project_id: project_id
-					},
-					success: function(data) {
-						if (data.status == 'success') {
-							Swal.fire({
-								icon: 'success',
-								title: 'Berhasil',
-								text: `${data.message}`,
-								showConfirmButton: false,
-								timer: 2000,
-							}).then((result) => {
-								window.location.reload();
-							});
-						} else if (data.status == 'failed') {
-							Swal.fire({
-								icon: 'error',
-								title: 'Gagal',
-								text: `${data.message}`,
-								showConfirmButton: false,
-								timer: 2000,
-							}).then((result) => {
-								window.location.reload();
-							});
-						}
-					}
-				});
-     		}
-     	});
-	}
+	// function deleteSubelemen(subelemen_id, subproject_id, project_id) {
+	// 	Swal.fire({
+	// 		icon: 'warning',
+	// 		title: 'Hapus Sub-Elemen Proyek?',
+	// 		text: 'Anda akan menghapus Sub-elemen Proyek.',
+	// 		confirmButtonText: 'Ya, Hapus',
+	// 		showCancelButton: true,
+	// 		cancelButtonText: 'Batal'
+ //     	}).then((res) => {
+ //     		if (res.isConfirmed) {
+ //     			$.ajax({
+	// 				url: `<?= site_url('pm/subelemen/hapus') ?>`,
+	// 				method: 'POST',
+	// 				dataType: 'json',
+	// 				cache: false,
+	// 				data: {
+	// 					subelemen_id: subelemen_id,
+	// 					subproject_id: subproject_id,
+	// 					project_id: project_id
+	// 				},
+	// 				success: function(data) {
+	// 					if (data.status == 'success') {
+	// 						Swal.fire({
+	// 							icon: 'success',
+	// 							title: 'Berhasil',
+	// 							text: `${data.message}`,
+	// 							showConfirmButton: false,
+	// 							timer: 2000,
+	// 						}).then((result) => {
+	// 							window.location.reload();
+	// 						});
+	// 					} else if (data.status == 'failed') {
+	// 						Swal.fire({
+	// 							icon: 'error',
+	// 							title: 'Gagal',
+	// 							text: `${data.message}`,
+	// 							showConfirmButton: false,
+	// 							timer: 2000,
+	// 						}).then((result) => {
+	// 							window.location.reload();
+	// 						});
+	// 					}
+	// 				}
+	// 			});
+ //     		}
+ //     	});
+	// }
 
 	// SHOW PHOTO DOCUMENTATION PROJECT / SUB-PROJECT
 	function showPhoto(project_id, subproject_id='', project_name, project_status='', proj_type='') {

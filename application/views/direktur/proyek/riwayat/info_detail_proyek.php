@@ -54,7 +54,7 @@
 		</tr>
 		<tr>
 			<th style="width: 180px;">Nama Lengkap</th>
-			<td><?= $project->user_fullname ?></td>
+			<td><?= $project->user_fullname ?> <?= $project->account_status == 'disable' ? '<span class="text-danger small">(Nonaktif)</span>' : NULL ?></td>
 		</tr>
 		<tr>
 			<th style="width: 180px;">Alamat Email</th>

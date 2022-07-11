@@ -28,8 +28,12 @@
             <label for="ID_pm">Manajer Proyek (Penanggung jawab)</label>
             <select name="ID_pm" class="custom-select formSelect">
                 <option value="">-- Pilih --</option>
-                <?php foreach ($project_manajer as $pm) { ?>
-                <option value="<?= $pm->user_id ?>" <?= $pm->user_id == $project->ID_pm ? 'selected' : NULL ?>><?= $pm->user_fullname ?></option>
+                <?php if ($project_manajer) { ?>
+                    <?php foreach ($project_manajer as $pm) { ?>
+                        <option value="<?= $pm->user_id ?>" <?= $pm->user_id == $project->ID_pm ? 'selected' : NULL ?>><?= $pm->user_fullname ?></option>
+                    <?php } ?>
+                <?php } else { ?>
+                    <option class="text-warning">PM aktif tidak tersedia.</option>
                 <?php } ?>
             </select>
         </div>

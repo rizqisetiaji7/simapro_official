@@ -146,7 +146,7 @@
                             <a href="" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a class="dropdown-item" href="javascript:void(0)" onclick="edit_subProject(<?= $project['project_id'] ?>,<?= $sub['subproject_id'] ?>)">Edit</a>
-                                <a class="dropdown-item" href="javascript:void(0)" onclick="delete_subProject(<?= $sub['subproject_id'] ?>, <?= $project['project_id'] ?>)">Hapus</a>
+                                <!-- <a class="dropdown-item" href="javascript:void(0)" onclick="delete_subProject(<?= $sub['subproject_id'] ?>, <?= $project['project_id'] ?>)">Hapus</a> -->
                             </div>
                         </div>
                     </div>
@@ -203,7 +203,7 @@
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right">
                                                 <a class="dropdown-item" href="javascript:void(0)" onclick="edit_subElemenProject(<?= $se['project_task_id'] ?>, <?= $sub['subproject_id'] ?>, <?= $project['project_id'] ?>)">Edit</a>
-                                                <a class="dropdown-item" href="javascript:void(0)" onclick="deleteSubelemen(<?= $se['project_task_id'] ?>, <?= $sub['subproject_id'] ?>, <?= $project['project_id'] ?>)">Hapus</a>
+                                                <!-- <a class="dropdown-item" href="javascript:void(0)" onclick="deleteSubelemen(<?= $se['project_task_id'] ?>, <?= $sub['subproject_id'] ?>, <?= $project['project_id'] ?>)">Hapus</a> -->
                                             </div>
                                         </div>
                                         <?php } ?>

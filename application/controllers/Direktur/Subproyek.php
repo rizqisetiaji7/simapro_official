@@ -164,44 +164,44 @@ class Subproyek extends CI_Controller {
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
 
-   function hapus() {
-      $message = [];
-      $post = $this->input->post(NULL, TRUE);
-      $project_id = $post['project_id'];
-      $subproject_id = $post['subproject_id'];
+   // function hapus() {
+   //    $message = [];
+   //    $post = $this->input->post(NULL, TRUE);
+   //    $project_id = $post['project_id'];
+   //    $subproject_id = $post['subproject_id'];
 
-      $del_subproject = $this->bm->delete($this->tb_subproject,['subproject_id' => $subproject_id]);
-      if ($del_subproject) {
-         // Count Total Rows and Progress Subproject
-         $total_sp_rows = $this->ppm->countRows('tb_subproject', ['ID_project' => $project_id]);
-         $total_sp_progress = $this->ppm->sumTotalProgress('tb_subproject', 'subproject_progress', 'total_progress', [
-            'ID_project'   => $project_id
-         ])->row()->total_progress;
+   //    $del_subproject = $this->bm->delete($this->tb_subproject,['subproject_id' => $subproject_id]);
+   //    if ($del_subproject) {
+   //       // Count Total Rows and Progress Subproject
+   //       $total_sp_rows = $this->ppm->countRows('tb_subproject', ['ID_project' => $project_id]);
+   //       $total_sp_progress = $this->ppm->sumTotalProgress('tb_subproject', 'subproject_progress', 'total_progress', [
+   //          'ID_project'   => $project_id
+   //       ])->row()->total_progress;
 
-         // Current Progress for Main Project
-         $proj_progress = $total_sp_progress != '' ? round(intval($total_sp_progress) / intval($total_sp_rows)) : 0;
-         $up_project = $this->bm->update('tb_project', ['project_progress' => $proj_progress], [
-            'project_id'   => $project_id
-         ]);
+   //       // Current Progress for Main Project
+   //       $proj_progress = $total_sp_progress != '' ? round(intval($total_sp_progress) / intval($total_sp_rows)) : 0;
+   //       $up_project = $this->bm->update('tb_project', ['project_progress' => $proj_progress], [
+   //          'project_id'   => $project_id
+   //       ]);
 
-         if ($up_project) {
-            $message = [
-               'status'    => 'success',
-               'message'   => 'Data Subprojek telah berhasil dihapus.'
-            ];
-         } else {
-            $message = [
-               'status'    => 'failed',
-               'message'   => 'Oops! Maaf Sub-Proyek gagal di hapus!'
-            ];
-         }
-      } else {
-         $message = [
-            'status'    => 'failed',
-            'message'   => 'Oops! Maaf Sub-Proyek gagal di hapus!'
-         ];
-      }
+   //       if ($up_project) {
+   //          $message = [
+   //             'status'    => 'success',
+   //             'message'   => 'Data Subprojek telah berhasil dihapus.'
+   //          ];
+   //       } else {
+   //          $message = [
+   //             'status'    => 'failed',
+   //             'message'   => 'Oops! Maaf Sub-Proyek gagal di hapus!'
+   //          ];
+   //       }
+   //    } else {
+   //       $message = [
+   //          'status'    => 'failed',
+   //          'message'   => 'Oops! Maaf Sub-Proyek gagal di hapus!'
+   //       ];
+   //    }
 
-      $this->output->set_content_type('application/json')->set_output(json_encode($message));
-   }
+   //    $this->output->set_content_type('application/json')->set_output(json_encode($message));
+   // }
 }

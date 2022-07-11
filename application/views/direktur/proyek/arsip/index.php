@@ -44,7 +44,7 @@
                                     <div class="d-flex align-items-center">
                                         <img src="<?= $arc->user_profile == 'default-avatar.jpg' ? base_url('assets/img/default-avatar.jpg') : base_url('uploads/profile/'.$arc->user_profile) ?>" class="rounded-lg" width="40" alt="">
                                         <div class="ml-3">
-                                            <h5 class="mb-0"><?= $arc->user_fullname ?></h5>
+                                            <h5 class="mb-0"><?= $arc->user_fullname ?> <?= $arc->account_status == 'disable' ? '<span class="text-danger">(Nonaktif)</span>' : NULL ?></h5>
                                             <p class="mb-0 text-xs text-secondary"><?= $arc->comp_name ?></p>
                                         </div>
                                     </div>

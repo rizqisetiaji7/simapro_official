@@ -83,6 +83,7 @@ class Riwayat extends CI_Controller {
          'user_role'             => $project->user_role,
          'user_fullname'         => $project->user_fullname,
          'user_profile'          => $project->user_profile,
+         'account_status'        => $project->account_status,
          'comp_name'             => $project->comp_name,
          'subproject'            => $subproject
       ];

@@ -11,7 +11,7 @@
                     <div class="profile-pic mr-2" style="width: 40px !important; height: 40px !important;">
                         <img src="<?= $project['user_profile'] == 'default-avatar.jpg' ? base_url('assets/img/default-avatar.jpg') : base_url('uploads/profile/'.$project['user_profile']) ?>">
                     </div>
-                    <p class="mb-0"><?= $project['user_fullname'] ?><br>
+                    <p class="mb-0"><?= $project['user_fullname'] ?> <?= $project['account_status'] == 'disable' ? '<span class="text-danger small">(Nonaktif)</span>' : NULL ?><br>
                         <span class="d-block text-muted small"><?= $project['user_role'] == 'pm' ? 'Proyek Manajer' : '-' ?></span>
                     </p>
                 </div>

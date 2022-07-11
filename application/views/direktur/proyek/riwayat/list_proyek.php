@@ -15,7 +15,7 @@
 		          <?php if ($project->user_id != NULL) { ?>
 		              <img src="<?= $project->user_profile == 'default-avatar.jpg' ? base_url('assets/img/default-avatar.jpg') : base_url('uploads/profile/'.$project->user_profile) ?>" class="rounded-lg" width="40" alt="">
 		              <div class="ml-3">
-		                  <h5 class="mb-0"><?= $project->user_fullname ?></h5>
+		                  <h5 class="mb-0"><?= $project->user_fullname ?> <?= $project->account_status == 'disable' ? '<span class="text-danger">(Nonaktif)</span>' : NULL ?></h5>
 		                  <p class="mb-0 text-xs text-secondary"><?= $project->comp_name ?></p>
 		              </div>
 		          <?php } else { ?>

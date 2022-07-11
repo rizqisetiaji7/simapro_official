@@ -108,6 +108,7 @@ class Proyek extends CI_Controller {
          'user_role'             => $project->user_role,
          'user_fullname'         => $project->user_fullname,
          'user_profile'          => $project->user_profile,
+         'account_status'        => $project->account_status,
          'comp_name'             => $project->comp_name,
          'subproject'            => $subproject
       ];
@@ -117,7 +118,11 @@ class Proyek extends CI_Controller {
 
    public function form_tambah() {
       $data['project_code_ID'] = urlencode(base64_encode(getIDCode('PROY', user_company()->comp_prefix)));
-      $data['project_man'] = $this->bm->get('tb_users', 'user_id, user_fullname', ['ID_company' => user_company()->company_id, 'user_role' => 'pm'])->result();
+      $data['project_man'] = $this->bm->get('tb_users', 'user_id, user_fullname', [
+         'ID_company'      => user_company()->company_id, 
+         'user_role'       => 'pm',
+         'account_status'  => 'enable'
+      ])->result();
       $this->load->view('direktur/proyek/daftar/form_tambah', $data);
    }
 
@@ -125,8 +130,9 @@ class Proyek extends CI_Controller {
       $code_ID = $this->input->post('project_code_ID', TRUE);
       $project = $this->project_model->get_project_detail(user_company()->company_id, $code_ID)->row();
       $project_manajer = $this->bm->get('tb_users', '*', [
-         'ID_company' => $project->company_id, 
-         'user_role' => 'pm'
+         'ID_company'      => $project->company_id, 
+         'user_role'       => 'pm',
+         'account_status'  => 'enable'
       ])->result();
 
       $data = [

@@ -11,7 +11,7 @@
                             <img src="<?= $project['user_profile'] == 'default-avatar.jpg' ? base_url('assets/img/default-avatar.jpg') : base_url('uploads/profile/'.$project['user_profile']) ?>">
                         </div>
                         <p class="mb-0">
-                            <?= $project['user_fullname'] ?> <br>
+                            <?= $project['user_fullname'] ?> <?= $project['account_status'] == 'disable' ? '<span class="text-danger small">(Nonaktif)</span>' : NULL ?> <br>
                             <span class="d-block text-muted small"><?= $project['user_role'] == 'pm' ? 'Projek Manajer' : NULL ?></span>
                         </p>
                     </div>
@@ -132,7 +132,7 @@
                                 <a href="" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a class="dropdown-item" href="javascript:void(0)" onclick="edit_subProject(<?= $project['project_id'] ?>, <?= $sub['subproject_id'] ?>)">Edit</a>
-                                    <a class="dropdown-item" href="javascript:void(0)" onclick="delete_subProject(<?= $sub['subproject_id'] ?>, <?= $project['project_id'] ?>)" >Hapus</a>
+                                    <!-- <a class="dropdown-item" href="javascript:void(0)" onclick="delete_subProject(<?= $sub['subproject_id'] ?>, <?= $project['project_id'] ?>)" >Hapus</a> -->
                                 </div>
                             </div>
                         </div>
@@ -166,7 +166,7 @@
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right">
                                                     <a class="dropdown-item" href="javascript:void(0)" onclick="edit_subElemenProject(<?= $se['project_task_id'] ?>, <?= $sub['subproject_id'] ?>)">Edit</a>
-                                                    <a class="dropdown-item" href="javascript:void(0)" onclick="deleteSubelemen(<?= $se['project_task_id'] ?>, <?= $sub['subproject_id'] ?>, <?= $project['project_id'] ?>)">Hapus</a>
+                                                    <!-- <a class="dropdown-item" href="javascript:void(0)" onclick="deleteSubelemen(<?= $se['project_task_id'] ?>, <?= $sub['subproject_id'] ?>, <?= $project['project_id'] ?>)">Hapus</a> -->
                                                 </div>
                                             </div>
                                         </div>

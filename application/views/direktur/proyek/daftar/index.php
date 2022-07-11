@@ -50,7 +50,7 @@
                                     <div class="d-flex align-items-center">
                                         <img src="<?= $pro->user_profile == 'default-avatar.jpg' ? base_url('assets/img/default-avatar.jpg') : base_url('uploads/profile/'.$pro->user_profile) ?>" class="rounded-lg" width="40">
                                         <div class="ml-3">
-                                            <h5 class="mb-0"><?= $pro->user_fullname ?></h5>
+                                            <h5 class="mb-0"><?= $pro->user_fullname ?> <?= $pro->account_status == 'disable' ? '<span class="text-danger">(Nonaktif)</span>' : NULL ?></h5>
                                             <p class="mb-0 text-xs text-secondary"><?= $pro->comp_name ?></p>
                                         </div>
                                     </div>

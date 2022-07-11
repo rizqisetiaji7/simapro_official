@@ -15,7 +15,7 @@
 		          <?php if ($ft->user_id != NULL) { ?>
 		              <img src="<?= $ft->user_profile == 'default-avatar.jpg' ? base_url('assets/img/default-avatar.jpg') : base_url('uploads/profile/'.$ft->user_profile) ?>" class="rounded-lg" width="40" alt="">
 		              <div class="ml-3">
-		                  <h5 class="mb-0"><?= $ft->user_fullname ?></h5>
+		                  <h5 class="mb-0"><?= $ft->user_fullname ?> <?= $ft->account_status == 'disable' ? '<span class="text-danger">(Nonaktif)</span>' : NULL ?></h5>
 		                  <p class="mb-0 text-xs text-secondary"><?= $ft->comp_name ?></p>
 		              </div>
 		          <?php } else { ?>
