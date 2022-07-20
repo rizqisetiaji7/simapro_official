@@ -62,7 +62,6 @@
                                             <i class="fa-solid fa-ellipsis-vertical"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" onclick="changePasswordPM(<?= "'".$pm->user_unique_id."'" ?>, <?= "'".$pm->user_role."'" ?>)" href="javascript:void(0)">Ganti password</a>
                                             <a class="dropdown-item text-danger" onclick="disable_account(<?= $pm->user_id ?>, <?= "'".$pm->user_unique_id."'" ?>)" href="javascript:void(0)">Nonaktifkan</a>
                                         </div>
                                     </div>

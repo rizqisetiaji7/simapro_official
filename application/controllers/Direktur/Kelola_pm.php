@@ -358,42 +358,4 @@ class Kelola_pm extends CI_Controller {
       }
       $this->output->set_content_type('application/json')->set_output(json_encode($message));
    }
-   
-
-   public function ubah_password() {
-      $message = [];
-      $post = $this->input->post(NULL, TRUE);
-
-      $this->form_validation->set_rules($this->_set_password_rules());
-      if ($this->form_validation->run() == FALSE) {
-         $message = [
-            'status' => 'validation_error',
-            'message' => [
-               ['field' => 'user_password', 'err_message' => form_error('user_password', '<span>','</span>')],
-               ['field' => 'password_confirm', 'err_message' => form_error('password_confirm', '<span>','</span>')]
-            ]
-         ];
-      } else {
-         $this->bm->update($this->table_users, [
-            'user_password'   => password_hash($post['user_password'], PASSWORD_DEFAULT),
-            'updated'         => date('Y-m-d H:i:s', now('Asia/Jakarta'))
-         ], [
-            'user_unique_id'  => $post['user_unique_id'],
-            'user_role'       => $post['user_role']
-         ]);
-
-         if ($this->db->affected_rows() > 0) {
-            $message = [
-               'status'    => 'success',
-               'message'   => 'Password Proyek Manajer telah berhasil diperbarui.'
-            ];
-         } else {
-            $message = [
-               'status'    => 'failed',
-               'message'   => 'Oops! Maaf Password Proyek Manajer gagal diperbarui.'
-            ];
-         }
-      }
-      $this->output->set_content_type('application/json')->set_output(json_encode($message));
-   }
 }

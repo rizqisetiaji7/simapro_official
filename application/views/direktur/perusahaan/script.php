@@ -176,32 +176,6 @@
         });
     }
 
-    function changePasswordPM(unique_id, user_role) {
-        title.text('Ubah Password');
-        formModal.attr('action', `<?= site_url('direktur/kelola_pm/ubah_password') ?>`);
-        $.ajax({
-            url: `<?= site_url('direktur/kelola_pm/form_password') ?>`,
-            dataType: 'html',
-            method: 'POST',
-            cache: false,
-            data: {
-                unique_id: unique_id, 
-                user_role: user_role
-            },
-            beforeSend: function() {
-                modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
-            },
-            success: function(data) {
-                modalBody.empty();
-                modalBody.html(data);
-            }
-        });
-        modal.modal({
-            show: true,
-            backdrop: 'static'
-        });
-    }
-
     formModal.on('submit', function(e) {
         e.preventDefault();
         $.ajax({
