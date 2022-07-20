@@ -10,10 +10,10 @@ class Chat extends CI_Controller {
 	public function __construct() {
       parent::__construct();
       is_not_login();
-      $this->app_id  = '1431182';
-      $this->key     = '051a295c0e08e48dd009';
-      $this->secret  = '25bc07e769d52ee898bd';
-      $this->cluster = 'ap1';
+      $this->app_id  = PUSHER_APP_ID;
+      $this->key     = PUSHER_KEY;
+      $this->secret  = PUSHER_SECRET;
+      $this->cluster = PUSHER_CLUSTER;
    }
 
    protected function _get_pusher($message) {
@@ -122,7 +122,7 @@ class Chat extends CI_Controller {
             'ID_project'   => $this->input->post('ID_project', TRUE),
             'ID_sender'    => $this->input->post('ID_sender', TRUE),
             'ID_receiver'  => $this->input->post('ID_receiver', TRUE),
-            'chat_message' => $this->input->post('chat_message', TRUE),
+            'chat_message' => addslashes($this->input->post('chat_message', TRUE)),
             'chat_type'    => 'text',
             'chat_status'  => NULL,
             'chat_created' => date('Y-m-d H:i:s', now('Asia/Jakarta'))
@@ -153,7 +153,7 @@ class Chat extends CI_Controller {
          'ID_project'   => $post['ID_project'],
          'ID_sender'    => $post['ID_sender'],
          'ID_receiver'  => $post['ID_receiver'],
-         'chat_message' => $post['chat_message'],
+         'chat_message' => addslashes($post['chat_message']),
          'chat_type'    => 'task',
          'chat_status'  => NULL,
          'chat_created' => date('Y-m-d H:i:s', now('Asia/Jakarta'))

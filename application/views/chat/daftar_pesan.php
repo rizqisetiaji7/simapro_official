@@ -12,7 +12,7 @@
             <div class="chat-body">
                <div class="chat-bubble">
                   <div class="chat-content">
-                     <p><?= $msg['chat_message'] ?></p>
+                     <p><?= stripslashes($msg['chat_message']) ?></p>
                      <span class="chat-time"><?= datetimeIDN($msg['chat_created'], FALSE, TRUE) ?></span>
                   </div>
                   <?php if ($sender['user_id'] == $msg['ID_sender'] && $sender['user_role'] == 'direktur') { ?>
@@ -36,7 +36,7 @@
                         <img src="<?= base_url('assets/img/bookmark.png') ?>" width="38">
                         <div class="ml-3">
                            <h5 class="text-info">Penugasan Proyek</h5>
-                           <p class="mb-0"><?= $msg['chat_message'] ?></p>
+                           <p class="mb-0"><?= stripslashes($msg['chat_message']) ?></p>
                            <span class="chat-time"><?= datetimeIDN($msg['chat_created'], FALSE, TRUE) ?></span>
                            <div class="pt-2">
                               <?php if ($msg['chat_status'] == NULL) { ?>
@@ -67,7 +67,7 @@
                         <img src="<?= base_url('assets/img/bookmark.png') ?>" width="38">
                         <div class="ml-3">
                            <h5 class="text-info">Penugasan Proyek <span class="text-success"></h5>
-                           <p class="mb-2"><?= $msg['chat_message'] ?></p>
+                           <p class="mb-2"><?= stripslashes($msg['chat_message']) ?></p>
                            <span class="chat-time"><?= datetimeIDN($msg['chat_created'], FALSE, TRUE) ?></span>
 
                            <span class="mt-3 mb-2 d-block small text-primary">Cek salah satu status (Tugas)</span>

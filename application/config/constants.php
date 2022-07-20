@@ -84,18 +84,24 @@ defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
-defined('APP_NAME')      		 	OR define('APP_NAME', 'SIMAPRO'); // App Name
-defined('APP_DESC')					OR define('APP_DESC', 'Sistem Manajemen Proyek'); // Description
-defined('COMPANY')					OR define('COMPANY', 'PT. Aryabakti Saluyu');
-defined('APP_AUTHOR')			 	OR define('APP_AUTHOR', 'Sans Serif'); // Author Name
+defined('APP_NAME')      	OR define('APP_NAME', 'SIMAPRO'); // App Name
+defined('APP_DESC')			OR define('APP_DESC', 'Sistem Manajemen Proyek'); // Description
+defined('COMPANY')			OR define('COMPANY', 'PT. Aryabakti Saluyu');
+defined('APP_AUTHOR')		OR define('APP_AUTHOR', 'Sans Serif'); // Author Name
 
-defined('DEFAULT_STYLE')       	OR define('DEFAULT_STYLE', 'assets/css/style.css'); // Default App Theme
-defined('DARK_STYLE') 	 		 	OR define('DARK_STYLE', 'assets/css/style-dark.css'); // Dark App Theme
+defined('DEFAULT_STYLE')	OR define('DEFAULT_STYLE', 'assets/css/style.css'); // Default App Theme
+defined('DARK_STYLE')		OR define('DARK_STYLE', 'assets/css/style-dark.css'); // Dark App Theme
 
 // Email Configuration
-defined('EMAIL')						OR define('EMAIL', 'rizqisetiaji9@gmail.com');				// Email Pengirim
-defined('EMAIL_PASS')				OR define('EMAIL_PASS', 'igjrngathaoybnvj');					// Password dari email pengirim
-defined('EMAIL_PROTOCOL')			OR define('EMAIL_PROTOCOL', 'smtp');							// Protocol yang digunakan (Default smtp)
-defined('SMTP_HOST')					OR define('SMTP_HOST', 'smtp.googlemail.com');				// Host dari email provider yang digunakan
-defined('SMTP_USER')					OR define('SMTP_USER', 'rizqisetiaji9@gmail.com');			// smtp user
-defined('SMTP_PORT')					OR define('SMTP_PORT', 465);										// Smtp port (Google mail default 465)
+defined('EMAIL')			OR define('EMAIL', 'rizqisetiaji9@gmail.com');		// Email Pengirim
+defined('EMAIL_PASS')		OR define('EMAIL_PASS', 'igjrngathaoybnvj');		// Password dari email pengirim
+defined('EMAIL_PROTOCOL')	OR define('EMAIL_PROTOCOL', 'smtp');				// Protocol yang digunakan (Default smtp)
+defined('SMTP_HOST')		OR define('SMTP_HOST', 'smtp.googlemail.com');		// Host dari email provider yang digunakan
+defined('SMTP_USER')		OR define('SMTP_USER', 'rizqisetiaji9@gmail.com');	// smtp user
+defined('SMTP_PORT')		OR define('SMTP_PORT', 465);						// Smtp port (Google mail default 465)
+
+// Pusher Config
+defined('PUSHER_APP_ID')	OR define('PUSHER_APP_ID', '1431182');				// Pusher App ID 
+defined('PUSHER_KEY')		OR define('PUSHER_KEY', '051a295c0e08e48dd009');	// Pusher Key
+defined('PUSHER_SECRET')	OR define('PUSHER_SECRET', '25bc07e769d52ee898bd');	// Pusher Secret
+defined('PUSHER_CLUSTER')	OR define('PUSHER_CLUSTER', 'ap1');					// Pusher Cluster
