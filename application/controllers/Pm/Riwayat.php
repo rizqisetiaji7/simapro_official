@@ -16,6 +16,10 @@ class Riwayat extends CI_Controller {
       return $this->ppm->get_projectpm_detail($comp_id, $project_code, $pm_id)->row();
    }
 
+   public function _direktur($company_id='') {
+      return $this->bm->get('tb_users', '*', ['ID_company' => $company_id, 'user_role' => 'direktur'])->row();
+   }
+
 	public function index() {
       $data = [
          'app_name'  => APP_NAME,
@@ -52,13 +56,16 @@ class Riwayat extends CI_Controller {
 
    public function detail($comp_id, $project_code) {
       $project = $this->detail_proyek($comp_id, $project_code, user_login()->user_id);
-      $subproject = $this->tampil_subproyek($project->project_id)->result_array();      
+      $subproject = $this->tampil_subproyek($project->project_id)->result_array();
+      $direktur   = $this->_direktur(user_company()->company_id);
+
       $data = [
          'app_name'  => APP_NAME,
          'author'    => APP_AUTHOR,
          'title'     => '(PM) Proyek Detail',
          'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
-         'page'      => 'riwayat_detail'
+         'page'      => 'riwayat_detail',
+         'direktur'  => $direktur
       ];
 
       $data['project'] = [

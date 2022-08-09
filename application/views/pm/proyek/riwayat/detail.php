@@ -25,7 +25,12 @@
         </div>
     </div>
     <div class="col-12 col-sm-4 text-sm-right">
-        <a href="<?= site_url('pm/chat') ?>" class="btn btn-primary mb-1 btn-sm" style="position: relative;" data-toggle="tooltip" title="Kirim Pesan"><i class="fa-solid fa-message"></i></a>
+        <?php $dir_id = $direktur->user_id != NULL ? $direktur->user_id : 0 ?>
+        <button type="button" onclick="set_data_chat(<?= user_login()->user_id ?>, <?= $dir_id ?>, <?= $project['project_id'] ?>)" class="btn btn-primary mb-1 btn-sm" data-toggle="tooltip" title="Kirim pesan" style="position: relative;">
+            <div style="top: 3px; left: 4px; border-radius: 50%; height: 8px; width: 8px; background: #55ce63; position: absolute;"></div>
+            <i class="fa-solid fa-message"></i>
+        </button>
+        
         <button type="button" class="btn btn-dark mb-1 btn-sm" data-toggle="tooltip" title="Detail Proyek" onclick="detailProject(<?= $project['project_id'] ?>, <?= "'".$project['projectID']."'" ?>)"><i class="fas fa-plus"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Detail Proyek</span></button>
     </div>
     <div class="col-12">
