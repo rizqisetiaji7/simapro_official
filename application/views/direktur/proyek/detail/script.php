@@ -311,7 +311,7 @@
 	 * ===============================================
 	 */ 
 	function showDesignProject(project_id, project_name='', photo_category=null) {
-		title.html(`Desain: <span class="text-secondary small">${project_name}</span>`);
+		title.html(`Desain Proyek: <span class="text-secondary small">${project_name}</span>`);
 		modalDialog.addClass('modal-xl');
 		modalFooter.addClass('d-none');
 
