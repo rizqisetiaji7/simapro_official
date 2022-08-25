@@ -290,3 +290,48 @@ input.custom-radio-input:checked + label.label-box i.check-icon {
 		height: 180px;
 	}
 }
+
+/**
+ * Preview Project Deign Photo
+ */
+
+.img-photo-preview {
+	position: relative;
+	overflow: hidden;
+	border-radius: .6rem;
+	min-height: 100px;
+	max-height: 150px;
+}
+
+.img-photo-preview img {
+	width: 100%;
+	height: 100px;
+	object-fit: cover;
+}
+
+.img-photo-preview .img-photo-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	transition: all .3s ease;
+	color: #fff;
+	background-color: rgba(0, 0, 0, 0.7);
+	cursor: pointer;
+	transform: translateY(100%);
+	transition: transform .3s ease-in-out;
+}
+
+.img-photo-preview .img-photo-overlay i {
+	font-size: 28px;
+	margin-bottom: 7px;
+}
+
+.img-photo-preview:hover .img-photo-overlay {
+	transform: translateY(0);
+}

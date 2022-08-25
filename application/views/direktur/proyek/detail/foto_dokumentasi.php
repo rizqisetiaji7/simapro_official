@@ -5,6 +5,9 @@
 				<a href="<?= base_url('uploads/'.$doc->url) ?>" class="image-lists">
 					<img src="<?= base_url('uploads/'.$doc->url) ?>" class="w-100 h-100" alt="<?= 'Image: '.$doc->url ?>">
 				</a>
+				<button class="btn btn-sm btn-danger btnDeletePhoto" data-toggle="tooltip" title="Hapus foto" onclick="deleteProjectDesign(<?= $doc->photo_id ?>, <?= $project_id ?>, <?= "'".$project_name."'" ?>, <?= "'".$doc->url."'" ?>, <?= "'".$doc->photo_category."'" ?>)">
+					<i class="fas fa-trash"></i>
+				</button>
 			</div>
 		<?php } ?>
 	</div>

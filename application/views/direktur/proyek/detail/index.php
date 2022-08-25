@@ -1,9 +1,32 @@
 <div class="row">
     <div class="col-12 col-sm-8">
         <div class="d-flex flex-row align-items-start justify-content-between justify-content-sm-start">
-            <div class="mr-5">
+            <div class="mr-4">
                 <h4 class="mb-0"><?= character_limiter($project['project_name'], 40, ' ...') ?></h4>
                 <p class="text-secondary small mb-2"><?= character_limiter($project['project_address'], 35, ' ...') ?></p>
+            </div>
+            <div>
+                <button type="button" class="btn btn-sm mb-1 btn-info" onclick="editProyek(<?= "'".$project['projectID']."'" ?>)" data-toggle="tooltip" title="Edit proyek">
+                    <i class="fa fa-pencil"></i>
+                </button>
+                <button type="button" class="btn btn-sm mb-1 btn-danger" onclick="editProjectStatus(<?= "'".$project['projectID']."'" ?>)" data-toggle="tooltip" title="Edit status proyek"><i class="fas fa-edit"></i></button>
+                <button type="button" class="btn btn-sm mb-1 btn-purple" onclick="showPhoto(<?= "'".$project['project_id']."'" ?>, 0, <?= "'".$project['project_name']."'" ?>)" data-toggle="tooltip" title="Lihat Foto Dokumentasi">
+                    <i class="fa-solid fa-camera"></i> <span class="d-none d-lg-inline-block ml-1">Foto Dokumentasi</span>
+                </button>
+
+                <!-- 
+                    ============================
+                    BUTTON UPLOAD PROJECT DESIGN 
+                    ============================
+                -->
+                <button type="button" class="btn btn-sm mb-1 mr-1 btn-success" onclick="uploadDesign(<?= $project['project_id'] ?>)" data-toggle="tooltip" title="Upload Desain Bangunan">
+                    <i class="fas fa-upload"></i> <span class="d-none d-lg-inline-block ml-1">Upload Desain</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-5 col-lg-4">
                 <?php if ($project['user_id'] != NULL) { ?>
                     <span class="d-inline-block text-primary mb-1 small">Penanggung Jawab</span>
                     <div class="d-flex align-items-center mb-3">
@@ -19,16 +42,23 @@
                     <span class="d-inline-block text-danger mb-1 small"><i class="fas fa-user mr-2"></i>Penanggung Jawab Tidak Terdaftar</span>
                 <?php } ?>
             </div>
-            <div>
-                <button type="button" class="btn btn-sm mb-1 mr-1 btn-info" onclick="editProyek(<?= "'".$project['projectID']."'" ?>)" data-toggle="tooltip" title="Edit proyek">
-                    <i class="fa fa-pencil"></i>
-                </button>
-                <button type="button" class="btn btn-sm mb-1 mr-1 btn-danger" onclick="editProjectStatus(<?= "'".$project['projectID']."'" ?>)" data-toggle="tooltip" title="Edit status proyek"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-sm mb-1 btn-purple" onclick="showPhoto(<?= "'".$project['project_id']."'" ?>, 0, <?= "'".$project['project_name']."'" ?>)" data-toggle="tooltip" title="Lihat Foto Dokumentasi">
-                    <i class="fa-solid fa-camera"></i> <span class="d-none d-lg-inline-block ml-1">Foto Dokumentasi</span>
-                </button>
+
+            <!-- 
+                ============================
+                PREVIEW PROJECT DESIGN PHOTO 
+                ============================
+            -->
+            <?php if($project_design->num_rows() > 0) { ?>
+            <div class="col-6 col-sm-6 col-md-5 col-lg-4 mb-3">
+                <div class="img-photo-preview">
+                    <img src="<?= base_url('uploads/'.$project_design->result()[0]->url) ?>">
+                    <div class="img-photo-overlay text-center" onclick="showDesignProject(<?= $project['project_id'] ?>, <?= "'".$project['project_name']."'" ?>, <?= "'".'design'."'" ?>)">
+                        <i class="fa-solid fa-image"></i>
+                        <span class="d-block">Lihat Desain</span>
+                    </div>
+                </div>
             </div>
-            
+            <?php } ?>
         </div>
     </div>
     
@@ -236,4 +266,6 @@
 </div>
 
 <?php $this->view('direktur/proyek/detail/modal'); ?>
+<?php $this->view('direktur/proyek/detail/modal_upload'); ?>
 <?php $this->view('direktur/proyek/detail/script'); ?>
+<?php $this->view('direktur/proyek/detail/script_upload'); ?>

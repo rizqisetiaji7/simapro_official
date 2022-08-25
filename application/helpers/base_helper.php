@@ -187,15 +187,16 @@ function resize_image($path = '/') {
 	}
 
 	$config = [
-		'image_library'	=> 'gd2',
-		'source_image'		=> $path,
-		'create_thumb'		=> FALSE,
-		'maintain_ratio'	=> FALSE,
-		'quality'			=> $quality,
-		'width'				=> $width,
-		'height'				=> $height,
-		'new_image'			=> $path
+		'image_library'	 => 'gd2',
+		'source_image'	 => $path,
+		'create_thumb'	 => FALSE,
+		'maintain_ratio' => FALSE,
+		'quality'		 => $quality,
+		'width'			 => $width,
+		'height'		 => $height,
+		'new_image'		 => $path
 	];
+	
 	$ci->image_lib->initialize($config);
 	$ci->image_lib->resize();
 	return true;

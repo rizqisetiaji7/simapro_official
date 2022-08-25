@@ -273,7 +273,7 @@
 	// }
 
 	// SHOW PHOTO DOCUMENTATION PROJECT / SUB-PROJECT
-	function showPhoto(project_id, subproject_id='', project_name, project_status='', proj_type='') {
+	function showPhoto(project_id, subproject_id='', project_name, project_status='', proj_type='', photo_category=null) {
 		title.html(`Dokumentasi Proyek: <span class="text-secondary small">${project_name}</span>`);
 		modalDialog.addClass('modal-xl');
 		modalFooter.addClass('d-none');
@@ -287,7 +287,8 @@
 				subproject_id: subproject_id,
 				proj_name: project_name,
 				project_status: project_status,
-				proj_type: proj_type
+				proj_type: proj_type,
+				photo_category: photo_category
 			},
 			beforeSend: function() {
 				modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
@@ -304,7 +305,7 @@
 	}
 
 	// DELETE PHOTO PROJECT / SUB-PROJECT
-	function delete_photo(photo_id, project_id, subproject_id='', photo_url, proj_name, proj_type='', proj_status='') {
+	function delete_photo(photo_id, project_id, subproject_id='', photo_url, proj_name, proj_type='', proj_status='', photo_category=null) {
 		Swal.fire({
 			icon: 'warning',
 			html: `
@@ -327,7 +328,8 @@
 						subproject_id: subproject_id,
 						photo_url: photo_url,
 						proj_name: proj_name,
-						proj_type: proj_type
+						proj_type: proj_type,
+						photo_category: photo_category
 					},
 					success: function(data) {
 						if (data.status == 'success') {

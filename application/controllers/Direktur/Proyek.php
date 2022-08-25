@@ -81,13 +81,21 @@ class Proyek extends CI_Controller {
       $subproject = $this->_tampil_subproyek($project->project_id);
       $docs = $this->project_model->get_documentation($project->project_id, NULL);
 
+      /**
+       * ==================================
+       * SHOW PREVIEW PROJECT DESIGN PHOTOS
+       * ==================================
+       */
+      $project_design = $this->project_model->get_documentation($project->project_id, NULL, 'design', 1);
+
       $data = [
-         'app_name'     => APP_NAME,
-         'author'       => APP_AUTHOR,
-         'title'        => '(Direktur) Detail Proyek',
-         'desc'         => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
-         'page'         => 'detail_proyek',
-         'docs'         => $docs
+         'app_name'        => APP_NAME,
+         'author'          => APP_AUTHOR,
+         'title'           => '(Direktur) Detail Proyek',
+         'desc'            => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
+         'page'            => 'detail_proyek',
+         'docs'            => $docs,
+         'project_design'  => $project_design
       ];
 
       $data['project'] = [
