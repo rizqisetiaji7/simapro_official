@@ -35,8 +35,8 @@
                                         <div class="d-flex align-items-center">
                                             <img src="<?= $arc->project_thumbnail == 'placeholder.jpg' ? base_url('assets/img/placeholder.jpg') : base_url('uploads/thumbnail/'.$arc->project_thumbnail) ?>" class="rounded-lg" width="50" alt="">
                                             <div class="ml-3">
-                                                <h5 class="mb-0"><?= $arc->project_name ?></h5>
-                                                <p class="mb-0 text-xs text-muted"><?= $arc->project_address ?></p>
+                                                <h5 class="mb-0"><?= character_limiter($arc->project_name, 40, ' ...') ?></h5>
+                                                <p class="mb-0 text-xs text-muted"><?= character_limiter($arc->project_address, 35, ' ...') ?></p>
                                             </div>
                                         </div>
                                     </td>

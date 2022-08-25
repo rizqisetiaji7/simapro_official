@@ -70,9 +70,9 @@
                                             <div class="d-flex flex-row align-items-center">
                                                 <img src="<?= $p->project_thumbnail == 'placeholder.jpg' ? base_url('assets/img/placeholder.jpg') : base_url('uploads/thumbnail/'.$p->project_thumbnail) ?>" class="rounded-lg" width="50">
                                                 <div class="ml-3">
-                                                    <h2><?= $p->project_name ?></h2>
+                                                    <h2><?= character_limiter($p->project_name, 40, ' ...') ?></h2>
                                                     <small class="block text-ellipsis">
-                                                        <span class="text-muted"><?= $p->project_address ?></span>
+                                                        <span class="text-muted"><?= character_limiter($p->project_address, 35, ' ...') ?></span>
                                                     </small>
                                                 </div>
                                             </div>

@@ -2,8 +2,8 @@
     <div class="col-12 col-sm-8">
         <div class="d-flex flex-row align-items-start justify-content-between justify-content-sm-start">
             <div class="mr-5">
-                <h4 class="mb-0"><?= $project['project_name'] ?></h4>
-                <p class="text-secondary small mb-2"><?= $project['project_address'] ?></p>
+                <h4 class="mb-0"><?= character_limiter($project['project_name'], 40, ' ...') ?></h4>
+                <p class="text-secondary small mb-2"><?= character_limiter($project['project_address'], 35, ' ...') ?></p>
                 <span class="d-inline-block text-primary mb-1 small">Penanggung Jawab</span>
                 <div class="d-flex align-items-center mb-3">
                     <div class="profile-pic mr-2" style="width: 40px !important; height: 40px !important;">
