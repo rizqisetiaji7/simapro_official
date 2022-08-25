@@ -13,8 +13,7 @@ class Foto extends CI_Controller {
       $config = [
          'upload_path'   => $filePath,
          'allowed_types' => 'jpg|jpeg|png',
-         'encrypt_name'  => TRUE,
-         'max_size'      => 4096
+         'encrypt_name'  => TRUE
       ];
       return $config;
    }
@@ -37,7 +36,7 @@ class Foto extends CI_Controller {
       $data['project_name'] = $post['project_name'];
       $data['project_id'] = $post['project_id'];
       $data['docs'] = $this->project_model->get_documentation($post['project_id'], NULL, $post['photo_category']);
-      $this->load->view('direktur/proyek/detail/foto_dokumentasi', $data);
+      $this->load->view('direktur/proyek/detail/foto_desain_proyek', $data);
    }
 
    /**

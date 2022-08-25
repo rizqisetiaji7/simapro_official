@@ -276,6 +276,34 @@
  //     		}
  //     	});
 	// }
+	
+	// SHOW PHOTO DOCUMENTATION PROJECT / SUB-PROJECT
+	function showPhoto(project_id, subproject_id='', project_name='') {
+		title.html(`Dokumentasi Proyek: <span class="text-secondary small">${project_name}</span>`);
+		modalDialog.addClass('modal-xl');
+		modalFooter.addClass('d-none');
+		$.ajax({
+			url: `<?= site_url('direktur/foto/tampil_foto') ?>`,
+			method: 'POST',
+			dataType: 'html',
+			cache: false,
+			data: {
+				project_id: project_id,
+				subproject_id: subproject_id
+			},
+			beforeSend: function() {
+				modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
+			},
+			success: function(data) {
+				modalBody.empty();
+				modalBody.html(data);
+			}
+		});
+		modal.modal({
+			backdrop: 'static',
+			show: true,
+		});
+	}
 
 	/**
 	 * ===============================================

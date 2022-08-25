@@ -5,14 +5,16 @@
 				<a href="<?= base_url('uploads/'.$doc->url) ?>" class="image-lists">
 					<img src="<?= base_url('uploads/'.$doc->url) ?>" class="w-100 h-100" alt="<?= 'Image: '.$doc->url ?>">
 				</a>
+				<button class="btn btn-sm btn-danger btnDeletePhoto" data-toggle="tooltip" title="Hapus foto" onclick="deleteProjectDesign(<?= $doc->photo_id ?>, <?= $project_id ?>, <?= "'".$project_name."'" ?>, <?= "'".$doc->url."'" ?>, <?= "'".$doc->photo_category."'" ?>)">
+					<i class="fas fa-trash"></i>
+				</button>
 			</div>
 		<?php } ?>
 	</div>
 <?php } else { ?>
 	<div class="text-center py-5">
 		<img src="<?= base_url('assets/img/blank.png') ?>" width="120" class="mb-3">
-		<h3 class="mb-1">Dokumentasi belum tersedia.</h3>
-		<p class="small text-muted">Foto dokumentasi akan ditampilkan, sesuai bukti pengerjaan dilapangan.</p>
+		<h3 class="mb-1">Foto desain bangunan belum tersedia.</h3>
 	</div>
 <?php } ?>
 
