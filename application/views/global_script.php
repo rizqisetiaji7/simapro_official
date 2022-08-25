@@ -48,5 +48,4 @@
     function showConfirm() {
         $('#modalConfirmation').modal('show');
     }
-
 </script>

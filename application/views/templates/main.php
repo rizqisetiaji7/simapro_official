@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="<?= base_url('assets/libs/fontawesome-6.1.1/css/all.min.css') ?>">
         <link rel="stylesheet" href="<?= base_url('assets/libs/line-awesome-1.3.0/css/line-awesome.min.css') ?>">
         <link rel="stylesheet" href="<?= base_url('assets/css/dataTables.bootstrap4.min.css') ?>">
-            <!-- lightgallery -->
+        <!-- lightgallery -->
         <link rel="stylesheet" href="<?= base_url('assets/plugins/lightGallery/dist/css/lightgallery.css')?>"/>
         <link rel="stylesheet" href="<?= base_url('assets/plugins/lightGallery/dist/css/lg-zoom.css')?>"/>
         <link rel="stylesheet" href="<?= user_login()->theme_mode == 1 ? base_url('assets/css/dark-style.css') : base_url('assets/css/style.css'); ?>" id="theme-style">
