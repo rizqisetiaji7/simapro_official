@@ -63,6 +63,19 @@ class Proyek extends CI_Controller {
       return $this->project_model->get_subproject($project_id)->result_array();
    }
 
+   /**
+    * =======================================
+    * SHOW DATA LIST OF PROJECT DESIGN PHOTOS
+    * =======================================
+    */
+   function tampil_foto_desain() {
+      $post = $this->input->post(NULL, TRUE);
+      $data['project_name'] = $post['project_name'];
+      $data['project_id'] = $post['project_id'];
+      $data['docs'] = $this->project_model->get_documentation($post['project_id'], NULL, $post['photo_category']);
+      $this->load->view('direktur/proyek/detail/foto_desain_proyek', $data);
+   }
+
    public function index() {
       $data = [
          'app_name'  => APP_NAME,

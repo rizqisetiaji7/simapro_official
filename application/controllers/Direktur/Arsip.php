@@ -24,6 +24,19 @@ class Arsip extends CI_Controller {
       return $this->project_model->get_subproject($project_id, $subproject_id);
    }
 
+   /**
+    * =======================================
+    * SHOW DATA LIST OF PROJECT DESIGN PHOTOS
+    * =======================================
+    */
+   function tampil_foto_desain() {
+      $post = $this->input->post(NULL, TRUE);
+      $data['project_name'] = $post['project_name'];
+      $data['project_id'] = $post['project_id'];
+      $data['docs'] = $this->project_model->get_documentation($post['project_id'], NULL, $post['photo_category']);
+      $this->load->view('direktur/proyek/arsip/foto_desain_proyek', $data);
+   }
+
    public function index() {
       $data = [
          'app_name'  => APP_NAME,
@@ -41,12 +54,20 @@ class Arsip extends CI_Controller {
       $project = $this->_detail_proyek($company_id, $project_code);
       $subproject = $this->_tampil_subproyek($project->project_id)->result_array();
 
+      /**
+       * ==================================
+       * SHOW PREVIEW PROJECT DESIGN PHOTOS
+       * ==================================
+       */
+      $project_design = $this->project_model->get_documentation($project->project_id, NULL, 'design', 1);
+
       $data = [
-         'app_name'     => APP_NAME,
-         'author'       => APP_AUTHOR,
-         'title'        => '(Direktur) Detail Arsip',
-         'desc'         => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
-         'page'         => 'detail_arsip_proyek'
+         'app_name'        => APP_NAME,
+         'author'          => APP_AUTHOR,
+         'title'           => '(Direktur) Detail Arsip',
+         'desc'            => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
+         'page'            => 'detail_arsip_proyek',
+         'project_design'  => $project_design
       ];
 
       $data['project'] = [
@@ -63,6 +84,7 @@ class Arsip extends CI_Controller {
          'project_progress'      => $project->project_progress,
          'project_address'       => $project->project_address,
          'project_archive'       => $project->project_archive,
+         'user_id'               => $project->user_id,
          'user_role'             => $project->user_role,
          'user_fullname'         => $project->user_fullname,
          'user_profile'          => $project->user_profile,

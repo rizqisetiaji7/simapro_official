@@ -316,7 +316,7 @@
 		modalFooter.addClass('d-none');
 
 		$.ajax({
-			url: `<?= site_url('direktur/foto/tampil_foto_desain') ?>`,
+			url: `<?= site_url('direktur/proyek/tampil_foto_desain') ?>`,
 			method: 'POST',
 			dataType: 'html',
 			cache: false,

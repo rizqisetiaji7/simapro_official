@@ -27,8 +27,8 @@
 
         <div class="row">
             <div class="col-12 col-sm-6 col-md-5 col-lg-4">
+                <span class="d-inline-block text-primary mb-1 small">Penanggung Jawab</span>
                 <?php if ($project['user_id'] != NULL) { ?>
-                    <span class="d-inline-block text-primary mb-1 small">Penanggung Jawab</span>
                     <div class="d-flex align-items-center mb-3">
                         <div class="profile-pic mr-2" style="width: 40px !important; height: 40px !important;">
                             <img src="<?= $project['user_profile'] == 'default-avatar.jpg' ? base_url('assets/img/default-avatar.jpg') : base_url('uploads/profile/'.$project['user_profile']) ?>">
@@ -72,15 +72,15 @@
         <button type="button" class="btn btn-info mb-1 btn-sm" data-toggle="tooltip" title="Buat Sub-Proyek" onclick="add_subProject(<?= $project['project_id'] ?>)"><i class="fas fa-plus"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Sub-proyek</span></button>
         <?php if ($project['project_progress'] >= 100 && $docs->num_rows() > 0) { ?>
             <?php if ($project['project_status'] == 'review') { ?>
-                <button type="button" class="btn btn-success mb-1 btn-sm" data-toggle="tooltip" title="Klik proyek dinyatakan selesai" onclick="finishProject(<?= $project['project_id'] ?>)"><i class="fas fa-check"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Proyek Selesai</span></button>
+                <button type="button" class="btn btn-success mb-1 btn-sm" data-toggle="tooltip" title="Klik proyek dinyatakan selesai" onclick="finishProject(<?= $project['project_id'] ?>)"><i class="fas fa-check"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Proyek</span> Selesai</button>
             <?php } else if ($project['project_status'] == 'revision') { ?>
-                <button class="btn btn-secondary mb-1 btn-sm" disabled="disabled"><i class="fas fa-pencil"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Sedang direvisi</span></button>
+                <button class="btn btn-secondary mb-1 btn-sm" disabled="disabled"><i class="fas fa-pencil"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Sedang</span> Direvisi</button>
             <?php } ?>
         <?php } else { ?>
             <?php if ($project['project_status'] == 'on_progress') { ?>
-                <button class="btn btn-outline-secondary mb-1 btn-sm" disabled="disabled"><span class="d-inline-block d-md-none d-lg-inline-block ml-1">Sedang dikerjakan</span></button>
+                <button class="btn btn-outline-secondary mb-1 btn-sm" disabled="disabled"><span class="d-inline-block d-md-none d-lg-inline-block ml-1">Sedang</span> Dikerjakan</button>
             <?php } else if ($project['project_status'] == 'revision') { ?>
-                <button class="btn btn-secondary mb-1 btn-sm" disabled="disabled"><i class="fas fa-pencil"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Sedang direvisi</span></button>
+                <button class="btn btn-secondary mb-1 btn-sm" disabled="disabled"><i class="fas fa-pencil"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Sedang</span> Direvisi</button>
             <?php } else if ($project['project_status'] == 'review') { ?>
                 <button class="btn btn-secondary mb-1 btn-sm" disabled="disabled"><i class="fas fa-eye"></i> <span class="d-inline-block d-md-none d-lg-inline-block ml-1">Diperiksa</span></button>
             <?php } ?>

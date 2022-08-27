@@ -19,6 +19,19 @@ class Riwayat extends CI_Controller {
       return $this->project_model->get_subproject($project_id, $subproject_id);
    }
 
+   /**
+    * =======================================
+    * SHOW DATA LIST OF PROJECT DESIGN PHOTOS
+    * =======================================
+    */
+   function tampil_foto_desain() {
+      $post = $this->input->post(NULL, TRUE);
+      $data['project_name'] = $post['project_name'];
+      $data['project_id'] = $post['project_id'];
+      $data['docs'] = $this->project_model->get_documentation($post['project_id'], NULL, $post['photo_category']);
+      $this->load->view('direktur/proyek/riwayat/foto_desain_proyek', $data);
+   }
+
    public function index() {
       $data = [
          'app_name'  => APP_NAME,
@@ -57,12 +70,21 @@ class Riwayat extends CI_Controller {
       // Get Archived Project
       $project = $this->_detail_proyek($company_id, $project_code);
       $subproject = $this->_tampil_subproyek($project->project_id)->result_array();
+
+      /**
+       * ==================================
+       * SHOW PREVIEW PROJECT DESIGN PHOTOS
+       * ==================================
+       */
+      $project_design = $this->project_model->get_documentation($project->project_id, NULL, 'design', 1);
+
       $data = [
-         'app_name'  => APP_NAME,
-         'author'    => APP_AUTHOR,
-         'title'     => '(Direktur) Proyek Detail',
-         'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
-         'page'      => 'riwayat_detail',
+         'app_name'        => APP_NAME,
+         'author'          => APP_AUTHOR,
+         'title'           => '(Direktur) Proyek Detail',
+         'desc'            => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
+         'page'            => 'riwayat_detail',
+         'project_design'  => $project_design
       ];
 
       $data['project'] = [
