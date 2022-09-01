@@ -366,6 +366,98 @@
      		}
      	});
 	}
+
+	/**
+	 * ===============================================
+	 * SHOW DATA PROJECT DESIGN / PROJECT DESIGN PHOTO
+	 * ===============================================
+	 */ 
+	function showDesignProject(project_id, project_name='', photo_category=null) {
+		title.html(`Desain Proyek: <span class="text-secondary small">${project_name}</span>`);
+		modalDialog.addClass('modal-xl');
+		modalFooter.addClass('d-none');
+
+		$.ajax({
+			url: `<?= site_url('pm/proyek/tampil_foto_desain') ?>`,
+			method: 'POST',
+			dataType: 'html',
+			cache: false,
+			data: {
+				project_id: project_id,
+				project_name: project_name,
+				photo_category: photo_category
+			},
+			beforeSend: function() {
+				modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
+			},
+			success: function(data) {
+				modalBody.empty();
+				modalBody.html(data);
+			}
+		});
+
+		modal.modal({
+			backdrop: 'static',
+			show: true,
+		});
+	}
+
+	/**
+	 * =================================================
+	 * DELETE DATA PROJECT DESIGN / PROJECT DESIGN PHOTO
+	 * =================================================
+	 */ 
+	function deleteProjectDesign(photo_id, project_id='', project_name='', photo_url='', photo_category=null) {
+		Swal.fire({
+			icon: 'warning',
+			html: `
+				<h3>Hapus Foto</h3>
+				<p class="text-secondary">Anda akan menghapus foto ini?</p>
+			`,
+			confirmButtonText: 'Ya, Hapus',
+			showCancelButton: true,
+			cancelButtonText: 'Batal'
+     	}).then((result) => {
+     		if (result.isConfirmed) {
+     			$.ajax({
+     				url: `<?= site_url('pm/foto/hapus_desain') ?>`,
+					method: 'POST',
+					dataType: 'json',
+					cache: false,
+					data: {
+						photo_id: photo_id, 
+						project_id: project_id, 
+						project_name: project_name, 
+						photo_url: photo_url, 
+						photo_category: photo_category
+					},
+					success: function(data) {
+						if (data.status == 'success') {
+							Swal.fire({
+								icon: 'success',
+								title: 'Berhasil',
+								text: `${data.message}`,
+								showConfirmButton: false,
+								timer: 2000,
+							}).then((result) => {
+								showDesignProject(data.project_id, data.project_name, data.photo_category);
+							});
+						} else if (data.status == 'failed') {
+							Swal.fire({
+								icon: 'error',
+								title: 'Gagal',
+								text: `${data.message}`,
+								showConfirmButton: false,
+								timer: 2000,
+							}).then((result) => {
+								showDesignProject(data.project_id, data.project_name, data.photo_category);
+							});
+						}
+					}
+     			});
+     		}
+     	})
+	}
 	
 	function sendReview(project_id, ID_pm, ID_company) {
 		Swal.fire({

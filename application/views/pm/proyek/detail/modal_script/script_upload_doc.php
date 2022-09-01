@@ -16,6 +16,13 @@
 		$('#subProj_ID').attr('value', subproject_id);
 		modalUpGambar.modal('show');
 	}
+
+	// Upload Sub Proyek
+	function uploadDesign(project_id) {
+		formUpload.attr('action', `<?= site_url('pm/foto/upload_design_photo') ?>`);
+		$('#projId').attr('value', project_id);
+		modalUpGambar.modal('show');
+	}
 	
 	// Custom click to choose file upload Proyek & Subproyek Documentation
 	chooseFile('#choosePhotoDoc', '#upPhotoProject');

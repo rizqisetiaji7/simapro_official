@@ -1,10 +1,11 @@
 <div class="row">
     <div class="col-12 col-sm-8">
         <div class="d-flex flex-row align-items-start justify-content-between justify-content-sm-start">
-            <div class="mr-4">
+            <div class="mr-5">
                 <h4 class="mb-0"><?= character_limiter($project['project_name'], 40, ' ...') ?></h4>
                 <p class="text-secondary small mb-2"><?= character_limiter($project['project_address'], 35, ' ...') ?></p>
             </div>
+
             <div>
                 <button type="button" class="btn btn-sm mb-1 btn-info" onclick="editProyek(<?= "'".$project['projectID']."'" ?>)" data-toggle="tooltip" title="Edit proyek">
                     <i class="fa fa-pencil"></i>
