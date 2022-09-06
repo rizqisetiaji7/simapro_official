@@ -10,7 +10,11 @@
                 <button type="button" class="btn btn-sm mb-1 btn-info" onclick="editProyek(<?= "'".$project['projectID']."'" ?>)" data-toggle="tooltip" title="Edit proyek">
                     <i class="fa fa-pencil"></i>
                 </button>
-                <button type="button" class="btn btn-sm mb-1 btn-danger" onclick="editProjectStatus(<?= "'".$project['projectID']."'" ?>)" data-toggle="tooltip" title="Edit status proyek"><i class="fas fa-edit"></i></button>
+
+                <button type="button" class="btn btn-sm mb-1 btn-danger" onclick="editProjectStatus(<?= "'".$project['projectID']."'" ?>)" data-toggle="tooltip" title="Edit status proyek">
+                    <i class="fas fa-edit"></i>
+                </button>
+
                 <button type="button" class="btn btn-sm mb-1 btn-purple" onclick="showPhoto(<?= "'".$project['project_id']."'" ?>, 0, <?= "'".$project['project_name']."'" ?>)" data-toggle="tooltip" title="Lihat Foto Dokumentasi">
                     <i class="fa-solid fa-camera"></i> <span class="d-none d-lg-inline-block ml-1">Foto Dokumentasi</span>
                 </button>
@@ -26,7 +30,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row my-2">
             <div class="col-12 col-sm-6 col-md-5 col-lg-4">
                 <span class="d-inline-block text-primary mb-1 small">Penanggung Jawab</span>
                 <?php if ($project['user_id'] != NULL) { ?>

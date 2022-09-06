@@ -6,7 +6,7 @@
 		          <img src="<?= $ft->project_thumbnail == 'placeholder.jpg' ? base_url('assets/img/placeholder.jpg') : base_url('uploads/thumbnail/'.$ft->project_thumbnail) ?>" class="rounded-lg" width="50" alt="">
 		          <div class="ml-3">
 		              <h5 class="mb-0"><?= word_limiter($ft->project_name, 4, '...') ?></h5>
-		              <p class="mb-0 text-xs text-muted"><?= $ft->project_address ?></p>
+		              <p class="mb-0 text-xs text-muted"><?= character_limiter($ft->project_address, 35, ' ...') ?></p>
 		          </div>
 		      </div>
 		  </td>

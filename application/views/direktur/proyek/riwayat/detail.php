@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row my-2">
             <div class="col-12 col-sm-6 col-md-5 col-lg-4">
                 <span class="d-inline-block text-primary mb-1 small">Penanggung Jawab</span>
                 <?php if($project['user_id'] != NULL) { ?>
