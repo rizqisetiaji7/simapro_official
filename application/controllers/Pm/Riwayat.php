@@ -6,6 +6,7 @@ class Riwayat extends CI_Controller {
       is_not_login();
       is_not_pm();
       unset_chat_session();
+      $this->load->model('project_model');
 	}
 
    public function tampil_subproyek($project_id, $subproject_id=NULL) {
@@ -18,6 +19,19 @@ class Riwayat extends CI_Controller {
 
    public function _direktur($company_id='') {
       return $this->bm->get('tb_users', '*', ['ID_company' => $company_id, 'user_role' => 'direktur'])->row();
+   }
+
+   /**
+    * =======================================
+    * SHOW DATA LIST OF PROJECT DESIGN PHOTOS
+    * =======================================
+    */
+   function tampil_foto_desain() {
+      $post = $this->input->post(NULL, TRUE);
+      $data['project_name'] = $post['project_name'];
+      $data['project_id'] = $post['project_id'];
+      $data['docs'] = $this->project_model->get_documentation($post['project_id'], NULL, $post['photo_category']);
+      $this->load->view('pm/proyek/riwayat/foto_desain_proyek', $data);
    }
 
 	public function index() {
@@ -59,13 +73,21 @@ class Riwayat extends CI_Controller {
       $subproject = $this->tampil_subproyek($project->project_id)->result_array();
       $direktur   = $this->_direktur(user_company()->company_id);
 
+      /**
+       * ==================================
+       * SHOW PREVIEW PROJECT DESIGN PHOTOS
+       * ==================================
+       */
+      $project_design = $this->project_model->get_documentation($project->project_id, NULL, 'design', 1);
+
       $data = [
          'app_name'  => APP_NAME,
          'author'    => APP_AUTHOR,
          'title'     => '(PM) Proyek Detail',
          'desc'      => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
          'page'      => 'riwayat_detail',
-         'direktur'  => $direktur
+         'direktur'  => $direktur,
+         'project_design'  => $project_design
       ];
 
       $data['project'] = [
@@ -82,9 +104,11 @@ class Riwayat extends CI_Controller {
          'project_progress'      => $project->project_progress,
          'project_address'       => $project->project_address,
          'project_archive'       => $project->project_archive,
+         'user_id'               => $project->user_id,
          'user_role'             => $project->user_role,
          'user_fullname'         => $project->user_fullname,
          'user_profile'          => $project->user_profile,
+         'account_status'        => $project->account_status,
          'comp_name'             => $project->comp_name,
          'subproject'            => $subproject
       ];
