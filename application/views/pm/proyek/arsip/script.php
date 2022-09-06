@@ -131,6 +131,41 @@
 		modal.modal('show');
 	}
 
+	/**
+    * ===============================================
+    * SHOW DATA PROJECT DESIGN / PROJECT DESIGN PHOTO
+    * ===============================================
+    */ 
+   function showDesignProject(project_id, project_name='', photo_category=null) {
+      title.html(`Desain Proyek: <span class="text-secondary small">${project_name}</span>`);
+      modalDialog.addClass('modal-xl');
+      modalFooter.addClass('d-none');
+
+      $.ajax({
+         url: `<?= site_url('pm/arsip/tampil_foto_desain') ?>`,
+         method: 'POST',
+         dataType: 'html',
+         cache: false,
+         data: {
+            project_id: project_id,
+            project_name: project_name,
+            photo_category: photo_category
+         },
+         beforeSend: function() {
+            modalBody.html(`<p class="text-secondary mb-0">Memuat konten...</p>`);
+         },
+         success: function(data) {
+            modalBody.empty();
+            modalBody.html(data);
+         }
+      });
+
+      modal.modal({
+         backdrop: 'static',
+         show: true,
+      });
+   }
+
 	modal.on('hidden.bs.modal', function() {
 		title.empty();
 		modalDialog.removeClass('modal-xl');

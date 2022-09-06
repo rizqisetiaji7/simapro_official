@@ -4,17 +4,42 @@
             <div class="mr-5">
                 <h4 class="mb-0"><?= character_limiter($project['project_name'], 40, ' ...') ?></h4>
                 <p class="text-secondary small mb-2"><?= character_limiter($project['project_address'], 35, ' ...') ?></p>
+            </div>
+        </div>
 
+        <div class="row my-2">
+            <div class="col-12 col-sm-6 col-md-5 col-lg-4">
                 <span class="d-inline-block text-primary mb-1 small">Penanggung Jawab</span>
+                <?php if($project['user_id'] != NULL) { ?>
                 <div class="d-flex align-items-center mb-3">
                     <div class="profile-pic mr-2" style="width: 40px !important; height: 40px !important;">
                         <img src="<?= $project['user_profile'] == 'default-avatar.jpg' ? base_url('assets/img/default-avatar.jpg') : base_url('uploads/profile/'.$project['user_profile']) ?>">
                     </div>
-                    <p class="mb-0"><?= $project['user_fullname'] ?><br>
+                    <p class="mb-0"><?= $project['user_fullname'] ?> <?= $project['account_status'] == 'disable' ? '<span class="text-danger small">(Nonaktif)</span>' : NULL ?><br>
                         <span class="d-block text-muted small"><?= $project['user_role'] == 'pm' ? 'Proyek Manajer' : '-' ?></span>
                     </p>
                 </div>
+                <?php } else { ?>
+                    <span class="d-inline-block text-danger mb-1 small"><i class="fas fa-user mr-2"></i>Penanggung Jawab Tidak Terdaftar</span>
+                <?php } ?>
             </div>
+
+            <!-- 
+                ============================
+                PREVIEW PROJECT DESIGN PHOTO 
+                ============================
+            -->
+            <?php if($project_design->num_rows() > 0) { ?>
+                <div class="col-6 col-sm-6 col-md-5 col-lg-4 mb-3">
+                    <div class="img-photo-preview">
+                        <img src="<?= base_url('uploads/'.$project_design->result()[0]->url) ?>">
+                        <div class="img-photo-overlay text-center" onclick="showDesignProject(<?= $project['project_id'] ?>, <?= "'".$project['project_name']."'" ?>, <?= "'".'design'."'" ?>)">
+                            <i class="fa-solid fa-image"></i>
+                            <span class="d-block">Lihat Desain</span>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
         </div>
     </div>
 

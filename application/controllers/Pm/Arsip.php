@@ -6,6 +6,7 @@ class Arsip extends CI_Controller {
       is_not_login();
       is_not_pm();
       unset_chat_session();
+      $this->load->model('project_model');
    }
 
    public function tampil_arsip($limit) {
@@ -20,6 +21,19 @@ class Arsip extends CI_Controller {
 
    public function detail_proyek($comp_id, $project_code, $pm_id) {
       return $this->ppm->get_projectpm_detail($comp_id, $project_code, $pm_id)->row();
+   }
+
+   /**
+    * =======================================
+    * SHOW DATA LIST OF PROJECT DESIGN PHOTOS
+    * =======================================
+    */
+   function tampil_foto_desain() {
+      $post = $this->input->post(NULL, TRUE);
+      $data['project_name'] = $post['project_name'];
+      $data['project_id'] = $post['project_id'];
+      $data['docs'] = $this->project_model->get_documentation($post['project_id'], NULL, $post['photo_category']);
+      $this->load->view('pm/proyek/arsip/foto_desain_proyek', $data);
    }
 
    public function index() {
@@ -37,12 +51,21 @@ class Arsip extends CI_Controller {
    public function detail($company_id, $project_code_ID) {
       $project = $this->detail_proyek($company_id, $project_code_ID, user_login()->user_id);
       $subproject = $this->tampil_subproyek($project->project_id)->result_array();
+
+      /**
+       * ==================================
+       * SHOW PREVIEW PROJECT DESIGN PHOTOS
+       * ==================================
+       */
+      $project_design = $this->project_model->get_documentation($project->project_id, NULL, 'design', 1);
+
       $data = [
          'app_name'     => APP_NAME,
          'author'       => APP_AUTHOR,
-         'title'        => '(Direktur) Detail Arsip',
+         'title'        => '(PM) Detail Arsip',
          'desc'         => APP_NAME . ' - ' . APP_DESC . ' ' . COMPANY,
-         'page'         => 'detail_arsip_proyek'
+         'page'         => 'detail_arsip_proyek',
+         'project_design'  => $project_design
       ];
 
       $data['project'] = [
@@ -59,9 +82,11 @@ class Arsip extends CI_Controller {
          'project_progress'      => $project->project_progress,
          'project_address'       => $project->project_address,
          'project_archive'       => $project->project_archive,
+         'user_id'               => $project->user_id,
          'user_role'             => $project->user_role,
          'user_fullname'         => $project->user_fullname,
          'user_profile'          => $project->user_profile,
+         'account_status'        => $project->account_status,
          'comp_name'             => $project->comp_name,
          'subproject'            => $subproject
       ];
