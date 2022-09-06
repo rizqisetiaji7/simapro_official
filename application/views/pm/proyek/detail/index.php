@@ -11,14 +11,23 @@
 
             <div>
                 <?php if ($project['project_status'] != 'review') { ?>
-                <button type="button" class="btn btn-sm mb-1 btn-info" onclick="editProyek(<?= "'".$project['projectID']."'" ?>)" data-toggle="tooltip" title="Edit proyek"><i class="fa fa-pencil"></i></button>
+                    <button type="button" class="btn btn-sm mb-1 btn-info" onclick="editProyek(<?= "'".$project['projectID']."'" ?>)" data-toggle="tooltip" title="Edit proyek">
+                        <i class="fa fa-pencil"></i>
+                    </button>
                 <?php } ?>
+
                 <?php if ($project['project_status'] != 'review') { ?>
-                <button type="button" class="btn btn-sm mb-1 btn-danger" onclick="editProjectStatus(<?= "'".$project['projectID']."'" ?>)" data-toggle="tooltip" title="Edit status proyek"><i class="fas fa-edit"></i></button>
+                    <button type="button" class="btn btn-sm mb-1 btn-danger" onclick="editProjectStatus(<?= "'".$project['projectID']."'" ?>)" data-toggle="tooltip" title="Edit status proyek">
+                        <i class="fas fa-edit"></i>
+                    </button>
                 <?php } ?>
+
                 <?php if ($project['project_status'] != 'review') { ?>
-                <button type="button" class="btn btn-sm mb-1 btn-purple text-white" onclick="uploadDocumentation('proyek', <?= $project['project_id'] ?>, null)" data-toggle="tooltip" title="Upload Foto Dokumentasi Proyek"><i class="fa fa-cloud-upload"></i></button>
+                    <button type="button" class="btn btn-sm mb-1 btn-purple text-white" onclick="uploadDocumentation('proyek', <?= $project['project_id'] ?>, null)" data-toggle="tooltip" title="Upload Foto Dokumentasi Proyek">
+                        <i class="fa fa-cloud-upload"></i>
+                    </button>
                 <?php } ?>
+
                 <button type="button" class="btn btn-sm mb-1 btn-custom" onclick="showPhoto(<?= $project['project_id'] ?>, 0, <?= "'".$project['project_name']."'" ?>, <?= "'".$project['project_status']."'" ?>, <?= "'".'proyek'."'" ?>)" data-toggle="tooltip" title="Lihat Foto Dokumentasi">
                     <i class="fas fa-camera"></i> <span class="d-none d-lg-inline-block ml-1">Lihat Foto</span>
                 </button>
@@ -34,7 +43,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row my-2">
             <div class="col-12 col-sm-6 col-md-5 col-lg-4">
                 <span class="d-inline-block text-primary mb-1 small">Penanggung Jawab</span>
                 <?php if ($project['user_id'] != NULL) { ?>
