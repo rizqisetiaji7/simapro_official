@@ -15,7 +15,8 @@
 		"hidehalo/nanoid-php": "^1.1",
 		"phpmailer/phpmailer": "^6.6",
 		"dompdf/dompdf": "^1.2",
-		"pusher/pusher-php-server": "^7.0"
+		"pusher/pusher-php-server": "^7.0",
+		"chriskacerguis/codeigniter-restserver": "^3.1"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

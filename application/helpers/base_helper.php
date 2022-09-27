@@ -99,6 +99,10 @@ function hourIDN($label='') {
 }
 
 function dateTimeIDN($datetime, $setDay = FALSE, $setTime = FALSE) {
+
+	if (!$datetime)
+		return FALSE;
+
 	$dTimeData = [
 		'days'	=> ['Minggu','Senin','Selasa','Rabu','Kamis','Jum\'at','Sabtu'],
 		'months'	=> [

@@ -7,8 +7,8 @@ class Str_secure {
     
 	function __construct() {
 		$this->encrypt_method = "AES-256-CBC";
-		$this->secret_key = "Your secret key";
-		$this->secret_iv = "Your secret iv";
+		$this->secret_key = "0123456789qazplmwsxoknedcijbrfvuhtgyQPWOEIRUTYALSKDJFHGVCXZBNM";
+		$this->secret_iv = "0987654321alskdjfhgzmxncbvqpwoeirutyZXCVHUBNJIOKMLPQASDFGEYRUTH";
 		$this->key_hash = hash("sha256", $this->secret_key);
 	}
     
