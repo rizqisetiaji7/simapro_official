@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 10, 2022 at 05:36 AM
--- Server version: 10.5.11-MariaDB-log
--- PHP Version: 7.4.21
+-- Generation Time: Oct 02, 2022 at 02:17 AM
+-- Server version: 10.8.3-MariaDB-log
+-- PHP Version: 7.4.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -42,7 +42,7 @@ CREATE TABLE `tb_company` (
   `comp_since` date DEFAULT NULL,
   `created` datetime NOT NULL DEFAULT current_timestamp(),
   `updated` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `tb_company`
@@ -69,7 +69,16 @@ CREATE TABLE `tb_livechat` (
   `chat_type` enum('text','task') NOT NULL DEFAULT 'text',
   `chat_status` enum('ok','pending') DEFAULT NULL,
   `chat_created` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+--
+-- Dumping data for table `tb_livechat`
+--
+
+INSERT INTO `tb_livechat` (`chat_id`, `ID_project`, `ID_sender`, `ID_receiver`, `chat_message`, `chat_type`, `chat_status`, `chat_created`) VALUES
+(1, 1, 1, 5, 'tes', 'text', NULL, '2022-08-09 11:16:44'),
+(2, 1, 5, 1, 'tes lagi', 'text', NULL, '2022-08-09 11:17:58'),
+(3, 1, 5, 1, 'Assalamu\\\'alaikum', 'text', NULL, '2022-08-25 11:58:49');
 
 -- --------------------------------------------------------
 
@@ -82,9 +91,26 @@ CREATE TABLE `tb_photo` (
   `ID_project` int(11) DEFAULT NULL,
   `ID_subproject` int(11) DEFAULT NULL,
   `photo_url` text DEFAULT NULL,
+  `photo_category` varchar(10) DEFAULT NULL,
   `created` datetime NOT NULL DEFAULT current_timestamp(),
   `updated` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+--
+-- Dumping data for table `tb_photo`
+--
+
+INSERT INTO `tb_photo` (`photo_id`, `ID_project`, `ID_subproject`, `photo_url`, `photo_category`, `created`, `updated`) VALUES
+(1, 1, NULL, 'project_doc/96cad3b0d66fbc045871cbc9785f0070.JPG', NULL, '2022-08-09 11:14:14', NULL),
+(2, 1, 1, 'subproject_doc/b02fa677d036b12fcea91dc51e6f4cdf.jpg', NULL, '2022-08-09 11:15:00', NULL),
+(19, 1, NULL, 'project_design/cdb7bb177353d1230b4683eb2596c5e0.jpg', 'design', '2022-08-25 21:51:51', NULL),
+(20, 1, NULL, 'project_design/bef616053e4f35d236651019993c6bf4.jpg', 'design', '2022-08-25 21:51:51', NULL),
+(35, 2, NULL, 'project_doc/04ab2d0f658277f0bf1e4097290f3a90.jpg', NULL, '2022-09-06 14:41:27', NULL),
+(36, 2, NULL, 'project_doc/115d04b9699893beb179c20deb2022ff.jpg', NULL, '2022-09-06 14:41:28', NULL),
+(37, 2, NULL, 'project_design/796f6d5014fbb053a5417e0f76c94a75.jpg', 'design', '2022-09-06 20:10:39', NULL),
+(38, 2, NULL, 'project_design/7239bfc7786141fdf883c9d231966774.jpg', 'design', '2022-09-06 20:10:39', NULL),
+(39, 2, NULL, 'project_design/2ad0138bd7a419da985b8fb987c2bea7.jpg', 'design', '2022-09-06 20:10:40', NULL),
+(40, 2, NULL, 'project_design/d6ba1dc8d76f149a48541711e319afb2.jpg', 'design', '2022-09-06 20:11:02', NULL);
 
 -- --------------------------------------------------------
 
@@ -96,7 +122,7 @@ CREATE TABLE `tb_priority` (
   `priority_id` int(11) NOT NULL,
   `priority_name` varchar(128) NOT NULL,
   `priority_color` varchar(80) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `tb_priority`
@@ -132,7 +158,16 @@ CREATE TABLE `tb_project` (
   `project_archive` enum('1','0') NOT NULL DEFAULT '0',
   `created` datetime NOT NULL DEFAULT current_timestamp(),
   `updated` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+--
+-- Dumping data for table `tb_project`
+--
+
+INSERT INTO `tb_project` (`project_id`, `ID_pm`, `ID_company`, `project_code_ID`, `project_name`, `project_thumbnail`, `project_address`, `project_description`, `project_start`, `project_deadline`, `project_current_deadline`, `project_status`, `project_deadline_status`, `project_deadline_month`, `project_progress`, `project_archive`, `created`, `updated`) VALUES
+(1, 5, 1, 'PROYM39208', 'Projek Rumah Sakit Kawali', '09df04b4521d3034317eabe15f40b4d9.jpg', 'Jl. KH. Ahmad Dahlan, No.30, RT/RW 05/07, Kecamatan Kawali, Kabupaten Ciamis, Jawa Barat', '', '2022-08-09', '2022-08-31', '2022-08-27', 'finish', NULL, '2022-08', 100, '0', '2022-08-09 10:45:48', '2022-08-27 12:03:33'),
+(2, 5, 1, 'PROYM06481', 'RSUD Kawali', 'placeholder.jpg', 'Desa Kawali, Kab. Ciamis, Jawa Barat', '', '2022-08-27', '2022-11-30', NULL, 'pending', NULL, NULL, 100, '1', '2022-08-27 12:05:15', '2022-09-01 14:26:07'),
+(3, 5, 1, 'PROYM35017', 'Pembangunan Jalan Raya Ciamis', '634ea58d8eff4a44d23bd8df4ba5c85d.jpg', '', '', '2022-09-11', '2022-09-30', NULL, 'finish', NULL, NULL, 100, '0', '2022-09-11 18:41:06', NULL);
 
 -- --------------------------------------------------------
 
@@ -150,7 +185,15 @@ CREATE TABLE `tb_project_task` (
   `project_task_progress` float NOT NULL,
   `created` datetime NOT NULL DEFAULT current_timestamp(),
   `updated` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+--
+-- Dumping data for table `tb_project_task`
+--
+
+INSERT INTO `tb_project_task` (`project_task_id`, `ID_subproject`, `ID_priority`, `project_task_name`, `project_task_deadline`, `project_task_status`, `project_task_progress`, `created`, `updated`) VALUES
+(1, 1, 2, 'Tes 1', '2022-08-10', 'finish', 100, '2022-08-09 10:50:19', '2022-08-09 11:15:18'),
+(2, 2, 3, 'Pondasi', '2022-09-06', 'finish', 100, '2022-09-01 14:26:41', '2022-09-01 14:27:39');
 
 -- --------------------------------------------------------
 
@@ -169,7 +212,15 @@ CREATE TABLE `tb_subproject` (
   `panel_color` varchar(50) DEFAULT NULL,
   `created` datetime NOT NULL DEFAULT current_timestamp(),
   `updated` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+--
+-- Dumping data for table `tb_subproject`
+--
+
+INSERT INTO `tb_subproject` (`subproject_id`, `ID_project`, `ID_priority`, `subproject_name`, `subproject_deadline`, `subproject_status`, `subproject_progress`, `panel_color`, `created`, `updated`) VALUES
+(1, 1, 1, 'Pengadaan Barang', '2022-08-10', NULL, 100, 'kanban-success', '2022-08-09 10:49:59', NULL),
+(2, 2, 2, 'Lahan Parkir', '2022-09-24', NULL, 100, 'kanban-info', '2022-09-01 14:26:07', NULL);
 
 -- --------------------------------------------------------
 
@@ -195,18 +246,18 @@ CREATE TABLE `tb_users` (
   `account_status` enum('disable','enable') DEFAULT 'enable',
   `created` datetime NOT NULL DEFAULT current_timestamp(),
   `updated` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `tb_users`
 --
 
 INSERT INTO `tb_users` (`user_id`, `ID_company`, `user_role`, `user_unique_id`, `user_profile`, `user_fullname`, `user_email`, `user_password`, `user_phone`, `user_address`, `token`, `token_expiry`, `theme_mode`, `login_status`, `account_status`, `created`, `updated`) VALUES
-(1, 1, 'direktur', 'DIRUTM39542', 'default-avatar.jpg', 'Rizqi Setiaji', 'rizqisetiaji9@gmail.com', '$2y$10$MC8jwY0axinI9fcyhCL2m.ynt68h.V91n.MWLP26SEVIpBlkyf2FS', '08766889388', 'Kota Banjar, Jabar', NULL, NULL, '0', 'on', 'enable', '2022-05-10 14:06:07', '2022-07-06 21:45:32'),
+(1, 1, 'direktur', 'DIRUTM39542', 'default-avatar.jpg', 'Rizqi Setiaji', 'admin1@gmail.com', '$2y$10$MC8jwY0axinI9fcyhCL2m.ynt68h.V91n.MWLP26SEVIpBlkyf2FS', '08766889388', 'Kota Banjar, Jabar', 'UNK1KkQhLdHhcVBpS6uwTGa0OeX2nrkMNvnDQR9kgpjyNElX', 1660022307, '0', 'off', 'enable', '2022-05-10 14:06:07', '2022-07-06 21:45:32'),
 (2, 2, 'direktur', 'DIRUTM103872', 'efb1ae2c2552c5e93266265d3a109783.jpg', 'Om Jay', 'omjay@gmail.com', '$2y$10$Roey8h73Xam7pzc.HHnFHe/vfjFtQHCN2evfmEAfXJiTIiG1epG1a', '087321445778', NULL, NULL, NULL, '0', 'off', 'enable', '2022-05-19 23:00:34', '2022-05-23 18:29:25'),
 (3, 3, 'direktur', 'DIRUTM283140', '0a42c31ca7985807b73cc1f69c244195.jpg', 'Sub-Direktur 2', 'subdirektur2@gmail.com', '$2y$10$8p9mkVyIJxS50Al7CMuJ6uVhhXHOTTLnj.Is6papl2yL26gKLn1vy', '0991887556', 'Ostania, Germany', NULL, NULL, '0', 'off', 'enable', '2022-05-24 13:15:00', '2022-05-24 13:16:33'),
 (4, 4, 'direktur', 'DIRUTM370546', 'default-avatar.jpg', 'Sub-Direktur 3', 'subdirektur3@gmail.com', '$2y$10$8p9mkVyIJxS50Al7CMuJ6uVhhXHOTTLnj.Is6papl2yL26gKLn1vy', NULL, 'Indonesia', NULL, NULL, '0', 'off', 'enable', '2022-07-10 12:10:00', NULL),
-(5, 1, 'pm', 'PMM87690', 'default-avatar.jpg', 'Rizqi PM', 'rizqisetiaji1@gmail.com', '$2y$10$6HxfMgmflpdGrzNr5VqBAeGGnlycPqMQ2UYTnk4n1BGtrdAJnTUiO', '089519598888', '', NULL, NULL, '0', 'off', 'enable', '2022-06-11 18:39:13', '2022-07-06 21:46:11');
+(5, 1, 'pm', 'PMM87690', 'default-avatar.jpg', 'Rizqi PM', 'admin2@gmail.com', '$2y$10$6HxfMgmflpdGrzNr5VqBAeGGnlycPqMQ2UYTnk4n1BGtrdAJnTUiO', '089519598888', '', NULL, NULL, '0', 'on', 'enable', '2022-06-11 18:39:13', '2022-07-06 21:46:11');
 
 --
 -- Indexes for dumped tables
@@ -287,13 +338,13 @@ ALTER TABLE `tb_company`
 -- AUTO_INCREMENT for table `tb_livechat`
 --
 ALTER TABLE `tb_livechat`
-  MODIFY `chat_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `chat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tb_photo`
 --
 ALTER TABLE `tb_photo`
-  MODIFY `photo_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `photo_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `tb_priority`
@@ -305,19 +356,19 @@ ALTER TABLE `tb_priority`
 -- AUTO_INCREMENT for table `tb_project`
 --
 ALTER TABLE `tb_project`
-  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tb_project_task`
 --
 ALTER TABLE `tb_project_task`
-  MODIFY `project_task_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `project_task_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tb_subproject`
 --
 ALTER TABLE `tb_subproject`
-  MODIFY `subproject_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `subproject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tb_users`
