@@ -43,5 +43,15 @@ Aplikasi ini memiliki fitur-fitur yang bisa digunakan dengan efisien, diantarany
 
 <br/>
 
+## Instalasi
+<div align="left">
+	1. Instal package menggunakan composer
+	```
+		composer install
+	```
+</div>
+
+<br/>
+
 ----
 <div align="left">Credit by SansSerif.</div>
