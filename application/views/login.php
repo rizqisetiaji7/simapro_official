@@ -1,45 +1,34 @@
-<div class="container">
-    <div class="row min-vh-100">
-        <div class="col-sm-12 col-md-8 col-lg-5 m-auto">
-            <div class="d-flex flex-column align-items-center justify-content-center mb-4">
-                <img src="<?= base_url('assets/img/simapro/logo-text.svg') ?>" class="mt-4 mb-4" width="320" alt="">
-                <div class="text-center">
-                    <h3 class="mb-1">Selamat Datang</h3>
-                    <p class="text-muted mb-0">Silahkan login untuk mengakses dashboard</p>
-                </div>
-            </div>
-            
-            <div class="card mx-2 mb-0">
-                <div class="card-body py-4 px-5">
-                    <form id="form-login" action="<?= site_url('login/login_process') ?>" method="POST">
-                        <div class="form-group mt-1">
-                            <label for="email">Email <span class="text-danger">*</span></label>
-                            <input type="text" id="email" name="email" class="form-control" placeholder="Alamat email" autofocus autocomplete="off">
-                            <div class="invalid-feedback"></div>
-                        </div>
+<div class="text-center mb-3">
+    <h3 class="mb-1">Selamat Datang</h3>
+    <p class="text-muted mb-0">Silahkan login untuk mengakses dashboard</p>
+</div>
 
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col">
-                                    <label for="password">Password <span class="text-danger">*</span></label>
-                                </div>
-                                <div class="col-auto">
-                                    <a class="text-muted" href="<?= site_url('forgot_password') ?>">Lupa password?</a>
-                                </div>
-                            </div>
-                            <input type="password" id="password" name="password" class="form-control" placeholder="Password" autofocus>
-                            <div class="invalid-feedback"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <button class="btn btn-primary submit-btn" type="submit" name="login">Login</button>
-                        </div>
-                    </form>
-                </div>
+<div class="card mx-2 mb-0">
+    <div class="card-body py-4 px-5">
+        <form id="form-login" action="<?= site_url('login/login_process') ?>" method="POST">
+            <div class="form-group mt-1">
+                <label for="email">Email <span class="text-danger">*</span></label>
+                <input type="text" id="email" name="email" class="form-control" placeholder="Alamat email" autofocus autocomplete="off">
+                <div class="invalid-feedback"></div>
             </div>
 
-            <?= $footer_copyright; ?>
-        </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col">
+                        <label for="password">Password <span class="text-danger">*</span></label>
+                    </div>
+                    <div class="col-auto">
+                        <a class="text-muted" href="<?= site_url('forgot_password') ?>">Lupa password?</a>
+                    </div>
+                </div>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Password" autofocus>
+                <div class="invalid-feedback"></div>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary submit-btn" type="submit" name="login">Login</button>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -114,5 +103,4 @@
             }
         });
     });
-
 </script>
