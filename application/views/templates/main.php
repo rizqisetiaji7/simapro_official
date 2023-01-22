@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+        <meta name="site_url" content="<?= trim(site_url(), '/') ?>">
         <meta name="author" content="<?= $author ?>">
         <meta name="description" content="<?= $desc ?>">
         <meta name="robots" content="noindex, nofollow">
@@ -15,7 +16,7 @@
         <!-- lightgallery -->
         <link rel="stylesheet" href="<?= base_url('assets/plugins/lightGallery/dist/css/lightgallery.css')?>"/>
         <link rel="stylesheet" href="<?= base_url('assets/plugins/lightGallery/dist/css/lg-zoom.css')?>"/>
-        <link rel="stylesheet" href="<?= user_login()->theme_mode == 1 ? base_url('assets/css/dark-style.css') : base_url('assets/css/style.css'); ?>" id="theme-style">
+        <link rel="stylesheet" href="<?= base_url('assets/css/style.css'); ?>" id="theme-style">
         <link rel="stylesheet" href="<?= base_url('assets/css/mycustom.css')?>">
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -64,6 +65,5 @@
         <script src="<?= base_url('assets/js/bootstrap.min.js') ?>"></script>
         <script src="<?= base_url('assets/js/jquery.slimscroll.min.js') ?>"></script>
         <script src="<?= base_url('assets/js/app.js') ?>"></script>
-        <?php $this->view('global_script'); ?>
     </body>
 </html>
