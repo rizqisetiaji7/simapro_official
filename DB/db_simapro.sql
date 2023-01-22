@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 02, 2022 at 02:17 AM
--- Server version: 10.8.3-MariaDB-log
--- PHP Version: 7.4.30
+-- Generation Time: Jan 22, 2023 at 02:54 PM
+-- Server version: 10.9.3-MariaDB-log
+-- PHP Version: 8.0.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -241,7 +241,6 @@ CREATE TABLE `tb_users` (
   `user_address` text DEFAULT NULL,
   `token` text DEFAULT NULL,
   `token_expiry` bigint(20) DEFAULT NULL,
-  `theme_mode` enum('1','0') NOT NULL DEFAULT '0',
   `login_status` enum('on','off') NOT NULL DEFAULT 'off',
   `account_status` enum('disable','enable') DEFAULT 'enable',
   `created` datetime NOT NULL DEFAULT current_timestamp(),
@@ -252,12 +251,12 @@ CREATE TABLE `tb_users` (
 -- Dumping data for table `tb_users`
 --
 
-INSERT INTO `tb_users` (`user_id`, `ID_company`, `user_role`, `user_unique_id`, `user_profile`, `user_fullname`, `user_email`, `user_password`, `user_phone`, `user_address`, `token`, `token_expiry`, `theme_mode`, `login_status`, `account_status`, `created`, `updated`) VALUES
-(1, 1, 'direktur', 'DIRUTM39542', 'default-avatar.jpg', 'Rizqi Setiaji', 'admin1@gmail.com', '$2y$10$MC8jwY0axinI9fcyhCL2m.ynt68h.V91n.MWLP26SEVIpBlkyf2FS', '08766889388', 'Kota Banjar, Jabar', 'UNK1KkQhLdHhcVBpS6uwTGa0OeX2nrkMNvnDQR9kgpjyNElX', 1660022307, '0', 'off', 'enable', '2022-05-10 14:06:07', '2022-07-06 21:45:32'),
-(2, 2, 'direktur', 'DIRUTM103872', 'efb1ae2c2552c5e93266265d3a109783.jpg', 'Om Jay', 'omjay@gmail.com', '$2y$10$Roey8h73Xam7pzc.HHnFHe/vfjFtQHCN2evfmEAfXJiTIiG1epG1a', '087321445778', NULL, NULL, NULL, '0', 'off', 'enable', '2022-05-19 23:00:34', '2022-05-23 18:29:25'),
-(3, 3, 'direktur', 'DIRUTM283140', '0a42c31ca7985807b73cc1f69c244195.jpg', 'Sub-Direktur 2', 'subdirektur2@gmail.com', '$2y$10$8p9mkVyIJxS50Al7CMuJ6uVhhXHOTTLnj.Is6papl2yL26gKLn1vy', '0991887556', 'Ostania, Germany', NULL, NULL, '0', 'off', 'enable', '2022-05-24 13:15:00', '2022-05-24 13:16:33'),
-(4, 4, 'direktur', 'DIRUTM370546', 'default-avatar.jpg', 'Sub-Direktur 3', 'subdirektur3@gmail.com', '$2y$10$8p9mkVyIJxS50Al7CMuJ6uVhhXHOTTLnj.Is6papl2yL26gKLn1vy', NULL, 'Indonesia', NULL, NULL, '0', 'off', 'enable', '2022-07-10 12:10:00', NULL),
-(5, 1, 'pm', 'PMM87690', 'default-avatar.jpg', 'Rizqi PM', 'admin2@gmail.com', '$2y$10$6HxfMgmflpdGrzNr5VqBAeGGnlycPqMQ2UYTnk4n1BGtrdAJnTUiO', '089519598888', '', NULL, NULL, '0', 'on', 'enable', '2022-06-11 18:39:13', '2022-07-06 21:46:11');
+INSERT INTO `tb_users` (`user_id`, `ID_company`, `user_role`, `user_unique_id`, `user_profile`, `user_fullname`, `user_email`, `user_password`, `user_phone`, `user_address`, `token`, `token_expiry`, `login_status`, `account_status`, `created`, `updated`) VALUES
+(1, 1, 'direktur', 'DIRUTM39542', 'default-avatar.jpg', 'Rizqi Setiaji', 'admin1@gmail.com', '$2y$10$MC8jwY0axinI9fcyhCL2m.ynt68h.V91n.MWLP26SEVIpBlkyf2FS', '08766889388', 'Kota Banjar, Jabar', 'UNK1KkQhLdHhcVBpS6uwTGa0OeX2nrkMNvnDQR9kgpjyNElX', 1660022307, 'on', 'enable', '2022-05-10 14:06:07', '2022-07-06 21:45:32'),
+(2, 2, 'direktur', 'DIRUTM103872', 'efb1ae2c2552c5e93266265d3a109783.jpg', 'Om Jay', 'omjay@gmail.com', '$2y$10$Roey8h73Xam7pzc.HHnFHe/vfjFtQHCN2evfmEAfXJiTIiG1epG1a', '087321445778', NULL, NULL, NULL, 'off', 'enable', '2022-05-19 23:00:34', '2022-05-23 18:29:25'),
+(3, 3, 'direktur', 'DIRUTM283140', '0a42c31ca7985807b73cc1f69c244195.jpg', 'Sub-Direktur 2', 'subdirektur2@gmail.com', '$2y$10$8p9mkVyIJxS50Al7CMuJ6uVhhXHOTTLnj.Is6papl2yL26gKLn1vy', '0991887556', 'Ostania, Germany', NULL, NULL, 'off', 'enable', '2022-05-24 13:15:00', '2022-05-24 13:16:33'),
+(4, 4, 'direktur', 'DIRUTM370546', 'default-avatar.jpg', 'Sub-Direktur 3', 'subdirektur3@gmail.com', '$2y$10$8p9mkVyIJxS50Al7CMuJ6uVhhXHOTTLnj.Is6papl2yL26gKLn1vy', NULL, 'Indonesia', NULL, NULL, 'off', 'enable', '2022-07-10 12:10:00', NULL),
+(5, 1, 'pm', 'PMM87690', 'default-avatar.jpg', 'Rizqi PM', 'admin2@gmail.com', '$2y$10$6HxfMgmflpdGrzNr5VqBAeGGnlycPqMQ2UYTnk4n1BGtrdAJnTUiO', '089519598888', '', NULL, NULL, 'off', 'enable', '2022-06-11 18:39:13', '2022-07-06 21:46:11');
 
 --
 -- Indexes for dumped tables
