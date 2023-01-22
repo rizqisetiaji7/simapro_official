@@ -338,7 +338,35 @@ $(document).ready(function() {
 
 // Loader
 
-$(window).on ('load', function (){
+$(window).on('load', function (){
 	$('#loader').delay(100).fadeOut('slow');
 	$('#loader-wrapper').delay(500).fadeOut('slow');
 });
+
+// Switch Light/Dark Mode Theme
+
+window.addEventListener('DOMContentLoaded', () => {
+	const url = window.location.origin
+	const cssHref = document.getElementById('theme-style')
+	const toggleSwitch = document.getElementById('theme_mode')
+	let themeMode = localStorage.getItem('theme_mode')
+
+	// Set Theme Mode Ligt/Dark
+	const setTheme = (mode='light') => {
+	    cssHref.setAttribute('href', `${url}/assets/css/${mode == 'dark' ? 'style-dark' : 'style'}.css`)
+	    mode == 'dark' ? toggleSwitch.setAttribute('checked', 'checked') : toggleSwitch.removeAttribute('checked')
+	    localStorage.setItem('theme_mode', mode)
+	}
+
+	// Check dark/light mode when window is loaded
+	(themeMode == 'dark') ? setTheme('dark') : setTheme('light')
+
+	// Toggle switch checkbox to change event light/dark mode
+	toggleSwitch.addEventListener('change', () => {
+	    themeMode = localStorage.getItem('theme_mode')
+	    toggleSwitch.checked ? setTheme('dark') : setTheme('light')
+	})
+})
+
+// Logout Confirmation Alert
+const showConfirm = () => $('#modalConfirmation').modal('show')
