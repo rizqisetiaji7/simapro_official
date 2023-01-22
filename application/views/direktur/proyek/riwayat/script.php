@@ -1,4 +1,5 @@
 <script>
+   const BASE_URL = $('meta[name=site_url]').attr('content') + '/' + 'direktur'
 	const modal = $('#riwayatProjectModal');
   	const title = $('#riwayatProjectModalLabel');
 	const modalDialog = $('#riwayatProjectModal .modal-dialog');
@@ -7,17 +8,14 @@
 	const btnSubmit = $('#btnSubmit-riwayatProject');
 	const modalFooter = $('#riwayatProjectModal .modal-footer');
 
-	function showRiwayatList() {
-		$.ajax({
-			url: `<?= site_url('direktur/riwayat/tampil_riwayat_proyek') ?>`,
-			method: 'POST',
-			dataType: 'html',
-			cache: false,
-			success: function(data) {
-				$('#listRiwayatProyek').html(data);
-			}
-		});
-	}
+   const showRiwayatList = () => 
+      $.post(`${BASE_URL}/riwayat/tampil_riwayat_proyek`)
+      .done(data => $('#listRiwayatProyek').html(data))
+      .fail(errors => alert(`
+            Oops, Terjadi Kesalahan!
+            Status: ${errors.status}
+            Message: ${errors.statusText}
+         `))
 
 	showRiwayatList();
 
