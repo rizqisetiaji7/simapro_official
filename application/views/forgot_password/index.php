@@ -1,35 +1,24 @@
-<div class="container">
-    <div class="row min-vh-100">
-        <div class="col-sm-12 col-md-8 col-lg-5 m-auto">
-            <div class="d-flex flex-column align-items-center justify-content-center mb-4">
-                <img src="<?= base_url('assets/img/simapro/logo-text.svg') ?>" class="mt-4 mb-4" width="320" alt="">
-                <div class="text-center">
-                    <h3 class="mb-1">Lupa password?</h3>
-                    <p class="text-muted mb-0">Masukkan email Anda untuk melakukan pergantian password.</p>
-                </div>
-            </div>
-            
-            <div class="card mx-2 mb-0">
-                <div class="card-body py-4 px-5">
-                    <form id="form-verif" action="<?= site_url('send_email_verify') ?>" method="POST">
-                        <div class="form-group">
-                            <label for="email">Email <span class="text-danger">*</span></label>
-                            <input type="text" id="email" name="email" class="form-control" placeholder="Alamat email anda" autofocus autocomplete="off">
-                            <div class="invalid-feedback"></div>
-                        </div>
+<div class="text-center mb-3">
+    <h3 class="mb-1">Lupa password?</h3>
+    <p class="text-muted mb-0">Masukkan email Anda untuk melakukan pergantian password.</p>
+</div>
 
-                        <div class="form-group mb-0">
-                            <button type="submit" class="btn btn-primary submit-btn" name="reset_password">Kirim</button>
-                        </div>
-                    </form>
-
-                    <div class="text-center mt-4 remember-pass">
-                        <p class="mb-0">Ingat password? <a href="<?= site_url('login') ?>" class="text-primary">Login sekarang</a></p>
-                    </div>
-                </div>
+<div class="card mx-2 mb-0">
+    <div class="card-body py-4 px-5">
+        <form id="form-verif" action="<?= site_url('send_email_verify') ?>" method="POST">
+            <div class="form-group">
+                <label for="email">Email <span class="text-danger">*</span></label>
+                <input type="text" id="email" name="email" class="form-control" placeholder="Alamat email anda" autofocus autocomplete="off">
+                <div class="invalid-feedback"></div>
             </div>
 
-            <?= $footer_copyright; ?>
+            <div class="form-group mb-0">
+                <button type="submit" class="btn btn-primary submit-btn" name="reset_password">Kirim</button>
+            </div>
+        </form>
+
+        <div class="text-center mt-4 remember-pass">
+            <p class="mb-0">Ingat password? <a href="<?= site_url('login') ?>" class="text-primary">Login sekarang</a></p>
         </div>
     </div>
 </div>

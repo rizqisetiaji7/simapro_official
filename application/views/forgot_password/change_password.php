@@ -1,39 +1,28 @@
-<div class="container">
-    <div class="row min-vh-100">
-        <div class="col-sm-12 col-md-8 col-lg-5 m-auto">
-            <div class="d-flex flex-column align-items-center justify-content-center mb-4">
-                <img src="<?= base_url('assets/img/simapro/logo-text.svg') ?>" class="mt-4 mb-4" width="320" alt="">
-                <div class="text-center">
-                    <h3 class="mb-1">Buat password baru</h3>
-                    <p class="text-muted mb-0">Silahkan isi form berikut untuk mengganti password</p>
-                </div>
-            </div>
-            
-            <div class="card mx-2 mb-0">
-                <div class="card-body py-4 px-5">
-                    <form id="form-newPass" action="<?= site_url('save_password') ?>" method="POST">
-                        <input type="hidden" name="key_ID" value="<?= $key_id ?>">
-                        <div class="form-group mt-1">
-                            <label for="new_password">Password baru <span class="text-danger">*</span></label>
-                            <input type="password" id="new_password" name="new_password" class="form-control" autofocus>
-                            <div class="invalid-feedback"></div>
-                        </div>
+<div class="text-center mb-3">
+    <h3 class="mb-1">Buat password baru</h3>
+    <p class="text-muted mb-0">Silahkan isi form berikut untuk mengganti password</p>
+</div>
 
-                        <div class="form-group">
-                            <label for="confirm_password">Konfirmasi password <span class="text-danger">*</span></label>
-                            <input type="password" id="confirm_password" name="confirm_password" class="form-control">
-                            <div class="invalid-feedback"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <button class="btn btn-primary submit-btn" type="submit" name="reset_pass">Reset password</button>
-                        </div>
-                    </form>
-                </div>
+<div class="card mx-2 mb-0">
+    <div class="card-body py-4 px-5">
+        <form id="form-newPass" action="<?= site_url('save_password') ?>" method="POST">
+            <input type="hidden" name="key_ID" value="<?= $key_id ?>">
+            <div class="form-group mt-1">
+                <label for="new_password">Password baru <span class="text-danger">*</span></label>
+                <input type="password" id="new_password" name="new_password" class="form-control" autofocus>
+                <div class="invalid-feedback"></div>
             </div>
 
-            <?= $footer_copyright; ?>
-        </div>
+            <div class="form-group">
+                <label for="confirm_password">Konfirmasi password <span class="text-danger">*</span></label>
+                <input type="password" id="confirm_password" name="confirm_password" class="form-control">
+                <div class="invalid-feedback"></div>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary submit-btn" type="submit" name="reset_pass">Reset password</button>
+            </div>
+        </form>
     </div>
 </div>
 
