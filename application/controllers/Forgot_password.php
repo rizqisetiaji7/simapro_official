@@ -61,6 +61,7 @@ class Forgot_password extends CI_Controller {
             if ($user->account_status == 'disable') {
                $message = [
                   'status'    => 'account_disable',
+                  'title'     => 'Akun anda telah di Nonaktikan!',
                   'message'   => 'Silahkan hubungi admin untuk melakukan pemulihan akun.',
                   'redirect'  => site_url('login')
                ];
@@ -88,6 +89,7 @@ class Forgot_password extends CI_Controller {
                   $this->bm->update($this->tb_users, ['token' => NULL, 'token_expiry' => NULL], ['user_email' => $email]);
                   $message = [
                      'status'       => 'failed',
+                     'title'        => 'Gagal mengirim!',
                      'error_info'   => $send['error_info'],
                      'message'      => 'Pastikan koneksi internet atau akun email anda benar.'
                   ];
@@ -96,7 +98,10 @@ class Forgot_password extends CI_Controller {
          } else {
             $message = [
                'status'    => 'error',
-               'message'   => 'Oops, email salah! Pastikan email anda sudah terdaftar.'
+               'message'   => [
+                  'field'         => 'email',
+                  'error_message' => 'Oops, email salah! Pastikan email anda sudah terdaftar.'
+               ]
             ];
          }
       }

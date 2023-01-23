@@ -24,102 +24,113 @@
 </div>
 
 <script>
-    $(document).on('keyup', '.form-control', function(e) {
-        $(this).removeClass('is-invalid');
-        $(this).next().html('');
-    });
-    
-    $(document).on('submit', '#form-verif', function(e) {
-        e.preventDefault();
-        const url = $(this).attr('action');
-        const method = $(this).attr('method');
-        const btnSubmit = $('button[type="submit"]');
+    const loadingBar = 'assets/img/gif/loading-white_bar.gif'
+    const btnSubmit = $('button[type="submit"]')
 
-        $.ajax({
-            url: url,
-            method: method,
-            dataType: 'json',
-            cache: false,
-            data: $(this).serialize(),
-            beforeSend: function() {
-                btnSubmit.attr('disabled', true).html(`<img src="<?= base_url('assets/img/gif/loading-white_bar.gif') ?>" width="28px" alt="loading">`);
-            },
-            complete: function() {
-                btnSubmit.attr('disabled', false).text('Kirim');
-            },
-            success: function(response) {
-                if (response.status == 'validation_error') {
-                    if (response.message.error_message == '') {
-                        $('#email').removeClass('is-invalid');
-                        $('#email').next().html('');
-                    } else {
-                        $('#email').addClass('is-invalid');
-                        $('#email').next().html(response.message.error_message);
-                    }
-                } else if (response.status == 'error') {
-                    if (response.message == '') {
-                        $('#email').removeClass('is-invalid');
-                        $('#email').next().html('');
-                    } else {
-                        $('#email').addClass('is-invalid');
-                        $('#email').next().html(response.message);
-                    }
-                } else if (response.status == 'failed') {
-                    Swal.fire({
-                        icon: 'error',
-                        html: `
-                            <div class="text-center">
-                                <h3>Gagal mengirim!</h3>
-                                <p class="mb-2">${response.message}</p>
-                            </div>
-                        `,
-                        showCancelButton: false,
-                        confirmButtonText: 'Coba lagi',
-                        confirmButtonColor: '#3085d6'
-                    });
-                } else if (response.status == 'success'){
-                    // If success
-                    Swal.fire({
-                        icon: 'success',
-                        html: `
-                            <div class="text-center">
-                                <h3>${response.title}</h3>
-                                <p class="mb-2 small">${response.message}</p>
-                            </div>
-                        `,
-                        showCancelButton: false,
-                        confirmButtonText: 'Kembali ke login',
-                        confirmButtonColor: '#3085d6'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $('#email').val('');
-                            window.location = response.redirect;
-                        } else {
-                            window.location = response.redirect;
-                        }
-                    });
-                } else if (response.status == 'account_disable') {
-                    Swal.fire({
-                        icon: 'warning',
-                        html: `
-                            <div class="text-center">
-                                <h3>Akun anda telah di Nonaktikan!</h3>
-                                <p class="mb-2 small text-secondary">${response.message}</p>
-                            </div>
-                        `,
-                        showCancelButton: false,
-                        confirmButtonText: 'Tutup',
-                        confirmButtonColor: '#3085d6'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location = response.redirect;
-                        } else {
-                            window.location = response.redirect;
-                        }
-                    });
-                }
-            }
-        });
-    });
+
+    // Show alert when email failed to send
+    const showAlertFailed = ({title, message}) => {
+        Swal.fire({
+            icon: 'error',
+            html: `
+                <div class="text-center">
+                    <h3>${title}</h3>
+                    <p class="mb-2">${message}</p>
+                </div>
+            `,
+            showCancelButton: false,
+            confirmButtonText: 'Coba lagi',
+            confirmButtonColor: '#3085d6'
+        })
+    }
+
+
+    /**
+     * Set & show error message on form input validation
+     * 
+     * @params response | json
+     */
+    const showErrorMessages = (response) => {
+        if (response.message.error_message == '') {
+            $(`#${response.message.field}`).removeClass('is-invalid')
+            $(`#${response.message.field}`).next().html('')
+        } else {
+            $(`#${response.message.field}`).addClass('is-invalid')
+            $(`#${response.message.field}`).next().html(response.message.error_message)
+        }
+    }
+
+
+    /**
+     * Set & show error message when request failed or success
+     * 
+     * @params {title, message, redirect} | json
+     * @params icon, btnText | string
+     */
+    const showAlertMessage = ({title, message, redirect}, icon, btnText) => {
+        Swal.fire({
+            icon: icon,
+            html: `<div class="text-center"><h3>${title}</h3><p class="mb-2 small">${message}</p></div>`,
+            showCancelButton: false,
+            confirmButtonText: btnText,
+            confirmButtonColor: '#3085d6'
+        }).then(result => {
+            $('#email').val('')
+            (result.isConfirmed) ? window.location = redirect : window.location = redirect
+        })
+    }
+
+
+    /**
+     * Set and show ajax response
+     * 
+     * @params response | json
+     */
+    const setResponse = (response) => {
+        (response.status == 'validation_error') ? showErrorMessages(response) : 
+        (response.status == 'error') ? showErrorMessages(response) : 
+        (response.status == 'failed') ? showAlertFailed(response) : 
+        (response.status == 'account_disable') ? 
+            showAlertMessage(response, 'error', 'Coba lagi') : 
+            showAlertMessage(response, 'success', 'Kembali ke login') // status success
+    }
+
+
+    /**
+     * Handle event to send verification to email on submit
+     * 
+     * @method POST
+     * @params url, data
+     * @return json 
+     */
+    const sendEmailVerify = ({url, data}) => {
+         // Show loading on button
+        btnSubmit.attr('disabled', true).html(`<img src="${siteUrl()}/${loadingBar}" width="28px" alt="loading">`)
+
+        // Send ajax login request
+        $.post(url, data).done(response => {
+                btnSubmit.attr('disabled', false).text('Kirim')
+                setResponse(response)
+            })
+            .fail(errors => console.log(errors))
+    }
+
+
+    /**
+     * Remove validation message when user typing to input with on keyup event
+     */
+    $(document).on('keyup', '.form-control', () => {
+        $(this).removeClass('is-invalid')
+        $(this).next().html('')
+    })
+    
+    
+    /**
+     * Run submit event and send email verification
+     */
+    $(document).on('submit', '#form-verif', function(e) {
+        e.preventDefault()
+        sendEmailVerify({ url: $(this).attr('action'), data: $(this).serialize() })
+    })
 
 </script>

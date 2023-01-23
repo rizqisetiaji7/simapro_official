@@ -69,11 +69,11 @@
 
 
     /**
-     * Set error message on form input validation
+     * Set & show error message on form input validation
      * 
      * @params message | json
      */
-    const setErrorMessages = (message) => {
+    const showErrorMessages = (message) => {
         for (let i = 0; i < message.length; i++) {
             if (message[i].error_message == '') {
                 $(`[name="${message[i].field}"]`).removeClass('is-invalid')
@@ -91,8 +91,8 @@
      * 
      * @params response | json
      */
-    const showResponse = (response) => {
-        (response.status == 'validation_error') ? setErrorMessages(response.message) : 
+    const setResponse = (response) => {
+        (response.status == 'validation_error') ? showErrorMessages(response.message) : 
         (response.status == 'account_disable') ? setAlertAccount(response.message) : 
         (response.status == 'success') ? window.location = response.data.redirect : 
         swAlert(response.data.form, response.message)
@@ -103,7 +103,7 @@
      * Handle ajax login when form submited
      * 
      * @method POST
-     * @params url|data
+     * @params url, data
      * @return json 
      */
     const handleLoginSubmit = ({url, data}) => {
@@ -113,7 +113,7 @@
         // Send ajax login request
         $.post(url, data).done(response => {
             btnSubmit.attr('disabled', false).text('Login')
-            showResponse(response)
+            setResponse(response)
         })
         .fail(errors => console.log(errors))
     }
@@ -122,10 +122,10 @@
     /**
      * Remove validation message when user typing to input with on keyup event
      */
-    $(document).on('keyup', '.form-control', function() {
+    $(document).on('keyup', '.form-control', () => {
         $(this).removeClass('is-invalid')
         $(this).next().html('')
-    });
+    })
 
 
     /**
@@ -134,5 +134,5 @@
     $(document).on('submit', '#form-login', function(e) {
         e.preventDefault()
         handleLoginSubmit({url: $(this).attr('action'), data: $(this).serialize()})
-    });
+    })
 </script>
