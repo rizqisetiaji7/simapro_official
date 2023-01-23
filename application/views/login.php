@@ -33,11 +33,15 @@
 </div>
 
 <script>
+    const loadingBar = 'assets/img/assets/img/gif/loading-white_bar.gif'
+    const warningIcon = 'assets/img/warning.png'
+    const btnSubmit = $('button[type="submit"]')
+
     const swAlert = (field, message) => {
         Swal.fire({
             html: `
                 <div class="text-center">
-                    <img src="<?= base_url('assets/img/warning.png') ?>" width="128px">
+                    <img src="${siteUrl()}/${warningIcon}" width="128px">
                     <h3>${field} Salah!</h3>
                     <p class="mb-2">${message}</p>
                 </div>
@@ -48,59 +52,87 @@
         });
     }
 
-    $(document).on('keyup', '.form-control', function(e) {
-        $(this).removeClass('is-invalid');
-        $(this).next().html('');
+    const setAlertAccount = (message) => {
+        Swal.fire({
+            icon: 'warning',
+            html: `
+                <div class="text-center">
+                    <h3>Akun anda telah di Nonaktikan!</h3>
+                    <p class="mb-2 small text-secondary">${message}</p>
+                </div>
+            `,
+            showCancelButton: false,
+            confirmButtonText: 'Tutup',
+            confirmButtonColor: '#3085d6'
+        })
+    }
+
+
+    /**
+     * Set error message on form input validation
+     * 
+     * @params message | json
+     */
+    const setErrorMessages = (message) => {
+        for (let i = 0; i < message.length; i++) {
+            if (message[i].error_message == '') {
+                $(`[name="${message[i].field}"]`).removeClass('is-invalid')
+                $(`[name="${message[i].field}"]`).next().html('')
+            } else {
+                $(`[name="${message[i].field}"]`).addClass('is-invalid')
+                $(`[name="${message[i].field}"]`).next().html(message[i].error_message)
+            }
+        }
+    }
+
+
+    /**
+     * Set and show ajax response
+     * 
+     * @params response | json
+     */
+    const showResponse = (response) => {
+        (response.status == 'validation_error') ? setErrorMessages(response.message) : 
+        (response.status == 'account_disable') ? setAlertAccount(response.message) : 
+        (response.status == 'success') ? window.location = response.data.redirect : 
+        swAlert(response.data.form, response.message)
+    }
+
+
+    /**
+     * Handle ajax login when form submited
+     * 
+     * @method POST
+     * @params url|data
+     * @return json 
+     */
+    const handleLoginSubmit = ({url, data}) => {
+        // Show loading on button login
+        btnSubmit.attr('disabled', true).html(`<img src="${siteUrl()}/${loadingBar}" width="28px" alt="loading">`)
+
+        // Send ajax login request
+        $.post(url, data).done(response => {
+            btnSubmit.attr('disabled', false).text('Login')
+            showResponse(response)
+        })
+        .fail(errors => console.log(errors))
+    }
+
+
+    /**
+     * Remove validation message when user typing to input with on keyup event
+     */
+    $(document).on('keyup', '.form-control', function() {
+        $(this).removeClass('is-invalid')
+        $(this).next().html('')
     });
 
-    $(document).on('submit', '#form-login', function(e) {
-        e.preventDefault();
-        const url = $(this).attr('action');
-        const method = $(this).attr('method');
-        const btnSubmit = $('button[type="submit"]');
 
-        $.ajax({
-            url: url,
-            method: method,
-            dataType: 'json',
-            cache: false,
-            data: $(this).serialize(),
-            beforeSend: function() {
-                btnSubmit.attr('disabled', true).html(`<img src="<?= base_url('assets/img/gif/loading-white_bar.gif') ?>" width="28px" alt="loading">`);
-            },
-            complete: function() {
-                btnSubmit.attr('disabled', false).text('Login');
-            },
-            success: function(response) {
-                if (response.status == 'validation_error') {
-                    for (let i = 0; i < response.message.length; i++) {
-                        if (response.message[i].error_message == '') {
-                            $(`[name="${response.message[i].field}"]`).removeClass('is-invalid');
-                            $(`[name="${response.message[i].field}"]`).next().html('');
-                        } else {
-                            $(`[name="${response.message[i].field}"]`).addClass('is-invalid');
-                            $(`[name="${response.message[i].field}"]`).next().html(response.message[i].error_message);
-                        }
-                    }
-                } else if (response.status == 'success') {
-                    window.location = response.data.redirect;
-                } else if (response.status == 'account_disable') {
-                    Swal.fire({
-                        icon: 'warning',
-                        html: `
-                            <div class="text-center">
-                                <h3>Akun anda telah di Nonaktikan!</h3>
-                                <p class="mb-2 small text-secondary">${response.message}</p>
-                            </div>
-                        `,
-                        showCancelButton: false,
-                        confirmButtonText: 'Tutup',
-                        confirmButtonColor: '#3085d6'
-                    });
-                } else {
-                    swAlert(response.data.form, response.message);
-                }
-            }
-        });
+    /**
+     * Run submit event and send the data to user login
+     */
+    $(document).on('submit', '#form-login', function(e) {
+        e.preventDefault()
+        handleLoginSubmit({url: $(this).attr('action'), data: $(this).serialize()})
     });
 </script>
