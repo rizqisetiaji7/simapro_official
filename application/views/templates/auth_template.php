@@ -53,6 +53,9 @@
 
         <!-- JQuery -->
         <script src="<?= base_url('assets/js/jquery.min.js') ?>"></script>
+        <script>
+            const siteUrl = () => document.querySelector('meta[name=site_url]').getAttribute('content')
+        </script>
     </head>
     <body>
 
@@ -75,12 +78,11 @@
         <script>
             window.addEventListener('DOMContentLoaded', () => {
                 const authLogo = document.getElementById('auth-logo')
-                const SITE_URL = document.querySelector('meta[name=site_url]').getAttribute('content')
                 let currentTheme = localStorage.getItem('theme_mode')
 
                 currentTheme == 'dark' ? 
-                    authLogo.setAttribute('src', `${SITE_URL}/assets/img/simapro/logo-text-white.svg`) : 
-                    authLogo.setAttribute('src', `${SITE_URL}/assets/img/simapro/logo-text.svg`)
+                    authLogo.setAttribute('src', `${siteUrl()}/assets/img/simapro/logo-text-white.svg`) : 
+                    authLogo.setAttribute('src', `${siteUrl()}/assets/img/simapro/logo-text.svg`)
             })
         </script>
     </body>
