@@ -33,7 +33,7 @@
 </div>
 
 <script>
-    const loadingBar = 'assets/img/assets/img/gif/loading-white_bar.gif'
+    const loadingBar = 'assets/img/gif/loading-white_bar.gif'
     const warningIcon = 'assets/img/warning.png'
     const btnSubmit = $('button[type="submit"]')
 
