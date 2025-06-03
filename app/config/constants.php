@@ -93,15 +93,15 @@ defined('DEFAULT_STYLE')	OR define('DEFAULT_STYLE', 'assets/css/style.css'); // 
 defined('DARK_STYLE')		OR define('DARK_STYLE', 'assets/css/style-dark.css'); // Dark App Theme
 
 // Email Configuration
-defined('EMAIL')			OR define('EMAIL', 'ptaryabaktisaluyu@gmail.com');		// Email Pengirim
-defined('EMAIL_PASS')		OR define('EMAIL_PASS', 'spiryxikgchmvtph');			// Password dari email pengirim
+defined('EMAIL')			OR define('EMAIL', '');		// Email Pengirim
+defined('EMAIL_PASS')		OR define('EMAIL_PASS', '');			// Password dari email pengirim
 defined('EMAIL_PROTOCOL')	OR define('EMAIL_PROTOCOL', 'smtp');					// Protocol yang digunakan (Default smtp)
 defined('SMTP_HOST')		OR define('SMTP_HOST', 'smtp.googlemail.com');			// Host dari email provider yang digunakan
-defined('SMTP_USER')		OR define('SMTP_USER', 'ptaryabaktisaluyu@gmail.com');	// smtp user
+defined('SMTP_USER')		OR define('SMTP_USER', '');	// smtp user
 defined('SMTP_PORT')		OR define('SMTP_PORT', 465);							// Smtp port (Google mail default 465)
 
 // Pusher Config
-defined('PUSHER_APP_ID')	OR define('PUSHER_APP_ID', '1431182');				// Pusher App ID 
-defined('PUSHER_KEY')		OR define('PUSHER_KEY', '051a295c0e08e48dd009');	// Pusher Key
-defined('PUSHER_SECRET')	OR define('PUSHER_SECRET', '25bc07e769d52ee898bd');	// Pusher Secret
-defined('PUSHER_CLUSTER')	OR define('PUSHER_CLUSTER', 'ap1');					// Pusher Cluster
+defined('PUSHER_APP_ID')	OR define('PUSHER_APP_ID', '');				// Pusher App ID 
+defined('PUSHER_KEY')		OR define('PUSHER_KEY', '');	// Pusher Key
+defined('PUSHER_SECRET')	OR define('PUSHER_SECRET', '');	// Pusher Secret
+defined('PUSHER_CLUSTER')	OR define('PUSHER_CLUSTER', '');					// Pusher Cluster
